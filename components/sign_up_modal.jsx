@@ -5,19 +5,21 @@ SignUpModal = React.createClass({
     };
   },
   hide(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_SIGN_UP_MODAL'});
   },
   signUp(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     var email = this.refs.email.getDOMNode().value;
     var password = this.refs.password.getDOMNode().value;
-    console.log(email, password);
 
     Accounts.createUser({email: email, password: password}, (err) => {
-      this.setState({errorMessage: err.message});
-      console.log(err);
+      if (err) {
+        this.setState({errorMessage: err.message});
+      } else {
+        this.hide();
+      }
     });
   },
   render() {
@@ -31,14 +33,14 @@ SignUpModal = React.createClass({
           <div className="field">
             <div className="ui left icon input">
               <i className="user icon" />
-              <input type="text" name="email" placeholder="E-mail address" ref="email" autocomplete="off" />
+              <input type="text" name="email" placeholder="E-mail address" ref="email" autoСomplete="off" />
             </div>
           </div>
 
           <div className="field">
             <div className="ui left icon input">
               <i className="lock icon" />
-              <input type="password" name="password" placeholder="Password" ref="password" autocomplete="off" />
+              <input type="password" name="password" placeholder="Password" ref="password" autoСomplete="off" />
             </div>
           </div>
 

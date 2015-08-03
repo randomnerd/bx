@@ -13,15 +13,12 @@ LoginModal = React.createClass({
     if (e) e.preventDefault();
     var email = this.refs.email.getDOMNode().value;
     var password = this.refs.password.getDOMNode().value;
-    console.log(email, password);
 
     Meteor.loginWithPassword(email, password, (err) => {
       if (err) {
-        console.log('login failed', err);
         this.setState({errorMessage: err.message});
       } else {
         this.hide();
-        console.log('login successful');
       };
     });
   },
