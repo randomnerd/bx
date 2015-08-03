@@ -1,4 +1,3 @@
-// Formsy = require('formsy-react');
 LoginModal = React.createClass({
   getInitialState() {
     return {
@@ -31,7 +30,7 @@ LoginModal = React.createClass({
   },
   render() {
     return (
-      <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
+      <Modal size="small" positiveLabel="Log in" header="Log in"
         onDeny={this.hide} onPositive={this.login} show={this.props.show}
         errorMsg={this.state.errorMessage} onVisible={this.focusLogin}>
 
@@ -52,7 +51,7 @@ LoginModal = React.createClass({
           </div>
 
         </form>
-      </Semantic.Modal>
+      </Modal>
     );
   }
 });

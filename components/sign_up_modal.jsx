@@ -1,7 +1,12 @@
+Formsy.addValidationRule('passwordConfirmationMatch', (values, value) => {
+  return values.password === values.password_confirm;
+});
+
 SignUpModal = React.createClass({
   getInitialState() {
     return {
-      errorMessage: null
+      errorMessage: null,
+      allowSubmit: false
     };
   },
   hide(e) {
@@ -22,30 +27,27 @@ SignUpModal = React.createClass({
       }
     });
   },
+  allowSubmit() { this.setState({allowSubmit: true}) },
+  disallowSubmit() { this.setState({allowSubmit: false}) },
+  matchConfirm(values, value) {
+    return false;
+  },
   render() {
     return (
-      <Modal size="small" positiveLabel="Sign up" header="Sign up"
+      <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
         onDeny={this.hide} onPositive={this.signUp} show={this.props.show}
-        errorMsg={this.state.errorMessage}>
+        errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <form className="ui large form">
+        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit}>
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="user icon" />
-              <input type="text" name="email" placeholder="E-mail address" ref="email" autoСomplete="off" />
-            </div>
-          </div>
+          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" />
+          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
+            ref="password" validations="passwordConfirmationMatch" required />
+          <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"
+            ref="password_confirm" validations="passwordConfirmationMatch" required/>
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="lock icon" />
-              <input type="password" name="password" placeholder="Password" ref="password" autoСomplete="off" />
-            </div>
-          </div>
-
-        </form>
-      </Modal>
+        </Formsy.Form>
+      </Semantic.Modal>
     );
   }
 });

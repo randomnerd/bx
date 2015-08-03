@@ -1,9 +1,12 @@
-Modal = React.createClass({
+if (typeof Semantic === 'undefined') Semantic = {};
+
+Semantic.Modal = React.createClass({
   getDefaultProps() {
     return {
       size: '',
       positiveLabel: 'OK',
-      denyLabel: 'Cancel'
+      denyLabel: 'Cancel',
+      allowSubmit: true
     };
   },
   componentDidMount() {
@@ -22,23 +25,32 @@ Modal = React.createClass({
   render() {
     return (
       <div className={ this.props.size + " ui modal" }>
-        { this.props.header ? <div className="header">{this.props.header}</div> : '' }
+        { this.props.header ?
+          <div className="header">
+            {this.props.header}
+          </div> : ''
+        }
+
         <div className="content">
           { this.props.errorMsg ?
             <div className="ui negative message">
               {this.props.errorMsg}
             </div> : ''
           }
+
           {this.props.children}
         </div>
+
         <div className="actions">
           <div className="ui black button" onClick={this.props.onDeny}>
             { this.props.denyLabel }
           </div>
-          <div className="ui green right labeled icon button" onClick={this.props.onPositive}>
+
+          <button className="ui green right labeled icon button"
+            onClick={this.props.onPositive} disabled={!this.props.allowSubmit}>
             { this.props.positiveLabel }
             <i className="checkmark icon"></i>
-          </div>
+          </button>
         </div>
       </div>
     );

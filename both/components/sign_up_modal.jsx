@@ -1,39 +1,34 @@
-// Formsy = require('formsy-react');
-LoginModal = React.createClass({
+SignUpModal = React.createClass({
   getInitialState() {
     return {
-      errorMessage: null
+      errorMessage: null,
+      allowSubmit: false
     };
   },
   hide(e) {
     if (e) e.preventDefault();
     this.setState({errorMessage: null});
-    Dispatcher.dispatch({actionType: 'HIDE_LOGIN_MODAL'});
+    Dispatcher.dispatch({actionType: 'HIDE_SIGN_UP_MODAL'});
   },
-  login(e) {
+  signUp(e) {
     if (e) e.preventDefault();
     var email = this.refs.email.getDOMNode().value;
     var password = this.refs.password.getDOMNode().value;
 
-    Meteor.loginWithPassword(email, password, (err) => {
+    Accounts.createUser({email: email, password: password}, (err) => {
       if (err) {
         this.setState({errorMessage: err.message});
       } else {
         this.hide();
-      };
+      }
     });
   },
-  focusLogin() {
-    Meteor.setTimeout(() => {
-      this.refs.email.getDOMNode().focus();
-    }, 50);
-
-  },
+  // toggleAllowSubmit() { this.setState({allowS}) }
   render() {
     return (
-      <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
-        onDeny={this.hide} onPositive={this.login} show={this.props.show}
-        errorMsg={this.state.errorMessage} onVisible={this.focusLogin}>
+      <Modal size="small" positiveLabel="Sign up" header="Sign up"
+        onDeny={this.hide} onPositive={this.signUp} show={this.props.show}
+        errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
         <form className="ui large form">
 
@@ -47,12 +42,19 @@ LoginModal = React.createClass({
           <div className="field">
             <div className="ui left icon input">
               <i className="lock icon" />
-              <input type="password" name="password" placeholder="Password" ref="password"/>
+              <input type="password" name="password" placeholder="Password" ref="password" />
+            </div>
+          </div>
+
+          <div className="field">
+            <div className="ui left icon input">
+              <i className="lock icon" />
+              <input type="password" name="password_confirmation" placeholder="Confirm" ref="password_confirmation" />
             </div>
           </div>
 
         </form>
-      </Semantic.Modal>
+      </Modal>
     );
   }
 });
