@@ -7,7 +7,8 @@ TopMenu = React.createClass({
   },
   getMenuItems() {
     return [
-      { href: '/', label: 'Home', extraCls: '' }
+      { href: '/', label: 'Home', extraCls: '' },
+      //{ href: '/pair', label: 'Pairs', extraCls: '' }
     ];
   },
   renderMenuItems() {
