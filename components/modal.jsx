@@ -10,7 +10,9 @@ Modal = React.createClass({
     $(this.getDOMNode()).modal({
       detachable: false,
       autofocus: true,
-      closable: false
+      closable: false,
+      onShow: this.props.onVisible,
+      onVisible: this.props.onVisible
     });
     $(this.getDOMNode()).modal(this.props.show ? 'show' : 'hide');
   },
@@ -22,6 +24,11 @@ Modal = React.createClass({
       <div className={ this.props.size + " ui modal" }>
         { this.props.header ? <div className="header">{this.props.header}</div> : '' }
         <div className="content">
+          { this.props.errorMsg ?
+            <div className="ui negative message">
+              {this.props.errorMsg}
+            </div> : ''
+          }
           {this.props.children}
         </div>
         <div className="actions">

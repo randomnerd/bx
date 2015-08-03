@@ -18,14 +18,14 @@ TopMenu = React.createClass({
   showLoginModal() {
     Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
   },
-  hideLoginModal() { this.setState({ showLoginModal: false }) },
+  showSignUpModal() {
+    Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
+  },
   renderLoginButtons() {
     return (
       <div className="right menu">
-        <div className="item">
-          <a href="#" className="ui primary button" onClick={this.showLoginModal}>Log in</a>
-        </div>
-        <a href="#" className="item">Sign up</a>
+        <a className="item" onClick={this.showLoginModal}>Log in</a>
+        <a className="item" onClick={this.showSignUpModal}>Sign up</a>
       </div>
     );
   },
@@ -35,7 +35,7 @@ TopMenu = React.createClass({
         <div className="ui container">
 
           { this.renderMenuItems() }
-          { this.data.user ? '<UserTopMenu />' : this.renderLoginButtons() }
+          { this.data.user ? <UserTopMenu /> : this.renderLoginButtons() }
         </div>
       </div>
     );

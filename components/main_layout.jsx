@@ -1,6 +1,9 @@
 MainLayout = React.createClass({
   getInitialState() {
-    return { showLoginModal: false };
+    return {
+      showLoginModal: false,
+      showSignUpModal: false
+    };
   },
   componentDidMount() {
     Dispatcher.register((payload) => {
@@ -14,6 +17,15 @@ MainLayout = React.createClass({
         case 'HIDE_LOGIN_MODAL':
           this.setState({showLoginModal: false});
           break;
+
+          case 'SHOW_SIGN_UP_MODAL':
+            this.setState({showSignUpModal: true});
+            break;
+
+          case 'HIDE_SIGN_UP_MODAL':
+            this.setState({showSignUpModal: false});
+            break;
+
       }
     })
   },
@@ -25,6 +37,7 @@ MainLayout = React.createClass({
           {this.props.content}
         </div>
         <LoginModal show={this.state.showLoginModal} />
+        <SignUpModal show={this.state.showSignUpModal} />
       </div>
     );
   }

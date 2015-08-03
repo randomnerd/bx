@@ -1,3 +1,11 @@
 .main.container {
   padding-top: 5em;
 }
+
+.tiny.button {
+  font-size: .85714286rem !important;
+}
+
+.mini.button {
+  font-size: .71428571rem !important;
+}

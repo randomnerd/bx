@@ -5,11 +5,12 @@ LoginModal = React.createClass({
     };
   },
   hide(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_LOGIN_MODAL'});
   },
   login(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     var email = this.refs.email.getDOMNode().value;
     var password = this.refs.password.getDOMNode().value;
     console.log(email, password);
@@ -19,18 +20,22 @@ LoginModal = React.createClass({
         console.log('login failed', err);
         this.setState({errorMessage: err.message});
       } else {
+        this.hide();
         console.log('login successful');
       };
     });
   },
+  focusLogin() {
+    Meteor.setTimeout(() => {
+      this.refs.email.getDOMNode().focus();
+    }, 50);
+
+  },
   render() {
     return (
-      <Modal size="small" positiveLabel="Log in" header="Log in" onDeny={this.hide} onPositive={this.login} show={this.props.show}>
-        { this.state.errorMessage ?
-          <div className="ui negative message">
-            {this.state.errorMessage}
-          </div> : ''
-        }
+      <Modal size="small" positiveLabel="Log in" header="Log in"
+        onDeny={this.hide} onPositive={this.login} show={this.props.show}
+        errorMsg={this.state.errorMessage} onVisible={this.focusLogin}>
 
         <form className="ui large form">
 
