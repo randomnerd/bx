@@ -8,6 +8,7 @@ UserTopMenu = React.createClass({
   logOut() { Meteor.logout() },
   getMenuItems() {
     return [
+      { href: '/u/wallets', label: 'My wallets', extraCls: ''},
       { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }
     ];
   },
@@ -17,7 +18,7 @@ UserTopMenu = React.createClass({
     });
   },
   componentDidMount() {
-    $(this.getDOMNode()).dropdown({on: 'hover'});
+    $(this.getDOMNode()).dropdown({on: 'hover', action: 'hide'});
   },
   render() {
     return (

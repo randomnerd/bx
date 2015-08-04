@@ -18,7 +18,7 @@ LoginModal = React.createClass({
         this.setState({errorMessage: err.message});
       } else {
         this.hide();
-      };
+      }
     });
   },
   focusLogin() {
