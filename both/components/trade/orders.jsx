@@ -28,9 +28,9 @@ Orders = React.createClass({
       return  (
 
         <tr key={item.price}>
-          <td>{item.price}</td>
-          <td>{item.amount}</td>
-          <td>{(item.price * item.amount).toFixed(8)}</td>
+          <td className="six wide">{item.price}</td>
+          <td className="five wide">{item.amount}</td>
+          <td className="five wide">{(item.price * item.amount).toFixed(8)}</td>
         </tr>
 
       );
@@ -43,9 +43,9 @@ Orders = React.createClass({
         <table className="ui selectable very compact very basic striped table nopadding nomargin">
           <thead>
             <tr className="lesspadding">
-              <th>Price</th>
-              <th>{this.props.valute1}</th>
-              <th>{this.props.valute2}</th>
+              <th className="six wide">Price</th>
+              <th className="five wide">{this.props.valute1}</th>
+              <th className="five wide">{this.props.valute2}</th>
             </tr>
           </thead>
         </table>

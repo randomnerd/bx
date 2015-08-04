@@ -18,7 +18,7 @@
   padding-bottom: 0.4em !important;
 }
 .scrollable10rows{
-  height: 26em;
+  max-height: 26em !important;
   overflow-y: auto;
 }
 

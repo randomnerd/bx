@@ -33,10 +33,10 @@ Trades = React.createClass({
       return  (
 
         <tr key={Math.random()} className={item.direction=="buy"?"positive":"negative"}>
-          <td>{item.time}</td>
-          <td>{item.price}</td>
-          <td>{item.amount}</td>
-          <td>{(item.price*item.amount).toFixed(8)}</td>
+          <td className="four wide">{item.time}</td>
+          <td className="four wide">{item.price}</td>
+          <td className="four wide">{item.amount}</td>
+          <td className="four wide">{(item.price*item.amount).toFixed(8)}</td>
         </tr>
 
       );
@@ -49,10 +49,10 @@ Trades = React.createClass({
         <table className="ui selectable very compact very basic striped table nopadding nomargin">
           <thead>
           <tr className="lesspadding">
-            <th>Time</th>
-            <th>Price</th>
-            <th>{this.props.valute1}</th>
-            <th>{this.props.valute2}</th>
+            <th className="four wide">Time</th>
+            <th className="four wide">Price</th>
+            <th className="four wide">{this.props.valute1}</th>
+            <th className="four wide">{this.props.valute2}</th>
           </tr>
           </thead>
         </table>
