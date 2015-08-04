@@ -28,7 +28,7 @@ Orders = React.createClass({
   },
   render() {
     return (
-      <table className="ui selectable very basic striped table">
+      <table className="ui selectable very compact very basic striped table">
         <thead>
           <tr>
             <th>Price</th>

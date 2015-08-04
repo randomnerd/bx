@@ -29,7 +29,7 @@ Trades = React.createClass({
   },
   render() {
     return (
-      <table className="ui selectable very basic table">
+      <table className="ui selectable very compact very basic table">
         <thead>
           <tr>
             <th>Time</th>
