@@ -34,10 +34,10 @@ TradePage = React.createClass({
           </div>
         </div>
         <div className="ui segments">
-          <div className="ui secondary segment nopaddingtop">
+          <div className="ui secondary segment">
             <p>Last market trades</p>
           </div>
-          <div className="ui red segment">
+          <div className="ui red segment nopaddingtop">
             <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
           </div>
         </div>
