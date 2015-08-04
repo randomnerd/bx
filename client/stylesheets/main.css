@@ -35,9 +35,4 @@ tr.lesspadding th {
   padding-top: 0.2em !important;
 }
 
-.orderbook {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
 .nomargin { margin: 0 !important; }

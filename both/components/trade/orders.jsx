@@ -49,7 +49,7 @@ Orders = React.createClass({
             </tr>
           </thead>
         </table>
-        <div className="orderbook">
+        <div className="scrollable10rows">
         <table className="ui selectable very compact very basic striped table">
           <tbody>
             { this.renderOrderItems() }
