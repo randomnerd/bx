@@ -9,7 +9,6 @@ autopublish
 insecure
 react
 kadira:react-layout
-coffeescript
 kadira:flow-router-ssr
 accounts-base
 accounts-password
