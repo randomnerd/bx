@@ -9,3 +9,10 @@
 .mini.button {
   font-size: .71428571rem !important;
 }
+.nopaddingtop{
+  padding-top: 0 !important;
+}
+.nopaddingtop th{
+  padding-top: 0.4em !important;
+  padding-bottom: 0.4em !important;
+}
