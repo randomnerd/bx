@@ -9,6 +9,7 @@
 .mini.button {
   font-size: .71428571rem !important;
 }
+
 .nopaddingtop{
   padding-top: 0 !important;
 }
@@ -20,3 +21,23 @@
   height: 26em;
   overflow-y: auto;
 }
+
+.segment.small {
+  padding: 0.5em;
+}
+
+.nopadding {
+  padding: 0 !important;
+}
+
+tr.lesspadding th {
+  padding: 0.5em !important;
+  padding-top: 0.2em !important;
+}
+
+.orderbook {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.nomargin { margin: 0 !important; }
