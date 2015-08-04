@@ -1,4 +1,4 @@
-PairLayout = React.createClass({
+PairBar = React.createClass({
   getPairItems() {
     return [
       { pair: 'BTC', value: '0.005467', href: 'btc'},
