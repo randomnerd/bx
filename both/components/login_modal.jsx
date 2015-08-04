@@ -1,7 +1,8 @@
 LoginModal = React.createClass({
   getInitialState() {
     return {
-      errorMessage: null
+      errorMessage: null,
+      allowSubmit: false
     };
   },
   hide(e) {
@@ -9,10 +10,8 @@ LoginModal = React.createClass({
     this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_LOGIN_MODAL'});
   },
-  login(e) {
-    if (e) e.preventDefault();
-    var email = this.refs.email.getDOMNode().value;
-    var password = this.refs.password.getDOMNode().value;
+  login() {
+    var {email, password} = this.refs.form.getCurrentValues();
 
     Meteor.loginWithPassword(email, password, (err) => {
       if (err) {
@@ -28,30 +27,22 @@ LoginModal = React.createClass({
     }, 50);
 
   },
+  allowSubmit() { this.setState({allowSubmit: true}) },
+  disallowSubmit() { this.setState({allowSubmit: false}) },
   render() {
     return (
-      <Modal size="small" positiveLabel="Log in" header="Log in"
+      <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
         onDeny={this.hide} onPositive={this.login} show={this.props.show}
-        errorMsg={this.state.errorMessage} onVisible={this.focusLogin}>
+        errorMsg={this.state.errorMessage} onVisible={this.focusLogin} allowSubmit={this.state.allowSubmit}>
 
-        <form className="ui large form">
+        <Formsy.Form className="ui large form" onValidSubmit={this.login} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="user icon" />
-              <input type="text" name="email" placeholder="E-mail address" ref="email" />
-            </div>
-          </div>
+          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
+          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="lock icon" />
-              <input type="password" name="password" placeholder="Password" ref="password"/>
-            </div>
-          </div>
+        </Formsy.Form>
 
-        </form>
-      </Modal>
+      </Semantic.Modal>
     );
   }
 });

@@ -1,3 +1,7 @@
+Formsy.addValidationRule('passwordConfirmationMatch', (values, value) => {
+  return values.password === values.password_confirm;
+});
+
 SignUpModal = React.createClass({
   getInitialState() {
     return {
@@ -10,11 +14,9 @@ SignUpModal = React.createClass({
     this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_SIGN_UP_MODAL'});
   },
-  signUp(e) {
-    if (e) e.preventDefault();
-    var email = this.refs.email.getDOMNode().value;
-    var password = this.refs.password.getDOMNode().value;
-
+  signUp() {
+    var {email, password} = this.refs.form.getCurrentValues();
+    
     Accounts.createUser({email: email, password: password}, (err) => {
       if (err) {
         this.setState({errorMessage: err.message});
@@ -23,38 +25,27 @@ SignUpModal = React.createClass({
       }
     });
   },
-  // toggleAllowSubmit() { this.setState({allowS}) }
+  allowSubmit() { this.setState({allowSubmit: true}) },
+  disallowSubmit() { this.setState({allowSubmit: false}) },
+  matchConfirm(values, value) {
+    return false;
+  },
   render() {
     return (
-      <Modal size="small" positiveLabel="Sign up" header="Sign up"
+      <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
         onDeny={this.hide} onPositive={this.signUp} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <form className="ui large form">
+        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="user icon" />
-              <input type="text" name="email" placeholder="E-mail address" ref="email" />
-            </div>
-          </div>
+          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
+          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
+            ref="password" validations="passwordConfirmationMatch" required />
+          <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"
+            ref="password_confirm" validations="passwordConfirmationMatch" required/>
 
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="lock icon" />
-              <input type="password" name="password" placeholder="Password" ref="password" />
-            </div>
-          </div>
-
-          <div className="field">
-            <div className="ui left icon input">
-              <i className="lock icon" />
-              <input type="password" name="password_confirmation" placeholder="Confirm" ref="password_confirmation" />
-            </div>
-          </div>
-
-        </form>
-      </Modal>
+        </Formsy.Form>
+      </Semantic.Modal>
     );
   }
 });

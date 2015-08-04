@@ -10,7 +10,7 @@ PairLayout = React.createClass({
   renderPairItems() {
     return this.getPairItems().map((item) => {
       return  (
-        <a className={"item " + (this.props.active==item.href?"active":"")} key={item.href} href={"/pair/"+item.href}>
+        <a className={"item" + (this.props.active==item.href?" active":"")} key={item.href} href={"/pair/"+item.href}>
           <div className="ui two column grid">
             <div className="column">
               {item.pair}
