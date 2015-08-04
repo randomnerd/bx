@@ -12,3 +12,4 @@ accounts-base
 accounts-password
 meteorflux:dispatcher
 randomnerd:bitcoinrpc
+vsivsi:job-collection
