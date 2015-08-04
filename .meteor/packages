@@ -14,3 +14,4 @@ kadira:flow-router-ssr
 accounts-base
 accounts-password
 meteorflux:dispatcher
+randomnerd:bitcoinrpc

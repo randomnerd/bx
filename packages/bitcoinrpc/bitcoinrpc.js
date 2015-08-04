@@ -1,0 +1,1 @@
+BitcoinRPC = Npm.require('bitcoin');
