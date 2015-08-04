@@ -16,3 +16,7 @@
   padding-top: 0.4em !important;
   padding-bottom: 0.4em !important;
 }
+.scrollable10rows{
+  height: 26em;
+  overflow-y: auto;
+}

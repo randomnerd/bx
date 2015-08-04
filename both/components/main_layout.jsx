@@ -34,17 +34,16 @@ MainLayout = React.createClass({
       <div>
         <TopMenu title="BitExchange"/>
         <div className="ui main container">
-        <div className="ui grid">
-          <div className="four wide column">
-            <div className="ui fluid vertical pointing menu">
-              <PairBar active={this.props.active} />
+          <div className="ui grid">
+            <div className="four wide column">
+              <div className="ui fluid vertical pointing menu">
+                <PairBar active={this.props.active} />
+              </div>
+            </div>
+            <div className="twelve wide column">
+              {this.props.content}
             </div>
           </div>
-          <div className="twelve wide column">
-            {this.props.content}
-          </div>
-        </div>
-
         </div>
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
