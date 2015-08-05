@@ -39,8 +39,8 @@ BuySell = React.createClass({
 
           <Formsy.Form className="ui form" onValidSubmit={this.goDeal} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
             <div className="two fields">
-              <Semantic.Input name="amount" label="Amount" icon="money" value={this.state.amount!=0?(parseFloat(this.state.amount)).toFixed(8):""} placeholder="0.0000" ref="amount" validations="isNumeric" labeled labelName={this.props.currency} onChg={this.changeAmount} />
-              <Semantic.Input name="price" label="Price" icon="shop" value={this.state.price!=0?(parseFloat(this.state.price)).toFixed(8):""} placeholder="0.0000" ref="price" validations="isNumeric" labelName="BTC" onChg={this.changePrice} />
+              <Semantic.Input name="amount" label="Amount" icon="money" value={this.state.amount!=0?(parseFloat(this.state.amount)).toFixed(8):"0"} placeholder="0.0000" ref="amount" validations="isNumeric" labeled labelName={this.props.currency} onChg={this.changeAmount} />
+              <Semantic.Input name="price" label="Price" icon="shop" value={this.state.price!=0?(parseFloat(this.state.price)).toFixed(8):"0"} placeholder="0.0000" ref="price" validations="isNumeric" labeled labelName="BTC" onChg={this.changePrice} />
             </div>
           </Formsy.Form>
         </div>
