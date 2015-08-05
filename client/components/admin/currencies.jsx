@@ -20,13 +20,17 @@ CurrenciesAdmin = React.createClass({
   render() {
     return (
       <div>
+        <a className="ui blue labeled icon button" href="/admin/currencies/new">
+          <i className="plus icon" />
+          New currency
+        </a>
         <table className="ui compact table">
           <thead>
             <tr>
               <th>Name</th>
               <th>Short name</th>
               <th>Status</th>
-              <th>Published</th>
+              <th>Public</th>
             </tr>
           </thead>
           <tbody>

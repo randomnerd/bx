@@ -32,3 +32,13 @@ adminRoutes.route('/currencies', {
     ReactLayout.render(AdminLayout, { content: <CurrenciesAdmin /> })
   }
 });
+
+adminRoutes.route('/currencies/new', {
+  subscriptions() {
+    this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
+  },
+  action() {
+    ReactLayout.render(AdminLayout, { content: <CurrencyForm /> })
+  }
+});
+
