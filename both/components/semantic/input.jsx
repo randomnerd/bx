@@ -9,6 +9,7 @@ Semantic.Input = React.createClass({
     }
   },
   changeValue(event) {
+    if (this.props.onChg) this.props.onChg(event);
     this.setValue(event.currentTarget.value);
   },
   render() {
