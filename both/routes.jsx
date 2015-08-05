@@ -15,3 +15,17 @@ FlowRouter.route('/u/wallets', {
     ReactLayout.render(MainLayout, { content: <WalletsPage /> })
   }
 });
+
+adminRoutes = FlowRouter.group({ prefix: '/admin' });
+
+adminRoutes.route('/', {
+  action() {
+    ReactLayout.render(MainLayout, { content: <AdminHome /> })
+  }
+});
+
+adminRoutes.route('/currencies', {
+  action() {
+    ReactLayout.render(MainLayout, { content: <CurrenciesAdmin /> })
+  }
+});

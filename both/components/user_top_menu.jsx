@@ -28,6 +28,9 @@ UserTopMenu = React.createClass({
         <i className="dropdown icon" />
 
         <div className="menu">
+          { this.data.user && this.data.user.isAdmin() ?
+            <a className="item" href="/admin/">Admin</a> : ''
+          }
           {this.renderMenuItems()}
         </div>
       </div>
