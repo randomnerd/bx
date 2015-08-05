@@ -6,8 +6,8 @@ Jobs.allow({
 });
 
 Meteor.startup(function() {
-  Meteor.publish('allJobs', function() {
-    return Jobs.find({});
+  Meteor.publish('jobQueue', function() {
+    return Jobs.find({status: {$ne: 'completed'}});
   });
 
   return Jobs.startJobServer();
