@@ -22,11 +22,18 @@ Semantic.Input = React.createClass({
 
     return (
       <div className={classes.join(' ')}>
+      {this.props.label ? <label>{this.props.label}</label> : ""}
         { this.props.icon ?
-          <div className={"ui " + this.props.iconSide + ' icon input'}>
+          <div className={"ui " + this.props.iconSide + ' icon ' + (this.props.labeled?'right labeled ':'') +  'input'}>
             <i className={"icon " + this.props.icon} />
             {input}
-          </div> : {input} }
+            {this.props.labeled ?
+              <div className="ui label">
+                {this.props.labelName}
+              </div>
+            : ""}
+          </div>
+          : {input} }
       </div>
     );
   }

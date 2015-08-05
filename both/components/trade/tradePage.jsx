@@ -13,6 +13,14 @@ TradePage = React.createClass({
         </div>
         <div className="ui grid">
           <div className="eight wide column">
+            <BuySell currency={this.props.active.toUpperCase()} direction="buy"/>
+          </div>
+          <div className="eight wide column">
+            <BuySell currency={this.props.active.toUpperCase()} direction="sell"/>
+          </div>
+        </div>
+        <div className="ui grid">
+          <div className="eight wide column">
             <div className="ui segments">
               <div className="ui secondary segment">
                 <h4>Sell orders</h4>
