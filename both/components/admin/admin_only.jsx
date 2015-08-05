@@ -2,11 +2,13 @@ AdminOnly = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      admin: Meteor.user() && Meteor.user().isAdmin()
+      admin: Meteor.user() && Meteor.user().isAdmin(),
+      authInProgress: Meteor.loggingIn()
     };
   },
   render() {
-    if (!this.data.admin && this.props.redirect) FlowRouter.go(this.props.redirect);
+    if (!this.data.admin && !this.data.authInProgress && this.props.redirect)
+      FlowRouter.go(this.props.redirect);
     return (
       <div className="adminOnly">
         {this.data.admin ? this.props.children : ''}

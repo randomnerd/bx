@@ -35,7 +35,7 @@ LoginModal = React.createClass({
         onDeny={this.hide} onPositive={this.login} show={this.props.show}
         errorMsg={this.state.errorMessage} onVisible={this.focusLogin} allowSubmit={this.state.allowSubmit}>
 
-        <Formsy.Form className="ui large form" onValidSubmit={this.login} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
+        <Formsy.Form className="ui large form" onSubmit={this.login} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />

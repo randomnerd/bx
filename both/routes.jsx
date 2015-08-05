@@ -5,7 +5,7 @@ FlowRouter.route('/', {
 });
 
 FlowRouter.route('/pair/:pair_id', {
-  action(params, queryParams) {
+  action(params) {
     ReactLayout.render(MainLayout, {active:params.pair_id, content: <TradePage active={params.pair_id}/> });
   }
 });
@@ -20,12 +20,15 @@ adminRoutes = FlowRouter.group({ prefix: '/admin' });
 
 adminRoutes.route('/', {
   action() {
-    ReactLayout.render(MainLayout, { content: <AdminHome /> })
+    ReactLayout.render(AdminLayout, { content: <AdminHome /> })
   }
 });
 
 adminRoutes.route('/currencies', {
+  subscriptions() {
+    this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
+  },
   action() {
-    ReactLayout.render(MainLayout, { content: <CurrenciesAdmin /> })
+    ReactLayout.render(AdminLayout, { content: <CurrenciesAdmin /> })
   }
 });

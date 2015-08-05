@@ -1,9 +1,7 @@
 AdminHome = React.createClass({
   render() {
     return (
-      <AdminOnly redirect="/">
-        admin home
-      </AdminOnly>
+        <div>admin home</div>
     );
   }
 });
