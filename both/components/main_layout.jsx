@@ -36,7 +36,7 @@ MainLayout = React.createClass({
         <div className="ui main container">
           <div className="ui grid">
             <div className="four wide column">
-              <div className="ui fluid vertical pointing menu">
+              <div className="ui fluid vertical menu">
                 <PairBar active={this.props.active} />
               </div>
             </div>
