@@ -7,7 +7,13 @@ CurrencyForm = React.createClass({
   },
   newCurr(event) {
     var {name, shortName,published} = this.refs.curr.getCurrentValues();
-    console.log(this.refs.curr.getCurrentValues())
+    Currencies.insert({name: name, shortName: shortName, published:published}, (err) => {
+      if (err) {
+        this.setState({errorMessage: err.message});
+      } else {
+        FlowRouter.go('/admin/currencies')
+      }
+    });
   },
   saveCurr(event) {
     this.setState({amount: event.currentTarget.value});
@@ -17,7 +23,7 @@ CurrencyForm = React.createClass({
   render() {
     return (
       <div>
-        <Formsy.Form className="ui form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
+        <Formsy.Form className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
           <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required />
           <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required />
           <div className="two fields">

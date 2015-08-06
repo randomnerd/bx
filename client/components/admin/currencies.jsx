@@ -13,6 +13,16 @@ CurrenciesAdmin = React.createClass({
           <td>{curr.shortName}</td>
           <td>{curr.status}</td>
           <td>{curr.published ? 'true' : 'false'}</td>
+          <td className="right aligned collapsing">
+            <div className="ui tiny icon buttons">
+              <div className="ui positive button" onClick={this.delCurr}>
+                <i className="write icon"></i>
+              </div>
+              <div className="ui negative button" onClick={this.editCurr}>
+                <i className="remove icon"></i>
+              </div>
+            </div>
+          </td>
         </tr>
       );
     })
@@ -31,6 +41,7 @@ CurrenciesAdmin = React.createClass({
               <th>Short name</th>
               <th>Status</th>
               <th>Public</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
