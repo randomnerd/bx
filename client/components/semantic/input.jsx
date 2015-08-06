@@ -5,7 +5,7 @@ Semantic.Input = React.createClass({
   getDefaultProps() {
     return {
       type: 'text',
-      iconSide: 'left'
+      iconSide: 'left',
     }
   },
   changeValue(event) {
@@ -13,6 +13,7 @@ Semantic.Input = React.createClass({
     this.setValue(event.currentTarget.value);
   },
   render() {
+
     classes = [ 'field' ];
     if (this.showRequired())  classes.push('required');
     if (this.showError())     classes.push('error');

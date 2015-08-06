@@ -5,6 +5,7 @@ CurrencyForm = React.createClass({
       allowSubmit: false
     };
   },
+
   newCurr(event) {
     var {name, shortName,published} = this.refs.curr.getCurrentValues();
     Currencies.insert({name: name, shortName: shortName, published:published}, (err) => {
@@ -23,7 +24,7 @@ CurrencyForm = React.createClass({
   render() {
     return (
       <div>
-        <Formsy.Form className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
+        <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
           <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required />
           <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required />
           <div className="two fields">

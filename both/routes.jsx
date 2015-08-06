@@ -38,7 +38,15 @@ adminRoutes.route('/currencies/new', {
     this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
   },
   action() {
-    ReactLayout.render(AdminLayout, { content: <CurrencyForm /> })
+    ReactLayout.render(AdminLayout, { content: <CurrencyForm k={Math.random()} /> })
   }
 });
 
+adminRoutes.route('/currencies/edit/:_id', {
+  subscriptions() {
+    this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
+  },
+  action() {
+    ReactLayout.render(AdminLayout, { content: <CurrencyForm />,  })
+  }
+});
