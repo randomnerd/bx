@@ -47,8 +47,8 @@ BuySell = React.createClass({
 
           <div className="ui horizontal segments">
             <div className={"ui small segment" + (this.props.direction=="buy"?" green":" red")}>
-              <p><strong>Total:</strong>
-              {(parseFloat(this.state.amount*this.state.price)).toFixed(8)}</p>
+              <strong>Total:</strong>
+              {(parseFloat(this.state.amount*this.state.price)).toFixed(8)}
             </div>
             <div className={"ui small segment" + (this.props.direction=="buy"?" green":" red")}>
               <strong>Fee:</strong>
