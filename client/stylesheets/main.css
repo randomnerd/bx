@@ -22,6 +22,10 @@
   overflow-y: auto;
 }
 
+.ui.form .field.nomargin{
+  margin: 0 0 0.4em !important;
+}
+
 .segment.small {
   padding: 0.5em;
 }

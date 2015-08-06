@@ -16,7 +16,9 @@ Semantic.Input = React.createClass({
     classes = [ 'field' ];
     if (this.showRequired())  classes.push('required');
     if (this.showError())     classes.push('error');
+    if (this.props.showInline)     classes.push('inline');
     if (this.props.className) classes.push(this.props.className);
+
 
     errorMessage = this.getErrorMessage();
     input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;

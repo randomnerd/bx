@@ -38,24 +38,24 @@ BuySell = React.createClass({
         <div className={"ui small segment" + (this.props.direction=="buy"?" green":" red")} >
 
           <Formsy.Form className="ui form" onValidSubmit={this.goDeal} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
-            <div className="two fields">
-              <Semantic.Input name="amount" label="Amount" icon="money" value={this.state.amount!=0?(parseFloat(this.state.amount)).toFixed(8):"0"} placeholder="0.0000" ref="amount" validations="isNumeric" labeled labelName={this.props.currency} onChg={this.changeAmount} />
-              <Semantic.Input name="price" label="Price" icon="shop" value={this.state.price!=0?(parseFloat(this.state.price)).toFixed(8):"0"} placeholder="0.0000" ref="price" validations="isNumeric" labeled labelName="BTC" onChg={this.changePrice} />
-            </div>
+
+            <Semantic.Input className="nomargin" name="amount" label="Amount" icon="money" value={this.state.amount!=0?(parseFloat(this.state.amount)).toFixed(8):"0"} placeholder="0.0000" ref="amount" validations="isNumeric" labeled labelName={this.props.currency} onChg={this.changeAmount} />
+            <Semantic.Input name="price" label="Price" icon="shop" value={this.state.price!=0?(parseFloat(this.state.price)).toFixed(8):"0"} placeholder="0.0000" ref="price" validations="isNumeric" labeled labelName="BTC" onChg={this.changePrice} />
+
           </Formsy.Form>
         </div>
-        <div className={"ui small attached segment" + (this.props.direction=="buy"?" green":" red")} >
-          <div className="ui label">
-            <i className="money icon"></i>
-            Total:
-            <a className="detail">{(parseFloat(this.state.amount*this.state.price)).toFixed(8)}</a>
+
+          <div className="ui horizontal segments">
+            <div className={"ui small segment" + (this.props.direction=="buy"?" green":" red")}>
+              <p><strong>Total:</strong>
+              {(parseFloat(this.state.amount*this.state.price)).toFixed(8)}</p>
+            </div>
+            <div className={"ui small segment" + (this.props.direction=="buy"?" green":" red")}>
+              <strong>Fee:</strong>
+              {(parseFloat(this.state.amount*this.state.price*0.002)).toFixed(8)}
+            </div>
           </div>
-          <div className="ui label">
-            <i className="money icon"></i>
-            Fee:
-            <a className="detail">{(parseFloat(this.state.amount*this.state.price*0.002)).toFixed(8)}</a>
-          </div>
-        </div>
+
         <button className={"ui fluid bottom attached button"+ (this.props.direction=="buy"?" green":" red")}>{this.props.direction=="buy"?"Buy":"Sell"} {this.props.currency}</button>
       </div>
     );
