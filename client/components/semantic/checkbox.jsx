@@ -11,6 +11,7 @@ Semantic.Checkbox = React.createClass({
 
   componentDidMount() {
     var $that=this;
+    this.props.isChecked?$(this.getDOMNode()).find('.ui.checkbox').checkbox('check'):false;
     $(this.getDOMNode()).find('.ui.checkbox').checkbox({
       onChecked: function() {
         $that.setValue(1);

@@ -1,5 +1,16 @@
 CurrenciesAdmin = React.createClass({
   mixins: [ReactMeteorData],
+  delCurr(event) {
+    if (confirm("Remove currency?")) {
+      Meteor.call('currrency_remove',$(event.currentTarget).attr('data-del'),function(error, result){
+				if(result){
+					this.setState({errorMessage: err.message});
+				}else{
+					FlowRouter.go('/admin/currencies');
+				}
+			});
+    }
+  },
   getMeteorData() {
     return {
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
@@ -15,10 +26,10 @@ CurrenciesAdmin = React.createClass({
           <td>{curr.published ? 'true' : 'false'}</td>
           <td className="right aligned collapsing">
             <div className="ui tiny icon buttons">
-              <div className="ui positive button" onClick={this.delCurr}>
+              <a className="ui positive button" href={"/admin/currencies/edit/" + curr.shortName}>
                 <i className="write icon"></i>
-              </div>
-              <div className="ui negative button" onClick={this.editCurr}>
+              </a>
+              <div className="ui negative button" onClick={this.delCurr} data-del={curr._id}>
                 <i className="remove icon"></i>
               </div>
             </div>

@@ -1,36 +1,59 @@
 CurrencyForm = React.createClass({
+  mixins: [ReactMeteorData],
   getInitialState() {
     return {
       errorMessage: null,
-      allowSubmit: false
+      allowSubmit: false,
+      published:''
     };
   },
 
   newCurr(event) {
     var {name, shortName,published} = this.refs.curr.getCurrentValues();
-    Currencies.insert({name: name, shortName: shortName, published:published}, (err) => {
-      if (err) {
+
+    Meteor.call('currrency_add',{name: name, shortName: shortName, published:published},function(error, result){
+      if(result){
         this.setState({errorMessage: err.message});
-      } else {
-        FlowRouter.go('/admin/currencies')
+      }else{
+        FlowRouter.go('/admin/currencies');
+      }
+    });
+
+  },
+  saveCurr(event) {
+    //console.log(this.refs.curr.getCurrentValues())
+    var currVals = this.refs.curr.getCurrentValues();
+    Meteor.call('currrency_update',this.data.currency._id,currVals,function(error, result){
+      if(result){
+        this.setState({errorMessage: err.message});
+      }else{
+        FlowRouter.go('/admin/currencies');
       }
     });
   },
-  saveCurr(event) {
-    this.setState({amount: event.currentTarget.value});
+  getMeteorData() {
+    return {
+      currency: Currencies.findOne({shortName:this.props.current})
+    }
+  },
+  currentVal(what) {
+
+    return this.data.currency?this.data.currency[what]:''
+
   },
   allowSubmit() { this.setState({allowSubmit: true}) },
   disallowSubmit() { this.setState({allowSubmit: false}) },
   render() {
+    this.published=this.currentVal('published')?"checked":false
     return (
       <div>
         <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
-          <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required />
-          <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required />
+          <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required value={this.currentVal('name')} />
+          <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required value={this.currentVal('shortName')} />
           <div className="two fields">
-            <Semantic.Checkbox name="published" label="Published" />
+            <Semantic.Checkbox name="published" label="Published" isChecked={this.published} />
             <div className="field">
-              <a className="ui blue labeled right aligned icon button" onClick={this.newCurr}>
+              <a className="ui blue labeled right aligned icon button" onClick={this.props.current?this.saveCurr:this.newCurr}>
                 <i className="plus icon" />
                 Save currency
               </a>
