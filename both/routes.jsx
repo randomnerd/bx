@@ -42,11 +42,38 @@ adminRoutes.route('/currencies/new', {
   }
 });
 
-adminRoutes.route('/currencies/edit/:_id', {
+adminRoutes.route('/currencies/edit/:shortName', {
   subscriptions() {
     this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
   },
+  action(params) {
+    ReactLayout.render(AdminLayout, { content: <CurrencyForm current={params.shortName} />  })
+  }
+});
+
+adminRoutes.route('/tradepairs', {
+  subscriptions() {
+    this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
+  },
   action() {
-    ReactLayout.render(AdminLayout, { content: <CurrencyForm />,  })
+    ReactLayout.render(AdminLayout, { content: <TradePairAdmin /> })
+  }
+});
+
+adminRoutes.route('/tradepairs/new', {
+  subscriptions() {
+    this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
+  },
+  action() {
+    ReactLayout.render(AdminLayout, { content: <TradePairForm k={Math.random()} /> })
+  }
+});
+
+adminRoutes.route('/tradepairs/edit/:shortName', {
+  subscriptions() {
+    this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
+  },
+  action(params) {
+    ReactLayout.render(AdminLayout, { content: <TradePairForm current={params.shortName} />  })
   }
 });
