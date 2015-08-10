@@ -47,16 +47,24 @@ CurrencyForm = React.createClass({
     this.published=this.currentVal('published')?"checked":false
     return (
       <div>
+        
         <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
+          <div className="field">
+            <a className="ui blue labeled icon button" href="/admin/currencies">
+              <i className="arrow left icon" />
+              Back
+            </a>
+          </div>
           <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required value={this.currentVal('name')} />
           <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required value={this.currentVal('shortName')} />
           <div className="two fields">
             <Semantic.Checkbox name="published" label="Published" isChecked={this.published} />
             <div className="field">
-              <a className="ui blue labeled right aligned icon button" onClick={this.props.current?this.saveCurr:this.newCurr}>
-                <i className="plus icon" />
+              <a className="ui positive labeled right aligned icon button" onClick={this.props.current?this.saveCurr:this.newCurr}>
+                <i className="checkmark icon" />
                 Save currency
               </a>
+
             </div>
           </div>
         </Formsy.Form>
