@@ -11,6 +11,9 @@ FlowRouter.route('/pair/:pair_id', {
 });
 
 FlowRouter.route('/u/wallets', {
+  subscriptions() {
+    this.register('currencies', Meteor.subscribe('currencies'));
+  },
   action() {
     ReactLayout.render(MainLayout, { content: <WalletsPage /> })
   }
