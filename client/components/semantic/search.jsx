@@ -9,27 +9,30 @@ Semantic.Search = React.createClass({
       iconSide: 'left'
     }
   },
+
   changeValue(event) {
     if (this.props.onChg) this.props.onChg(event);
     this.setValue(event.currentTarget.value);
   },
 
+  onSelect(result) {
+    this.setValue(result.title)
+  },
+
+  initSearch(source) {
+    var el = $(this.refs.search.getDOMNode());
+    el.search({source: source, onSelect: this.onSelect});
+  },
+
   componentDidMount() {
-    var $that=this;
-    //alert($(this.getDOMNode()).find('.ui.search').html());
-    $(this.getDOMNode()).find('.ui.search').search({
-      source: this.props.content
-    });
+    this.initSearch(this.props.content)
   },
 
   componentWillReceiveProps(newProps) {
-    $(this.getDOMNode()).find('.ui.search').search({
-      source: newProps.content
-    });
+    this.initSearch(newProps.content)
   },
 
   render() {
-
     classes = [ 'field' ];
     if (this.showRequired())  classes.push('required');
     if (this.showError())     classes.push('error');
@@ -42,7 +45,7 @@ Semantic.Search = React.createClass({
 
     return (
       <div className={classes.join(' ')}>
-        <div className="ui search">
+        <div className="ui search" ref="search">
           {this.props.label ? <label>{this.props.label}</label> : ""}
           { this.props.icon ?
             <div className={"ui " + this.props.iconSide + ' icon ' + (this.props.labeled?'right labeled ':'') +  'input'}>
