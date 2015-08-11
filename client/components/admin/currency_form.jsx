@@ -11,7 +11,7 @@ CurrencyForm = React.createClass({
   newCurr(event) {
     var {name, shortName,published} = this.refs.curr.getCurrentValues();
 
-    Meteor.call('currrency_add',{name: name, shortName: shortName, published:published},function(error, result){
+    Meteor.call('currrency_add',{name: name, shortName: shortName, published:published?true:false},function(error, result){
       if(result){
         this.setState({errorMessage: err.message});
       }else{
@@ -47,7 +47,7 @@ CurrencyForm = React.createClass({
     this.published=this.currentVal('published')?"checked":false
     return (
       <div>
-        
+
         <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
           <div className="field">
             <a className="ui blue labeled icon button" href="/admin/currencies">

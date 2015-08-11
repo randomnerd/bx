@@ -1,9 +1,7 @@
 Meteor.methods({
 
 	currrency_add: function(cur){
-		//doc, doc_number, movement
-		nom.prices=Array(price);
-		Currencies.insert(nom, function (err,id) {
+		Currencies.insert(cur, function (err,id) {
 			if (!err) {
 				return false
 			}else{
