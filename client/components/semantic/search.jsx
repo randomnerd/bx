@@ -1,11 +1,12 @@
 if (typeof Semantic === 'undefined') Semantic = {};
 
-Semantic.Select = React.createClass({
+Semantic.Search = React.createClass({
   mixins: [Formsy.Mixin],
   getDefaultProps() {
     return {
+      icon: 'search',
       type: 'text',
-      iconSide: 'left',
+      iconSide: 'left'
     }
   },
   changeValue(event) {
@@ -21,6 +22,12 @@ Semantic.Select = React.createClass({
     });
   },
 
+  componentWillReceiveProps(newProps) {
+    $(this.getDOMNode()).find('.ui.search').search({
+      source: newProps.content
+    });
+  },
+
   render() {
 
     classes = [ 'field' ];
@@ -31,7 +38,7 @@ Semantic.Select = React.createClass({
 
 
     errorMessage = this.getErrorMessage();
-    input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;
+    input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} className="prompt"/>;
 
     return (
       <div className={classes.join(' ')}>

@@ -4,7 +4,7 @@ TradePairForm = React.createClass({
     return {
       errorMessage: null,
       allowSubmit: false,
-      published:'',
+      published:''
     };
   },
 
@@ -46,17 +46,13 @@ TradePairForm = React.createClass({
   disallowSubmit() { this.setState({allowSubmit: false}) },
 
   currsForSearch() {
-    console.log(this.data.currencies);
-    var currs = [];
-    _.each(this.data.currencies,((curr) => {
-      currs.push({title:curr.shortName, description:curr.name})
-    }));
-    return currs;
+    return this.data.currencies.map((curr) => {
+      return {title:curr.shortName, description:curr.name}
+    });
   },
 
   render() {
-    this.published=this.currentVal('published')?"checked":false
-
+    var published=this.currentVal('published')?"checked":false
 
     //currId: currencyId
     //marketCurrId: currencyId
@@ -66,12 +62,12 @@ TradePairForm = React.createClass({
     return (
       <div>
         <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
-          <Semantic.Select name="currId" icon="search" label="Currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('name')} content={this.currsForSearch()} />
-          <Semantic.Select name="marketCurrId" label="Market currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('name')} content={this.currsForSearch()} />
+          <Semantic.Search name="currId" icon="search" label="Currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('name')} content={this.currsForSearch()} />
+          <Semantic.Search name="marketCurrId" label="Market currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('name')} content={this.currsForSearch()} />
           <Semantic.Input name="buyFee" label="Buy fee" validations="isNumeric" placeholder="Enter name of currency" required value={this.currentVal('name')} />
           <Semantic.Input name="sellFee" label="Sell fee" validations="isNumeric" placeholder="Enter name of currency" required value={this.currentVal('name')} />
           <div className="two fields">
-            <Semantic.Checkbox name="published" label="Published" isChecked={this.published} />
+            <Semantic.Checkbox name="published" label="Published" isChecked={published} />
             <div className="field">
               <a className="ui blue labeled right aligned icon button" onClick={this.props.current?this.saveCurr:this.newCurr}>
                 <i className="plus icon" />
