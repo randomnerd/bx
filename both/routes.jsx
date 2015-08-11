@@ -18,6 +18,14 @@ FlowRouter.route('/u/wallets', {
     ReactLayout.render(MainLayout, { content: <WalletsPage /> })
   }
 });
+FlowRouter.route('/u/wallet/:w_id', {
+  subscriptions() {
+    this.register('currencies', Meteor.subscribe('currencies'));
+  },
+  action() {
+    ReactLayout.render(MainLayout, { content: <WalletPage /> })
+  }
+});
 
 adminRoutes = FlowRouter.group({ prefix: '/admin' });
 

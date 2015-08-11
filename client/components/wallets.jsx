@@ -1,5 +1,5 @@
 WalletsPage = React.createClass({
-
+  mixins: [ReactMeteorData],
   getMeteorData() {
     return {
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
@@ -11,18 +11,16 @@ WalletsPage = React.createClass({
 
         <tr key={item._id}>
           <td className="two wide">0</td>
-          <td className="three wide">{item.currency}</td>
-          <td className="eight wide"><div  className="ui button">Generete</div></td>
-          <td className="three wide">
-            <div className="ui icon buttons">
-              <a className="ui blue button" onClick="">
-                <i className="write icon"></i>
+          <td className="two wide">{item.shortName}</td>
+          <td className="nine wide"><div  className="ui mini button">Generete</div></td>
+          <td className="three wide right aligned">
+            <div className="ui mini buttons">
+              <a className="ui blue button">
                 Withdraw
               </a>
-              <div className="ui button" href={"/wallets/view/" + item._id}>
-                <i className="search icon"></i>
+              <a className="ui button" href={"/u/wallet/" + item._id}>
                 Details
-              </div>
+              </a>
             </div>
           </td>
         </tr>
@@ -38,12 +36,12 @@ WalletsPage = React.createClass({
           <h4>Wallets</h4>
         </div>
         <div className="ui blue segment basic nopaddingtop">
-          <table className="ui selectable very compact very basic striped table nopadding nomargin">
+          <table className="ui selectable very compact very basic striped table nomargin">
             <thead>
               <tr className="lesspadding">
                 <th className="two wide" >Amount</th>
-                <th className="three wide" >Coin</th>
-                <th className="eight wide">Deposit address</th>
+                <th className="two wide" >Coin</th>
+                <th className="nine wide">Deposit address</th>
                 <th className="three wide">Actions</th>
               </tr>
             </thead>
