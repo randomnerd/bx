@@ -62,6 +62,7 @@ adminRoutes.route('/tradepairs', {
 
 adminRoutes.route('/tradepairs/new', {
   subscriptions() {
+    this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
     this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
   },
   action() {
@@ -71,6 +72,7 @@ adminRoutes.route('/tradepairs/new', {
 
 adminRoutes.route('/tradepairs/edit/:shortName', {
   subscriptions() {
+    this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
     this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
   },
   action(params) {

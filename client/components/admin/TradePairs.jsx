@@ -25,13 +25,14 @@ TradePairAdmin = React.createClass({
     return this.data.TradePairs.map((pair) => {
       return (
         <tr key={pair._id}>
-          <td>{pair.name}</td>
-          <td>{pair.shortName}</td>
-          <td>{pair.status}</td>
+          <td>{pair.currId}</td>
+          <td>{pair.marketCurrId}</td>
+          <td>{pair.buyFee}</td>
+          <td>{pair.sellFee}</td>
           <td>{pair.published ? 'true' : 'false'}</td>
           <td className="right aligned collapsing">
             <div className="ui tiny icon buttons">
-              <a className="ui positive button" href={"/admin/tradepairs/edit/" + pair.shortName}>
+              <a className="ui positive button" href={"/admin/tradepairs/edit/" + pair._id}>
                 <i className="write icon"></i>
               </a>
               <div className="ui negative button" onClick={pair.delCurr} data-del={pair._id}>
@@ -53,10 +54,11 @@ TradePairAdmin = React.createClass({
         <table className="ui compact table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Short name</th>
-              <th>Status</th>
-              <th>Public</th>
+              <th>Currency</th>
+              <th>Market currency</th>
+              <th>Buy fee</th>
+              <th>Sell fee</th>
+              <th>Published</th>
               <th>Action</th>
             </tr>
           </thead>

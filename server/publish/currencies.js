@@ -1,6 +1,6 @@
 Meteor.startup(function() {
   Meteor.publish('currencies', function () {
-    return Currencies.find({public: true});
+    return Currencies.find({published: true});
   });
 
   Meteor.publish('currenciesAdmin', function () {
