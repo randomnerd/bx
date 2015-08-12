@@ -10,8 +10,12 @@ Semantic.Select = React.createClass({
     }
   },
 
+  onChange(result) {
+    this.setValue(result)
+  },
+
   componentDidMount() {
-    $(this.refs.select.getDOMNode()).dropdown();
+    $(this.refs.select.getDOMNode()).dropdown({onChange: (value)=>this.onChange(value)});
   },
 
   renderOptions(){
@@ -36,7 +40,8 @@ Semantic.Select = React.createClass({
     return (
       <div className={classes.join(' ')}>
         {this.props.label ? <label>{this.props.label}</label> : ""}
-        <select className="ui search dropdown" ref="select">
+        <select {...this.props} className="ui search dropdown" ref="select">
+          <option key="0" value="">{this.props.placeholder}</option>
           {this.renderOptions()}
         </select>
       </div>
