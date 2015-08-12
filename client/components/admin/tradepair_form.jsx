@@ -62,6 +62,12 @@ TradePairForm = React.createClass({
     return (
       <div>
         <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='curr'>
+          <div className="field">
+            <a className="ui blue labeled icon button" href="/admin/tradepairs">
+              <i className="arrow left icon" />
+              Back
+            </a>
+          </div>
           <Semantic.Select name="currId" label="Currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('currId')} content={this.currsForSearch()} />
           <Semantic.Select name="marketCurrId" label="Market currency" validations="minLength:3" placeholder="Select currency" required value={this.currentVal('marketCurrId')} content={this.currsForSearch()} />
           <Semantic.Input name="buyFee" label="Buy fee" validations="isNumeric" placeholder="Enter name of currency" required value={this.currentVal('buyFee')} />
@@ -69,7 +75,7 @@ TradePairForm = React.createClass({
           <div className="two fields">
             <Semantic.Checkbox name="published" label="Published" isChecked={published} />
             <div className="field">
-              <a className="ui blue labeled right aligned icon button" onClick={this.props.current?this.savePair:this.newPair}>
+              <a className="ui positive labeled right aligned icon button" onClick={this.props.current?this.savePair:this.newPair}>
                 <i className="checkmark icon" />
                 Save pair
               </a>
