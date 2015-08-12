@@ -12,7 +12,7 @@ WalletsPage = React.createClass({
         <tr key={item._id}>
           <td className="two wide">0</td>
           <td className="two wide">{item.shortName}</td>
-          <td className="nine wide"><div  className="ui mini button">Generete</div></td>
+          <td className="nine wide"><div  className="ui mini button">Generate</div></td>
           <td className="three wide right aligned">
             <div className="ui mini buttons">
               <a className="ui blue button">
@@ -35,7 +35,7 @@ WalletsPage = React.createClass({
         <div className="ui secondary segment">
           <h4>Wallets</h4>
         </div>
-        <div className="ui blue segment basic nopaddingtop">
+        <div className="ui small blue segment">
           <table className="ui selectable very compact very basic striped table nomargin">
             <thead>
               <tr className="lesspadding">
