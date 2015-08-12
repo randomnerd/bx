@@ -5,28 +5,33 @@ TradePairAdmin = React.createClass({
   //published: boolean
   //buyFee: float
   //sellFee: float
-  delCurr(event) {
+  delPair(event) {
     if (confirm("Remove currency?")) {
-      Meteor.call('traidpair_remove',$(event.currentTarget).attr('data-del'),function(error, result){
+      Meteor.call('tradepair_remove',$(event.currentTarget).attr('data-del'),function(error, result){
 				if(result){
 					this.setState({errorMessage: err.message});
 				}else{
-					FlowRouter.go('/admin/currencies');
+
 				}
 			});
     }
   },
+  currName(id){
+    var curr=_.findWhere(this.data.currencies,{_id:id});
+    return curr?curr.shortName:''
+  },
   getMeteorData() {
     return {
-      TradePairs: TradePairs.find({}, {sort: {name: 1}}).fetch()
+      TradePairs: TradePairs.find({}, {sort: {name: 1}}).fetch(),
+      currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
     }
   },
   renderPairsList() {
     return this.data.TradePairs.map((pair) => {
       return (
         <tr key={pair._id}>
-          <td>{pair.currId}</td>
-          <td>{pair.marketCurrId}</td>
+          <td>{this.currName(pair.currId)}</td>
+          <td>{this.currName(pair.marketCurrId)}</td>
           <td>{pair.buyFee}</td>
           <td>{pair.sellFee}</td>
           <td>{pair.published ? 'true' : 'false'}</td>
@@ -35,7 +40,7 @@ TradePairAdmin = React.createClass({
               <a className="ui positive button" href={"/admin/tradepairs/edit/" + pair._id}>
                 <i className="write icon"></i>
               </a>
-              <div className="ui negative button" onClick={pair.delCurr} data-del={pair._id}>
+              <div className="ui negative button" onClick={this.delPair} data-del={pair._id}>
                 <i className="remove icon"></i>
               </div>
             </div>

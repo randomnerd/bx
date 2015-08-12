@@ -31,10 +31,8 @@ Meteor.methods({
 	},
 
 
-  traidpair_add: function(cur){
-    //doc, doc_number, movement
-    nom.prices=Array(price);
-    TradePairs.insert(nom, function (err,id) {
+  tradepair_add: function(pair){
+    TradePairs.insert(pair, function (err,id) {
       if (!err) {
         return false
       }else{
@@ -42,8 +40,8 @@ Meteor.methods({
       }
     });
   },
-  traidpair_update: function(id,cur){
-    TradePairs.update(id,{$set:cur}, function (err) {
+  tradepair_update: function(id,pair){
+    TradePairs.update(id,{$set:pair}, function (err) {
       if (!err) {
         return false
       }else{
@@ -53,7 +51,7 @@ Meteor.methods({
   },
 
 
-  traidpair_remove: function(id){
+  tradepair_remove: function(id){
     TradePairs.remove(id, function (err) {
       if (!err) {
         return false
