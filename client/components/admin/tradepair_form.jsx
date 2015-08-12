@@ -20,26 +20,26 @@ TradePairForm = React.createClass({
     });
 
   },
-  saveCurr(event) {
+  savePair(event) {
     //console.log(this.refs.curr.getCurrentValues())
-    var currVals = this.refs.curr.getCurrentValues();
-    Meteor.call('traidpair_update',this.data.TradePairs._id,currVals,function(error, result){
+    var {currId, marketCurrId, buyFee, sellFee, published} = this.refs.curr.getCurrentValues();
+    Meteor.call('tradepair_update',this.data.tradePairs._id,{currId: currId, marketCurrId: marketCurrId, buyFee:buyFee, sellFee:sellFee, published:published?true:false},function(error, result){
       if(result){
         this.setState({errorMessage: err.message});
       }else{
-        FlowRouter.go('/admin/currencies');
+        FlowRouter.go('/admin/tradepairs');
       }
     });
   },
   getMeteorData() {
     return {
-      tradePairs: TradePairs.findOne({shortName:this.props.current}),
+      tradePairs: TradePairs.findOne(this.props.current),
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
     }
   },
   currentVal(what) {
 
-    return this.data.TradePairs?this.data.tradePairs[what]:''
+    return this.data.tradePairs?this.data.tradePairs[what]:''
 
   },
   allowSubmit() { this.setState({allowSubmit: true}) },

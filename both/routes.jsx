@@ -82,12 +82,12 @@ adminRoutes.route('/tradepairs/new', {
   }
 });
 
-adminRoutes.route('/tradepairs/edit/:shortName', {
+adminRoutes.route('/tradepairs/edit/:p_id', {
   subscriptions() {
     this.register('currenciesAdmin', Meteor.subscribe('currenciesAdmin'));
     this.register('tradepairsAdmin', Meteor.subscribe('tradepairsAdmin'));
   },
   action(params) {
-    ReactLayout.render(AdminLayout, { content: <TradePairForm current={params.shortName} />  })
+    ReactLayout.render(AdminLayout, { content: <TradePairForm current={params.p_id} />  })
   }
 });
