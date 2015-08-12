@@ -35,6 +35,7 @@ Semantic.Select = React.createClass({
 
     return (
       <div className={classes.join(' ')}>
+        {this.props.label ? <label>{this.props.label}</label> : ""}
         <select className="ui search dropdown" ref="select">
           {this.renderOptions()}
         </select>
