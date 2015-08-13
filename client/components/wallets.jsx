@@ -2,22 +2,31 @@ WalletsPage = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
+      currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
+      wallets: Wallets.find({}, {sort: {createdAt: -1}}).fetch()
     }
   },
   newWallet(item) {
     if (!Meteor.user()) { return }
     Meteor.call('jobs/wallet/newWallet', item._id)
   },
+  getAddress(currId) {
+    if (!this.data.wallets) return;
+    var wallet = _.findWhere(this.data.wallets, {currId: currId});
+    return wallet && wallet.address;
+  },
   renderWalletItems() {
     return this.data.currencies.map((item) => {
+      var address = this.getAddress(item._id);
       return  (
 
         <tr key={item._id}>
           <td className="two wide">0</td>
           <td className="two wide">{item.shortName}</td>
           <td className="nine wide">
-            <div className="ui mini button" onClick={this.newWallet.bind(this, item)}>Generate</div>
+            { address ?
+              address :
+              <div className="ui mini button" onClick={this.newWallet.bind(this, item)}>Generate</div> }
           </td>
           <td className="three wide right aligned">
             <div className="ui mini buttons">

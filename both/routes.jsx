@@ -12,6 +12,7 @@ FlowRouter.route('/pair/:pair_id', {
 
 FlowRouter.route('/u/wallets', {
   subscriptions() {
+    this.register('wallets', Meteor.subscribe('wallets'));
     this.register('currencies', Meteor.subscribe('currencies'));
   },
   action() {
