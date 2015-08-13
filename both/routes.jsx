@@ -23,7 +23,7 @@ FlowRouter.route('/u/wallet/:w_id', {
     this.register('currencies', Meteor.subscribe('currencies'));
   },
   action(params) {
-    ReactLayout.render(MainLayout, { content: <WalletPage current={params.w_id} /> })
+    ReactLayout.render(MainLayout, { content: <TransactionsPage current={params.w_id} /> })
   }
 });
 

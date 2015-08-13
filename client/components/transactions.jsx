@@ -1,4 +1,4 @@
-WalletPage = React.createClass({
+TransactionsPage = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
