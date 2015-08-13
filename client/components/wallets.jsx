@@ -5,6 +5,10 @@ WalletsPage = React.createClass({
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
     }
   },
+  newWallet(item) {
+    if (!Meteor.user()) { return }
+    Meteor.call('jobs/wallet/newWallet', item._id)
+  },
   renderWalletItems() {
     return this.data.currencies.map((item) => {
       return  (
@@ -12,7 +16,9 @@ WalletsPage = React.createClass({
         <tr key={item._id}>
           <td className="two wide">0</td>
           <td className="two wide">{item.shortName}</td>
-          <td className="nine wide"><div  className="ui mini button">Generate</div></td>
+          <td className="nine wide">
+            <div className="ui mini button" onClick={this.newWallet.bind(this, item)}>Generate</div>
+          </td>
           <td className="three wide right aligned">
             <div className="ui mini buttons">
               <a className="ui blue button">
