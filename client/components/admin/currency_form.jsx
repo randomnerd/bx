@@ -38,7 +38,7 @@ CurrencyForm = React.createClass({
   },
   currentVal(what) {
 
-    return this.data.currency?this.data.currency[what]:''
+    return this.data.currency ? this.data.currency[what] : ''
 
   },
   allowSubmit() { this.setState({allowSubmit: true}) },
@@ -60,7 +60,7 @@ CurrencyForm = React.createClass({
           <div className="two fields">
             <Semantic.Checkbox name="published" label="Published" isChecked={this.published} />
             <div className="field">
-              <a className="ui positive labeled right aligned icon button" onClick={this.props.current?this.saveCurr:this.newCurr}>
+              <a className="ui positive labeled right aligned icon button" onClick={this.props.current ? this.saveCurr : this.newCurr}>
                 <i className="checkmark icon" />
                 Save currency
               </a>

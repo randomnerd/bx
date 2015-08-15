@@ -47,7 +47,7 @@ TradePairForm = React.createClass({
 
   currsForSearch() {
     return this.data.currencies.map((curr) => {
-      return {_id:curr._id,title:curr.shortName, description:curr.name}
+      return {_id:curr._id, title:curr.shortName, description:curr.name}
     });
   },
 
@@ -75,7 +75,7 @@ TradePairForm = React.createClass({
           <div className="two fields">
             <Semantic.Checkbox name="published" label="Published" isChecked={published} />
             <div className="field">
-              <a className="ui positive labeled right aligned icon button" onClick={this.props.current?this.savePair:this.newPair}>
+              <a className="ui positive labeled right aligned icon button" onClick={this.props.current ? this.savePair : this.newPair}>
                 <i className="checkmark icon" />
                 Save pair
               </a>
