@@ -8,6 +8,7 @@ Semantic.Input = React.createClass({
       iconSide: 'left'
     }
   },
+
   changeValue(event) {
     if (this.props.onChg) this.props.onChg(event);
     this.setValue(event.currentTarget.value);
@@ -28,12 +29,17 @@ Semantic.Input = React.createClass({
       <div className={classes.join(' ')}>
       {this.props.label ? <label>{this.props.label}</label> : ""}
         { this.props.icon ?
-          <div className={"ui " + this.props.iconSide + ' icon ' + (this.props.labeled?'right labeled ':'') +  'input'}>
+          <div className={"ui " + this.props.iconSide + ' icon ' + (this.props.labeled?'right labeled ':'') + (this.props.action?'action ':'') +  'input'}>
             <i className={"icon " + this.props.icon} />
             {input}
             {this.props.labeled ?
               <div className="ui label">
                 {this.props.labelName}
+              </div>
+            : ""}
+            {this.props.action ?
+              <div className="ui positive button" onClick="{this.action}">
+                {this.props.buttonName}
               </div>
             : ""}
           </div>

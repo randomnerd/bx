@@ -28,6 +28,24 @@ FlowRouter.route('/u/wallet/:w_id', {
   }
 });
 
+FlowRouter.route('/u/settings', {
+  subscriptions() {
+    //this.register('currencies', Meteor.subscribe('currencies'));
+  },
+  action() {
+    ReactLayout.render(MainLayout, { content: <SettingsPage /> })
+  }
+});
+
+FlowRouter.route('/u/password', {
+  subscriptions() {
+    //this.register('currencies', Meteor.subscribe('currencies'));
+  },
+  action() {
+    ReactLayout.render(MainLayout, { content: <PasswordPage /> })
+  }
+});
+
 adminRoutes = FlowRouter.group({ prefix: '/admin' });
 
 adminRoutes.route('/', {
