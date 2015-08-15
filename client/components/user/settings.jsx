@@ -26,7 +26,7 @@ SettingsPage = React.createClass({
         </div>
         <div className="ui small blue segment">
           <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
-            <Semantic.Input name="chat_name" icon="user" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" action={this.saveName()} buttonName="Save" required />
+            <Semantic.Input name="chat_name" icon="user" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" action={this.saveName()} actionButton buttonName="Save" required />
           </Formsy.Form>
         </div>
         <div className="ui small blue segment">
@@ -36,7 +36,7 @@ SettingsPage = React.createClass({
             <Semantic.Input name="confirm_pass" label="Confirm new password" validations="minLength:3" placeholder="Enter new password" required />
 
             <div className="field">
-              <a className="ui positive labeled right aligned icon button" onClick={this.twoFactorAuth}>
+              <a className="ui positive labeled icon button" onClick={this.twoFactorAuth()}>
                 <i className="checkmark icon" />
                 Save currency
               </a>
