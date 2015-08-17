@@ -31,15 +31,7 @@
   margin-right: 0;
 }
 
-.segment .right.aligned{
-  float: right;
-  margin-right: 0;
-}
 
-.segment .left.aligned{
-  float: left;
-  margin-right: 0;
-}
 
 .segment.small {
   padding: 0.5em;
