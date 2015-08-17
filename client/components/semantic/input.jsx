@@ -28,9 +28,9 @@ Semantic.Input = React.createClass({
     return (
       <div className={classes.join(' ')}>
       {this.props.label ? <label>{this.props.label}</label> : ""}
-        { this.props.icon ?
-          <div className={"ui " + this.props.iconSide + ' icon ' + (this.props.labeled?'right labeled ':'') + (this.props.actionButton?'action ':'') +  'input'}>
-            <i className={"icon " + this.props.icon} />
+        { this.props.icon||this.props.labeled||this.props.actionButton ?
+          <div className={"ui " + (this.props.icon? this.props.iconSide + ' icon ':'') + (this.props.labeled?' right labeled ':'') + (this.props.actionButton?' action ':'') +  'input'}>
+            { this.props.icon ? <i className={"icon " + this.props.icon} /> : '' }
             {input}
             {this.props.labeled ?
               <div className="ui label">
@@ -38,7 +38,7 @@ Semantic.Input = React.createClass({
               </div>
             : ""}
             {this.props.actionButton ?
-              <div className="ui positive button" onClick="{this.props.action()}">
+              <div className="ui positive button" onClick={this.props.buttonAction}>
                 {this.props.buttonName}
               </div>
             : ""}
