@@ -47,3 +47,19 @@ tr.lesspadding th {
 }
 
 .nomargin { margin: 0 !important; }
+
+/* notifications */
+.ui.down.floating{
+  top:1.8em !important;
+  left:75% !important;
+}
+.ui.item.pointer{
+  cursor: pointer;
+}
+.notification.container{
+  position: fixed;
+  right: 15px;
+  top: 55px;
+  width: 350px;
+}
+/* notifications */
