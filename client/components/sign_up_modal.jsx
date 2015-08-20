@@ -16,7 +16,7 @@ SignUpModal = React.createClass({
   },
   signUp() {
     var {email, password} = this.refs.form.getCurrentValues();
-    
+
     Accounts.createUser({email: email, password: password}, (err) => {
       if (err) {
         this.setState({errorMessage: err.message});
@@ -27,9 +27,7 @@ SignUpModal = React.createClass({
   },
   allowSubmit() { this.setState({allowSubmit: true}) },
   disallowSubmit() { this.setState({allowSubmit: false}) },
-  matchConfirm(values, value) {
-    return false;
-  },
+  
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
