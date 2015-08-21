@@ -6,26 +6,7 @@ NotificationShow = React.createClass({
       messages:[]
     };
   },
-  getDefaultProps() {
-    return {
-      messageAccent: {
-        error:' negative', //red
-        accept:' positive', //green
-        warning:' warning', //orange
-        info:' info', //blue
-        chat:' purple',
-        default:false //gray
-      },
-      messagesIcon:{
-        error:' warning sign',
-        accept:' checkmark',
-        warning:' warning circle',
-        info:' info circle',
-        chat:' comment',
-        default:false
-      }
-    };
-  },
+
   getMeteorData() {
     return {
       notifications: Notifications.find({deleted: false}).fetch()
@@ -41,11 +22,11 @@ NotificationShow = React.createClass({
           var mess=this.state.messages
           mess.push(payload.payload.message)
           this.setState({messages: mess});
-          
+
 
       }
       if(payload.actionType=='DEL_NOTIFICATION'){
-        this.setState({messages: _.reject(this.state.messages,(x)=>{return x._id===payload.payload.message})})
+        this.setState({ messages : _.reject( this.state.messages, (x)=>{ return x._id === payload.payload.message } ) })
       }
       if(payload.actionType=='CHANGE_NOTIFICATION'){
         //???
@@ -67,8 +48,8 @@ NotificationShow = React.createClass({
     return (
       <div className="ui item pointer">
         <i className="alarm icon" />
-        {_.size(this.state.messages) ?
-          <div className="down floating ui red circular mini label">{_.size(this.state.messages) }</div>
+        {this.state.messages.length ?
+          <div className="down floating ui red circular mini label">{this.state.messages.length }</div>
           : ""
         }
         <div className="notification container" ref="container">

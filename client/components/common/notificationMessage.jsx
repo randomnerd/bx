@@ -5,8 +5,7 @@ NotificationMessage = React.createClass({
       hidden: true
     };
   },
-  getDefaultProps() {
-    return {
+  types: {
       messageAccent: {
         error:' negative', //red
         accept:' positive', //green
@@ -23,7 +22,6 @@ NotificationMessage = React.createClass({
         chat:' comment',
         default:false
       }
-    };
   },
   getMeteorData() {
     return {
@@ -64,20 +62,20 @@ NotificationMessage = React.createClass({
 
   render() {
     return (
-      <div key={this.props.item._id} className={"ui" + (this.state.hidden ? " hidden" : '') + " message" + (this.props.item.accent?this.props.messageAccent[this.props.item.accent]:'') + " icon"}>
+      <div key={this.props.item._id} className={"ui" + (this.state.hidden ? " hidden" : '') + " small icon message" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}>
         <i className="close icon" onClick={this.delMessage}></i>
         {this.props.item.icon?
-          <i className={this.props.messagesIcon[this.props.item.icon] + " icon"}></i>
+          <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon"}></i>
           :""
         }
         <div className="content">
-          {this.props.item.header?
+          {this.props.item.title?
             <div className="header">
-              {this.props.item.header}
+              {this.props.item.title}
             </div>
             :""
           }
-          <p>{this.props.item.content}</p>
+          <p>{this.props.item.message}</p>
         </div>
       </div>
     )

@@ -10,8 +10,8 @@ Meteor.methods({
   'notifications/del': (_id) =>{
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     Notifications.update(
-      {_id:_id,user_id:Meteor.userId()},
-      {$set:{deleted:true}},
+      {_id:_id,userId:Meteor.userId()},
+      {$set:{ack:true}},
       (err)=>{
         if(err){
           return err
