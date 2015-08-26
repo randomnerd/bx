@@ -1,4 +1,4 @@
-NotificationMessage = React.createClass({
+DropMessage = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -7,10 +7,10 @@ NotificationMessage = React.createClass({
   },
   types: {
       messageAccent: {
-        error:' negative', //red
-        accept:' positive', //green
-        warning:' warning', //orange
-        info:' info', //blue
+        error:' red', //red
+        accept:' green', //green
+        warning:' orange', //orange
+        info:' blue', //blue
         chat:' purple',
         default:false //gray
       },
@@ -30,7 +30,7 @@ NotificationMessage = React.createClass({
   },
   componentDidMount() {
     var $this=this
-    if(this.state.hidden){
+    if(this.state.hidden&&this.state.needShow){
       $(this.getDOMNode()).transition({
         animation  : 'fade',
         onComplete : function() {
@@ -54,7 +54,7 @@ NotificationMessage = React.createClass({
           console.log(error,result)
           this.setState({errorMessage: error.message});
         }else{
-
+          return false
         }
       })
     },500)
@@ -64,22 +64,17 @@ NotificationMessage = React.createClass({
   render() {
     //console.log(this.props.item._id)
     return (
-      <div className={"ui" + (this.state.hidden ? " hidden" : '') + " small icon message" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}>
-        <i className="close icon" onClick={this.delMessage}></i>
-        {this.props.item.icon?
-          <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon"}></i>
-          :""
-        }
-        <div className="content">
+      <a className={"item " + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')} onClick={this.delMessage}>
+
           {this.props.item.title?
-            <div className="header">
+            <h4 className={"ui header" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}>
               {this.props.item.title}
-            </div>
+            </h4>
             :""
           }
           <p>{this.props.item.message}</p>
-        </div>
-      </div>
+
+      </a>
     )
   }
 });

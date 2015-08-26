@@ -7,7 +7,7 @@ MainLayout = React.createClass({
   },
   componentDidMount() {
     Dispatcher.register((payload) => {
-      console.log('new dispatcher event', payload);
+      //console.log('new dispatcher event', payload);
 
       switch (payload.actionType) {
         case 'SHOW_LOGIN_MODAL':

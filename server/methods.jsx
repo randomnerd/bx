@@ -10,7 +10,7 @@ Meteor.methods({
   'notifications/del': (_id) =>{
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     Notifications.update(
-      {_id:_id,userId:Meteor.userId()},
+      {_id: _id, userId: Meteor.userId()},
       {$set:{ack:true}},
       (err)=>{
         if(err){
@@ -20,7 +20,36 @@ Meteor.methods({
         }
       }
     )
+  },
+  'notifications/add': () =>{
+    Notifications.remove({},()=>{
+      var arr=[
+        {userId: Meteor.userId(), type:'accept',title:'Your password changed!', ack: false},
+        {userId: Meteor.userId(), type:'error',title:'Your password changed!',ack: false},
+        {userId: Meteor.userId(), type:'accept',title:'Your password changed!', ack: false},
+        {userId: Meteor.userId(), type:'info',title:'Your password changed!', ack: false},
+        {userId: Meteor.userId(), type:'accept',title:'Your password changed!', ack: false},
+        {userId: Meteor.userId(), type:'chat',title:'Your password changed!',ack: false},
+        {userId: Meteor.userId(), type:'warning',title:'Your password changed!',ack: false},
+        {userId: Meteor.userId(), type:'accept',title:'Your password changed!',ack: false},
+        {userId: Meteor.userId(), type:'accept',title:'Your password changed!',ack: false},
+      ]
+      if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+      for(var i=0; i<10; i++){
+        Notifications.insert(
+          arr[i],
+          (err)=>{
+            if(err){
+              //return err
+            }else {
+              //return false
+            }
+          }
+        )
+      }
+    })
   }
+
 
 
 
