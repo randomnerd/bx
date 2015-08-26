@@ -2,8 +2,15 @@ NotificationMessage = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      hidden: true
+      hidden: true,
+      needShow:true,
+
     };
+  },
+  getDefaultProps(){
+    return {
+      item: {timeout: 5000}
+    }
   },
   types: {
       messageAccent: {
@@ -30,7 +37,8 @@ NotificationMessage = React.createClass({
   },
   componentDidMount() {
     var $this=this
-    if(this.state.hidden){
+    //Dispatcher.dispatch({ actionType: 'CHANGE_NOTIFICATION_TIME' })
+    if(this.state.hidden&&this.state.needShow){
       $(this.getDOMNode()).transition({
         animation  : 'fade',
         onComplete : function() {
@@ -43,21 +51,16 @@ NotificationMessage = React.createClass({
         }
       })
     }
+
   },
   delMessage(){
-    $(this.getDOMNode()).transition('fade')
-
-    Meteor.setTimeout(() => {
-      Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:this.props.item._id } })
-      Meteor.call('notifications/del',this.props.item._id,function(error, result){
-        if(error||result){
-          console.log(error,result)
-          this.setState({errorMessage: error.message});
-        }else{
-
-        }
-      })
-    },500)
+    var $this=this;
+    $(this.getDOMNode()).transition({
+      animation  : 'fade',
+      onComplete : function() {
+        Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
+      }
+    })
   },
 
 
