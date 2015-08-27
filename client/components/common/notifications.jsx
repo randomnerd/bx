@@ -9,15 +9,15 @@ NotificationShow = React.createClass({
     };
   },
   addNotif(){
-    console.log('ok');
-    Meteor.call('notifications/add',function(error, result){
-      if(error||result){
-        console.log(error.message);
-        this.setState({errorMessage: error.message});
-      }else{
-          console.log('added');
-      }
-    })
+    // console.log('ok');
+    // Meteor.call('notifications/add',function(error, result){
+    //   if(error||result){
+    //     console.log(error.message);
+    //     this.setState({errorMessage: error.message});
+    //   }else{
+    //       console.log('added');
+    //   }
+    // })
   },
   getMeteorData() {
     return {
