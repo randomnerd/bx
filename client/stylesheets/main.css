@@ -59,7 +59,7 @@ tr.lesspadding th {
 .notification.container{
   position: fixed;
   right: 15px;
-  top: 55px;
+  bottom: 15px;
   width: 350px;
 }
 /* notifications */

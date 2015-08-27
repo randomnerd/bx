@@ -47,6 +47,7 @@ MainLayout = React.createClass({
         </div>
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
+        <NotificationPopups />
       </div>
     );
   }

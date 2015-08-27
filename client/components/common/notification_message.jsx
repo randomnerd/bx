@@ -4,13 +4,8 @@ NotificationMessage = React.createClass({
     return {
       hidden: true,
       needShow:true,
-
+      closed: false
     };
-  },
-  getDefaultProps(){
-    return {
-      item: {timeout: 5000}
-    }
   },
   types: {
       messageAccent: {
@@ -43,6 +38,7 @@ NotificationMessage = React.createClass({
         animation  : 'fade',
         onComplete : function() {
           $this.setState({hidden: false});
+          $this.setState({needShow: false});
           if($this.props.item.timeout){
             Meteor.setTimeout(() => {
               $this.delMessage()
@@ -55,12 +51,18 @@ NotificationMessage = React.createClass({
   },
   delMessage(){
     var $this=this;
-    $(this.getDOMNode()).transition({
-      animation  : 'fade',
-      onComplete : function() {
-        Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
-      }
-    })
+    if(!this.state.closed){
+      //$this.setState({hidden: true});
+      $(this.getDOMNode()).transition({
+        animation  : 'fade',
+        onComplete : function() {
+          Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
+          $this.setState({closed: true});
+          $this.setState({hidden: true});
+        }
+
+      })
+    }
   },
 
 
@@ -69,10 +71,8 @@ NotificationMessage = React.createClass({
     return (
       <div className={"ui" + (this.state.hidden ? " hidden" : '') + " small icon message" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}>
         <i className="close icon" onClick={this.delMessage}></i>
-        {this.props.item.icon?
-          <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon"}></i>
-          :""
-        }
+        <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon"}></i>
+
         <div className="content">
           {this.props.item.title?
             <div className="header">

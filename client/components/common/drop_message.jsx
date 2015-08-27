@@ -30,19 +30,11 @@ DropMessage = React.createClass({
   },
   componentDidMount() {
     var $this=this
-    if(this.state.hidden&&this.state.needShow){
-      $(this.getDOMNode()).transition({
-        animation  : 'fade',
-        onComplete : function() {
-          $this.setState({hidden: false});
-          if($this.props.item.timeout){
-            Meteor.setTimeout(() => {
-              $this.delMessage()
-            },$this.props.item.timeout)
-          }
-        }
-      })
-    }
+    Dispatcher.register((payload) => {
+      if(payload.actionType=='DEL_ALL_NOTIFICATION'){
+        $this.delMessage()
+      }
+    })
   },
   delMessage(){
     $(this.getDOMNode()).transition('fade')
