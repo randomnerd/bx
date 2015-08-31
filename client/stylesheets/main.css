@@ -62,4 +62,23 @@ tr.lesspadding th {
   bottom: 15px;
   width: 350px;
 }
+
+.item .ui.header .icon{
+  vertical-align: inherit !important;
+
+}
+
+.ui.table td.info, .ui.table tr.info {
+    box-shadow: 0 0 0 #a9d5de inset;
+    background-color: #f8ffff;
+    color: #276f86;
+}
+
+.ui.table td.chat, .ui.table tr.chat {
+    background: #f6e7ff;
+    color: #a333c8 !important;
+}
+
+
+
 /* notifications */

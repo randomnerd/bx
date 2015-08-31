@@ -46,6 +46,15 @@ FlowRouter.route('/u/password', {
   }
 });
 
+FlowRouter.route('/u/notifications', {
+  subscriptions() {
+    this.register('notifications', Meteor.subscribe('notifications'));
+  },
+  action() {
+    ReactLayout.render(MainLayout, { content: <NotificationPage /> })
+  }
+});
+
 adminRoutes = FlowRouter.group({ prefix: '/admin' });
 
 adminRoutes.route('/', {
