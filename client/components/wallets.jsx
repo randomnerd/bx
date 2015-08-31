@@ -2,6 +2,7 @@ WalletsPage = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
+      balances: Balances.find({}).fetch(),
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
       wallets: Wallets.find({}, {sort: {createdAt: -1}}).fetch()
     }
@@ -21,13 +22,20 @@ WalletsPage = React.createClass({
     var wallet = _.findWhere(this.data.wallets, {currId: currId});
     return wallet && wallet.address;
   },
+  getBalance(currId) {
+    if (!this.data.balances) return;
+    let balance = _.findWhere(this.data.balances, {currId: currId});
+    let amount = balance ? balance.amount / Math.pow(10, 8) : 0;
+    return amount.toFixed(8);
+  },
   renderWalletItems() {
     return this.data.currencies.map((item) => {
       var address = this.getAddress(item._id);
+      var balance = this.getBalance(item._id);
       return  (
 
         <tr key={item._id}>
-          <td className="two wide">0</td>
+          <td className="two wide">{balance}</td>
           <td className="two wide">{item.shortName}</td>
           <td className="nine wide">
             { address ?
