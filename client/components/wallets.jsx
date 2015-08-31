@@ -68,7 +68,7 @@ WalletsPage = React.createClass({
             </thead>
           </table>
           <div className="scrollable10rows">
-            <table className="ui selectable very compact very basic striped table">
+            <table className="ui selectable very compact very basic sortable table">
               <tbody>
                 { this.renderWalletItems() }
               </tbody>
