@@ -21,9 +21,9 @@ NotificationShow = React.createClass({
   },
   getMeteorData() {
     return {
-      notifications_new: Notifications.find({ack: false}).fetch(),
-      notifications_now: Notifications.find({ack: false, createdAt: {$gt: new Date(this.state.nowDate)}}).fetch(),
-      notifications: Notifications.find({}, {limit: 10}).fetch()
+      notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
+      notifications_now: Notifications.find({ack: false, createdAt: {$gt: new Date(this.state.nowDate)}}, {sort: {createdAt: -1}}).fetch(),
+      notifications: Notifications.find({}, {limit: 10}, {sort: {createdAt: -1}}).fetch()
     };
   },
   componentDidMount() {
@@ -67,11 +67,19 @@ NotificationShow = React.createClass({
     Dispatcher.dispatch({ actionType: 'DEL_ALL_NOTIFICATION' })
   },
   renderDropMessages(){
-    return this.data.notifications_new.map((item) => {
-      return (
-        <DropMessage key={item._id} item={item} />
-      )
-    });
+    if(this.data.notifications_new.length){
+      return this.data.notifications_new.map((item) => {
+        return (
+          <DropMessage key={item._id} item={item} closable={true} />
+        )
+      })
+    }else{
+      return this.data.notifications.map((item) => {
+        return (
+          <DropMessage key={item._id} item={item} closable={false} />
+        )
+      })
+    }
   },
 
   render() {
@@ -87,10 +95,13 @@ NotificationShow = React.createClass({
           <div className="scrolling menu">
             {this.renderDropMessages()}
           </div>
-          <a className="item" onClick={this.delAllMessages}>
-            Mark all as read
-          </a>
-          <a className="item">
+          {this.data.notifications_new.length ?
+            <a className="item" onClick={this.delAllMessages}>
+              Mark all as read
+            </a>
+            : ""
+          }
+          <a className="item" href="/u/notifications">
             See all notifications
           </a>
         </div>

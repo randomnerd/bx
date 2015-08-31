@@ -2,7 +2,8 @@ DropMessage = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      hidden: true
+      hidden: true,
+      closed: false
     };
   },
   types: {
@@ -32,34 +33,40 @@ DropMessage = React.createClass({
     var $this=this
     Dispatcher.register((payload) => {
       if(payload.actionType=='DEL_ALL_NOTIFICATION'){
-        $this.delMessage()
+        if(!$this.state.closed){
+          $this.delMessage()
+        }
       }
     })
   },
   delMessage(){
-    $(this.getDOMNode()).transition('fade')
-
-    Meteor.setTimeout(() => {
-      Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:this.props.item._id } })
-      Meteor.call('notifications/del',this.props.item._id,function(error, result){
-        if(error||result){
-          console.log(error,result)
-          this.setState({errorMessage: error.message});
-        }else{
-          return false
-        }
-      })
-    },500)
+    var $this=this
+    $(this.getDOMNode()).transition({
+      animation  : 'fade',
+      onComplete : function() {
+        $this.setState({closed: true});
+        Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
+        Meteor.call('notifications/del',$this.props.item._id,function(error, result){
+          if(error||result){
+            console.log(error,result)
+            $this.setState({errorMessage: error.message});
+          }else{
+            return false
+          }
+        })
+      }
+    })
   },
 
 
   render() {
     //console.log(this.props.item._id)
     return (
-      <a className={"item " + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')} onClick={this.delMessage}>
+      <a className={"item " + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')} onClick={this.props.closable?this.delMessage:""}>
 
           {this.props.item.title?
-            <h4 className={"ui header" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}>
+            <h4 className="ui header">
+              <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}></i>
               {this.props.item.title}
             </h4>
             :""
