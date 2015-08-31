@@ -1,0 +1,24 @@
+{
+  "servers": [
+    {
+      "host": "ve4.sickoffice.net",
+      "username": "deploy",
+      "pem": "~/.ssh/id_rsa"
+    }
+  ],
+
+  "setupMongo": false,
+  "setupNode": false,
+  "nodeVersion": "0.10.36",
+  "setupPhantom": false,
+  "enableUploadProgressBar": true,
+  "appName": "bx",
+  "app": "~/Sites/bx",
+
+  "env": {
+    "PORT": 80,
+    "MONGO_URL": "mongodb://localhost/bx",
+    "ROOT_URL": "http://ve4.sickoffice.net"
+  },
+  "deployCheckWaitTime": 15
+}
