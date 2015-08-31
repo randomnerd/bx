@@ -1,3 +1,8 @@
+/*     globals     */
+
+.hidden{display: none !important}
+
+/*     globals     */
 .main.container {
   padding-top: 5em;
 }

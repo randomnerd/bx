@@ -39,7 +39,7 @@ LoginModal = React.createClass({
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />
-
+          <input type="submit" className="hidden" />
         </Formsy.Form>
 
       </Semantic.Modal>

@@ -13,7 +13,7 @@ Semantic.Modal = React.createClass({
     $(this.getDOMNode()).modal({
       detachable: false,
       autofocus: true,
-      closable: false,
+      closable: true,
       onShow: this.props.onVisible,
       onVisible: this.props.onVisible
     });

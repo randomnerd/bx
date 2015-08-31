@@ -27,7 +27,7 @@ SignUpModal = React.createClass({
   },
   allowSubmit() { this.setState({allowSubmit: true}) },
   disallowSubmit() { this.setState({allowSubmit: false}) },
-  
+
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
@@ -41,7 +41,7 @@ SignUpModal = React.createClass({
             ref="password" validations="passwordConfirmationMatch" required />
           <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"
             ref="password_confirm" validations="passwordConfirmationMatch" required/>
-
+          <input type="submit" className="hidden" />
         </Formsy.Form>
       </Semantic.Modal>
     );

@@ -24,7 +24,7 @@ TopMenu = React.createClass({
   },
   renderLoginButtons() {
     return (
-      <div>
+      <div className="right menu">
         <a className="item" onClick={this.showLoginModal}>Log in</a>
         <a className="item" onClick={this.showSignUpModal}>Sign up</a>
       </div>
@@ -36,10 +36,12 @@ TopMenu = React.createClass({
         <div className="ui container">
 
           { this.renderMenuItems() }
-          <div className="right menu">
-            { this.data.user ? <UserTopMenu /> : this.renderLoginButtons() }
-            { this.data.user ? <NotificationShow /> : '' }
-          </div>
+            { this.data.user ?
+              <div className="right menu"><UserTopMenu /><NotificationShow /></div>
+              : this.renderLoginButtons()
+            }
+
+
         </div>
       </div>
     );
