@@ -13,7 +13,7 @@ NotificationPage = React.createClass({
   },
   getMeteorData() {
     return {
-      notifications: Notifications.find({}, {sort: {createdAt: -1}}).fetch()
+      notifications: Notifications.find({}, {limit: 50}, {sort: {createdAt: -1}}).fetch()
     }
   },
   renderNotificationsList() {
