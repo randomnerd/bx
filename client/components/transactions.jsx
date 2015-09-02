@@ -2,8 +2,13 @@ TransactionsPage = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
+      balance: Balances.findOne({currId: this.props.current}),
       currency: Currencies.findOne({_id:this.props.current})
     }
+  },
+  getBalance(currId) {
+    let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
+    return amount.toFixed(8);
   },
   getHistory(){
     return [
@@ -47,7 +52,7 @@ TransactionsPage = React.createClass({
                   <h4>Available</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">123 ANC</h1>
+                  <h1 className="ui header center aligned">{this.getBalance(this.props.current)} {this.data.currency.shortName}</h1>
                 </div>
               </div>
             </div>
@@ -57,7 +62,7 @@ TransactionsPage = React.createClass({
                   <h4>Held for orders</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">123 ANC</h1>
+                  <h1 className="ui header center aligned">123 {this.data.currency.shortName}</h1>
                 </div>
               </div>
             </div>
@@ -67,7 +72,7 @@ TransactionsPage = React.createClass({
                   <h4>Total</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">123 ANC</h1>
+                  <h1 className="ui header center aligned">123 {this.data.currency.shortName}</h1>
                 </div>
               </div>
             </div>
