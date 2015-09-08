@@ -54,6 +54,7 @@ tr.lesspadding th {
 .nomargin { margin: 0 !important; }
 
 /* notifications */
+
 .ui.down.floating{
   top:1.8em !important;
   left:53% !important;
@@ -84,6 +85,21 @@ tr.lesspadding th {
     color: #a333c8 !important;
 }
 
-
-
 /* notifications */
+
+/* seamntic input */
+
+.ui.input[class*="right left action"] > input, .ui.input[class*="left right action"] > input  {
+    border-radius: 0 !important;
+    border-left: medium none;
+    border-right: medium none;
+}
+
+.ui.action.input[class*="right left action"]:first-child,
+.ui.action.input[class*="right left action"] > .buttons:first-child > .button,
+.ui.action.input[class*="right left action"] > .dropdown:first-child
+.ui.action.input[class*="left right action"]:first-child,
+.ui.action.input[class*="left right action"] > .buttons:first-child > .button,
+.ui.action.input[class*="left right action"] > .dropdown:first-child{
+    border-radius: 0.285714rem 0 0 0.285714rem !important;
+}

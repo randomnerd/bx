@@ -28,6 +28,9 @@ WalletsPage = React.createClass({
     let amount = balance ? balance.amount / Math.pow(10, 8) : 0;
     return amount.toFixed(8);
   },
+  showWithdraw(item, event){
+    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL', payload: { currId: item._id } });
+  },
   renderWalletItems() {
     return this.data.currencies.map((item) => {
       var address = this.getAddress(item._id);
@@ -44,7 +47,7 @@ WalletsPage = React.createClass({
           </td>
           <td className="three wide right aligned">
             <div className="ui mini buttons">
-              <a className="ui blue button">
+              <a className={"ui blue button" + (balance>0?'':" disabled")} onClick={this.showWithdraw.bind(this, item)} >
                 Withdraw
               </a>
               <a className="ui button" href={"/u/wallet/" + item._id}>

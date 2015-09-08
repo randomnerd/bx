@@ -2,7 +2,9 @@ MainLayout = React.createClass({
   getInitialState() {
     return {
       showLoginModal: false,
-      showSignUpModal: false
+      showSignUpModal: false,
+      showWithdrawModal: false,
+      withdrawCurr: false
     };
   },
   componentDidMount() {
@@ -26,6 +28,14 @@ MainLayout = React.createClass({
             this.setState({showSignUpModal: false});
             break;
 
+          case 'SHOW_WITHDRAW_MODAL':
+            this.setState({showWithdrawModal: true});
+            this.setState({withdrawCurr: payload.payload.currId});
+            break;
+
+          case 'HIDE_WITHDRAW_MODAL':
+            this.setState({showWithdrawModal: false});
+            break;
       }
     })
   },
@@ -47,6 +57,7 @@ MainLayout = React.createClass({
         </div>
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
+        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} />
         <NotificationPopups />
       </div>
     );
