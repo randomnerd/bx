@@ -6,7 +6,7 @@ LoginModal = React.createClass({
     };
   },
   hide(e) {
-    if (e) e.preventDefault();
+    //if (e) e.preventDefault();
     this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_LOGIN_MODAL'});
   },

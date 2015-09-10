@@ -1,4 +1,4 @@
-WithdrawModal = React.createClass({
+WithdrawAddressModal = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -9,9 +9,7 @@ WithdrawModal = React.createClass({
   },
   getMeteorData() {
     return {
-      balance: Balances.findOne({currId: this.props.current}),
-      currency: Currencies.findOne({_id:this.props.current}),
-      wallet: Wallets.findOne({_id:this.props.current})
+      addresses: wAddressBook.find().fetch()
     }
   },
 
@@ -39,7 +37,7 @@ WithdrawModal = React.createClass({
   hide(e) {
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
-    Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
+    Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
   },
 
   allowSubmit() { this.setState({allowSubmit: true}) },
@@ -47,7 +45,7 @@ WithdrawModal = React.createClass({
 
   render() {
     return (
-      <Semantic.Modal size="small" positiveLabel="Sign up" header={"Withdraw " + (this.data.currency?this.data.currency.name:'')}
+      <Semantic.Modal size="small" positiveLabel="Sign up" header="Addressbook"
         onDeny={this.hide} onPositive={this.hide} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
