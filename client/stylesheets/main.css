@@ -95,11 +95,18 @@ tr.lesspadding th {
     border-right: medium none;
 }
 
-.ui.action.input[class*="right left action"]:first-child,
+
+.ui.action.input[class*="right left action"] > .button:first-child,
 .ui.action.input[class*="right left action"] > .buttons:first-child > .button,
-.ui.action.input[class*="right left action"] > .dropdown:first-child
-.ui.action.input[class*="left right action"]:first-child,
+.ui.action.input[class*="right left action"] > .dropdown:first-child,
+.ui.action.input[class*="left right action"] > .button:first-child,
 .ui.action.input[class*="left right action"] > .buttons:first-child > .button,
 .ui.action.input[class*="left right action"] > .dropdown:first-child{
     border-radius: 0.285714rem 0 0 0.285714rem !important;
+}
+.ui.labeled.input > .label:first-child{
+    border-radius: 0.285714rem 0 0 0.285714rem !important;
+}
+.ui.labeled.input > .label:last-child{
+    border-radius: 0 0.285714rem 0.285714rem 0 !important;
 }

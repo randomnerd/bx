@@ -5,3 +5,4 @@ Transactions = new Mongo.Collection('transactions');
 BalanceChanges = new Mongo.Collection('balance_changes');
 Notifications = new Mongo.Collection('notifications');
 Balances = new Mongo.Collection('balances');
+wAddressBook = new Mongo.Collection('waddressbook');

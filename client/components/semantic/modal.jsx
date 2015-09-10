@@ -6,16 +6,17 @@ Semantic.Modal = React.createClass({
       size: '',
       positiveLabel: 'OK',
       denyLabel: 'Cancel',
-      allowSubmit: true
+      allowSubmit: true,
     };
   },
   componentDidMount() {
     $(this.getDOMNode()).modal({
       detachable: false,
-      autofocus: true,
-      closable: true,
-      onShow: this.props.onVisible,
-      onVisible: this.props.onVisible
+      autofocus:  true,
+      closable:   false,
+      onShow:     this.props.onVisible,
+      onVisible:  this.props.onVisible,
+    //  onHidden:   this.props.onDeny
     });
     $(this.getDOMNode()).modal(this.props.show ? 'show' : 'hide');
   },
@@ -24,7 +25,7 @@ Semantic.Modal = React.createClass({
   },
   render() {
     return (
-      <div className={ this.props.size + " ui modal" }>
+      <div className={ this.props.size + this.props.hide + " ui modal" }>
         { this.props.header ?
           <div className="header">
             {this.props.header}

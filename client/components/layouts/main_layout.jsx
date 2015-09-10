@@ -13,6 +13,7 @@ MainLayout = React.createClass({
 
       switch (payload.actionType) {
         case 'SHOW_LOGIN_MODAL':
+          //console.log('login');
           this.setState({showLoginModal: true});
           break;
 
@@ -21,6 +22,7 @@ MainLayout = React.createClass({
           break;
 
           case 'SHOW_SIGN_UP_MODAL':
+            //console.log('signup');
             this.setState({showSignUpModal: true});
             break;
 
@@ -29,6 +31,7 @@ MainLayout = React.createClass({
             break;
 
           case 'SHOW_WITHDRAW_MODAL':
+            //console.log('withdraw');
             this.setState({showWithdrawModal: true});
             this.setState({withdrawCurr: payload.payload.currId});
             break;

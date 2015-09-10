@@ -16,7 +16,14 @@ SettingsPage = React.createClass({
 
   },
   saveName(){
-
+    console.log('fff')
+  },
+  getAdds(){
+    return {
+      right:{
+        buttons:[{name:"Save",icon:'checkmark',accent:'blue',action:()=>{this.saveName()}}]
+      }
+    }
   },
   render() {
     return (
@@ -26,7 +33,7 @@ SettingsPage = React.createClass({
         </div>
         <div className="ui small blue segment">
           <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
-            <Semantic.Input name="chat_name" icon="user" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" buttonAction={this.saveName} actionButton buttonName="Save" required />
+            <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" adds={this.getAdds()} required />
           </Formsy.Form>
         </div>
         <div className="ui small blue segment">
