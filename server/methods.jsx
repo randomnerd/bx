@@ -69,7 +69,41 @@ Meteor.methods({
         )
       }
     //})
-  }
+  },
+
+  'address/add': function(address){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    address.userId=Meteor.userId()
+    wAddressBook.insert(address, function (err,id) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
+  "address/update": function(id,address){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    wAddressBook.update(id,{$set:address}, function (err) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
+
+
+  'address/remove': function(id){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    wAddressBook.remove(id, function (err) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
 
 
 
