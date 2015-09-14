@@ -18,7 +18,7 @@ WithdrawModal = React.createClass({
   componentDidMount() {
 
   },
-  getAdds(){
+  getAmount(){
     return {
       left:{
         buttons:[{icon:'right arrow',action:()=>{ this.setState({amount:this.getBalance()}) } }],
@@ -27,7 +27,20 @@ WithdrawModal = React.createClass({
       right:{
         labels:[{name:("Your fee: 0.1 " + (this.data.currency?this.data.currency.shortName:'')),icon:'warning'}]
       },
-      pointed:"Your amount"
+      pointed:"Avalable for withdraw"
+    }
+  },
+  getAddressbook(){
+    Dispatcher.dispatch({actionType: 'SHOW_ADDRESSBOOK_MODAL'});
+  },
+  getAddress(){
+    return {
+      left:{
+
+      },
+      right:{
+        buttons:[{name:"Addressbook",action:this.getAddressbook,icon:'user'}]
+      }
     }
   },
   getBalance() {
@@ -39,6 +52,7 @@ WithdrawModal = React.createClass({
   hide(e) {
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
+    this.setState({amount:''})
     Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
   },
 
@@ -54,9 +68,9 @@ WithdrawModal = React.createClass({
         <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
 
           <Semantic.Input name="amount" label="Amount"  placeholder="0.00000000" ref="amount"
-          adds={this.getAdds()} value={this.state.amount} required />
+          adds={this.getAmount()} value={this.state.amount?this.state.amount:(this.props.amount?this.props.amount:'')} required />
 
-          <Semantic.Input name="address" label="Address"  placeholder="Type address here or select from address book" ref="address" required />
+          <Semantic.Input name="address" label="Address" value={this.props.address?this.props.address:''} placeholder="Type address here or select from address book" ref="address" adds={this.getAddress()} required />
           <Semantic.Input name="tfa" label="TFA code" placeholder="Type your TFA code here" ref="tfa" required/>
           <input type="submit" className="hidden" />
         </Formsy.Form>

@@ -4,7 +4,10 @@ MainLayout = React.createClass({
       showLoginModal: false,
       showSignUpModal: false,
       showWithdrawModal: false,
-      withdrawCurr: false
+      withdrawCurr: false,
+      withdrawAddressModal: false,
+      withdrawAddress:'',
+      withdrawAmount:''
     };
   },
   componentDidMount() {
@@ -21,24 +24,39 @@ MainLayout = React.createClass({
           this.setState({showLoginModal: false});
           break;
 
-          case 'SHOW_SIGN_UP_MODAL':
-            //console.log('signup');
-            this.setState({showSignUpModal: true});
-            break;
+        case 'SHOW_SIGN_UP_MODAL':
+          //console.log('signup');
+          this.setState({showSignUpModal: true});
+          break;
 
-          case 'HIDE_SIGN_UP_MODAL':
-            this.setState({showSignUpModal: false});
-            break;
+        case 'HIDE_SIGN_UP_MODAL':
+          this.setState({showSignUpModal: false});
+          break;
 
-          case 'SHOW_WITHDRAW_MODAL':
-            //console.log('withdraw');
-            this.setState({showWithdrawModal: true});
-            this.setState({withdrawCurr: payload.payload.currId});
-            break;
+        case 'SHOW_WITHDRAW_MODAL':
+          //console.log('withdraw');
+          this.setState({showWithdrawModal: true});
+          this.setState({withdrawAmount: payload.payload.amount});
+          this.setState({withdrawAddress: payload.payload.addr});
+          this.setState({withdrawCurr: payload.payload.currId});
+          break;
 
-          case 'HIDE_WITHDRAW_MODAL':
-            this.setState({showWithdrawModal: false});
-            break;
+        case 'HIDE_WITHDRAW_MODAL':
+          this.setState({withdrawAddress: ''});
+          this.setState({withdrawAmount: ''});
+          this.setState({showWithdrawModal: false});
+          break;
+
+        case 'SHOW_ADDRESSBOOK_MODAL':
+          //console.log('withdraw');
+          this.setState({withdrawAddressModal: true});
+          break;
+
+        case 'HIDE_ADDRESSBOOK_MODAL':
+          this.setState({withdrawAddress: payload.payload.addr});
+          this.setState({withdrawAmount: payload.payload.amount});
+          this.setState({withdrawAddressModal: false});
+          break;
       }
     })
   },
@@ -60,7 +78,8 @@ MainLayout = React.createClass({
         </div>
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
-        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} />
+        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
+        <WithdrawAddressModal show={this.state.withdrawAddressModal} />
         <NotificationPopups />
       </div>
     );
