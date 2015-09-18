@@ -10,6 +10,20 @@ FlowRouter.route('/pair/:pair_id', {
   }
 });
 
+FlowRouter.route('/BitIndex', {
+  subscriptions() {
+
+    this.register('BTTC', Meteor.subscribe('BitIndexIndicator_BTTC'));
+    this.register('BTTN', Meteor.subscribe('BitIndexIndicator_BTTN'));
+    this.register('BTPR', Meteor.subscribe('BitIndexIndicator_BTPR'));
+    this.register('BTUA', Meteor.subscribe('BitIndexIndicator_BTUA'));
+
+  },
+  action() {
+    ReactLayout.render(MainLayout, {content: <BitIndex /> });
+  }
+});
+
 FlowRouter.route('/u/wallets', {
   subscriptions() {
     this.register('wallets', Meteor.subscribe('wallets'));
@@ -23,6 +37,7 @@ FlowRouter.route('/u/wallets', {
 FlowRouter.route('/u/wallet/:w_id', {
   subscriptions() {
     this.register('currencies', Meteor.subscribe('currencies'));
+    this.register('transactions', Meteor.subscribe('transactions'));
   },
   action(params) {
     ReactLayout.render(MainLayout, { content: <TransactionsPage current={params.w_id} /> })

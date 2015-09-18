@@ -14,6 +14,7 @@ callback-hook@1.0.4-rc.0
 check@1.0.6-rc.0
 coffeescript@1.0.8-rc.2
 cosmos:browserify@0.5.0
+d3js:d3@3.5.5
 ddp@1.2.1-rc.0
 ddp-client@1.2.1-rc.1
 ddp-common@1.2.1-rc.0
@@ -44,6 +45,7 @@ meteor-base@1.0.1-rc.0
 meteorflux:dispatcher@1.0.4
 minifiers@1.1.6-rc.1
 minimongo@1.0.9-rc.0
+momentjs:moment@2.10.6
 mongo@1.1.1-rc.2
 mongo-id@1.0.1-rc.0
 mrt:later@1.6.1

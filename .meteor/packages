@@ -25,3 +25,6 @@ reload
 random
 ejson
 check
+momentjs:moment
+http
+d3js:d3
