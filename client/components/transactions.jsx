@@ -3,35 +3,33 @@ TransactionsPage = React.createClass({
   getMeteorData() {
     return {
       balance: Balances.findOne({currId: this.props.current}),
-      currency: Currencies.findOne({_id:this.props.current})
+      currency: Currencies.findOne({_id:this.props.current}),
+      history: Transactions.find({currId: this.props.current}, {limit: 30}, {sort: {createdAt: -1}}).fetch()
     }
   },
   getBalance() {
     let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
     return amount.toFixed(8);
   },
-  getHistory(){
-    return [
-      {_id:1,operation_id:104535,direction:true,time:'24.06.1984',details:"Mining reward for block #139968 | 0.00760112 ANC",total:12},
-      {_id:2,operation_id:345356,direction:true,time:'23.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:126},
-      {_id:3,operation_id:356345,direction:true,time:'22.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:15},
-      {_id:4,operation_id:356655,direction:false,time:'21.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:10},
-      {_id:5,operation_id:653465,direction:true,time:'20.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:12},
-      {_id:6,operation_id:345266,direction:true,time:'18.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:7},
-      {_id:7,operation_id:657432,direction:false,time:'13.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:12},
-      {_id:8,operation_id:165436,direction:true,time:'10.06.1984',details:'Mining reward for block #139968 | 0.00760112 ANC',total:32},
-    ]
+  getHeld() {
+    let held = this.data.balance ? this.data.balance.held / Math.pow(10, 8) : 0;
+    return held.toFixed(8);
   },
-  renderWalletItems() {
-    return this.getHistory().map((item) => {
+  getAvalable() {
+    let avalable = this.getBalance()-this.getHeld();
+    return avalable.toFixed(8);
+  },
+
+  renderHistoryItems() {
+    return this.data.history.map((item) => {
       return  (
 
         <tr key={item._id} className={item.direction?"positive":"negative"}>
-          <td className="two wide">{item.operation_id}</td>
-          <td className="two wide">{item.time}</td>
-          <td className="nine wide">{item.details}</td>
-          <td className="three wide right aligned">
-            {item.total}
+          <td className="four wide">{moment(item.createdAt).fromNow()}</td>
+          <td className="five wide">{item.address}</td>
+          <td className="three wide">{item.amount}</td>
+          <td className="four wide right aligned">
+
           </td>
         </tr>
 
@@ -62,7 +60,7 @@ TransactionsPage = React.createClass({
                   <h4>Held for orders</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">123 {this.data.currency?this.data.currency.shortName:''}</h1>
+                  <h1 className="ui header center aligned">{this.getHeld()} {this.data.currency?this.data.currency.shortName:''}</h1>
                 </div>
               </div>
             </div>
@@ -72,7 +70,7 @@ TransactionsPage = React.createClass({
                   <h4>Total</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">123 {this.data.currency?this.data.currency.shortName:''}</h1>
+                  <h1 className="ui header center aligned">{this.getAvalable()} {this.data.currency?this.data.currency.shortName:''}</h1>
                 </div>
               </div>
             </div>
@@ -86,17 +84,17 @@ TransactionsPage = React.createClass({
             <table className="ui selectable very compact very basic striped table nomargin">
               <thead>
                 <tr className="lesspadding">
-                  <th className="two wide" >ID</th>
-                  <th className="two wide" >Time</th>
-                  <th className="nine wide">Details</th>
-                  <th className="three wide">Total balance</th>
+                  <th className="four wide" >Created at</th>
+                  <th className="five wide" >Address</th>
+                  <th className="three wide">Amount</th>
+                  <th className="four wide">Total balance</th>
                 </tr>
               </thead>
             </table>
             <div className="scrollable10rows">
               <table className="ui selectable very compact very basic striped table">
                 <tbody>
-                  { this.renderWalletItems() }
+                  { this.renderHistoryItems() }
                 </tbody>
               </table>
             </div>

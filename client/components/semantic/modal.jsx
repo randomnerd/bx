@@ -25,7 +25,7 @@ Semantic.Modal = React.createClass({
   },
   render() {
     return (
-      <div className={ this.props.size + this.props.hide + " ui modal" }>
+      <div className={ this.props.size + " " + this.props.hide + " ui modal" }>
         { this.props.header ?
           <div className="header">
             {this.props.header}
