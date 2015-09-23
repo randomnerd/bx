@@ -4,11 +4,17 @@ MainLayout = React.createClass({
       showLoginModal: false,
       showSignUpModal: false,
       showWithdrawModal: false,
+      showSidebar: false,
+      sidebarContent:'',
       withdrawCurr: false,
       withdrawAddressModal: false,
       withdrawAddress:'',
       withdrawAmount:''
     };
+  },
+  chatToggle(){
+    this.setState({showSidebar: this.state.showSidebar?false:true});
+    this.setState({ sidebarContent: 'chat' });
   },
   componentDidMount() {
     Dispatcher.register((payload) => {
@@ -57,22 +63,56 @@ MainLayout = React.createClass({
           this.setState({withdrawAmount: payload.payload.amount});
           this.setState({withdrawAddressModal: false});
           break;
+
+        case 'SHOW_SIDEBAR':
+          //console.log('withdraw');
+          this.setState({showSidebar: true});
+          this.chatToggle();
+          //this.setState({sidebarContent: payload.payload.content});
+          break;
+
+        case 'HIDE_SIDEBAR':
+          this.setState({showSidebar: false});
+          break;
       }
     })
   },
+  renderSidebarContent(){
+    switch (this.state.sidebarContent) {
+      case 'chat':
+        return (
+
+            <Chats />
+          
+        )
+        break;
+    }
+  },
   render() {
     return (
-      <div>
-        <TopMenu title="BitExchange"/>
-        <div className="ui main container">
-          <div className="ui grid">
-            <div className="four wide column">
-              <div className="ui fluid vertical menu">
-                <PairBar active={this.props.active} />
-              </div>
+      <div className="body">
+        <Sidebar show={this.state.showSidebar}>
+          {this.renderSidebarContent()}
+        </Sidebar>
+        <div className="pusher">
+          <div className="forsidebar">
+            <div className="ui vertical fluid tabular labeled icon menu">
+              <a className="item active" onClick={this.chatToggle}>
+                <i className="comment icon"></i>
+              </a>
             </div>
-            <div className="twelve wide column">
-              {this.props.content}
+          </div>
+          <TopMenu title="BitExchange"/>
+          <div className="ui main container">
+            <div className="ui grid">
+              <div className="four wide column">
+                <div className="ui fluid vertical menu">
+                  <PairBar active={this.props.active} />
+                </div>
+              </div>
+              <div className="twelve wide column">
+                {this.props.content}
+              </div>
             </div>
           </div>
         </div>
@@ -81,6 +121,7 @@ MainLayout = React.createClass({
         <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
         <WithdrawAddressModal show={this.state.withdrawAddressModal} />
         <NotificationPopups />
+
       </div>
     );
   }

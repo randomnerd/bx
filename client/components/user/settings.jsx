@@ -16,7 +16,16 @@ SettingsPage = React.createClass({
 
   },
   saveName(){
-    console.log('fff')
+    var name = this.refs.chat.getCurrentValues();
+    //console.log(message)
+    Meteor.call('chatname/update',name,(err, result)=>{
+       if(err||result){
+         console.log(err.message)
+       }else{
+
+
+       }
+     });
   },
   getAdds(){
     return {
@@ -33,7 +42,7 @@ SettingsPage = React.createClass({
         </div>
         <div className="ui small blue segment">
           <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
-            <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" adds={this.getAdds()} required />
+            <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" adds={this.getAdds()} required />
           </Formsy.Form>
         </div>
         <div className="ui small blue segment">

@@ -105,7 +105,53 @@ Meteor.methods({
     });
   },
 
+  'chat/add': function(message){
+    //Chat.remove({})
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    message.userId=Meteor.userId()
+    message.userName=Meteor.user().username
+    message.createdAt=new Date()
+    Chat.insert(message, function (err,id) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
+  "chat/update": function(id,address){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    Chat.update(id,{$set:address}, function (err) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
 
+
+  'chat/remove': function(id){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    Chat.remove(id, function (err) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
+
+  "chatname/update": function(name){
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    Meteor.users.update(Meteor.userId(),{$set:{username:name}}, function (err) {
+      if (!err) {
+        return false
+      }else{
+        return err
+      }
+    });
+  },
 
 
 });
