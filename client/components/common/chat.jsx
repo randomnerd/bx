@@ -16,7 +16,7 @@ Chats = React.createClass({
     return {
       mesages: Chat.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
       messages_now: Chat.find({ack: false, createdAt: {$gt: new Date(this.state.nowDate)}}, {sort: {createdAt: -1}}).fetch(),
-      messages_all: Chat.find({$or:[{isPrivate:false},{replyId:Meteor.userId()}]}, {sort: {createdAt: 1}}).fetch()
+      messages_all: Chat.find({ $or : [ {isPrivate : false}, {replyId : Meteor.userId()}, {userId : Meteor.userId()} ] }, {sort: {createdAt: 1}}).fetch()
     };
   },
   writeMessage(){
