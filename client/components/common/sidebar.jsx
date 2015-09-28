@@ -14,7 +14,10 @@ Sidebar = React.createClass({
   componentDidMount() {
     //$this=this;
     $(this.getDOMNode()).sidebar({
-      context: $('.body')
+      context: $('.body'),
+      onHidden:()=>{
+        $('.body').css('overflow-y','auto')
+      }
     });
     $(this.getDOMNode()).sidebar(this.props.show ? 'show' : 'hide');
   },

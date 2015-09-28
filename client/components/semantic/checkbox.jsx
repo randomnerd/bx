@@ -11,6 +11,12 @@ Semantic.Checkbox = React.createClass({
 
   componentDidMount() {
     var $that=this;
+    if(this.props.className!=" disabled"){
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set enabled')
+    }else{
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set disabled')
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck')
+    }
     this.props.isChecked?$(this.getDOMNode()).find('.ui.checkbox').checkbox('check'):false;
     $(this.getDOMNode()).find('.ui.checkbox').checkbox({
       onChecked: function() {
@@ -20,6 +26,17 @@ Semantic.Checkbox = React.createClass({
         $that.setValue(undefined);
       },
     });
+
+  },
+  componentWillReceiveProps(newProps) {
+    var $that=this;
+    //newProps.isChecked?$(this.getDOMNode()).find('.ui.checkbox').checkbox('check'):$(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck');
+    if(newProps.className!=" disabled"){
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set enabled')
+    }else{
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set disabled')
+      $(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck')
+    }
   },
   render() {
     classes = [ 'field' ];

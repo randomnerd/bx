@@ -18,7 +18,7 @@ SettingsPage = React.createClass({
   saveName(){
     var name = this.refs.chat.getCurrentValues();
     //console.log(message)
-    Meteor.call('chatname/update',name,(err, result)=>{
+    Meteor.call('chatname/update',name.chat_name,(err, result)=>{
        if(err||result){
          console.log(err.message)
        }else{

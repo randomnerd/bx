@@ -2,6 +2,39 @@
 #react-root{height: 100%;}
 .hidden{display: none !important}
 
+/*colors*/
+.ui.blue.text{color: #2185d0 !important}
+.ui.red.text{color: ##db2828 !important}
+.ui.orange.text{color: #f2711c !important}
+.ui.yellow.text{color: #fbbd08 !important}
+.ui.olive.text{color: #b5cc18 !important}
+.ui.green.text{color: #21ba45 !important}
+.ui.teal.text{color: #00b5ad !important}
+.ui.violet.text{color: #6435c9 !important}
+.ui.purple.text{color: #a333c8 !important}
+.ui.pink.text{color: #e03997 !important}
+.ui.brown.text{color: #a5673f !important}
+.ui.grey.text{color: #767676 !important}
+.ui.white.text{color: #ffffff !important}
+.ui.black.text{color: #1b1c1d !important}
+
+.ui.markered.text{color: #ffffff !important}
+
+.ui.blue.markered.text{background-color: #2185d0 !important; }
+.ui.red.markered.text{background-color: ##db2828 !important}
+.ui.orange.markered.text{background-color: #f2711c !important}
+.ui.yellow.markered.text{background-color: #fbbd08 !important}
+.ui.olive.markered.text{background-color: #b5cc18 !important}
+.ui.green.markered.text{background-color: #21ba45 !important}
+.ui.teal.markered.text{background-color: #00b5ad !important}
+.ui.violet.markered.text{background-color: #6435c9 !important}
+.ui.purple.markered.text{background-color: #a333c8 !important}
+.ui.pink.markered.text{background-color: #e03997 !important}
+.ui.brown.markered.text{background-color: #a5673f !important}
+.ui.grey.markered.text{background-color: #767676 !important}
+.ui.white.markered.text{background-color: #ffffff !important}
+.ui.black.markered.text{background-color: #1b1c1d !important}
+
 /*     globals     */
 .main.container {
   padding-top: 5em;

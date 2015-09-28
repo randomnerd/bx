@@ -15,6 +15,11 @@ MainLayout = React.createClass({
   chatToggle(){
     this.setState({showSidebar: this.state.showSidebar?false:true});
     this.setState({ sidebarContent: 'chat' });
+    if(!this.state.showSidebar){
+      $('.body').css('overflow-y','hidden')
+    }else{
+      $('.body').css('overflow-y','auto')
+    }
   },
   componentDidMount() {
     Dispatcher.register((payload) => {
@@ -83,7 +88,7 @@ MainLayout = React.createClass({
         return (
 
             <Chats />
-          
+
         )
         break;
     }
@@ -95,7 +100,7 @@ MainLayout = React.createClass({
           {this.renderSidebarContent()}
         </Sidebar>
         <div className="pusher">
-          <div className="forsidebar">
+          <div className="forsidebar above">
             <div className="ui vertical fluid tabular labeled icon menu">
               <a className="item active" onClick={this.chatToggle}>
                 <i className="comment icon"></i>

@@ -11,6 +11,7 @@ Semantic.Modal = React.createClass({
   },
   componentDidMount() {
     $(this.getDOMNode()).modal({
+      context: $('.body'),
       detachable: false,
       autofocus:  true,
       closable:   false,
