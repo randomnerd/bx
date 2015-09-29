@@ -27,10 +27,7 @@ TransactionsPage = React.createClass({
         <tr key={item._id} className={item.direction?"positive":"negative"}>
           <td className="four wide">{moment(item.createdAt).fromNow()}</td>
           <td className="five wide">{item.address}</td>
-          <td className="three wide">{item.amount}</td>
-          <td className="four wide right aligned">
-
-          </td>
+          <td className="three wide">{item.displayAmount()}</td>
         </tr>
 
       );
@@ -39,9 +36,10 @@ TransactionsPage = React.createClass({
   },
 
   render() {
+    let currency = this.data.currency || {};
     return (
       <div>
-        <h1 className="ui header">AnonCoin balance</h1>
+        <h1 className="ui header">{currency.name} balance</h1>
         <div className="ui grid">
           <div className="three column row">
             <div className="column">
@@ -50,7 +48,7 @@ TransactionsPage = React.createClass({
                   <h4>Available</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getBalance()} {this.data.currency?this.data.currency.shortName:''}</h1>
+                  <h1 className="ui header center aligned">{this.getBalance()} {currency.shortName}</h1>
                 </div>
               </div>
             </div>
@@ -60,7 +58,7 @@ TransactionsPage = React.createClass({
                   <h4>Held for orders</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getHeld()} {this.data.currency?this.data.currency.shortName:''}</h1>
+                  <h1 className="ui header center aligned">{this.getHeld()} {currency.shortName}</h1>
                 </div>
               </div>
             </div>
@@ -70,7 +68,7 @@ TransactionsPage = React.createClass({
                   <h4>Total</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getAvalable()} {this.data.currency?this.data.currency.shortName:''}</h1>
+                  <h1 className="ui header center aligned">{this.getAvalable()} {currency.shortName}</h1>
                 </div>
               </div>
             </div>
@@ -87,7 +85,6 @@ TransactionsPage = React.createClass({
                   <th className="four wide" >Created at</th>
                   <th className="five wide" >Address</th>
                   <th className="three wide">Amount</th>
-                  <th className="four wide">Total balance</th>
                 </tr>
               </thead>
             </table>
