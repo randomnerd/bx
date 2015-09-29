@@ -18,7 +18,7 @@
   "env": {
     "PORT": 80,
     "MONGO_URL": "mongodb://localhost/bx",
-    "ROOT_URL": "http://ve1.sickoffice.net"
+    "ROOT_URL": "http://bx.sickoffice.net/"
   },
   "deployCheckWaitTime": 15
 }
