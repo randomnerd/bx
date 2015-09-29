@@ -16,9 +16,9 @@ MainLayout = React.createClass({
     this.setState({showSidebar: this.state.showSidebar?false:true});
     this.setState({ sidebarContent: 'chat' });
     if(!this.state.showSidebar){
-      $('.body').css('overflow-y','hidden')
+      //$('.body').css('overflow-y','hidden')
     }else{
-      $('.body').css('overflow-y','auto')
+      //$('.body').css('overflow-y','auto')
     }
   },
   componentDidMount() {
@@ -99,13 +99,13 @@ MainLayout = React.createClass({
   },
   render() {
     return (
-      <div className="body">
+      <div className="ui inverted newgrey body">
         <Sidebar show={this.state.showSidebar}>
           {this.renderSidebarContent()}
         </Sidebar>
         <div className="pusher">
           <div className="forsidebar above">
-            <div className="ui vertical fluid tabular labeled icon menu">
+            <div className="ui vertical fluid tabular labeled icon inverted newgrey menu">
               <a className="item active" onClick={this.chatToggle}>
                 <i className="comment icon"></i>
               </a>
@@ -115,7 +115,7 @@ MainLayout = React.createClass({
           <div className="ui main container">
             <div className="ui grid">
               <div className="four wide column">
-                <div className="ui fluid vertical menu">
+                <div className="ui fluid vertical inverted newgrey menu">
                   <PairBar active={this.props.active} />
                 </div>
               </div>

@@ -2,6 +2,81 @@
 #react-root{height: 100%;}
 .hidden{display: none !important}
 
+
+/* Semantic new grey */
+
+.ui.inverted.newgrey{
+  background-color: #15232c;
+  color:#fff;
+}
+
+.ui.inverted.newgrey.menu{
+  background-color: #2f3d45;
+  color:#ced2d5;
+}
+.ui.inverted.newgrey.menu .item.active{
+  background-color: rgba(255, 255, 255, 0.15);
+  color:#ced2d5;
+}
+
+.ui.inverted.newgrey .segment{
+  background-color: #1e2b34;
+}
+.ui.inverted.newgrey .ui.table {
+    color: rgba(200, 200, 200, 0.67);
+}
+
+.ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
+    background: rgba(255, 145, 67, 0.2) none repeat scroll 0 0 !important;
+    color: rgba(240, 150, 150, 0.67) !important;
+}
+.ui.inverted.newgrey .ui.table td.positive, .ui.inverted.newgrey .ui.table tr.positive {
+    background: rgba(132, 247, 102, 0.1) none repeat scroll 0 0 !important;
+    color: rgba(150, 240, 150, 0.67) !important;
+}
+.ui.inverted.newgrey .ui.table td.negative:hover, .ui.inverted.newgrey .ui.table tr.negative:hover {
+  background: rgba(255, 145, 67, 0.08) none repeat scroll 0 0 !important;
+}
+.ui.inverted.newgrey .ui.table td.positive:hover, .ui.inverted.newgrey .ui.table tr.positive:hover {
+  background: rgba(132, 247, 102, 0.08) none repeat scroll 0 0 !important;
+}
+
+.ui.inverted.newgrey .ui.form input:not([type]),
+.ui.inverted.newgrey .ui.form input[type="text"],
+.ui.inverted.newgrey .ui.form input[type="email"],
+.ui.inverted.newgrey .ui.form input[type="search"],
+.ui.inverted.newgrey .ui.form input[type="password"],
+.ui.inverted.newgrey .ui.form input[type="date"],
+.ui.inverted.newgrey .ui.form input[type="datetime-local"],
+.ui.inverted.newgrey .ui.form input[type="tel"],
+.ui.inverted.newgrey .ui.form input[type="time"],
+.ui.inverted.newgrey .ui.form input[type="url"],
+.ui.inverted.newgrey .ui.form input[type="number"] {
+    background: rgba(206, 210, 213, 0.05) none repeat scroll 0 0;
+    border: 1px solid rgba(206, 210, 213, 0.15);
+    color: rgba(200, 200, 200, 0.67);
+    transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
+}
+.ui.inverted.newgrey .ui.form input:focus{
+  border-color: rgba(206, 210, 213, 0.35);
+  color: rgba(200, 200, 200, 0.77);
+}
+
+.ui.inverted.newgrey .sidebar{
+  background-color: #2f3d45;
+  color:#ced2d5 ;
+}
+.ui.inverted.newgrey .ui.comments .comment .author, .ui.inverted.newgrey .ui.comments .comment .text{
+  color:#ced2d5 ;
+}
+.ui.inverted.newgrey .ui.comments .comment .metadata {
+  color: rgba(200, 200, 200, 0.2);
+}
+/* Semantic new grey */
+
+
+
+
 /*colors*/
 .ui.blue.text{color: #2185d0 !important}
 .ui.red.text{color: ##db2828 !important}
@@ -159,7 +234,23 @@ tr.lesspadding th {
   z-index: 9999;
 }
 
-.pushable > .pusher{background-color: #fff;}
+.ui.visible.right.sidebar ~ .fixed, .ui.visible.right.sidebar ~ .pusher {
+    padding-left: 260px;
+    transition: padding-left 500ms, transform 500ms ease 0s;
+}
+
+.ui.right.sidebar ~ .fixed, .pushable .pusher {
+    padding-left: 0px;
+    transition: padding-left 500ms, transform 500ms ease 0s;
+}
+
+.ui.menu.fixed {
+    margin: 0 0 -3rem;
+    position: relative;
+    width: 100%;
+    z-index: 101;
+}
+
 
 /* Semantic sidebar */
 

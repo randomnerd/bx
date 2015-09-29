@@ -85,7 +85,7 @@ Chats = React.createClass({
           <div className="comment" key={item._id}>
 
             <div className="content">
-              <a className="author">{item.userName||"noname"}</a>
+              <a className="author" onClick={this.reply.bind(this, item)}>{item.userName||"noname"}</a>
               <div className="metadata">
                 <span className="date">{moment(item.createdAt).fromNow()}</span>
                 <div className={"ui orange text rating" + (item.isPrivate?"":" hidden")}>
@@ -96,9 +96,7 @@ Chats = React.createClass({
                 <strong className={"ui grey text" + (item.replyName?"":" hidden")}>{item.replyName}, </strong>
                 {item.text}
               </div>
-              <div className="actions">
-                <a className="reply" onClick={this.reply.bind(this, item)}>Reply</a>
-              </div>
+              
             </div>
           </div>
         )

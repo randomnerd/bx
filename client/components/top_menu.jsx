@@ -32,7 +32,7 @@ TopMenu = React.createClass({
   },
   render() {
     return (
-      <div className="ui top fixed menu">
+      <div className="ui top fixed inverted newgrey menu">
         <div className="ui container">
 
           { this.renderMenuItems() }
