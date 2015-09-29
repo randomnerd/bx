@@ -8,4 +8,3 @@ npm-debug.log
 docker/nginx/bundle
 docker/meteor/bundle
 .vagrant
-tmp
