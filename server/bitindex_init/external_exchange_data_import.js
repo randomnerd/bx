@@ -19,9 +19,11 @@ Meteor.startup(function() {
   BitIndexIndicator_BTPR._ensureIndex({
     timestamp: 1
   });
+    var root_url = process.env.ROOT_URL;
+
     var parseDate = d3.time.format("%Y-%m-%d").parse;
     console.log('no BitIndexIndicator_BTPR data found, importing...');
-    HTTP.get('http://localhost:3000/BITSTAMPUSDcopy.json', function(err, resp) {
+    HTTP.get(root_url + 'BITSTAMPUSDcopy.json', function(err, resp) {
       var crash_array, first_value, item, lastValue, max_elem, maximum_crash_array, point, _i, _len, _ref;
 
 

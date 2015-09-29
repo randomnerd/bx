@@ -18,8 +18,10 @@ Meteor.startup(function() {
   timestamp: 1
   });
 
+  var root_url = process.env.ROOT_URL;
+
   console.log('no totalBitcoins data found, importing...');
-  HTTP.get('http://localhost:3000/total_bitcoin_circulation.json', function(err, resp) {
+  HTTP.get(root_url + 'total_bitcoin_circulation.json', function(err, resp) {
     var item, lastValue, point, _i, _len, _ref;
     lastValue = 0;
     _ref = resp.data.values;
@@ -50,7 +52,7 @@ Meteor.startup(function() {
      });
 
      console.log('no totalTransactions data found, importing...');
-     HTTP.get('http://localhost:3000/total_number_transactions.json', function(err, resp) {
+     HTTP.get(root_url + 'total_number_transactions.json', function(err, resp) {
        var item, lastValue, point, _i, _len, _ref;
        lastValue = 0;
        _ref = resp.data.values;
@@ -81,7 +83,7 @@ Meteor.startup(function() {
     });
 
     console.log('no total_number_unique_addresses data found, importing...');
-    HTTP.get('http://localhost:3000/total_number_unique_addresses.json', function(err, resp) {
+    HTTP.get(root_url + 'total_number_unique_addresses.json', function(err, resp) {
       var item, lastValue, point, _i, _len, _ref;
       lastValue = 0;
       _ref = resp.data.values;
