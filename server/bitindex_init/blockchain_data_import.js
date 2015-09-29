@@ -107,24 +107,4 @@ Meteor.startup(function() {
       };
    });
 
-
-    Meteor.publish('BitIndexIndicator_BTTC', function () {
-      // TODO: authorize worker
-
-      return BitIndexIndicator_BTTC.find({});
-    });
-
-    Meteor.publish('BitIndexIndicator_BTTN', function () {
-      // TODO: authorize worker
-
-      return BitIndexIndicator_BTTN.find({});
-    });
-  
-    Meteor.publish('BitIndexIndicator_BTUA', function () {
-      // TODO: authorize worker
-
-      return BitIndexIndicator_BTUA.find({});
-    });
-
-
   });

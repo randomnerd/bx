@@ -64,15 +64,4 @@ Meteor.startup(function() {
       };
    });
 
-
-
-
-
-    Meteor.publish('BitIndexIndicator_BTPR', function () {
-      // TODO: authorize worker
-      return BitIndexIndicator_BTPR.find({}, {sort: {date: 1}});
-
-    });
-
-
   });
