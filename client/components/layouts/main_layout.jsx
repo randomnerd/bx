@@ -22,10 +22,10 @@ MainLayout = React.createClass({
     }
   },
   componentDidMount() {
-    Dispatcher.register((payload) => {
+    Dispatcher.register((e) => {
       //console.log('new dispatcher event', payload);
 
-      switch (payload.actionType) {
+      switch (e.actionType) {
         case 'SHOW_LOGIN_MODAL':
           //console.log('login');
           this.setState({showLoginModal: true});
@@ -47,9 +47,11 @@ MainLayout = React.createClass({
         case 'SHOW_WITHDRAW_MODAL':
           //console.log('withdraw');
           this.setState({showWithdrawModal: true});
-          this.setState({withdrawAmount: payload.payload.amount});
-          this.setState({withdrawAddress: payload.payload.addr});
-          this.setState({withdrawCurr: payload.payload.currId});
+          if (e.payload) {
+            this.setState({withdrawAmount: e.payload.amount});
+            this.setState({withdrawAddress: e.payload.addr});
+            this.setState({withdrawCurr: e.payload.currId});
+          }
           break;
 
         case 'HIDE_WITHDRAW_MODAL':
@@ -64,8 +66,10 @@ MainLayout = React.createClass({
           break;
 
         case 'HIDE_ADDRESSBOOK_MODAL':
-          this.setState({withdrawAddress: payload.payload.addr});
-          this.setState({withdrawAmount: payload.payload.amount});
+          if (e.payload) {
+            this.setState({withdrawAddress: e.payload.addr});
+            this.setState({withdrawAmount: e.payload.amount});
+          }
           this.setState({withdrawAddressModal: false});
           break;
 

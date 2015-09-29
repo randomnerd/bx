@@ -19,15 +19,16 @@ WithdrawModal = React.createClass({
 
   },
   getAmount(){
+    let curr = this.data.currency || {};
     return {
       left:{
         buttons:[{icon:'right arrow',action:()=>{ this.setState({amount:this.getBalance()}) } }],
         labels:[{name:this.getBalance()}]
       },
       right:{
-        labels:[{name:("Your fee: 0.1 " + (this.data.currency?this.data.currency.shortName:'')),icon:'warning'}]
+        labels:[{name:(`Fee: ${curr.withdrawalFee} ${curr.shortName}`),icon:'warning'}]
       },
-      pointed:"Avalable for withdraw"
+      pointed:"Available to withdraw"
     }
   },
   getAddressbook(){

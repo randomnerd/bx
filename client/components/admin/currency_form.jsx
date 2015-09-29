@@ -57,6 +57,7 @@ CurrencyForm = React.createClass({
           </div>
           <Semantic.Input name="name" label="Full name" validations="minLength:3" placeholder="Enter name of currency" required value={this.currentVal('name')} />
           <Semantic.Input name="shortName" label="Short name" validations="minLength:3" placeholder="Enter short name of currency" required value={this.currentVal('shortName')} />
+          <Semantic.Input name="withdrawalFee" label="Withdrawal fee" validations="isNumeric" placeholder="0.0001" value={this.currentVal('withdrawalFee')} />
           <div className="two fields">
             <Semantic.Checkbox name="published" label="Published" isChecked={this.published} />
             <div className="field">
