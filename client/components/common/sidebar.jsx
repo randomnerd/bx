@@ -15,6 +15,9 @@ Sidebar = React.createClass({
     //$this=this;
     $(this.getDOMNode()).sidebar({
       context: $('.body'),
+      dimPage:false,
+      closable:false,
+      transition:'slide along',
       onHidden:()=>{
         $('.body').css('overflow-y','auto')
       }

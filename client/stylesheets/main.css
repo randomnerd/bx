@@ -159,6 +159,8 @@ tr.lesspadding th {
   z-index: 9999;
 }
 
+.pushable > .pusher{background-color: #fff;}
+
 /* Semantic sidebar */
 
 /* Semantic chat */
