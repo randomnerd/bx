@@ -60,10 +60,31 @@ WithdrawModal = React.createClass({
   allowSubmit() { this.setState({allowSubmit: true}) },
   disallowSubmit() { this.setState({allowSubmit: false}) },
 
+  withdraw() {
+    Meteor.call('withdraw', {
+      currId: this.data.currency._id,
+      amount: this.refs.amount.getValue(),
+      address: this.refs.address.getValue()
+    })
+    Dispatcher.dispatch({
+      actionType: 'NEW_NOTIFICATION', payload: {
+        message: {
+          _id:'withdrawal_requested',
+          type:'accept',
+          icon:'accept',
+          title:'Withdrawal request sent',
+          timeout:3000,
+          needShow:true
+        }
+      }
+    });
+    this.hide();
+  },
+
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Request withdrawal" header={"Withdraw " + (this.data.currency?this.data.currency.name:'')}
-        onDeny={this.hide} onPositive={this.hide} show={this.props.show}
+        onDeny={this.hide} onPositive={this.withdraw} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
         <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>

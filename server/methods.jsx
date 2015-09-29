@@ -152,6 +152,17 @@ Meteor.methods({
       }
     });
   },
+  withdraw: function(params) {
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    Withdrawals.insert({
+      userId: Meteor.userId(),
+      currId: params.currId,
+      address: params.address,
+      amount: parseFloat(params.amount) * Math.pow(10, 8),
+      state: 'initial',
+      createdAt: new Date()
+    })
+  }
 
 
 });

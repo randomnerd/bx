@@ -7,6 +7,7 @@ Notifications = new Mongo.Collection('notifications');
 Balances = new Mongo.Collection('balances');
 wAddressBook = new Mongo.Collection('waddressbook');
 Chat = new Mongo.Collection('chat');
+Withdrawals = new Mongo.Collection('withdrawals');
 
 BitIndexIndicator_BTTC = new Mongo.Collection('BitIndexIndicator_BTTC');
 BitIndexIndicator_BTTN = new Mongo.Collection('BitIndexIndicator_BTTN');
