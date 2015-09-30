@@ -4,145 +4,112 @@ Semantic.Input = React.createClass({
   mixins: [Formsy.Mixin],
   getDefaultProps() {
     return {
-      adds:{left:null,right:null},
+      adds: {
+        left:  { buttons: [] },
+        right: { buttons: [] }
+      }
     }
   },
-  inputAdds:{
-    left:{
-      buttons:false,
-      labels:false
-    },
-    right:{
-      buttons:false,
-      labels:false
-    },
-    ballon:false
-  },
-  componentDidMount(){
-      //if(this.props.adds.left){
 
-      //}
-      //if(this.props.adds.right){
-
-      //}
-    //  if(this.props.adds.ballon){
-
-      //}
-  },
   changeValue(event) {
     if (this.props.onChg) this.props.onChg(event);
     this.setValue(event.currentTarget.value);
   },
-  rightButton(){
-    if(this.props.adds.right.buttons){
-      return this.props.adds.right.buttons.map((button) => {
-        return(
-          <div className={"ui " + (button.accent?button.accent:'') + (button.name?" right labeled":'') + " icon button"} onClick={button.action}>
-            {button.name}
-            <i className={"icon " + button.icon}></i>
-          </div>
-        )
-      })
-    }
-  },
-  rightLabel(){
-    if(this.props.adds.right.labels){
-      return this.props.adds.right.labels.map((label) => {
-        return(
-          <div className={"ui label " + (label.accent?label.accent:'')}>
-            {label.icon?<i className={label.icon + " icon"} />:null}
-            {label.name}
-          </div>
-        )
-      })
-    }
-  },
-  leftButton(){
-    if(this.props.adds.left.buttons){
-      return this.props.adds.left.buttons.map((button) => {
-        return(
-          <div className={"ui " + (button.accent?button.accent:'') + (button.name?" right labeled":'') + " icon button"} onClick={button.action}>
-            {button.name}
-            <i className={"icon " + button.icon}></i>
-          </div>
-        )
-      })
-    }
-  },
-  leftLabel(){
-    if(this.props.adds.left.labels){
-      return this.props.adds.left.labels.map((label) => {
-        return(
-          <div className={"ui label " + (label.accent?label.accent:'')}>
-            {label.name}
-            {label.icon?<i className={label.icon + " icon"} />:null}
-          </div>
-        )
-      })
-    }
-  },
-  ballon(){
-    if(this.props.adds.pointed){
-      return(
-        <div className="ui pointing basic label">
-          {this.props.adds.pointed}
+
+  sideButtons(side) {
+    if (!this.props.adds && !this.props.adds[side]) return null;
+    let buttons = this.props.adds[side].buttons;
+    if (!buttons) return null;
+
+    return buttons.map((button, idx) => {
+      let cls = React.addons.classSet({
+        'ui icon button': true,
+        'right labeled': button.name
+      });
+      let iconCls = `icon ${button.icon}`;
+
+      return (
+        <div key={idx} className={cls} onClick={button.action}>
+          {button.name}
+          <i className={iconCls}/>
         </div>
-      )
-    }
+      );
+    })
   },
-  classes(){
-    var classes=''
-    if((this.props.adds.left&&this.props.adds.left.buttons)||(this.props.adds.right&&this.props.adds.right.buttons)){
-      classes+=
-      ((this.props.adds.left&&this.props.adds.left.buttons)?'left ':'')+
-      ((this.props.adds.right&&this.props.adds.right.buttons)?'right ':'')+
-      'action'
-    }
-    if((this.props.adds.left&&this.props.adds.left.labels)||(this.props.adds.right&&this.props.adds.right.labels)){
-      classes+= (this.props.adds.right&&this.props.adds.right.labels)?' right labeled':' labeled'
-    }
-    if(this.props.icon){
-      classes+= ' '+this.props.icon + ' icon'
-    }
-    return classes
+
+  sideLabels(side) {
+    if (!this.props.adds && !this.props.adds[side]) return null;
+    let labels = this.props.adds[side].labels;
+    if (!labels) return null;
+    let iconFirst = (side === 'right');
+
+    return labels.map((label, idx) => {
+      let icon = label.icon ? <i className={label.icon + " icon"} /> : null;
+      return (
+        <div key={idx} className={"ui label " + label.accent}>
+          {iconFirst ? icon : label.name}
+          {iconFirst ? label.name : icon}
+        </div>
+      );
+    });
   },
+
+  ballon() {
+    if (!this.props.adds.pointed) return null;
+    return (
+      <div className="ui pointing basic label">
+        {this.props.adds.pointed}
+      </div>
+    );
+  },
+
+  classes() {
+    let left  = this.props.adds.left;
+    let right = this.props.adds.right;
+    let leftButtons  = left  && left.buttons  && left.buttons.length;
+    let rightButtons = right && right.buttons && right.buttons.length;
+    let leftLabels   = left  && left.labels   && left.labels.length;
+    let rightLabels  = right && right.labels  && right.labels.length;
+
+    let params = {
+      action:  true,
+      left:    leftButtons  || leftLabels,
+      right:   rightButtons || rightLabels,
+      labeled: leftLabels   || rightLabels,
+      icon:    this.props.icon
+    }
+    if (this.props.icon) params[this.props.icon] = true;
+    return React.addons.classSet(params);
+  },
+
   render() {
+    let clsParams = {
+      field:    true,
+      required: this.showRequired(),
+      error:    this.showError(),
+      inline:   this.props.showInline
+    };
+    if (this.props.className) clsParams[this.props.className] = true;
+    let cls = React.addons.classSet(clsParams);
 
-
-    classes = [ 'field' ];
-    if (this.showRequired())  classes.push('required');
-    if (this.showError())     classes.push('error');
-    if (this.props.showInline)     classes.push('inline');
-    if (this.props.className) classes.push(this.props.className);
-
-
-    errorMessage = this.getErrorMessage();
-    input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;
+    let errorMessage = this.getErrorMessage();
+    let input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;
+    let label = this.props.label ? <label>{this.props.label}</label> : null;
+    let icon  = this.props.icon ? <i className={"icon " + this.props.icon} /> : null;
 
     return (
 
-
-
-
-
-
-
-      <div className={classes.join(' ')}>
-      {this.props.label ? <label>{this.props.label}</label> : ""}
-          <div className={"ui " + (this.props.adds?this.classes():'') +  ' input'}>
-            {this.props.adds.left?this.leftLabel():null}
-            {this.props.adds.left?this.leftButton():null}
-            { this.props.icon ? <i className={"icon " + this.props.icon} /> : null }
-
-            {input}
-
-
-            {this.props.adds.right?this.rightButton():null}
-            {this.props.adds.right?this.rightLabel():null}
-
-          </div>
-          {this.ballon()}
-
+      <div className={cls}>
+        {label}
+        <div className={"ui " + (this.props.adds?this.classes():'') +  ' input'}>
+          {this.sideLabels('left')}
+          {this.sideButtons('left')}
+          {icon}
+          {input}
+          {this.sideButtons('right')}
+          {this.sideLabels('right')}
+        </div>
+        {this.ballon()}
       </div>
     );
   }
