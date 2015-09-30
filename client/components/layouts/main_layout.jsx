@@ -108,21 +108,14 @@ MainLayout = React.createClass({
             </div>
           </div>
           <div className="contwrapper">
-            <div className="ui main container">
-              <div className="ui grid">
-                <div className="four wide column">
-                  <div className="ui fluid vertical inverted newgrey menu">
-                    <PairBar active={this.props.active} />
-                  </div>
-                </div>
-                <div className="twelve wide column">
+            <div className="ui main fluid container">
+
                   {this.props.content}
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
-        <TopMenu title="BitExchange"/>
+        <TopMenu title="BitExchange" active={this.props.active} />
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
         <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />

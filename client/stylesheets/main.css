@@ -235,6 +235,7 @@ tr.lesspadding th {
   top: 80px;
   width: 60px;
   z-index: 999;
+  opacity: 0.3;
 }
 .forsidebar.above{
   z-index: 9999;
@@ -254,6 +255,8 @@ tr.lesspadding th {
   height: 100% !important;
   overflow-y: auto;
   margin-right: -20px;
+  overflow-x: hidden;
+  padding: 0 15px 0 10px;
 }
 .pushable > .pusher {
   height: 100% !important;

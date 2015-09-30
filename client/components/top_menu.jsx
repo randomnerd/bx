@@ -33,9 +33,10 @@ TopMenu = React.createClass({
   render() {
     return (
       <div className="ui top fixed inverted newgrey menu">
-        <div className="ui container">
+        <div className="ui fluid container">
 
           { this.renderMenuItems() }
+          <TradePairsMenu active={this.props.active} />
             { this.data.user ?
               <div className="right menu"><UserTopMenu /><NotificationShow /></div>
               : this.renderLoginButtons()
