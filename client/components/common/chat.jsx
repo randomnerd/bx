@@ -46,6 +46,7 @@ Chats = React.createClass({
   noReply(){
     this.setState({replyId:null})
     this.setState({replyName:null})
+    this.setState({isPrivate:false})
   },
   bePrivate(){
     this.setState({isPrivate:(this.state.isPrivate?false:true)})
