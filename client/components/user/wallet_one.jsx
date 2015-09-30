@@ -25,7 +25,8 @@ WalletOne = React.createClass({
     return amount.toFixed(8);
   },
   showWithdraw(id){
-    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL', payload: { currId: id } });
+    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
+    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
   },
   renderWalletItems() {
     return this.data.currencies.map((item) => {

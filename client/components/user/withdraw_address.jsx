@@ -43,7 +43,8 @@ WithdrawAddress = React.createClass({
     }
   },
   pick(){
-    Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL', payload: { addr: this.props.item.address } });
+    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_ADDRESS', payload: this.props.item.address });
+    Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
   },
 
 

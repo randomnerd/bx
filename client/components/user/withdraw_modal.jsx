@@ -1,80 +1,108 @@
+Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
+  let amount = parseFloat(values.amount);
+  let fee = parseFloat(params[0]);
+  let balance = parseFloat(params[1]);
+  if (!amount) return false;
+  if (!fee) return true;
+  if (amount <= fee) return false;
+  if (amount > balance) return false;
+  return true;
+});
+
 WithdrawModal = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      errorMessage: null,
-      allowSubmit: false,
-      amount:''
+      currId: null,
+      allowSubmit:  false,
+      errorMessage: null
     };
   },
+
   getMeteorData() {
     return {
-      balance: Balances.findOne({currId: this.props.current}),
-      currency: Currencies.findOne({_id:this.props.current}),
-      wallet: Wallets.findOne({_id:this.props.current})
+      wallet:   Wallets.findOne({_id: this.state.currId}),
+      balance:  Balances.findOne({currId: this.state.currId}),
+      currency: Currencies.findOne({_id: this.state.currId})
+    }
+  },
+
+  getAmount(){
+    let curr    = this.data.currency;
+    let balance = this.data.balance.displayAmount();
+    return {
+      left: {
+        buttons: [{
+          icon: 'right arrow',
+          action: () => { this.refs.amount.setValue(balance) }
+        }],
+        labels: [{ name: balance }]
+      },
+      right:{
+        labels:[{
+          name: `Fee: ${curr.withdrawalFee} ${curr.shortName}`,
+          icon: 'warning'
+        }]
+      },
+      pointed: "Available to withdraw"
+    }
+  },
+
+  getAddressbook(){
+    Dispatcher.dispatch({actionType: 'SHOW_ADDRESSBOOK_MODAL'});
+  },
+
+  getAddress(){
+    return {
+      left:  {},
+      right: {
+        buttons: [{
+          name:   "Addressbook",
+          action: this.getAddressbook,
+          icon:   'user'
+        }]
+      }
     }
   },
 
   componentDidMount() {
-
-  },
-  getAmount(){
-    let curr = this.data.currency || {};
-    return {
-      left:{
-        buttons:[{icon:'right arrow',action:()=>{ this.setState({amount:this.getBalance()}) } }],
-        labels:[{name:this.getBalance()}]
-      },
-      right:{
-        labels:[{name:(`Fee: ${curr.withdrawalFee} ${curr.shortName}`),icon:'warning'}]
-      },
-      pointed:"Available to withdraw"
-    }
-  },
-  getAddressbook(){
-    Dispatcher.dispatch({actionType: 'SHOW_ADDRESSBOOK_MODAL'});
-  },
-  getAddress(){
-    return {
-      left:{
-
-      },
-      right:{
-        buttons:[{name:"Addressbook",action:this.getAddressbook,icon:'user'}]
+    Dispatcher.register((e) => {
+      switch (e.actionType) {
+        case 'SET_WITHDRAWAL_ADDRESS':
+          this.refs.address.setValue(e.payload);
+          break;
+        case 'SET_WITHDRAWAL_CURRENCY':
+          this.setState({currId: e.payload});
+          break;
       }
-    }
+    });
   },
-  getBalance() {
-    if (!this.data.balance) return;
-    let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
-    //console.log(amount.toFixed(8))
-    return amount.toFixed(8);
-  },
+
   hide(e) {
-    //if (e) e.preventDefault();
     this.setState({errorMessage: null});
-    this.setState({amount:''})
     Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
   },
 
-  allowSubmit() { this.setState({allowSubmit: true}) },
+  allowSubmit()    { this.setState({allowSubmit: true}) },
   disallowSubmit() { this.setState({allowSubmit: false}) },
 
   withdraw() {
     Meteor.call('withdraw', {
-      currId: this.data.currency._id,
-      amount: this.refs.amount.getValue(),
+      currId:  this.data.currency._id,
+      amount:  this.refs.amount.getValue(),
       address: this.refs.address.getValue()
-    })
+    });
+
     Dispatcher.dispatch({
-      actionType: 'NEW_NOTIFICATION', payload: {
+      actionType: 'NEW_NOTIFICATION',
+      payload: {
         message: {
-          _id:'withdrawal_requested',
-          type:'accept',
-          icon:'accept',
-          title:'Withdrawal request sent',
-          timeout:3000,
-          needShow:true
+          _id:      'withdrawal_requested',
+          type:     'accept',
+          icon:     'accept',
+          title:    'Withdrawal request sent',
+          timeout:  3000,
+          needShow: true
         }
       }
     });
@@ -82,17 +110,22 @@ WithdrawModal = React.createClass({
   },
 
   render() {
+    let curr = this.data.currency;
+    if (!curr) return null;
+    let fee = curr.withdrawalFee;
+    let balance = this.data.balance.displayAmount();
+
     return (
-      <Semantic.Modal size="small" positiveLabel="Request withdrawal" header={"Withdraw " + (this.data.currency?this.data.currency.name:'')}
+      <Semantic.Modal size="small" positiveLabel="Request withdrawal" header={`Withdraw ${curr.name}`}
         onDeny={this.hide} onPositive={this.withdraw} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+        <Formsy.Form className="ui large form" onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
 
-          <Semantic.Input name="amount" label="Amount"  placeholder="0.00000000" ref="amount"
-          adds={this.getAmount()} value={this.state.amount?this.state.amount:(this.props.amount?this.props.amount:'')} required />
+          <Semantic.Input name="amount" label="Amount"  placeholder="0.00000000" ref="amount" validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
+          adds={this.getAmount()} required />
 
-          <Semantic.Input name="address" label="Address" value={this.props.address?this.props.address:''} placeholder="Type address here or select from address book" ref="address" adds={this.getAddress()} required />
+          <Semantic.Input name="address" label="Address" placeholder="Type address here or select from address book" ref="address" adds={this.getAddress()} required />
           <Semantic.Input name="tfa" label="TFA code" placeholder="Type your TFA code here" ref="tfa" />
           <input type="submit" className="hidden" />
         </Formsy.Form>

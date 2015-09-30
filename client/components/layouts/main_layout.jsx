@@ -1,33 +1,33 @@
 MainLayout = React.createClass({
-  getInitialState() {
+  mixins: [ReactMeteorData],
+  getMeteorData() {
     return {
-      showLoginModal: false,
-      showSignUpModal: false,
-      showWithdrawModal: false,
-      showSidebar: false,
-      sidebarContent:'',
-      withdrawCurr: false,
-      withdrawAddressModal: false,
-      withdrawAddress:'',
-      withdrawAmount:''
-    };
-  },
-  chatToggle(){
-    this.setState({showSidebar: this.state.showSidebar?false:true});
-    this.setState({ sidebarContent: 'chat' });
-    if(!this.state.showSidebar){
-      //$('.body').css('overflow-y','hidden')
-    }else{
-      //$('.body').css('overflow-y','auto')
+      loading: !Meteor.subs.ready()
     }
   },
+
+  getInitialState() {
+    return {
+      showLoginModal:       false,
+      showSignUpModal:      false,
+      showWithdrawModal:    false,
+      showSidebar:          false,
+      sidebarContent:       null,
+      withdrawAddressModal: false
+    };
+  },
+
+  chatToggle(){
+    this.setState({ showSidebar: !this.state.showSidebar });
+    this.setState({ sidebarContent: 'chat' });
+  },
+
   componentDidMount() {
     Dispatcher.register((e) => {
       //console.log('new dispatcher event', payload);
 
       switch (e.actionType) {
         case 'SHOW_LOGIN_MODAL':
-          //console.log('login');
           this.setState({showLoginModal: true});
           break;
 
@@ -36,7 +36,6 @@ MainLayout = React.createClass({
           break;
 
         case 'SHOW_SIGN_UP_MODAL':
-          //console.log('signup');
           this.setState({showSignUpModal: true});
           break;
 
@@ -45,36 +44,22 @@ MainLayout = React.createClass({
           break;
 
         case 'SHOW_WITHDRAW_MODAL':
-          //console.log('withdraw');
           this.setState({showWithdrawModal: true});
-          if (e.payload) {
-            this.setState({withdrawAmount: e.payload.amount});
-            this.setState({withdrawAddress: e.payload.addr});
-            this.setState({withdrawCurr: e.payload.currId});
-          }
           break;
 
         case 'HIDE_WITHDRAW_MODAL':
-          this.setState({withdrawAddress: ''});
-          this.setState({withdrawAmount: ''});
           this.setState({showWithdrawModal: false});
           break;
 
         case 'SHOW_ADDRESSBOOK_MODAL':
-          //console.log('withdraw');
           this.setState({withdrawAddressModal: true});
           break;
 
         case 'HIDE_ADDRESSBOOK_MODAL':
-          if (e.payload) {
-            this.setState({withdrawAddress: e.payload.addr});
-            this.setState({withdrawAmount: e.payload.amount});
-          }
           this.setState({withdrawAddressModal: false});
           break;
 
         case 'SHOW_SIDEBAR':
-          //console.log('withdraw');
           this.setState({showSidebar: true});
           this.chatToggle();
           //this.setState({sidebarContent: payload.payload.content});
@@ -97,7 +82,17 @@ MainLayout = React.createClass({
         break;
     }
   },
+
+  renderLoading() {
+    return (
+      <div className="ui active dimmer">
+        <div className="ui loader"></div>
+      </div>
+    );
+  },
+
   render() {
+    if (this.data.loading) return this.renderLoading();
     return (
       <div className="ui inverted newgrey body">
         <Sidebar show={this.state.showSidebar}>

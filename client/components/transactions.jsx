@@ -4,30 +4,26 @@ TransactionsPage = React.createClass({
     return {
       balance: Balances.findOne({currId: this.props.current}),
       currency: Currencies.findOne({_id:this.props.current}),
-      history: Transactions.find({currId: this.props.current}, {limit: 30}, {sort: {createdAt: -1}}).fetch()
+      withdrawals: Withdrawals.find({currId: this.props.current}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+      deposits: Transactions.find({currId: this.props.current}, {limit: 30, sort: {createdAt: -1}}).fetch()
     }
-  },
-  getBalance() {
-    let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
-    return amount.toFixed(8);
-  },
-  getHeld() {
-    let held = this.data.balance ? this.data.balance.held / Math.pow(10, 8) : 0;
-    return held.toFixed(8);
-  },
-  getAvalable() {
-    let avalable = this.getBalance()-this.getHeld();
-    return avalable.toFixed(8);
   },
 
   renderHistoryItems() {
-    return this.data.history.map((item) => {
+    let unsortedItems = this.data.deposits.concat(this.data.withdrawals);
+    let items = unsortedItems.sort((a, b) => {
+      if (a.createdAt > b.createdAt) return -1;
+      if (a.createdAt < b.createdAt) return 1;
+      return 0;
+    });
+    return items.map((item) => {
+      let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
       return  (
-
-        <tr key={item._id} className={item.direction?"positive":"negative"}>
+        <tr key={item._id} className={cls}>
           <td className="four wide">{moment(item.createdAt).fromNow()}</td>
           <td className="five wide">{item.address}</td>
           <td className="three wide">{item.displayAmount()}</td>
+          <td className="four wide">{item.displayChanged()}</td>
         </tr>
 
       );
@@ -35,11 +31,20 @@ TransactionsPage = React.createClass({
     });
   },
 
+  showWithdraw(){
+    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
+    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
+  },
+
   render() {
-    let currency = this.data.currency || {};
     return (
       <div>
-        <h1 className="ui header">{currency.name} balance</h1>
+        <div className="ui header clearfix">
+          <button className="ui right floated blue button" onClick={this.showWithdraw}>
+            Withdraw {this.data.currency.shortName}
+          </button>
+          <h1>{this.data.currency.name} balance</h1>
+        </div>
         <div className="ui grid">
           <div className="three column row">
             <div className="column">
@@ -48,7 +53,9 @@ TransactionsPage = React.createClass({
                   <h4>Available</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getBalance()} {currency.shortName}</h1>
+                  <h2 className="ui header center aligned">
+                    {this.data.balance.displayAmount()} {this.data.currency.shortName}
+                  </h2>
                 </div>
               </div>
             </div>
@@ -58,7 +65,9 @@ TransactionsPage = React.createClass({
                   <h4>Held for orders</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getHeld()} {currency.shortName}</h1>
+                  <h2 className="ui header center aligned">
+                    {this.data.balance.displayHeld()} {this.data.currency.shortName}
+                  </h2>
                 </div>
               </div>
             </div>
@@ -68,7 +77,9 @@ TransactionsPage = React.createClass({
                   <h4>Total</h4>
                 </div>
                 <div className="ui small blue segment">
-                  <h1 className="ui header center aligned">{this.getAvalable()} {currency.shortName}</h1>
+                  <h2 className="ui header center aligned">
+                    {this.data.balance.displayTotal()} {this.data.currency.shortName}
+                  </h2>
                 </div>
               </div>
             </div>
@@ -76,15 +87,16 @@ TransactionsPage = React.createClass({
         </div>
         <div className="ui segments">
           <div className="ui secondary segment">
-            <h4>ANC balance history</h4>
+            <h4>Transactions</h4>
           </div>
           <div className="ui small blue segment">
             <table className="ui selectable very compact very basic striped table nomargin">
               <thead>
                 <tr className="lesspadding">
-                  <th className="four wide" >Created at</th>
+                  <th className="four wide" >Time</th>
                   <th className="five wide" >Address</th>
                   <th className="three wide">Amount</th>
+                  <th className="three wide">Balance</th>
                 </tr>
               </thead>
             </table>

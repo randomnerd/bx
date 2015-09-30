@@ -2,52 +2,55 @@ WalletsPage = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      balances: Balances.find({}).fetch(),
+      balances:   Balances.find({}).fetch(),
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
-      wallets: Wallets.find({}, {sort: {createdAt: -1}}).fetch()
+      wallets:    Wallets.find({}, {sort: {createdAt: -1}}).fetch()
     }
   },
+
   newWallet(item, event) {
     if (!Meteor.user()) { return }
     var el = $(event.currentTarget);
     el.addClass('loading');
     el.attr('disabled', true);
     Meteor.call('jobs/wallet/newWallet', item._id, () => {
-        el.removeClass('loading');
-        el.attr('disabled', false);
+      el.removeClass('loading');
+      el.attr('disabled', false);
     })
   },
+
   getAddress(currId) {
     if (!this.data.wallets) return;
     var wallet = _.findWhere(this.data.wallets, {currId: currId});
     return wallet && wallet.address;
   },
+
   getBalance(currId) {
     if (!this.data.balances) return;
     let balance = _.findWhere(this.data.balances, {currId: currId});
-    let amount = balance ? balance.amount / Math.pow(10, 8) : 0;
-    return amount.toFixed(8);
+    return balance ? balance.displayAmount() : (0).toFixed(8);
   },
-  showWithdraw(item, event){
-    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL', payload: { currId: item._id } });
+
+  showWithdraw(item, event) {
+    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: item._id});
+    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
   },
+
   renderWalletItems() {
     return this.data.currencies.map((item) => {
-      var address = this.getAddress(item._id);
-      var balance = this.getBalance(item._id);
-      return  (
+      let address = this.getAddress(item._id);
+      let balance = this.getBalance(item._id);
+      let allowWithdraw = parseFloat(balance) > 0;
+      let generateBtn = <button className="ui mini button" onClick={this.newWallet.bind(this, item)}>Generate</button>;
 
+      return  (
         <tr key={item._id}>
           <td className="two wide">{balance}</td>
           <td className="two wide">{item.shortName}</td>
-          <td className="nine wide">
-            { address ?
-              address :
-              <button className="ui mini button" onClick={this.newWallet.bind(this, item)}>Generate</button> }
-          </td>
+          <td className="nine wide">{address ? address : generateBtn}</td>
           <td className="three wide right aligned">
             <div className="ui mini buttons">
-              <a className={"ui blue button" + (balance>0?'':" disabled")} onClick={this.showWithdraw.bind(this, item)} >
+              <a className={"ui blue button" + (allowWithdraw ? '' : " disabled")} onClick={this.showWithdraw.bind(this, item)}>
                 Withdraw
               </a>
               <a className="ui button" href={"/u/wallet/" + item._id}>
@@ -56,11 +59,10 @@ WalletsPage = React.createClass({
             </div>
           </td>
         </tr>
-
       );
-
     });
   },
+
   render() {
     return (
       <div className="ui segments">

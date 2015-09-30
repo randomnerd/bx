@@ -1,9 +1,9 @@
 Meteor.startup(() => {
-  Transactions._transform = (obj) => {
-    return new Transaction(obj);
+  Withdrawals._transform = (obj) => {
+    return new Withdrawal(obj);
   };
 
-  class Transaction {
+  class Withdrawal {
     constructor(data) {
       _.extend(this, data);
     }
