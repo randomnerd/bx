@@ -10,6 +10,7 @@ accounts-base
 accounts-password
 meteorflux:dispatcher
 randomnerd:bitcoinrpc
+meteorhacks:subs-manager
 vsivsi:job-collection
 alanning:roles
 kadira:flow-router

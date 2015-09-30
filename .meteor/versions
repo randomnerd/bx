@@ -43,6 +43,7 @@ logging@1.0.8
 meteor@1.1.9
 meteor-base@1.0.1
 meteorflux:dispatcher@1.0.4
+meteorhacks:subs-manager@1.6.2
 minifiers@1.1.7
 minimongo@1.0.10
 momentjs:moment@2.10.6
