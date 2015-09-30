@@ -96,11 +96,38 @@ Chats = React.createClass({
                 <strong className={"ui grey text" + (item.replyName?"":" hidden")}>{item.replyName}, </strong>
                 {item.text}
               </div>
-              
+
             </div>
           </div>
         )
       })
+    )
+  },
+  writeForm(){
+    return(
+      <Formsy.Form className="ui form chatform" onValidSubmit={this.writeMessage} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+
+        <div className="field">
+          <label>
+            <a className={"ui horizontal label" + (this.state.replyName?"":" hidden")}>
+              To: {this.state.replyName}
+              <i className="delete icon" onClick={this.noReply}></i>
+            </a>
+          </label>
+          <Semantic.Input name="text" placeholder="text here..." value={this.state.textVal} ref="text" />
+        </div>
+        <div className="two fields">
+          <Semantic.Checkbox className={this.state.replyName?"":" disabled"} name="isPrivate" label="private" onClick={this.bePrivate} ref="isPrivate" isChecked={this.state.isPrivate} />
+          <div className="field">
+            <a className="ui positive labeled right aligned icon button" onClick={this.writeMessage}>
+              <i className="checkmark icon" />
+              Send
+            </a>
+          </div>
+        </div>
+
+        <input type="submit" className="hidden" />
+      </Formsy.Form>
     )
   },
   allowSubmit() { this.setState({allowSubmit: true}) },
@@ -114,31 +141,7 @@ Chats = React.createClass({
 
           {this.messages()}
         </div>
-
-
-        <Formsy.Form className="ui form chatform" onValidSubmit={this.writeMessage} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
-
-          <div className="field">
-            <label>
-              <a className={"ui horizontal label" + (this.state.replyName?"":" hidden")}>
-                To: {this.state.replyName}
-                <i className="delete icon" onClick={this.noReply}></i>
-              </a>
-            </label>
-            <Semantic.Input name="text" placeholder="text here..." value={this.state.textVal} ref="text" />
-          </div>
-          <div className="two fields">
-            <Semantic.Checkbox className={this.state.replyName?"":" disabled"} name="isPrivate" label="private" onClick={this.bePrivate} ref="isPrivate" isChecked={this.state.isPrivate} />
-            <div className="field">
-              <a className="ui positive labeled right aligned icon button" onClick={this.writeMessage}>
-                <i className="checkmark icon" />
-                Send
-              </a>
-            </div>
-          </div>
-
-          <input type="submit" className="hidden" />
-        </Formsy.Form>
+        {Meteor.userId()?this.writeForm():null}
       </div>
     )
   }

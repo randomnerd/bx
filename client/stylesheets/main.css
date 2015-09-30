@@ -5,12 +5,14 @@
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
 /* Semantic new grey */
-
+.ui.body{display: block;}
 .ui.inverted.newgrey{
   background-color: #15232c;
   color:#fff;
 }
-
+.ui.fixed.menu{
+  position: absolute !important;
+}
 .ui.inverted.newgrey.menu{
   background-color: #2f3d45;
   color:#ced2d5;
@@ -223,9 +225,12 @@ tr.lesspadding th {
 
 
 /* Semantic sidebar */
-
+.ui.sidebar {
+    position: fixed !important;
+    overflow-y: visible !important;
+}
 .forsidebar{
-  position: absolute;
+  position: fixed;
   right: 0px;
   top: 80px;
   width: 60px;
@@ -245,11 +250,13 @@ tr.lesspadding th {
     transition: padding-left 500ms, transform 500ms ease 0s;
 }
 
-.ui.menu.fixed {
-    margin: 0 0 -3rem;
-    position: relative;
-    width: 100%;
-    z-index: 101;
+.contwrapper{
+  height: 100% !important;
+  overflow-y: auto;
+  margin-right: -20px;
+}
+.pushable > .pusher {
+  height: 100% !important;
 }
 
 
@@ -260,6 +267,7 @@ tr.lesspadding th {
 .ui.chat{
   height: 100% !important;
   padding-bottom: 140px !important;
+  margin-right: -10px;
 }
 
 .ui.chat.comments{

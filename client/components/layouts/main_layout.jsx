@@ -95,6 +95,7 @@ MainLayout = React.createClass({
     if (this.data.loading) return this.renderLoading();
     return (
       <div className="ui inverted newgrey body">
+
         <Sidebar show={this.state.showSidebar}>
           {this.renderSidebarContent()}
         </Sidebar>
@@ -106,20 +107,22 @@ MainLayout = React.createClass({
               </a>
             </div>
           </div>
-          <TopMenu title="BitExchange"/>
-          <div className="ui main container">
-            <div className="ui grid">
-              <div className="four wide column">
-                <div className="ui fluid vertical inverted newgrey menu">
-                  <PairBar active={this.props.active} />
+          <div className="contwrapper">
+            <div className="ui main container">
+              <div className="ui grid">
+                <div className="four wide column">
+                  <div className="ui fluid vertical inverted newgrey menu">
+                    <PairBar active={this.props.active} />
+                  </div>
                 </div>
-              </div>
-              <div className="twelve wide column">
-                {this.props.content}
+                <div className="twelve wide column">
+                  {this.props.content}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <TopMenu title="BitExchange"/>
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
         <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
