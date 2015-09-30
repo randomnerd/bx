@@ -13,5 +13,8 @@ Meteor.startup(() => {
     displayChanged() {
       return (this.changed / Math.pow(10, 8)).toFixed(8);
     }
+    displayFee() {
+      return (this.fee / Math.pow(10, 8)).toFixed(8);
+    }
   }
 });

@@ -154,10 +154,12 @@ Meteor.methods({
   },
   withdraw: function(params) {
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    let curr = Currencies.findOne(params.currId);
     Withdrawals.insert({
       userId: Meteor.userId(),
       currId: params.currId,
       address: params.address,
+      fee: parseFloat(curr.withdrawalFee) * Math.pow(10, 8),
       amount: parseFloat(params.amount) * Math.pow(10, 8),
       state: 'initial',
       createdAt: new Date()

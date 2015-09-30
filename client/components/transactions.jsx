@@ -20,10 +20,11 @@ TransactionsPage = React.createClass({
       let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
       return  (
         <tr key={item._id} className={cls}>
-          <td className="four wide">{moment(item.createdAt).fromNow()}</td>
+          <td className="three wide">{moment(item.createdAt).fromNow()}</td>
           <td className="five wide">{item.address}</td>
           <td className="three wide">{item.displayAmount()}</td>
-          <td className="four wide">{item.displayChanged()}</td>
+          <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
+          <td className="three wide">{item.displayChanged()}</td>
         </tr>
 
       );
@@ -96,6 +97,7 @@ TransactionsPage = React.createClass({
                   <th className="four wide" >Time</th>
                   <th className="five wide" >Address</th>
                   <th className="three wide">Amount</th>
+                  <th className="two wide">Fee</th>
                   <th className="three wide">Balance</th>
                 </tr>
               </thead>
