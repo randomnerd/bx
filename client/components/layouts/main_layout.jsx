@@ -86,7 +86,7 @@ MainLayout = React.createClass({
   renderLoading() {
     return (
       <div className="ui active dimmer">
-        <div className="ui loader"></div>
+        <div className="ui text loader">Loading...</div>
       </div>
     );
   },
