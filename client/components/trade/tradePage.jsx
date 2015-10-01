@@ -24,46 +24,43 @@ TradePage = React.createClass({
     return (
       <div className="ui grid">
         <div className="three wide column">
-          <div className="ui basic segment">
+          <div className="ui basic segment h100">
+            <h3 className="ui header">AVAILABLE BALANCE</h3>
             <BuySell currency={this.props.active.toUpperCase()} direction="buy"/>
-          </div>
-          <div className="ui basic segment">
-            <BuySell currency={this.props.active.toUpperCase()} direction="sell"/>
           </div>
         </div>
         <div className="three wide column">
-          <div className="ui basic segment">
-              <div className="ui basic secondary segment">
-                <h4>Order book</h4>
-              </div>
-              <div className="ui basic small red segment">
+          <div className="ui basic segment h100">
+
+              <h3 className="ui header">ORDER BOOK</h3>
+
+              <div className="ui basic small red segment h50">
                 <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction="sell" />
               </div>
 
-              <div className="ui basic small green segment">
+              <div className="ui basic small green segment h50">
                 <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction="buy" />
               </div>
           </div>
         </div>
         <div className="seven wide column">
-          <div className="ui basic segment">
-            {this.data.BTPR_Loading?<div className="cube"></div>:
-              this.renderBlockChainIndicator()
-            }
+          <div className="ui basic segment h100">
+            <h3 className="ui header">PRICE CHART</h3>
+            <div className="ui basic teal segment">
+              {this.data.BTPR_Loading?<div className="cube"></div>:
+                this.renderBlockChainIndicator()
+              }
+            </div>
           </div>
         </div>
 
 
 
         <div className="three wide column">
-          <div className="ui basic segment">
-            <div className="ui segments">
-              <div className="ui secondary segment">
-                <h4>Trade history</h4>
-              </div>
-              <div className="ui small blue segment">
-                <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
-              </div>
+          <div className="ui basic segment h100">
+            <h3 className="ui header">TRADE HISTORY</h3>
+            <div className="ui small teal segment">
+              <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
             </div>
           </div>
         </div>

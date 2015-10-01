@@ -1,22 +1,51 @@
 /*     globals     */
+
+html, body{
+  font-size: 11px;
+}
+
 #react-root{height: 100%;}
 .hidden{display: none !important}
 
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
-/* Semantic new grey */
 .ui.body{display: block;}
+
+.ui.fixed.menu{
+  position: absolute !important;
+}
+
+/* Semantic new grey */
 .ui.inverted.newgrey{
   background-color: #15232c;
   color:#fff;
 }
-.ui.fixed.menu{
-  position: absolute !important;
+
+.ui.inverted.newgrey .ui.header{
+  color: #fff;
+  font-weight: normal;
 }
+
 .ui.inverted.newgrey.menu{
   background-color: #2f3d45;
   color:#ced2d5;
 }
+
+.ui.inverted.newgrey .basic.menu .item{
+  color:#ced2d5;
+  margin-bottom: 2px;
+  padding-bottom: 11px;
+}
+
+.ui.inverted.newgrey .basic.menu .item.active{
+  color:#fff;
+  border-style: none none solid;
+  border-bottom: 2px solid #fff;
+  background: none !important;
+  margin-bottom: -1px;
+  padding-bottom: 9px;
+}
+
 .ui.inverted.newgrey.menu .item.active{
   background-color: rgba(255, 255, 255, 0.15);
   color:#ced2d5;
@@ -30,11 +59,11 @@
 }
 
 .ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
-    background: rgba(255, 145, 67, 0.2) none repeat scroll 0 0 !important;
+    background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
     color: rgba(240, 150, 150, 0.67) !important;
 }
 .ui.inverted.newgrey .ui.table td.positive, .ui.inverted.newgrey .ui.table tr.positive {
-    background: rgba(132, 247, 102, 0.1) none repeat scroll 0 0 !important;
+    background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
     color: rgba(150, 240, 150, 0.67) !important;
 }
 .ui.inverted.newgrey .ui.table td.negative:hover, .ui.inverted.newgrey .ui.table tr.negative:hover {
@@ -43,6 +72,31 @@
 .ui.inverted.newgrey .ui.table td.positive:hover, .ui.inverted.newgrey .ui.table tr.positive:hover {
   background: rgba(132, 247, 102, 0.08) none repeat scroll 0 0 !important;
 }
+
+.ui.inverted.newgrey .ui.button{
+  background: none !important;
+}
+
+.ui.inverted.newgrey .ui.blue.button{color: #2185d0 !important; border: 1px solid #2185d0;}
+.ui.inverted.newgrey .ui.red.button{color: #db2828 !important; border: 1px solid #db2828;}
+.ui.inverted.newgrey .ui.orange.button{color: #f2711c !important; border: 1px solid #f2711c;}
+.ui.inverted.newgrey .ui.yellow.button{color: #fbbd08 !important; border: 1px solid #fbbd08;}
+.ui.inverted.newgrey .ui.olive.button{color: #b5cc18 !important; border: 1px solid #b5cc18;}
+.ui.inverted.newgrey .ui.green.button{color: #21ba45 !important; border: 1px solid #21ba45;}
+.ui.inverted.newgrey .ui.teal.button{color: #00b5ad !important; border: 1px solid #00b5ad;}
+.ui.inverted.newgrey .ui.violet.button{color: #6435c9 !important; border: 1px solid #6435c9;}
+.ui.inverted.newgrey .ui.purple.button{color: #a333c8 !important; border: 1px solid #a333c8;}
+.ui.inverted.newgrey .ui.pink.button{color: #e03997 !important; border: 1px solid #e03997;}
+.ui.inverted.newgrey .ui.brown.button{color: #a5673f !important; border: 1px solid #a5673f;}
+.ui.inverted.newgrey .ui.grey.button{color: #767676 !important; border: 1px solid #767676;}
+.ui.inverted.newgrey .ui.white.button{color: #ffffff !important; border: 1px solid #ffffff;}
+.ui.inverted.newgrey .ui.black.button{color: #1b1c1d !important; border: 1px solid #1b1c1d;}
+
+.ui.inverted.newgrey .ui.form .field > label {
+    color: #ced2d5;
+    margin: 0.8rem 0;
+}
+
 
 .ui.inverted.newgrey .ui.form input:not([type]),
 .ui.inverted.newgrey .ui.form input[type="text"],
@@ -74,6 +128,36 @@
 }
 .ui.inverted.newgrey .ui.comments .comment .metadata {
   color: rgba(200, 200, 200, 0.2);
+}
+
+.ui.grid{
+  height: 100%
+}
+.ui.grid > .column{
+  padding-left: 0.1rem !important;
+  padding-right: 0.1rem !important;
+  padding-top: 0.1rem !important;
+  padding-bottom: 0.1rem !important;
+  margin: 0 !important;
+  height: 100% !important;
+}
+.ui.grid > .column .h50.segment{
+  height: 50% !important;
+  margin: 0 0 0.2rem 0;
+}
+
+.ui.grid > .column .h100.segment{
+  height: 100% !important;
+  margin-bottom: 0.2rem;
+}
+
+.main.container{
+  height: 100%;
+  padding-top: 4em !important;
+}
+
+.ui.segments{
+  border: none !important;
 }
 /* Semantic new grey */
 

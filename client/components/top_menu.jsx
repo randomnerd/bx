@@ -7,7 +7,7 @@ TopMenu = React.createClass({
   },
   getMenuItems() {
     return [
-      { href: '/', label: 'Home', extraCls: '' },
+      { href: '/', label: 'Coin.Exhange', extraCls: '' },
       //{ href: '/pair', label: 'Pairs', extraCls: '' }
     ];
   },
@@ -32,7 +32,7 @@ TopMenu = React.createClass({
   },
   render() {
     return (
-      <div className="ui top fixed inverted newgrey menu">
+      <div className="ui top fixed menu">
         <div className="ui fluid container">
 
           { this.renderMenuItems() }
