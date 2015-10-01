@@ -79,6 +79,10 @@ html, body{
   border: 1px solid #767676;
 }
 
+.ui.dropdown .menu > .item > .label{
+  float: right;
+}
+
 .ui.inverted.newgrey .ui.blue.button{color: #2185d0 !important; border: 1px solid #2185d0;}
 .ui.inverted.newgrey .ui.red.button, .ui.inverted.newgrey .ui.negative.button{color: #db2828 !important; border: 1px solid #db2828;}
 .ui.inverted.newgrey .ui.orange.button{color: #f2711c !important; border: 1px solid #f2711c;}
@@ -220,7 +224,17 @@ html, body{
   padding-bottom: 0.4em !important;
 }
 .scrollable10rows{
-  max-height: 26em !important;
+  height: 26em !important;
+  overflow-y: auto;
+}
+
+.scrollable50{
+  height: 50% !important;
+  overflow-y: auto;
+}
+
+.scrollable100{
+  height: 100% !important;
   overflow-y: auto;
 }
 

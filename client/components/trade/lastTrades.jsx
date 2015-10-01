@@ -56,7 +56,7 @@ Trades = React.createClass({
           </tr>
           </thead>
         </table>
-        <div className="scrollable10rows">
+        <div className="scrollable100">
           <table className="ui selectable very compact very basic table">
             <tbody>
             { this.renderTradesItems() }

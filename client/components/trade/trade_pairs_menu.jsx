@@ -20,14 +20,10 @@ TradePairsMenu = React.createClass({
     return this.getPairItems().map((item) => {
       return (
         <a className={"item" + (this.props.active==item.href?" active":"")} key={item.href} href={"/pair/"+item.href}>
-          <div className="ui two column grid">
-            <div className="column">
-              {item.pair}
-            </div>
-            <div className="right aligned column">
-              {item.value}
-            </div>
-          </div>
+          <div className="ui label">{item.value}</div>
+          {item.pair}
+
+
         </a>
       )
     });
@@ -42,7 +38,7 @@ TradePairsMenu = React.createClass({
         {this.displayCurrent()}
         <i className="dropdown icon" />
 
-        <div className="menu">
+        <div className="ui vertical menu">
           {this.renderMenuItems()}
         </div>
       </div>
