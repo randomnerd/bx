@@ -80,7 +80,7 @@ BuySell = React.createClass({
             </div>
           </div>
 
-        <div className="ui fluid bottom attached buttons">
+        <div className="ui fluid buttons">
           <button className="ui button green">Buy {this.props.currency}</button>
           <button className="ui button red">Sell {this.props.currency}</button>
         </div>

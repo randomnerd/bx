@@ -42,21 +42,38 @@ BitIndex = React.createClass({
     // console.log(data);
     // <AreaChart data={this.data.BTTC} />
     // <AreaChart data={this.data.BTTN} />
+    //
+    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" />
+    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" />
+    //
+    // <CandleStickChartWithUpdatingData
+    //
+    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" />
+    //
+    // <HaikinAshi data = {this.data.BTPR} type = "hybrid"/>
+    //
+    //
+    // <AreaChartFixed data = {this.data.BTTC} type = "svg"/>
+    // <AreaChartFixed data = {this.data.BTTN} type = "svg"/>
+    // <AreaChartFixed data = {this.data.BTUA} type = "svg"/>
+    //
+    // <CandleStickChartWithUpdatingData data = {this.data.BTPR.slice(200)} type = "svg" />
+    // <HaikinAshi data = {this.data.BTPR.slice(200)} type = "svg" />
+    // <Kagi data = {this.data.BTPR.slice(200)} type = "svg" />
+    //
+    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
+    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
+    // <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg"/>
+    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = "svg"/>
 
     return (
+
       <div>
-        <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" />
-        <CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" />
-
-        <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" />
-
-        <HaikinAshi data = {this.data.BTPR} type = "hybrid"/>
-
-
-        <AreaChartFixed data = {this.data.BTTC} type = "svg"/>
-        <AreaChartFixed data = {this.data.BTTN} type = "svg"/>
-        <AreaChartFixed data = {this.data.BTUA} type = "svg"/>
-
+        <HaikinAshi data = {this.data.BTPR.slice(200)} type = "svg" />
+        <CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
+        <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
+        <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg"/>
+        <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = "svg"/>
 
       </div>
     );

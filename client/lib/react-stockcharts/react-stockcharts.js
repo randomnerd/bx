@@ -67,31 +67,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libChartCanvas2 = _interopRequireDefault(_libChartCanvas);
 	
-	var _libChart = __webpack_require__(22);
+	var _libChart = __webpack_require__(23);
 	
 	var _libChart2 = _interopRequireDefault(_libChart);
 	
-	var _libDataSeries = __webpack_require__(23);
+	var _libDataSeries = __webpack_require__(24);
 	
 	var _libDataSeries2 = _interopRequireDefault(_libDataSeries);
 	
 	// interaction components
 	
-	var _libEventCapture = __webpack_require__(24);
+	var _libEventCapture = __webpack_require__(25);
 	
 	var _libEventCapture2 = _interopRequireDefault(_libEventCapture);
 	
 	// chart types & Series
 	
-	var _libSeries = __webpack_require__(25);
+	var _libSeries = __webpack_require__(26);
 	
 	var _libSeries2 = _interopRequireDefault(_libSeries);
 	
-	var _libCoordinates = __webpack_require__(41);
+	var _libCoordinates = __webpack_require__(43);
 	
 	var _libCoordinates2 = _interopRequireDefault(_libCoordinates);
 	
-	var _libIndicator = __webpack_require__(48);
+	var _libIndicator = __webpack_require__(50);
 	
 	var _libIndicator2 = _interopRequireDefault(_libIndicator);
 	
@@ -99,19 +99,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libTransforms2 = _interopRequireDefault(_libTransforms);
 	
-	var _libAxes = __webpack_require__(55);
+	var _libAxes = __webpack_require__(57);
 	
 	var _libAxes2 = _interopRequireDefault(_libAxes);
 	
-	var _libTooltip = __webpack_require__(61);
+	var _libTooltip = __webpack_require__(63);
 	
 	var _libTooltip2 = _interopRequireDefault(_libTooltip);
 	
-	var _libHelper = __webpack_require__(72);
+	var _libHelper = __webpack_require__(74);
 	
 	var _libHelper2 = _interopRequireDefault(_libHelper);
 	
-	var version = "0.2.0";
+	var version = "0.2.2";
 	
 	exports["default"] = {
 		ChartCanvas: _libChartCanvas2["default"],
@@ -157,15 +157,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _utilsUtils = __webpack_require__(8);
-	
-	var _utilsUtils2 = _interopRequireDefault(_utilsUtils);
-	
 	var _transforms = __webpack_require__(10);
 	
 	var _EventHandler = __webpack_require__(19);
 	
 	var _EventHandler2 = _interopRequireDefault(_EventHandler);
+	
+	var _CanvasContainer = __webpack_require__(22);
+	
+	var _CanvasContainer2 = _interopRequireDefault(_CanvasContainer);
 	
 	var ChartCanvas = (function (_React$Component) {
 		_inherits(ChartCanvas, _React$Component);
@@ -174,10 +174,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			_classCallCheck(this, ChartCanvas);
 	
 			_get(Object.getPrototypeOf(ChartCanvas.prototype), "constructor", this).call(this);
-			this.getCanvasContextList = this.getCanvasContextList.bind(this);
-			this.state = {
-				canvasList: []
-			};
+			this.getCanvases = this.getCanvases.bind(this);
 		}
 	
 		_createClass(ChartCanvas, [{
@@ -189,116 +186,30 @@ return /******/ (function(modules) { // webpackBootstrap
 				};
 			}
 		}, {
-			key: "getChildContext",
-			value: function getChildContext() {
-				return {
-					canvasList: this.state.canvasList
-				};
+			key: "pushData",
+			value: function pushData(array) {
+				this.refs.chartContainer.pushData(array);
 			}
 		}, {
-			key: "getCanvasContextList",
-			value: function getCanvasContextList() {
-				var _this = this;
-	
-				var canvasList = Object.keys(this.refs).filter(function (key) {
-					return key.indexOf("chart_canvas_") > -1;
-				}).map(function (key) {
-					return _react2["default"].findDOMNode(_this.refs[key]);
-				}).map(function (canvas) {
-					return { id: canvas.id, context: canvas.getContext('2d') };
-				});
-				canvasList.forEach(function (ctx) {
-					return ctx.context.translate(0.5, 0);
-				});
-				return canvasList;
+			key: "alterData",
+			value: function alterData(array) {
+				this.refs.chartContainer.alterData(array);
 			}
 		}, {
-			key: "componentDidMount",
-			value: function componentDidMount() {
-				var canvasList = this.getCanvasContextList();
-				this.setState({
-					canvasList: canvasList
-				});
-			}
-		}, {
-			key: "componentDidUpdate",
-			value: function componentDidUpdate() {
-				var newCanvasList = this.getCanvasContextList();
-				var canvasList = this.state.canvasList;
-	
-				if (canvasList.length !== newCanvasList.length) {
-					this.setState({
-						canvasList: newCanvasList
-					});
-				} else {
-					for (var i = 0; i < canvasList.length; i++) {
-						var oldEach = canvasList[i];
-						var newEach = newCanvasList[i];
-						if (oldEach.id !== newEach.id || oldEach.context !== newEach.context) {
-							this.setState({
-								canvasList: newCanvasList
-							});
-						}
-					}
-				}
-			}
-		}, {
-			key: "updateState",
-			value: function updateState(props, context) {
-				var defaultDataTransform = props.defaultDataTransform;
-				var dataTransform = props.dataTransform;
-				var interval = props.interval;
-	
-				var i = 0,
-				    eachTransform,
-				    options = {},
-				    data = props.data;
-				var transforms = defaultDataTransform.concat(dataTransform);
-				for (i = 0; i < transforms.length; i++) {
-					// console.log(transforms[i]);
-					eachTransform = transforms[i].transform();
-					options = (0, _objectAssign2["default"])({}, options, transforms[i].options);
-					options = eachTransform.options(options);
-					data = eachTransform(data, interval);
-				}
-	
-				var state = {
-					data: data,
-					options: options
-				};
-				this.setState(state);
-			}
-		}, {
-			key: "componentWillMount",
-			value: function componentWillMount() {
-				this.updateState(this.props);
-			}
-		}, {
-			key: "componentWillReceiveProps",
-			value: function componentWillReceiveProps(nextProps) {
-				if (this.props.data !== nextProps.data || this.props.dataTransform !== nextProps.dataTransform) {
-					this.updateState(nextProps);
+			key: "getCanvases",
+			value: function getCanvases() {
+				if (this.refs && this.refs.canvases) {
+					return this.refs.canvases.getCanvasContexts();
 				}
 			}
 		}, {
 			key: "render",
 			value: function render() {
-				var _this2 = this;
-	
 				var dimensions = this.getDimensions(this.props);
-				var children = _react2["default"].Children.map(this.props.children, function (child) {
-					// console.log(child);
-					var newChild = _utilsUtils2["default"].isReactVersion13() ? _react2["default"].withContext(_this2.getChildContext(), function () {
-						return _react2["default"].createElement(child.type, (0, _objectAssign2["default"])({ key: child.key, ref: child.ref }, child.props));
-					}) : _react2["default"].cloneElement(child);
-					// React.createElement(child.type, objectAssign({ key: child.key, ref: child.ref}, child.props));
-					return newChild;
-				});
 				var style = "<![CDATA[\n\t\t\t\t\t\t.react-stockcharts-grabbing-cursor {\n\t\t\t\t\t\t\tcursor: grabbing;\n\t\t\t\t\t\t\tcursor: -moz-grabbing;\n\t\t\t\t\t\t\tcursor: -webkit-grabbing;\n\t\t\t\t\t\t}\n\t\t\t\t\t\t.react-stockcharts-crosshair-cursor {\n\t\t\t\t\t\t\tcursor: crosshair;\n\t\t\t\t\t\t}\n\t\t\t\t\t\t.react-stockcharts-toottip-hover {\n\t\t\t\t\t\t\tpointer-events: all;\n\t\t\t\t\t\t\tcursor: pointer;\n\t\t\t\t\t\t}\n\t\t\t\t\t]]>";
-				var _state = this.state;
-				var data = _state.data;
-				var options = _state.options;
 				var _props = this.props;
+				var data = _props.data;
+				var dataTransform = _props.dataTransform;
 				var interval = _props.interval;
 				var initialDisplay = _props.initialDisplay;
 				var type = _props.type;
@@ -306,32 +217,12 @@ return /******/ (function(modules) { // webpackBootstrap
 				var width = _props.width;
 				var margin = _props.margin;
 				var className = _props.className;
+				var clip = _props.clip;
 	
-				var displayCount = initialDisplay || this.props.data.length;
-	
-				var canvasList = [];
-				if (type !== "svg") {
-					canvasList = _utilsChartDataUtil2["default"].getCharts(this.props).map(function (each) {
-						return {
-							width: each.props.width || dimensions.width,
-							height: each.props.height || dimensions.height,
-							origin: _utilsChartDataUtil2["default"].getChartOrigin(each.props.origin, dimensions.width, dimensions.height),
-							id: each.props.id
-						};
-					});
-				}
 				return _react2["default"].createElement(
 					"div",
 					{ style: { position: "relative", height: height, width: width }, className: className },
-					_react2["default"].createElement(
-						"div",
-						{ style: { position: "relative", top: margin.top, left: margin.left } },
-						canvasList.map(function (each) {
-							return _react2["default"].createElement("canvas", { key: each.id, ref: "chart_canvas_" + each.id, id: each.id,
-								width: each.width, height: each.height,
-								style: { position: "absolute", left: each.origin[0] + "px", top: each.origin[1] + "px", zIndex: -1 } });
-						})
-					),
+					_react2["default"].createElement(_CanvasContainer2["default"], { ref: "canvases", width: width, height: height, type: this.props.type }),
 					_react2["default"].createElement(
 						"svg",
 						{ width: width, height: height, style: { position: "absolute" } },
@@ -347,14 +238,14 @@ return /******/ (function(modules) { // webpackBootstrap
 						),
 						_react2["default"].createElement(
 							"g",
-							{ transform: "translate(" + margin.left + ", " + margin.top + ")" },
+							{ transform: "translate(" + (margin.left + 0.5) + ", " + (margin.top + 0.5) + ")" },
 							_react2["default"].createElement(
 								_EventHandler2["default"],
 								{ ref: "chartContainer",
-									data: data, options: options, interval: interval,
+									rawData: data, dataTransform: dataTransform, interval: interval,
 									initialDisplay: initialDisplay,
-									dimensions: dimensions, type: type },
-								children
+									dimensions: dimensions, type: type, margin: margin, canvasContexts: this.getCanvases },
+								this.props.children
 							)
 						)
 					)
@@ -377,19 +268,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		className: _react2["default"].PropTypes.string
 	};
 	
-	ChartCanvas.childContextTypes = {
-		canvasList: _react2["default"].PropTypes.array
-	};
-	
+	// clip: React.PropTypes.bool.isRequired,
 	ChartCanvas.defaultProps = {
 		margin: { top: 20, right: 30, bottom: 30, left: 80 },
 		interval: "D",
 		type: "hybrid",
-		defaultDataTransform: [{ transform: _transforms.DummyTransformer }],
+		// defaultDataTransform: [ { transform: DummyTransformer } ],
 		dataTransform: [],
 		className: "react-stockchart"
 	};
 	
+	// clip: true,
 	// initialDisplay: 30
 	module.exports = ChartCanvas;
 
@@ -484,23 +373,28 @@ return /******/ (function(modules) { // webpackBootstrap
 			return this.getChildren(props.children, /Chart$/);
 		},
 		getChartDataForChart: function getChartDataForChart(props, context) {
-			var chartData = context.chartData.filter(function (each) {
-				return each.id === props.forChart;
-			})[0];
-			return chartData;
+			return this.getChartDataForChartNew(context.chartData, props.forChart);
 		},
 		getCurrentItemForChart: function getCurrentItemForChart(props, context) {
-			var currentItem = context.currentItems.filter(function (each) {
-				return each.id === props.forChart;
+			return this.getCurrentItemForChartNew(context.currentItems, props.forChart);
+		},
+		getChartDataForChartNew: function getChartDataForChartNew(chartData, chartId) {
+			return chartData.filter(function (each) {
+				return each.id === chartId;
 			})[0];
-			var item = currentItem ? currentItem.data : {};
+		},
+		getCurrentItemForChartNew: function getCurrentItemForChartNew(currentItems, chartId) {
+			var currentItem = currentItems.filter(function (each) {
+				return each.id === chartId;
+			})[0];
+			var item = currentItem !== undefined ? currentItem.data : {};
 			return item;
 		},
 		getChartOrigin: function getChartOrigin(origin, contextWidth, contextHeight) {
 			var originCoordinates = typeof origin === "function" ? origin(contextWidth, contextHeight) : origin;
 			return originCoordinates;
 		},
-		getChartData: function getChartData(props, innerDimensions, partialData, fullData, other) {
+		getChartData: function getChartData(props, innerDimensions, partialData, fullData, other, domainL, domainR) {
 			var _this = this;
 	
 			var charts = this.getCharts(props);
@@ -508,7 +402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			return charts.map(function (each) {
 				var chartProps = each.props;
 				var config = _this.getChartConfigFor(innerDimensions, chartProps, partialData, fullData, other);
-				var plot = _this.getChartPlotFor(config, partialData);
+				var plot = _this.getChartPlotFor(config, partialData, domainL, domainR);
 	
 				// console.log(config.compareSeries);
 	
@@ -556,6 +450,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 		getChartConfigFor: function getChartConfigFor(innerDimension, chartProps, partialData, fullData, passThroughProps) {
 			var padding = chartProps.padding;
+			var margin = chartProps.margin;
 	
 			var dimensions = this.getDimensions(innerDimension, chartProps);
 			// var indicator = this.getIndicator(chartProps);
@@ -642,7 +537,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			var scales = this.updateScales(xyValues, config.scaleType, partialData, config.width, config.height, config.padding, domain);
 	
-			if (domainL && domainR) scales.xScale.domain([domainL, domainR]);
+			if (domainL !== undefined && domainR !== undefined) {
+				scales.xScale.domain([domainL, domainR]);
+			}
 	
 			var plot = {
 				overlayValues: overlayValues,
@@ -2431,6 +2328,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsShallowEqual2 = _interopRequireDefault(_utilsShallowEqual);
 	
+	var _transforms = __webpack_require__(10);
+	
 	var _objectAssign = __webpack_require__(3);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
@@ -2440,6 +2339,16 @@ return /******/ (function(modules) { // webpackBootstrap
 			return value.getTime();
 		}
 		return value;
+	}
+	function deepEquals(arr1, arr2) {
+		if (arr1.length === arr2.length) {
+			var result = true;
+			arr1.forEach(function (each, i) {
+				result = result && each.transform === arr2[i].transform && each.options === arr2[i].options;
+			});
+			return result;
+		}
+		return false;
 	}
 	
 	var EventHandler = (function (_PureComponent) {
@@ -2458,6 +2367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.handlePanEnd = this.handlePanEnd.bind(this);
 			this.handleFocus = this.handleFocus.bind(this);
 			this.deltaXY = this.deltaXY.bind(this);
+			this.getCanvasContexts = this.getCanvasContexts.bind(this);
 	
 			this.state = {
 				focus: false,
@@ -2480,16 +2390,42 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 			}
 		}, {
+			key: "getTransformedData",
+			value: function getTransformedData(rawData, defaultDataTransform, dataTransform, interval) {
+				var i = 0,
+				    eachTransform,
+				    options = {},
+				    data = rawData;
+				var transforms = defaultDataTransform.concat(dataTransform);
+				for (i = 0; i < transforms.length; i++) {
+					// console.log(transforms[i]);
+					eachTransform = transforms[i].transform();
+					options = (0, _objectAssign2["default"])({}, options, transforms[i].options);
+					options = eachTransform.options(options);
+					data = eachTransform(data, interval);
+				}
+				return {
+					data: data,
+					options: options
+				};
+			}
+		}, {
 			key: "componentWillMount",
 			value: function componentWillMount() {
 				// console.log("EventHandler.componentWillMount");
 				var props = this.props;
 				var context = this.context;
-				var data = props.data;
 				var initialDisplay = props.initialDisplay;
-				var options = props.options;
+				var rawData = props.rawData;
+				var defaultDataTransform = props.defaultDataTransform;
+				var dataTransform = props.dataTransform;
 				var interval = props.interval;
 				var dimensions = props.dimensions;
+	
+				var transformedData = this.getTransformedData(rawData, defaultDataTransform, dataTransform, interval);
+	
+				var data = transformedData.data;
+				var options = transformedData.options;
 	
 				var dataForInterval = data[interval];
 				var mainChart = _utilsChartDataUtil2["default"].getMainChart(props.children);
@@ -2499,58 +2435,326 @@ return /******/ (function(modules) { // webpackBootstrap
 				var chartData = _utilsChartDataUtil2["default"].getChartData(props, dimensions, plotData, data, options);
 	
 				this.setState({
+					data: data,
+					rawData: rawData,
+					options: options,
 					plotData: plotData,
 					chartData: chartData,
 					interval: this.props.interval,
 					mainChart: mainChart,
 					currentCharts: [mainChart],
-					initialRender: true
+					initialRender: true,
+					secretToSuperFastCanvasDraw: []
 				});
 			}
 		}, {
 			key: "componentWillReceiveProps",
 			value: function componentWillReceiveProps(nextProps) {
+				var _props = this.props;
+				var prevData = _props.rawData;
+				var prevDataTransform = _props.dataTransform;
+				var nextData = nextProps.rawData;
+				var nextDataTransform = nextProps.dataTransform;
+				var dimensions = nextProps.dimensions;
+				var initialDisplay = nextProps.initialDisplay;
+				var defaultDataTransform = nextProps.defaultDataTransform;
+				var intervalProp = nextProps.interval;
+				var _state = this.state;
+				var data = _state.data;
+				var options = _state.options;
+				var interval = _state.interval;
+				var chartData = _state.chartData;
+				var plotData = _state.plotData;
+				var rawData = _state.rawData;
 	
-				if (nextProps.type !== "svg" && this.state.initialRender) {
-					this.setState({
-						initialRender: false
-					});
+				var prevDataForInterval = data[interval];
+	
+				var dataChanged = false;
+				if (prevData !== nextData || !deepEquals(prevDataTransform, nextDataTransform)) {
+					var transformedData = this.getTransformedData(nextData, defaultDataTransform, nextDataTransform, intervalProp);
+					data = transformedData.data;
+					options = transformedData.options;
+	
+					dataChanged = true;
+					rawData = nextData;
+				}
+	
+				var dataForInterval = data[interval];
+	
+				var mainChart = _utilsChartDataUtil2["default"].getMainChart(nextProps.children);
+				var mainChartData = chartData.filter(function (each) {
+					return each.id === mainChart;
+				})[0];
+				var xScale = mainChartData.plot.scales.xScale;
+	
+				var domainL,
+				    domainR,
+				    startDomain = xScale.domain();
+				// console.log(dataPushed, lastItemVisible);
+	
+				if (dataChanged) {
+					var beginIndex = Math.max(dataForInterval.length - initialDisplay, 0);
+					var endIndex = dataForInterval.length;
+	
+					plotData = dataForInterval.slice(beginIndex, endIndex);
 				} else {
-					var _state = this.state;
-					var interval = _state.interval;
-					var chartData = _state.chartData;
-					var plotData = _state.plotData;
-					var data = nextProps.data;
-					var options = nextProps.options;
-					var dimensions = nextProps.dimensions;
 	
-					var dataForInterval = data[interval];
-					var mainChart = _utilsChartDataUtil2["default"].getMainChart(nextProps.children);
-					var mainChartData = chartData.filter(function (each) {
-						return each.id === mainChart;
-					})[0];
-					var xAccessor = mainChartData.config.xAccessor;
-					var domainL = xAccessor(plotData[0]);
-					var domainR = xAccessor(plotData[plotData.length - 1]);
+					domainL = startDomain[0];
+					domainR = startDomain[1];
+				}
 	
+				// console.log(plotData[0], plotData[plotData.length - 1]);
+				var newChartData = _utilsChartDataUtil2["default"].getChartData(nextProps, dimensions, plotData, data, options);
+	
+				newChartData = newChartData.map(function (eachChart) {
+					var plot = _utilsChartDataUtil2["default"].getChartPlotFor(eachChart.config, plotData, domainL, domainR);
+					return {
+						id: eachChart.id,
+						config: eachChart.config,
+						plot: plot
+					};
+				});
+	
+				var newCurrentItems = _utilsChartDataUtil2["default"].getCurrentItems(newChartData, this.state.mouseXY, plotData);
+	
+				this.clearBothCanvas(nextProps);
+	
+				this.setState({
+					rawData: rawData,
+					data: data,
+					options: options,
+					chartData: newChartData,
+					plotData: plotData,
+					currentItems: newCurrentItems,
+					mainChart: mainChart,
+					initialRender: false,
+					secretToSuperFastCanvasDraw: [],
+					canvases: null
+				});
+			}
+		}, {
+			key: "pushData",
+			value: function pushData(array) {
+				var _this = this;
+	
+				if (array === undefined || array === null || array.length === 0) return;
+	
+				var _props2 = this.props;
+				var dataTransform = _props2.dataTransform;
+				var defaultDataTransform = _props2.defaultDataTransform;
+				var dimensions = _props2.dimensions;
+				var _state2 = this.state;
+				var rawData = _state2.rawData;
+				var data = _state2.data;
+				var options = _state2.options;
+				var interval = _state2.interval;
+				var chartData = _state2.chartData;
+				var plotData = _state2.plotData;
+				var mainChart = _state2.mainChart;
+	
+				var newRawData = rawData.concat(array);
+				var transformedData = this.getTransformedData(newRawData, defaultDataTransform, dataTransform, interval);
+	
+				var prevDataForInterval = data[interval];
+				var dataForInterval = transformedData.data[interval];
+	
+				var mainChartData = chartData.filter(function (each) {
+					return each.id === mainChart;
+				})[0];
+				var xAccessor = mainChartData.config.xAccessor;
+				var xScale = mainChartData.plot.scales.xScale;
+	
+				var deltaPushed = array.length;
+	
+				var startDomain = xScale.domain();
+				var domainL, domainR;
+	
+				var lastItemVisible = plotData[plotData.length - 1] === prevDataForInterval[prevDataForInterval.length - 1];
+	
+				var beginIndex, endIndex;
+				if (lastItemVisible) {
+					var left = xAccessor(plotData[deltaPushed]);
+	
+					var tick = xScale(xAccessor(plotData[1])) - xScale(xAccessor(plotData[0]));
+	
+					// console.log(tick);
+	
+					if (xScale(xAccessor(plotData[0])) - xScale(startDomain[0]) > tick) {
+						left = xAccessor(plotData[0]);
+					}
+	
+					beginIndex = _utilsUtils2["default"].getClosestItemIndexes(dataForInterval, left, xAccessor).left;
+					endIndex = dataForInterval.length;
+				} else {
+					//
+					domainL = startDomain[0];
+					domainR = startDomain[1];
 					var beginIndex = _utilsUtils2["default"].getClosestItemIndexes(dataForInterval, domainL, xAccessor).left;
-					var endIndex = _utilsUtils2["default"].getClosestItemIndexes(dataForInterval, domainR, xAccessor).right;
+					var endIndex = beginIndex + plotData.length;
+				}
 	
-					// console.log(plotData[0], plotData[plotData.length - 1]);
-					var newPlotData = dataForInterval.slice(beginIndex, endIndex);
-					// console.log(newPlotData[0], newPlotData[newPlotData.length - 1]);
-					var newChartData = _utilsChartDataUtil2["default"].getChartData(nextProps, dimensions, newPlotData, data, options);
-					// console.log("componentWillReceiveProps");
-					this.setState({
+				var newPlotData = dataForInterval.slice(beginIndex, endIndex);
+	
+				if (lastItemVisible && domainL === undefined) {
+					if (startDomain[1] > xAccessor(plotData[plotData.length - 1])) {
+						domainL = startDomain[0] + (xAccessor(newPlotData[newPlotData.length - 1]) - xAccessor(plotData[plotData.length - 1]));
+						domainR = startDomain[1] + (xAccessor(newPlotData[newPlotData.length - 1]) - xAccessor(plotData[plotData.length - 1]));
+					}
+				}
+	
+				var newChartData = _utilsChartDataUtil2["default"].getChartData(this.props, dimensions, newPlotData, transformedData.data, transformedData.options);
+	
+				if (domainL === undefined) {
+					domainL = xAccessor(newPlotData[0]);
+					domainR = xAccessor(newPlotData[newPlotData.length - 1]);
+				}
+	
+				var l = 2,
+				    i = 0,
+				    speed = 16;
+	
+				var updateState = function updateState(L, R) {
+					newChartData = newChartData.map(function (eachChart) {
+						var plot = _utilsChartDataUtil2["default"].getChartPlotFor(eachChart.config, newPlotData, L, R);
+						return {
+							id: eachChart.id,
+							config: eachChart.config,
+							plot: plot
+						};
+					});
+	
+					var newCurrentItems = _utilsChartDataUtil2["default"].getCurrentItems(newChartData, _this.state.mouseXY, newPlotData);
+	
+					_this.clearBothCanvas(_this.props);
+	
+					// console.log(L, R, this.state.secretToSuperFastCanvasDraw.length);
+	
+					_this.setState({
+						rawData: newRawData,
+						data: transformedData.data,
+						options: transformedData.options,
 						chartData: newChartData,
 						plotData: newPlotData,
-						currentItems: [],
-						show: false,
-						mouseXY: [0, 0],
-						mainChart: mainChart,
-						initialRender: false
+						currentItems: newCurrentItems,
+						secretToSuperFastCanvasDraw: [],
+						canvases: null
+					});
+				};
+				if (lastItemVisible) {
+	
+					var timeout = setInterval(function () {
+						var dxL = (startDomain[0] - domainL) / l;
+						var dxR = (startDomain[1] - domainR) / l;
+	
+						i++;
+	
+						var L = i === l ? domainL : startDomain[0] - dxL * i;
+						var R = i === l ? domainR : startDomain[1] - dxR * i;
+						// console.log(i, L, domainL, R, domainR);
+						// console.log(startDomain[0], domainL, startDomain[0] - dxL * i, i);
+						// console.log(startDomain[1], domainR, startDomain[1] - dxR * i, i);
+	
+						updateState(L, R);
+						if (i === l) clearInterval(timeout);
+					}, speed);
+				} else {
+					this.setState({
+						rawData: newRawData,
+						data: transformedData.data,
+						options: transformedData.options
 					});
 				}
+			}
+		}, {
+			key: "alterData",
+			// chartData: newChartData,
+			// plotData: newPlotData,
+			// currentItems: newCurrentItems,
+			// secretToSuperFastCanvasDraw: [],
+			// canvases: null,
+			value: function alterData(newRawData) {
+				if (newRawData === undefined || newRawData === null || newRawData.length === 0) return;
+	
+				var _props3 = this.props;
+				var dataTransform = _props3.dataTransform;
+				var defaultDataTransform = _props3.defaultDataTransform;
+				var dimensions = _props3.dimensions;
+				var _state3 = this.state;
+				var rawData = _state3.rawData;
+				var data = _state3.data;
+				var options = _state3.options;
+				var interval = _state3.interval;
+				var chartData = _state3.chartData;
+				var plotData = _state3.plotData;
+				var mainChart = _state3.mainChart;
+	
+				if (rawData.length !== newRawData.length) {
+					console.log(rawData.length, newRawData.length);
+					throw Error("Have to update data of same length");
+				}
+	
+				var transformedData = this.getTransformedData(newRawData, defaultDataTransform, dataTransform, interval);
+	
+				var dataForInterval = transformedData.data[interval];
+	
+				var mainChartData = chartData.filter(function (each) {
+					return each.id === mainChart;
+				})[0];
+				var xAccessor = mainChartData.config.xAccessor;
+				var xScale = mainChartData.plot.scales.xScale;
+	
+				var startDomain = xScale.domain();
+	
+				var left = xAccessor(plotData[0]);
+				var beginIndex = _utilsUtils2["default"].getClosestItemIndexes(dataForInterval, left, xAccessor).left;
+				var endIndex = beginIndex + plotData.length;
+	
+				var newPlotData = dataForInterval.slice(beginIndex, endIndex);
+	
+				var newChartData = _utilsChartDataUtil2["default"].getChartData(this.props, dimensions, newPlotData, transformedData.data, transformedData.options);
+	
+				newChartData = newChartData.map(function (eachChart) {
+					var plot = _utilsChartDataUtil2["default"].getChartPlotFor(eachChart.config, newPlotData, startDomain[0], startDomain[1]);
+					return {
+						id: eachChart.id,
+						config: eachChart.config,
+						plot: plot
+					};
+				});
+	
+				var newCurrentItems = _utilsChartDataUtil2["default"].getCurrentItems(newChartData, this.state.mouseXY, newPlotData);
+	
+				this.clearBothCanvas(this.props);
+	
+				// console.log(newPlotData.length);
+	
+				this.setState({
+					rawData: newRawData,
+					data: transformedData.data,
+					options: transformedData.options,
+					chartData: newChartData,
+					plotData: newPlotData,
+					currentItems: newCurrentItems,
+					secretToSuperFastCanvasDraw: [],
+					canvases: null
+				});
+			}
+		}, {
+			key: "clearBothCanvas",
+			value: function clearBothCanvas(props) {
+				props = props || this.props;
+				var canvases = props.canvasContexts();
+				if (canvases && canvases.axes) {
+					this.clearCanvas([canvases.axes, canvases.mouseCoord]);
+				}
+			}
+		}, {
+			key: "clearCanvas",
+			value: function clearCanvas(canvasList) {
+				canvasList.forEach(function (each) {
+					each.setTransform(1, 0, 0, 1, 0, 0);
+					each.clearRect(-1, -1, each.canvas.width + 2, each.canvas.height + 2);
+				});
 			}
 		}, {
 			key: "getChildContext",
@@ -2567,8 +2771,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					width: this.props.dimensions.width,
 					height: this.props.dimensions.height,
 					type: this.props.type,
-					dateAccessor: this.props.options.dateAccessor,
+					dateAccessor: this.state.options.dateAccessor,
+					secretToSuperFastCanvasDraw: this.state.secretToSuperFastCanvasDraw,
+					margin: this.props.margin,
 	
+					getCanvasContexts: this.getCanvasContexts,
 					onMouseMove: this.handleMouseMove,
 					onMouseEnter: this.handleMouseEnter,
 					onMouseLeave: this.handleMouseLeave,
@@ -2594,6 +2801,17 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 				var currentItems = _utilsChartDataUtil2["default"].getCurrentItems(this.state.chartData, mouseXY, this.state.plotData);
 	
+				var chartData = this.state.chartData;
+	
+				var contexts = this.getCanvasContexts();
+	
+				if (contexts && contexts.mouseCoord) {
+					var mouseCoord = contexts.mouseCoord;
+	
+					mouseCoord.setTransform(1, 0, 0, 1, 0, 0);
+					mouseCoord.clearRect(-1, -1, mouseCoord.canvas.width + 2, mouseCoord.canvas.height + 2);
+				}
+	
 				this.setState({
 					mouseXY: mouseXY,
 					currentItems: currentItems,
@@ -2602,17 +2820,43 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			}
 		}, {
+			key: "getCanvasContexts",
+			value: function getCanvasContexts() {
+				// console.log(this.state.canvases, this.props.canvasContexts())
+				return this.state.canvases || this.props.canvasContexts();
+			}
+		}, {
 			key: "handleMouseEnter",
 			value: function handleMouseEnter() {
-				// console.log("enter");
+				// if type === svg remove state.canvases
+				// if type !== svg get canvases and set in state if state.canvases is not present already
+				var _props4 = this.props;
+				var type = _props4.type;
+				var canvasContexts = _props4.canvasContexts;
+				var canvases = this.state.canvases;
+	
+				if (type === "svg") {
+					canvases = null;
+				} else {
+					canvases = canvasContexts();
+				}
 				this.setState({
-					show: true
+					show: true,
+					canvases: canvases
 				});
 			}
 		}, {
 			key: "handleMouseLeave",
 			value: function handleMouseLeave() {
-				// console.log("leave");
+				var contexts = this.getCanvasContexts();
+	
+				if (contexts && contexts.mouseCoord) {
+					var mouseCoord = contexts.mouseCoord;
+	
+					mouseCoord.setTransform(1, 0, 0, 1, 0, 0);
+					mouseCoord.clearRect(-1, -1, mouseCoord.canvas.width + 2, mouseCoord.canvas.height + 2);
+				}
+	
 				this.setState({
 					show: false
 				});
@@ -2621,12 +2865,12 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: "handleZoom",
 			value: function handleZoom(zoomDirection, mouseXY) {
 				// console.log("zoomDirection ", zoomDirection, " mouseXY ", mouseXY);
-				var _state2 = this.state;
-				var mainChart = _state2.mainChart;
-				var chartData = _state2.chartData;
-				var plotData = _state2.plotData;
-				var interval = _state2.interval;
-				var data = this.props.data;
+				var _state4 = this.state;
+				var data = _state4.data;
+				var mainChart = _state4.mainChart;
+				var chartData = _state4.chartData;
+				var plotData = _state4.plotData;
+				var interval = _state4.interval;
 	
 				var chart = chartData.filter(function (eachChart) {
 					return eachChart.id === mainChart;
@@ -2658,10 +2902,13 @@ return /******/ (function(modules) { // webpackBootstrap
 						plot: plot
 					};
 				});
+				this.clearBothCanvas();
+	
 				this.setState({
 					chartData: newChartData,
 					plotData: dataToPlot.data,
-					interval: dataToPlot.interval
+					interval: dataToPlot.interval,
+					secretToSuperFastCanvasDraw: []
 				});
 			}
 		}, {
@@ -2676,88 +2923,171 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			}
 		}, {
+			key: "panHelper",
+			value: function panHelper(mousePosition) {
+				var _state5 = this.state;
+				var data = _state5.data;
+				var mainChart = _state5.mainChart;
+				var chartData = _state5.chartData;
+				var interval = _state5.interval;
+				var panStartDomain = _state5.panStartDomain;
+				var panOrigin = _state5.panOrigin;
+	
+				var chart = chartData.filter(function (eachChart) {
+					return eachChart.id === mainChart;
+				})[0],
+				    domainRange = panStartDomain[1] - panStartDomain[0],
+				    fullData = data[interval],
+				    last = fullData[fullData.length - 1],
+				    first = fullData[0],
+				    dx = mousePosition[0] - panOrigin[0],
+				    xAccessor = chart.config.xAccessor;
+	
+				// console.log("pan -- mouse move - ", mousePosition, " dragged by ", dx, " pixels");
+	
+				var domainStart = getLongValue(panStartDomain[0]) - dx / chart.config.width * domainRange;
+				if (domainStart < getLongValue(xAccessor(first)) - Math.floor(domainRange / 3)) {
+					domainStart = getLongValue(xAccessor(first)) - Math.floor(domainRange / 3);
+				} else {
+					domainStart = Math.min(getLongValue(xAccessor(last)) + Math.ceil(domainRange / 3), domainStart + domainRange) - domainRange;
+				}
+				var domainL = domainStart,
+				    domainR = domainStart + domainRange;
+				if (panStartDomain[0] instanceof Date) {
+					domainL = new Date(domainL);
+					domainR = new Date(domainR);
+				}
+	
+				var beginIndex = _utilsUtils2["default"].getClosestItemIndexes(fullData, domainL, xAccessor).left;
+				var endIndex = _utilsUtils2["default"].getClosestItemIndexes(fullData, domainR, xAccessor).right;
+	
+				var filteredData = fullData.slice(beginIndex, endIndex);
+	
+				var newChartData = chartData.map(function (eachChart) {
+					var plot = _utilsChartDataUtil2["default"].getChartPlotFor(eachChart.config, filteredData, domainL, domainR);
+					return {
+						id: eachChart.id,
+						config: eachChart.config,
+						plot: plot
+					};
+				});
+				var currentItems = _utilsChartDataUtil2["default"].getCurrentItems(newChartData, mousePosition, filteredData);
+	
+				var currentCharts = newChartData.filter(function (eachChartData) {
+					var top = eachChartData.config.origin[1];
+					var bottom = top + eachChartData.config.height;
+					return mousePosition[1] > top && mousePosition[1] < bottom;
+				}).map(function (eachChartData) {
+					return eachChartData.id;
+				});
+				return {
+					plotData: filteredData,
+					// show: true,
+					mouseXY: mousePosition,
+					currentCharts: currentCharts,
+					chartData: newChartData,
+					currentItems: currentItems
+				};
+			}
+		}, {
+			key: "getCurrentCanvasContext",
+			value: function getCurrentCanvasContext(canvasList, chartId) {
+				var canvasContextList = canvasList.filter(function (each) {
+					return parseInt(each.id, 10) === chartId;
+				});
+				var canvasContext = canvasContextList.length > 0 ? canvasContextList[0].context : undefined;
+				return canvasContext;
+			}
+		}, {
 			key: "handlePan",
 			value: function handlePan(mousePosition, startDomain) {
-				// console.log("mousePosition ", mousePosition);
-				/* can also use plotData, use this if you want to pan and show only within that data set*/
-				var _state3 = this.state;
-				var mainChart = _state3.mainChart;
-				var chartData = _state3.chartData;
-				var interval = _state3.interval;
-				var panStartDomain = _state3.panStartDomain;
-				var panOrigin = _state3.panOrigin;
-				var data = this.props.data;
+				var _this2 = this;
 	
-				if (panStartDomain === null) {
+				/* can also use plotData, use this if you want to pan and show only within that data set*/
+				if (this.state.panStartDomain === null) {
 					this.handlePanStart(startDomain, mousePosition);
 				} else {
-					// requestAnimationFrame(() => {
-					var chart = chartData.filter(function (eachChart) {
-						return eachChart.id === mainChart;
-					})[0],
-					    domainRange = panStartDomain[1] - panStartDomain[0],
-					    fullData = data[interval],
-					    last = fullData[fullData.length - 1],
-					    first = fullData[0],
-					    dx = mousePosition[0] - panOrigin[0],
-					    xAccessor = chart.config.xAccessor;
 	
-					// console.log("pan -- mouse move - ", mousePosition, " dragged by ", dx, " pixels");
+					var state = this.panHelper(mousePosition);
+					// console.log(this.state.secretToSuperFastCanvasDraw);
+					if (this.props.type !== "svg") {
+						var _context = this.context;
+						var canvasList = _context.canvasList;
+						var getCanvasContexts = _context.getCanvasContexts;
+						var margin = _context.margin;
 	
-					var domainStart = getLongValue(panStartDomain[0]) - dx / chart.config.width * domainRange;
-					if (domainStart < getLongValue(xAccessor(first)) - Math.floor(domainRange / 3)) {
-						domainStart = getLongValue(xAccessor(first)) - Math.floor(domainRange / 3);
+						var _getCanvasContexts = this.getCanvasContexts();
+	
+						var axesCanvasContext = _getCanvasContexts.axes;
+						var mouseContext = _getCanvasContexts.mouseCoord;
+						var chartData = state.chartData;
+						var plotData = state.plotData;
+	
+						requestAnimationFrame(function () {
+							_this2.clearCanvas([axesCanvasContext, mouseContext]);
+	
+							chartData.forEach(function (eachChart) {
+								_this2.state.secretToSuperFastCanvasDraw.filter(function (each) {
+									return eachChart.id === each.chartId;
+								}).forEach(function (each) {
+									var _eachChart$plot$scales = eachChart.plot.scales;
+									var xScale = _eachChart$plot$scales.xScale;
+									var yScale = _eachChart$plot$scales.yScale;
+	
+									eachChart.config.overlays.filter(function (eachOverlay) {
+										return eachOverlay.id === each.seriesId;
+									}).forEach(function (eachOverlay) {
+										// console.log("Do Stuff here", i);
+										var _eachChart$config = eachChart.config;
+										var xAccessor = _eachChart$config.xAccessor;
+										var compareSeries = _eachChart$config.compareSeries;
+										var yAccessor = eachOverlay.yAccessor;
+	
+										// xScale, yScale, plotData
+										each.draw(axesCanvasContext, xScale, yScale, plotData);
+									});
+									if (each.type === "axis") {
+										each.draw(axesCanvasContext, eachChart, xScale, yScale);
+									}
+								});
+							});
+							_this2.state.secretToSuperFastCanvasDraw.filter(function (each) {
+								return each.chartId === undefined;
+							}).filter(function (each) {
+								return each.type === "axis";
+							}).forEach(function (each) {
+								return each.draw(axesCanvasContext, chartData);
+							});
+	
+							_this2.state.secretToSuperFastCanvasDraw.filter(function (each) {
+								return each.type === "mouse";
+							}).forEach(function (each) {
+								return each.draw(mouseContext, _this2.state.show, state.mouseXY, state.currentCharts, state.chartData, state.currentItems);
+							});
+	
+							_this2.state.secretToSuperFastCanvasDraw.filter(function (each) {
+								return each.type === "currentcoordinate";
+							}).forEach(function (each) {
+								return each.draw(mouseContext, _this2.state.show, state.mouseXY, state.currentCharts, state.chartData, state.currentItems);
+							});
+						});
 					} else {
-						domainStart = Math.min(getLongValue(xAccessor(last)) + Math.ceil(domainRange / 3), domainStart + domainRange) - domainRange;
+						this.setState(state);
 					}
-					var domainL = domainStart,
-					    domainR = domainStart + domainRange;
-					if (panStartDomain[0] instanceof Date) {
-						domainL = new Date(domainL);
-						domainR = new Date(domainR);
-					}
-	
-					var beginIndex = _utilsUtils2["default"].getClosestItemIndexes(fullData, domainL, xAccessor).left;
-					var endIndex = _utilsUtils2["default"].getClosestItemIndexes(fullData, domainR, xAccessor).right;
-	
-					var filteredData = fullData.slice(beginIndex, endIndex);
-	
-					var newChartData = chartData.map(function (eachChart) {
-						var plot = _utilsChartDataUtil2["default"].getChartPlotFor(eachChart.config, filteredData, domainL, domainR);
-						return {
-							id: eachChart.id,
-							config: eachChart.config,
-							plot: plot
-						};
-					});
-					var currentItems = _utilsChartDataUtil2["default"].getCurrentItems(newChartData, mousePosition, filteredData);
-	
-					var currentCharts = newChartData.filter(function (eachChartData) {
-						var top = eachChartData.config.origin[1];
-						var bottom = top + eachChartData.config.height;
-						return mousePosition[1] > top && mousePosition[1] < bottom;
-					}).map(function (eachChartData) {
-						return eachChartData.id;
-					});
-	
-					this.setState({
-						chartData: newChartData,
-						plotData: filteredData,
-						currentItems: currentItems,
-						// show: true,
-						mouseXY: mousePosition,
-						currentCharts: currentCharts
-					});
-					// });
 				}
 			}
 		}, {
 			key: "handlePanEnd",
-			value: function handlePanEnd() {
-				this.setState({
+			value: function handlePanEnd(mousePosition) {
+				this.clearBothCanvas();
+	
+				var state = this.panHelper(mousePosition);
+				this.setState((0, _objectAssign2["default"])({}, state, {
+					show: this.state.show,
 					panInProgress: false,
-					panStartDomain: null
-				});
+					panStartDomain: null,
+					secretToSuperFastCanvasDraw: []
+				}));
 			}
 		}, {
 			key: "handleFocus",
@@ -2770,10 +3100,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "render",
 			value: function render() {
-				var _this = this;
+				var _this3 = this;
 	
 				var children = _react2["default"].Children.map(this.props.children, function (child) {
-					var newChild = _utilsUtils2["default"].isReactVersion13() ? _react2["default"].withContext(_this.getChildContext(), function () {
+					var newChild = _utilsUtils2["default"].isReactVersion13() ? _react2["default"].withContext(_this3.getChildContext(), function () {
 						return _react2["default"].createElement(child.type, (0, _objectAssign2["default"])({ key: child.key, ref: child.ref }, child.props));
 					}) : _react2["default"].cloneElement(child);
 					// React.createElement(child.type, objectAssign({ key: child.key, ref: child.ref}, child.props));
@@ -2791,6 +3121,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		return EventHandler;
 	})(_utilsPureComponent2["default"]);
 	
+	EventHandler.defaultProps = {
+		defaultDataTransform: [{ transform: _transforms.DummyTransformer }]
+	};
+	
 	EventHandler.childContextTypes = {
 		plotData: _react2["default"].PropTypes.array,
 		chartData: _react2["default"].PropTypes.array,
@@ -2804,7 +3138,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		height: _react2["default"].PropTypes.number.isRequired,
 		type: _react2["default"].PropTypes.oneOf(["svg", "hybrid"]).isRequired,
 		dateAccessor: _react2["default"].PropTypes.func,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired,
+		margin: _react2["default"].PropTypes.object.isRequired,
 	
+		getCanvasContexts: _react2["default"].PropTypes.func,
 		onMouseMove: _react2["default"].PropTypes.func,
 		onMouseEnter: _react2["default"].PropTypes.func,
 		onMouseLeave: _react2["default"].PropTypes.func,
@@ -2947,6 +3284,84 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _utilsUtils = __webpack_require__(8);
+	
+	var _utilsUtils2 = _interopRequireDefault(_utilsUtils);
+	
+	var CanvasContainer = (function (_React$Component) {
+		_inherits(CanvasContainer, _React$Component);
+	
+		function CanvasContainer() {
+			_classCallCheck(this, CanvasContainer);
+	
+			_get(Object.getPrototypeOf(CanvasContainer.prototype), "constructor", this).apply(this, arguments);
+		}
+	
+		_createClass(CanvasContainer, [{
+			key: "getCanvasContexts",
+			value: function getCanvasContexts() {
+				var axesCanvasDOM = _utilsUtils2["default"].isReactVersion14() ? this.refs.canvas_axes : _react2["default"].findDOMNode(this.refs.canvas_axes);
+	
+				var mouseCoordDOM = _utilsUtils2["default"].isReactVersion14() ? this.refs.canvas_mouse_coordinates : _react2["default"].findDOMNode(this.refs.canvas_mouse_coordinates);
+	
+				if (this.refs.canvas_axes) {
+					return {
+						axes: axesCanvasDOM.getContext('2d'),
+						mouseCoord: mouseCoordDOM.getContext('2d')
+					};
+				}
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var height = _props.height;
+				var width = _props.width;
+				var type = _props.type;
+	
+				if (type === "svg") return null;
+				return _react2["default"].createElement(
+					"div",
+					null,
+					_react2["default"].createElement("canvas", { ref: "canvas_axes", width: width, height: height,
+						style: { position: "absolute", left: 0, top: 0, zIndex: -1 } }),
+					_react2["default"].createElement("canvas", { ref: "canvas_mouse_coordinates", width: width, height: height,
+						style: { position: "absolute", left: 0, top: 0, zIndex: -1 } })
+				);
+			}
+		}]);
+	
+		return CanvasContainer;
+	})(_react2["default"].Component);
+	
+	CanvasContainer.propTypes = {
+		width: _react2["default"].PropTypes.number.isRequired,
+		height: _react2["default"].PropTypes.number.isRequired,
+		type: _react2["default"].PropTypes.string.isRequired
+	};
+	
+	module.exports = CanvasContainer;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	var _objectAssign = __webpack_require__(3);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
@@ -2969,74 +3384,53 @@ return /******/ (function(modules) { // webpackBootstrap
 		function Chart() {
 			_classCallCheck(this, Chart);
 	
-			_get(Object.getPrototypeOf(Chart.prototype), "constructor", this).call(this);
-			this.state = {};
-			this.getCurrentCanvasContext = this.getCurrentCanvasContext.bind(this);
+			_get(Object.getPrototypeOf(Chart.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(Chart, [{
-			key: "getCurrentCanvasContext",
-			value: function getCurrentCanvasContext() {
-				var _this = this;
-	
-				var canvasContextList = this.context.canvasList.filter(function (each) {
-					return parseInt(each.id, 10) === _this.props.id;
-				});
-				var canvasContext = canvasContextList.length > 0 ? canvasContextList[0].context : undefined;
-				return canvasContext;
-			}
-		}, {
 			key: "getChildContext",
 			value: function getChildContext() {
-				var _this2 = this;
+				var _this = this;
 	
 				var chartData = this.context.chartData.filter(function (each) {
-					return each.id === _this2.props.id;
+					return each.id === _this.props.id;
 				})[0];
-				var canvasContext = this.getCurrentCanvasContext();
-				var origin = _utilsChartDataUtil2["default"].getChartOrigin(this.props.origin, this.context.width, this.context.height);
+	
+				var originX = 0.5 + chartData.config.origin[0] + this.context.margin.left;
+				var originY = 0.5 + chartData.config.origin[1] + this.context.margin.top;
+	
 				return {
+					chartId: this.props.id,
 					xScale: chartData.plot.scales.xScale,
 					yScale: chartData.plot.scales.yScale,
 					xAccessor: chartData.config.xAccessor,
-					// yAccessor: chartData.config.accessors.yAccessor,
 					overlays: chartData.config.overlays,
 					compareSeries: chartData.config.compareSeries,
-					// indicatorOptions: chartData.config.indicatorOptions,
-					isCompareSeries: chartData.config.compareSeries.length > 0,
 					chartData: chartData,
-					width: this.props.width || this.context.width,
-					height: this.props.height || this.context.height,
-					canvasContext: canvasContext
+					width: chartData.config.width,
+					height: chartData.config.height,
+					canvasOriginX: originX,
+					canvasOriginY: originY
 				};
-			}
-		}, {
-			key: "componentWillUpdate",
-			value: function componentWillUpdate() {
-				var canvasContext = this.getCurrentCanvasContext();
-				if (canvasContext) {
-					var width = this.props.width || this.context.width;
-					var height = this.props.height || this.context.height;
-					canvasContext.clearRect(-1, -1, width, height);
-				}
 			}
 		}, {
 			key: "render",
 			value: function render() {
-				var _this3 = this;
+				var _this2 = this;
 	
 				var origin = _utilsChartDataUtil2["default"].getChartOrigin(this.props.origin, this.context.width, this.context.height);
 				var children = _react2["default"].Children.map(this.props.children, function (child) {
-					var newChild = _utilsUtils2["default"].isReactVersion13() ? _react2["default"].withContext(_this3.getChildContext(), function () {
+					var newChild = _utilsUtils2["default"].isReactVersion13() ? _react2["default"].withContext(_this2.getChildContext(), function () {
 						return _react2["default"].createElement(child.type, (0, _objectAssign2["default"])({ key: child.key, ref: child.ref }, child.props));
 					}) : _react2["default"].cloneElement(child);
 					// React.createElement(child.type, objectAssign({ key: child.key, ref: child.ref}, child.props));
 					return newChild;
 				});
-				var left = origin[0] + 0.5; // refer to http://www.rgraph.net/docs/howto-get-crisp-lines-with-no-antialias.html - similar fix for svg here
+				var x = origin[0]; // + 0.5; // refer to http://www.rgraph.net/docs/howto-get-crisp-lines-with-no-antialias.html - similar fix for svg here
+				var y = origin[1]; // + 0.5; // refer to http://www.rgraph.net/docs/howto-get-crisp-lines-with-no-antialias.html - similar fix for svg here
 				return _react2["default"].createElement(
 					"g",
-					{ transform: "translate(" + left + ", " + origin[1] + ")" },
+					{ transform: "translate(" + x + ", " + y + ")" },
 					children
 				);
 			}
@@ -3072,7 +3466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		width: _react2["default"].PropTypes.number.isRequired,
 		height: _react2["default"].PropTypes.number.isRequired,
 		chartData: _react2["default"].PropTypes.array,
-		canvasList: _react2["default"].PropTypes.array,
+		margin: _react2["default"].PropTypes.object.isRequired,
 		type: _react2["default"].PropTypes.string.isRequired
 	};
 	
@@ -3081,20 +3475,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		yScale: _react2["default"].PropTypes.func.isRequired,
 		xAccessor: _react2["default"].PropTypes.func.isRequired,
 		chartData: _react2["default"].PropTypes.object.isRequired,
-		// yAccessor: React.PropTypes.func.isRequired,
 		overlays: _react2["default"].PropTypes.array.isRequired,
-		// indicatorOptions: React.PropTypes.object,
-		isCompareSeries: _react2["default"].PropTypes.bool.isRequired,
 		compareSeries: _react2["default"].PropTypes.array.isRequired,
 		width: _react2["default"].PropTypes.number.isRequired,
 		height: _react2["default"].PropTypes.number.isRequired,
-		canvasContext: _react2["default"].PropTypes.object
+		canvasOriginX: _react2["default"].PropTypes.number,
+		canvasOriginY: _react2["default"].PropTypes.number,
+		chartId: _react2["default"].PropTypes.number.isRequired
 	};
 	
 	module.exports = Chart;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3140,6 +3533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				})[0];
 	
 				return {
+					seriesId: this.props.id,
 					yAccessor: overlay.yAccessor,
 					indicator: overlay.indicator,
 					stroke: overlay.stroke,
@@ -3191,12 +3585,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		yAccessor: _react2["default"].PropTypes.func.isRequired,
 		indicator: _react2["default"].PropTypes.func,
 		stroke: _react2["default"].PropTypes.string,
-		fill: _react2["default"].PropTypes.string
+		fill: _react2["default"].PropTypes.string,
+		seriesId: _react2["default"].PropTypes.number.isRequired
 	};
 	module.exports = DataSeries;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3304,7 +3699,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					var dx = mouseEvent.pageX - mouseXY[0],
 					    dy = mouseEvent.pageY - mouseXY[1];
 	
-					var win = d3Window(_react2["default"].findDOMNode(this.refs.capture));
+					var captureDOM = _utilsUtils2["default"].isReactVersion14() ? this.refs.capture : _react2["default"].findDOMNode(this.refs.capture);
+	
+					var win = d3Window(captureDOM);
 					_d32["default"].select(win).on(mousemove, this.handlePan).on(mouseup, this.handlePanEnd);
 	
 					this.context.deltaXY([dx, dy]);
@@ -3332,12 +3729,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: "handlePanEnd",
-			value: function handlePanEnd() {
-				var win = d3Window(_react2["default"].findDOMNode(this.refs.capture));
+			value: function handlePanEnd(event) {
+				var deltaXY = this.context.deltaXY();
+				var newPos = [_d32["default"].event.pageX - deltaXY[0], _d32["default"].event.pageY - deltaXY[1]];
+	
+				var captureDOM = _utilsUtils2["default"].isReactVersion14() ? this.refs.capture : _react2["default"].findDOMNode(this.refs.capture);
+	
+				var win = d3Window(captureDOM);
 	
 				_d32["default"].select(win).on(mousemove, null).on(mouseup, null);
 				if (this.props.pan && this.context.onPanEnd) {
-					this.context.onPanEnd();
+					this.context.onPanEnd(newPos);
 				}
 				// e.preventDefault();
 			}
@@ -3420,7 +3822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = EventCapture;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3431,53 +3833,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _AreaSeries = __webpack_require__(26);
+	var _AreaSeries = __webpack_require__(27);
 	
 	var _AreaSeries2 = _interopRequireDefault(_AreaSeries);
 	
-	var _LineSeries = __webpack_require__(29);
+	var _LineSeries = __webpack_require__(31);
 	
 	var _LineSeries2 = _interopRequireDefault(_LineSeries);
 	
-	var _CompareSeries = __webpack_require__(30);
+	var _CompareSeries = __webpack_require__(32);
 	
 	var _CompareSeries2 = _interopRequireDefault(_CompareSeries);
 	
-	var _CandlestickSeries = __webpack_require__(31);
+	var _CandlestickSeries = __webpack_require__(33);
 	
 	var _CandlestickSeries2 = _interopRequireDefault(_CandlestickSeries);
 	
-	var _HistogramSeries = __webpack_require__(32);
+	var _HistogramSeries = __webpack_require__(34);
 	
 	var _HistogramSeries2 = _interopRequireDefault(_HistogramSeries);
 	
-	var _KagiSeries = __webpack_require__(33);
+	var _KagiSeries = __webpack_require__(35);
 	
 	var _KagiSeries2 = _interopRequireDefault(_KagiSeries);
 	
-	var _PointAndFigureSeries = __webpack_require__(34);
+	var _PointAndFigureSeries = __webpack_require__(36);
 	
 	var _PointAndFigureSeries2 = _interopRequireDefault(_PointAndFigureSeries);
 	
-	var _RenkoSeries = __webpack_require__(35);
+	var _RenkoSeries = __webpack_require__(37);
 	
 	var _RenkoSeries2 = _interopRequireDefault(_RenkoSeries);
 	
-	var _MACDSeries = __webpack_require__(36);
+	var _MACDSeries = __webpack_require__(38);
 	
 	var _MACDSeries2 = _interopRequireDefault(_MACDSeries);
 	
-	var _BollingerSeries = __webpack_require__(38);
+	var _BollingerSeries = __webpack_require__(40);
 	
 	var _BollingerSeries2 = _interopRequireDefault(_BollingerSeries);
 	
-	var _RSISeries = __webpack_require__(39);
+	var _RSISeries = __webpack_require__(41);
 	
 	var _RSISeries2 = _interopRequireDefault(_RSISeries);
 	
-	var _StochasticSeries = __webpack_require__(40);
+	var _StochasticSeries = __webpack_require__(42);
 	
 	var _StochasticSeries2 = _interopRequireDefault(_StochasticSeries);
+	
+	var _Area = __webpack_require__(30);
+	
+	var _Area2 = _interopRequireDefault(_Area);
+	
+	var _Line = __webpack_require__(28);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _StraightLine = __webpack_require__(39);
+	
+	var _StraightLine2 = _interopRequireDefault(_StraightLine);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	exports["default"] = {
 		AreaSeries: _AreaSeries2["default"],
@@ -3491,15 +3909,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		MACDSeries: _MACDSeries2["default"],
 		BollingerSeries: _BollingerSeries2["default"],
 		RSISeries: _RSISeries2["default"],
-		StochasticSeries: _StochasticSeries2["default"]
+		StochasticSeries: _StochasticSeries2["default"],
+		Area: _Area2["default"],
+		Line: _Line2["default"],
+		StraightLine: _StraightLine2["default"],
+		wrap: _wrap2["default"]
 	};
 	module.exports = exports["default"];
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -3515,17 +3941,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _Line = __webpack_require__(27);
+	var _Line = __webpack_require__(28);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Area = __webpack_require__(28);
+	var _Area = __webpack_require__(30);
 	
 	var _Area2 = _interopRequireDefault(_Area);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	var AreaSeries = (function (_React$Component) {
 		_inherits(AreaSeries, _React$Component);
@@ -3539,36 +3965,34 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(AreaSeries, [{
 			key: "render",
 			value: function render() {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-				var stroke = _context.stroke;
-				var fill = _context.fill;
-	
-				if (stroke === undefined) stroke = this.props.stroke;
-				if (fill === undefined) fill = this.props.fill;
-	
-				var opacity = this.props.opacity;
+				var props = this.props;
+				var className = props.className;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var type = props.type;
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var defaultStroke = props.defaultStroke;
+				var opacity = props.opacity;
 	
 				return _react2["default"].createElement(
 					"g",
 					null,
 					_react2["default"].createElement(_Line2["default"], {
-						className: this.props.className,
+						className: className,
 						xScale: xScale, yScale: yScale,
 						xAccessor: xAccessor, yAccessor: yAccessor,
-						data: plotData,
+						plotData: plotData,
 						stroke: stroke, fill: "none",
 						type: type }),
 					_react2["default"].createElement(_Area2["default"], {
-						className: this.props.className,
+						className: className,
 						xScale: xScale, yScale: yScale,
 						xAccessor: xAccessor, yAccessor: yAccessor,
-						data: plotData,
+						plotData: plotData,
 						stroke: "none", fill: fill, opacity: opacity,
 						type: type })
 				);
@@ -3579,171 +4003,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 	
 	AreaSeries.propTypes = {
-		stroke: _react2["default"].PropTypes.string.isRequired,
+		stroke: _react2["default"].PropTypes.string,
 		fill: _react2["default"].PropTypes.string.isRequired,
 		opacity: _react2["default"].PropTypes.number.isRequired,
 		className: _react2["default"].PropTypes.string
 	};
 	
-	AreaSeries.contextTypes = {
-		stroke: _react2["default"].PropTypes.string,
-		fill: _react2["default"].PropTypes.string,
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
-	};
-	
 	AreaSeries.defaultProps = {
-		namespace: "ReStock.AreaSeries",
-		stroke: "black",
+		stroke: "steelblue",
 		opacity: 0.5,
 		fill: "steelblue"
 	};
 	
-	module.exports = AreaSeries;
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var Line = (function (_React$Component) {
-		_inherits(Line, _React$Component);
-	
-		function Line(props) {
-			_classCallCheck(this, Line);
-	
-			_get(Object.getPrototypeOf(Line.prototype), "constructor", this).call(this, props);
-			this.getPath = this.getPath.bind(this);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
-		}
-	
-		_createClass(Line, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var _props = this.props;
-				var data = _props.data;
-				var xScale = _props.xScale;
-				var yScale = _props.yScale;
-				var xAccessor = _props.xAccessor;
-				var yAccessor = _props.yAccessor;
-				var stroke = _props.stroke;
-	
-				var path = this.getPath();
-				ctx.beginPath();
-	
-				var strokeStyle = ctx.strokeStyle;
-	
-				// console.log(stroke);
-				ctx.strokeStyle = stroke;
-				var begin = true;
-				data.forEach(function (d) {
-					if (yAccessor(d) === undefined) {
-						ctx.stroke();
-						ctx.beginPath();
-						begin = true;
-					} else {
-						if (begin) {
-							begin = false;
-							var x = xScale(xAccessor(d));
-							var y = yScale(yAccessor(d));
-	
-							ctx.moveTo(x, y);
-						}
-						ctx.lineTo(xScale(xAccessor(d)), yScale(yAccessor(d)));
-					}
-				});
-				ctx.stroke();
-				ctx.strokeStyle = strokeStyle;
-			}
-		}, {
-			key: "getPath",
-			value: function getPath() {
-				var _props2 = this.props;
-				var data = _props2.data;
-				var xScale = _props2.xScale;
-				var yScale = _props2.yScale;
-				var xAccessor = _props2.xAccessor;
-				var yAccessor = _props2.yAccessor;
-	
-				var dataSeries = _d32["default"].svg.line().defined(function (d) {
-					return yAccessor(d) !== undefined;
-				}).x(function (d) {
-					return xScale(xAccessor(d));
-				}).y(function (d) {
-					return yScale(yAccessor(d));
-				});
-				return dataSeries(data);
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var _props3 = this.props;
-				var type = _props3.type;
-				var stroke = _props3.stroke;
-				var fill = _props3.fill;
-				var className = _props3.className;
-	
-				if (type !== "svg") return null;
-	
-				className = className.concat(stroke ? "" : " line-stroke");
-				return _react2["default"].createElement("path", { d: this.getPath(), stroke: stroke, fill: fill, className: className });
-			}
-		}]);
-	
-		return Line;
-	})(_react2["default"].Component);
-	
-	Line.propTypes = {
-		className: _react2["default"].PropTypes.string,
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		data: _react2["default"].PropTypes.array.isRequired,
-		stroke: _react2["default"].PropTypes.string,
-		fill: _react2["default"].PropTypes.string,
-		type: _react2["default"].PropTypes.string.isRequired
-	};
-	Line.defaultProps = {
-		className: "line ",
-		fill: "none",
-		stroke: "black"
-	};
-	Line.contextTypes = {
-		canvasContext: _react2["default"].PropTypes.object
-	};
-	
-	module.exports = Line;
+	exports["default"] = (0, _wrap2["default"])(AreaSeries);
+	module.exports = exports["default"];
 
 /***/ },
 /* 28 */
@@ -3751,6 +4024,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -3769,122 +4046,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var Line = (function (_React$Component) {
 		_inherits(Line, _React$Component);
 	
-		function Line(props) {
+		function Line() {
 			_classCallCheck(this, Line);
 	
-			_get(Object.getPrototypeOf(Line.prototype), "constructor", this).call(this, props);
-			this.getArea = this.getArea.bind(this);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
+			_get(Object.getPrototypeOf(Line.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(Line, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var _props = this.props;
-				var data = _props.data;
-				var xScale = _props.xScale;
-				var yScale = _props.yScale;
-				var xAccessor = _props.xAccessor;
-				var yAccessor = _props.yAccessor;
-				var fill = _props.fill;
-				var stroke = _props.stroke;
-				var opacity = _props.opacity;
-				var base = _props.base;
-	
-				var begin = true;
-				var height = yScale.range()[0];
-				var newBase = base === undefined ? function () {
-					return height - 1;
-				} : base;
-	
-				var strokeStyle = ctx.strokeStyle;
-				var fillStyle = ctx.fillStyle;
-				var globalAlpha = ctx.globalAlpha;
-	
-				ctx.fillStyle = fill;
-				ctx.strokeStyle = stroke;
-				ctx.globalAlpha = opacity;
-	
-				data.forEach(function (d) {
-					if (yAccessor(d) !== undefined) {
-						if (begin) {
-							ctx.beginPath();
-							begin = false;
-							var x = xScale(xAccessor(d));
-							var y = yScale(yAccessor(d));
-	
-							ctx.moveTo(x, newBase(d));
-							ctx.lineTo(x, y);
-						}
-						ctx.lineTo(xScale(xAccessor(d)), yScale(yAccessor(d)));
-					}
-				});
-	
-				var last = data[data.length - 1];
-				ctx.lineTo(xScale(xAccessor(last)), newBase(last));
-	
-				if (base !== undefined) {
-					data.slice().reverse().forEach(function (d) {
-						if (yAccessor(d) !== undefined) {
-							ctx.lineTo(xScale(xAccessor(d)), base(d));
-						}
-					});
-				}
-				ctx.closePath();
-				ctx.fill();
-				ctx.fillStyle = fillStyle;
-				ctx.strokeStyle = strokeStyle;
-				ctx.globalAlpha = globalAlpha;
-			}
-		}, {
-			key: "getArea",
-			value: function getArea() {
-				var _props2 = this.props;
-				var data = _props2.data;
-				var xScale = _props2.xScale;
-				var yScale = _props2.yScale;
-				var xAccessor = _props2.xAccessor;
-				var yAccessor = _props2.yAccessor;
-				var base = _props2.base;
-	
-				var height = yScale.range()[0];
-				if (base === undefined) base = function () {
-					return height - 1;
-				};
-	
-				var areaSeries = _d32["default"].svg.area().defined(function (d) {
-					return yAccessor(d) !== undefined;
-				}).x(function (d) {
-					return xScale(xAccessor(d));
-				}).y0(base).y1(function (d) {
-					return yScale(yAccessor(d));
-				});
-	
-				return areaSeries(data);
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				var _props3 = this.props;
-				var type = _props3.type;
-				var stroke = _props3.stroke;
-				var fill = _props3.fill;
-				var className = _props3.className;
-				var opacity = _props3.opacity;
+				var props = this.props;
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var className = props.className;
 	
-				if (type !== "svg") return null;
-	
-				className = className.concat(stroke !== undefined ? "" : " line-stroke");
-				return _react2["default"].createElement("path", { d: this.getArea(), stroke: stroke, fill: fill, className: className, opacity: opacity });
+				className = className.concat(stroke ? "" : " line-stroke");
+				return _react2["default"].createElement("path", { d: Line.getPath(props), stroke: stroke, fill: fill, className: className });
 			}
 		}]);
 	
@@ -3897,29 +4081,289 @@ return /******/ (function(modules) { // webpackBootstrap
 		yScale: _react2["default"].PropTypes.func.isRequired,
 		xAccessor: _react2["default"].PropTypes.func.isRequired,
 		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		data: _react2["default"].PropTypes.array.isRequired,
+		plotData: _react2["default"].PropTypes.array.isRequired,
 		stroke: _react2["default"].PropTypes.string,
 		fill: _react2["default"].PropTypes.string,
-		opacity: _react2["default"].PropTypes.number,
-		type: _react2["default"].PropTypes.string.isRequired,
-		base: _react2["default"].PropTypes.func
+		type: _react2["default"].PropTypes.string.isRequired
 	};
+	
 	Line.defaultProps = {
 		className: "line ",
 		fill: "none",
-		opacity: 1
-	};
-	Line.contextTypes = {
-		canvasContext: _react2["default"].PropTypes.object
+		stroke: "black"
 	};
 	
-	module.exports = Line;
+	Line.getPath = function (props) {
+		var plotData = props.plotData;
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+	
+		var dataSeries = _d32["default"].svg.line().defined(function (d) {
+			return yAccessor(d) !== undefined;
+		}).x(function (d) {
+			return xScale(xAccessor(d));
+		}).y(function (d) {
+			return yScale(yAccessor(d));
+		});
+		return dataSeries(plotData);
+	};
+	
+	Line.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var stroke = props.stroke;
+	
+		var path = Line.getPath(props);
+	
+		ctx.strokeStyle = stroke;
+		ctx.beginPath();
+	
+		var begin = true;
+		plotData.forEach(function (d) {
+			if (yAccessor(d) === undefined) {
+				ctx.stroke();
+				ctx.beginPath();
+				begin = true;
+			} else {
+				if (begin) {
+					begin = false;
+					var x = xScale(xAccessor(d));
+					var y = yScale(yAccessor(d));
+	
+					ctx.moveTo(x, y);
+				}
+				ctx.lineTo(xScale(xAccessor(d)), yScale(yAccessor(d)));
+			}
+		});
+		ctx.stroke();
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(Line);
+	module.exports = exports["default"];
 
 /***/ },
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _objectAssign = __webpack_require__(3);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	function getDisplayName(Series) {
+		var name = Series.displayName || Series.name || "Series";
+		return name;
+	}
+	
+	function wrap(WrappedSeries) {
+		var BaseCanvasSeries = (function (_React$Component) {
+			_inherits(BaseCanvasSeries, _React$Component);
+	
+			function BaseCanvasSeries() {
+				_classCallCheck(this, BaseCanvasSeries);
+	
+				_get(Object.getPrototypeOf(BaseCanvasSeries.prototype), "constructor", this).apply(this, arguments);
+			}
+	
+			_createClass(BaseCanvasSeries, [{
+				key: "componentDidMount",
+				value: function componentDidMount() {
+					var callback = WrappedSeries.drawOnCanvas;
+					if (callback) {
+						var type = this.props.type;
+						var getCanvasContexts = this.context.getCanvasContexts;
+	
+						if (type !== "svg" && getCanvasContexts !== undefined) {
+							var contexts = getCanvasContexts();
+							if (contexts) BaseCanvasSeries.baseReStockDrawOnCanvasHelper(contexts.axes, this.context, this.props, callback);
+						}
+					}
+				}
+			}, {
+				key: "componentDidUpdate",
+				value: function componentDidUpdate() {
+					this.componentDidMount();
+				}
+			}, {
+				key: "componentWillMount",
+				value: function componentWillMount() {
+					this.componentWillReceiveProps(this.props, this.context);
+				}
+			}, {
+				key: "componentWillReceiveProps",
+				value: function componentWillReceiveProps(nextProps, nextContext) {
+					var callback = WrappedSeries.drawOnCanvas;
+					if (callback) {
+						var canvasOriginX = nextContext.canvasOriginX;
+						var canvasOriginY = nextContext.canvasOriginY;
+						var height = nextContext.height;
+						var width = nextContext.width;
+						var compareSeries = nextContext.compareSeries;
+						var indicator = nextContext.indicator;
+						var xAccessor = nextContext.xAccessor;
+						var yAccessor = nextContext.yAccessor;
+						var seriesId = nextContext.seriesId;
+						var chartId = nextContext.chartId;
+	
+						var canvasOrigin = [canvasOriginX, canvasOriginY];
+						var draw = BaseCanvasSeries.baseReStockDrawOnCanvas.bind(null, nextProps, callback, canvasOrigin, height, width, compareSeries, indicator, xAccessor, yAccessor);
+	
+						nextContext.secretToSuperFastCanvasDraw.push({
+							chartId: chartId,
+							seriesId: seriesId,
+							draw: draw
+						});
+					}
+				}
+			}, {
+				key: "render",
+				value: function render() {
+					var _context = this.context;
+					var type = _context.type;
+					var height = _context.height;
+					var width = _context.width;
+					var compareSeries = _context.compareSeries;
+					var indicator = _context.indicator;
+					var xAccessor = _context.xAccessor;
+					var yAccessor = _context.yAccessor;
+					var xScale = _context.xScale;
+					var yScale = _context.yScale;
+					var plotData = _context.plotData;
+					var stroke = _context.stroke;
+					var fill = _context.fill;
+	
+					var callback = WrappedSeries.drawOnCanvas;
+	
+					if (type !== "svg" && callback !== undefined) return null;
+					return _react2["default"].createElement(WrappedSeries, _extends({ ref: "wrappedSeries",
+						type: type,
+						height: height, width: width,
+						compareSeries: compareSeries,
+						indicator: indicator,
+						xAccessor: xAccessor, yAccessor: yAccessor,
+						xScale: xScale, yScale: yScale,
+						stroke: stroke, fill: fill,
+						plotData: plotData
+					}, this.props));
+				}
+			}]);
+	
+			return BaseCanvasSeries;
+		})(_react2["default"].Component);
+	
+		;
+	
+		BaseCanvasSeries.displayName = "wrap(" + getDisplayName(WrappedSeries) + ")";
+	
+		BaseCanvasSeries.contextTypes = {
+			getCanvasContexts: _react2["default"].PropTypes.func,
+			canvasOriginX: _react2["default"].PropTypes.number,
+			canvasOriginY: _react2["default"].PropTypes.number,
+			height: _react2["default"].PropTypes.number.isRequired,
+			width: _react2["default"].PropTypes.number.isRequired,
+			secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired,
+			chartId: _react2["default"].PropTypes.number.isRequired,
+			seriesId: _react2["default"].PropTypes.number.isRequired,
+			stroke: _react2["default"].PropTypes.string,
+			fill: _react2["default"].PropTypes.string,
+	
+			type: _react2["default"].PropTypes.string,
+			indicator: _react2["default"].PropTypes.func,
+			xScale: _react2["default"].PropTypes.func.isRequired,
+			yScale: _react2["default"].PropTypes.func.isRequired,
+			xAccessor: _react2["default"].PropTypes.func.isRequired,
+			yAccessor: _react2["default"].PropTypes.func.isRequired,
+			compareSeries: _react2["default"].PropTypes.array.isRequired,
+			plotData: _react2["default"].PropTypes.array.isRequired
+		};
+	
+		BaseCanvasSeries.baseReStockDrawOnCanvasHelper = function (canvasContext, context, props, callback) {
+			var height = context.height;
+			var width = context.width;
+			var compareSeries = context.compareSeries;
+			var indicator = context.indicator;
+			var xAccessor = context.xAccessor;
+			var yAccessor = context.yAccessor;
+			var xScale = context.xScale;
+			var yScale = context.yScale;
+			var plotData = context.plotData;
+			var canvasOriginX = context.canvasOriginX;
+			var canvasOriginY = context.canvasOriginY;
+	
+			var canvasOrigin = [canvasOriginX, canvasOriginY];
+			BaseCanvasSeries.baseReStockDrawOnCanvas(props, callback, canvasOrigin, height, width, compareSeries, indicator, xAccessor, yAccessor, canvasContext, xScale, yScale, plotData);
+		};
+	
+		BaseCanvasSeries.baseReStockDrawOnCanvas = function (props, callback, canvasOrigin, height, width, compareSeries, indicator, xAccessor, yAccessor, ctx, xScale, yScale, plotData) {
+			ctx.save();
+	
+			ctx.setTransform(1, 0, 0, 1, 0, 0);
+			ctx.translate(canvasOrigin[0], canvasOrigin[1]);
+	
+			ctx.beginPath();
+			ctx.rect(-1, -1, width + 1, height + 1);
+			ctx.clip();
+	
+			if (callback) {
+				var newProps = (0, _objectAssign2["default"])({}, { height: height, width: width, compareSeries: compareSeries, indicator: indicator, xAccessor: xAccessor, yAccessor: yAccessor }, props);
+				callback(newProps, ctx, xScale, yScale, plotData);
+			}
+	
+			ctx.restore();
+		};
+	
+		Object.keys(WrappedSeries)
+		// .filter((key) => key !== "propTypes")
+		// .filter((key) => key !== "defaultProps")
+		.filter(function (key) {
+			return key !== "displayName";
+		}).filter(function (key) {
+			return key !== "contextTypes";
+		}).filter(function (key) {
+			return key !== "childContextTypes";
+		}).forEach(function (key) {
+			return BaseCanvasSeries[key] = WrappedSeries[key];
+		});
+	
+		// console.log(Object.keys(BaseCanvasSeries))
+		return BaseCanvasSeries;
+	}
+	
+	exports["default"] = wrap;
+	module.exports = exports["default"];
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -3939,9 +4383,162 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
-	var _Line = __webpack_require__(27);
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
+	var Area = (function (_React$Component) {
+		_inherits(Area, _React$Component);
+	
+		function Area() {
+			_classCallCheck(this, Area);
+	
+			_get(Object.getPrototypeOf(Area.prototype), "constructor", this).apply(this, arguments);
+		}
+	
+		_createClass(Area, [{
+			key: "render",
+			value: function render() {
+				var props = this.props;
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var className = props.className;
+				var opacity = props.opacity;
+	
+				className = className.concat(stroke !== undefined ? "" : " line-stroke");
+				return _react2["default"].createElement("path", { d: Area.getArea(props), stroke: stroke, fill: fill, className: className, opacity: opacity });
+			}
+		}]);
+	
+		return Area;
+	})(_react2["default"].Component);
+	
+	;
+	
+	Area.propTypes = {
+		className: _react2["default"].PropTypes.string,
+		xScale: _react2["default"].PropTypes.func.isRequired,
+		yScale: _react2["default"].PropTypes.func.isRequired,
+		xAccessor: _react2["default"].PropTypes.func.isRequired,
+		yAccessor: _react2["default"].PropTypes.func.isRequired,
+		plotData: _react2["default"].PropTypes.array.isRequired,
+		stroke: _react2["default"].PropTypes.string,
+		fill: _react2["default"].PropTypes.string,
+		opacity: _react2["default"].PropTypes.number,
+		type: _react2["default"].PropTypes.string.isRequired,
+		base: _react2["default"].PropTypes.func
+	};
+	
+	Area.defaultProps = {
+		className: "line ",
+		fill: "none",
+		opacity: 1
+	};
+	Area.getArea = function (props) {
+		var plotData = props.plotData;
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var base = props.base;
+	
+		var height = yScale.range()[0];
+		if (base === undefined) base = function () {
+			return height - 1;
+		};
+	
+		var areaSeries = _d32["default"].svg.area().defined(function (d) {
+			return yAccessor(d) !== undefined;
+		}).x(function (d) {
+			return xScale(xAccessor(d));
+		}).y0(base.bind(null, yScale)).y1(function (d) {
+			return yScale(yAccessor(d));
+		});
+	
+		return areaSeries(plotData);
+	};
+	
+	Area.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var fill = props.fill;
+		var stroke = props.stroke;
+		var opacity = props.opacity;
+		var base = props.base;
+	
+		var begin = true;
+		var height = yScale.range()[0];
+		var newBase = base === undefined ? function () {
+			return height - 1;
+		} : base;
+	
+		ctx.fillStyle = fill;
+		ctx.strokeStyle = stroke;
+		ctx.globalAlpha = opacity;
+	
+		plotData.forEach(function (d) {
+			if (yAccessor(d) !== undefined) {
+				if (begin) {
+					ctx.beginPath();
+					begin = false;
+					var x = xScale(xAccessor(d));
+					var y = yScale(yAccessor(d));
+	
+					ctx.moveTo(x, newBase(yScale, d));
+					ctx.lineTo(x, y);
+				}
+				ctx.lineTo(xScale(xAccessor(d)), yScale(yAccessor(d)));
+			}
+		});
+	
+		var last = plotData[plotData.length - 1];
+		ctx.lineTo(xScale(xAccessor(last)), newBase(yScale, last));
+	
+		if (base !== undefined) {
+			plotData.slice().reverse().forEach(function (d) {
+				if (yAccessor(d) !== undefined) {
+					ctx.lineTo(xScale(xAccessor(d)), base(yScale, d));
+				}
+			});
+		}
+		ctx.closePath();
+		ctx.fill();
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(Area);
+	module.exports = exports["default"];
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Line = __webpack_require__(28);
 	
 	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	var LineSeries = (function (_React$Component) {
 		_inherits(LineSeries, _React$Component);
@@ -3955,20 +4552,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(LineSeries, [{
 			key: "render",
 			value: function render() {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var stroke = _context.stroke;
-				var type = _context.type;
+				var props = this.props;
+				var className = props.className;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var stroke = props.stroke;
+				var type = props.type;
 	
 				return _react2["default"].createElement(_Line2["default"], {
-					className: this.props.className,
+					className: className,
 					xScale: xScale, yScale: yScale,
 					xAccessor: xAccessor, yAccessor: yAccessor,
-					data: plotData,
+					plotData: plotData,
 					stroke: stroke, fill: "none",
 					type: type });
 			}
@@ -3982,27 +4580,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	LineSeries.defaultProps = {
-		namespace: "ReStock.LineSeries",
 		className: "line "
 	};
 	
-	LineSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		stroke: _react2["default"].PropTypes.string,
-		type: _react2["default"].PropTypes.string
-	};
-	
-	module.exports = LineSeries;
+	exports["default"] = (0, _wrap2["default"])(LineSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -4018,13 +4610,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _Line = __webpack_require__(27);
+	var _Line = __webpack_require__(28);
 	
 	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	var CompareSeries = (function (_React$Component) {
 		_inherits(CompareSeries, _React$Component);
@@ -4038,23 +4630,24 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(CompareSeries, [{
 			key: "render",
 			value: function render() {
-				var _this = this;
+				var props = this.props;
+				var className = props.className;
+				var compareSeries = props.compareSeries;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var plotData = props.plotData;
+				var type = props.type;
+				var id = props.id;
 	
-				var thisSeries = this.context.compareSeries.filter(function (each) {
-					return each.id === _this.props.id;
+				var thisSeries = compareSeries.filter(function (each) {
+					return each.id === id;
 				})[0];
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-	
 				return _react2["default"].createElement(_Line2["default"], {
-					className: this.props.className,
+					className: className,
 					xScale: xScale, yScale: yScale,
 					xAccessor: xAccessor, yAccessor: thisSeries.percentYAccessor,
-					data: plotData,
+					plotData: plotData,
 					stroke: thisSeries.stroke, fill: "none",
 					type: type });
 			}
@@ -4071,26 +4664,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	CompareSeries.defaultProps = {
-		namespace: "ReStock.CompareSeries",
 		className: "line "
 	};
 	
-	CompareSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		compareSeries: _react2["default"].PropTypes.array.isRequired,
-		type: _react2["default"].PropTypes.string
-	};
-	
-	module.exports = CompareSeries;
+	exports["default"] = (0, _wrap2["default"])(CompareSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -4106,174 +4694,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var CandlestickSeries = (function (_React$Component) {
 		_inherits(CandlestickSeries, _React$Component);
 	
-		function CandlestickSeries(props) {
+		function CandlestickSeries() {
 			_classCallCheck(this, CandlestickSeries);
 	
-			_get(Object.getPrototypeOf(CandlestickSeries.prototype), "constructor", this).call(this, props);
-			this.getWickData = this.getWickData.bind(this);
-			this.getWicksSVG = this.getWicksSVG.bind(this);
-			this.getCandleData = this.getCandleData.bind(this);
-			this.getCandlesSVG = this.getCandlesSVG.bind(this);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
+			_get(Object.getPrototypeOf(CandlestickSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(CandlestickSeries, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var _props = this.props;
-				var stroke = _props.stroke;
-				var fill = _props.fill;
-	
-				var wickData = this.getWickData();
-				wickData.forEach(function (d) {
-					ctx.beginPath();
-					ctx.moveTo(d.x1, d.y1);
-					ctx.lineTo(d.x2, d.y2);
-					ctx.stroke();
-				});
-				var candleData = this.getCandleData();
-				var fillStyle = ctx.fillStyle;
-	
-				candleData.forEach(function (d) {
-					if (d.width < 0) {
-						if (d.direction >= 0) ctx.fillStyle = fill.up;else ctx.fillStyle = fill.down;
-	
-						// <line className={d.className} key={idx} x1={d.x} y1={d.y} x2={d.x} y2={d.y + d.height}/>
-						ctx.beginPath();
-						ctx.moveTo(d.x, d.y);
-						ctx.lineTo(d.x, d.y + d.height);
-						ctx.stroke();
-					} else if (d.height === 0) {
-						// <line key={idx} x1={d.x} y1={d.y} x2={d.x + d.width} y2={d.y + d.height} />
-						if (d.direction >= 0) ctx.fillStyle = fill.up;else ctx.fillStyle = fill.down;
-	
-						ctx.beginPath();
-						ctx.moveTo(d.x, d.y);
-						ctx.lineTo(d.x + d.width, d.y + d.height);
-						ctx.stroke();
-					} else {
-						if (d.direction >= 0) ctx.fillStyle = fill.up;else ctx.fillStyle = fill.down;
-	
-						ctx.beginPath();
-						ctx.rect(d.x, d.y, d.width, d.height);
-						ctx.closePath();
-						ctx.fill();
-					}
-				});
-	
-				ctx.fillStyle = fillStyle;
-			}
-		}, {
-			key: "getWickData",
-			value: function getWickData() {
-				var _this = this;
-	
-				var wickData = this.context.plotData.filter(function (d) {
-					return d.close !== undefined;
-				}).map(function (d, idx) {
-					// console.log(this.context.yAccessor);
-					var ohlc = _this.context.isCompareSeries ? _this.context.yAccessor(d.compare) : _this.context.yAccessor(d);
-	
-					var x1 = Math.round(_this.context.xScale(_this.context.xAccessor(d))),
-					    y1 = _this.context.yScale(ohlc.high),
-					    x2 = x1,
-					    y2 = _this.context.yScale(ohlc.low),
-					    className = ohlc.open <= ohlc.close ? "up" : "down";
-	
-					return {
-						x1: x1,
-						y1: y1,
-						x2: x2,
-						y2: y2,
-						className: className,
-						direction: ohlc.close - ohlc.open,
-						stroke: "black"
-					};
-				});
-				return wickData;
-			}
-		}, {
-			key: "getCandleData",
-			value: function getCandleData() {
-				var _this2 = this;
-	
-				var _props2 = this.props;
-				var classNames = _props2.classNames;
-				var fill = _props2.fill;
-				var stroke = _props2.stroke;
-	
-				var width = this.context.xScale(this.context.xAccessor(this.context.plotData[this.context.plotData.length - 1])) - this.context.xScale(this.context.xAccessor(this.context.plotData[0]));
-				var cw = width / this.context.plotData.length * 0.5;
-				var candleWidth = Math.round(cw); // Math.floor(cw) % 2 === 0 ? Math.floor(cw) : Math.round(cw);
-				var candles = this.context.plotData.filter(function (d) {
-					return d.close !== undefined;
-				}).map(function (d, idx) {
-					var ohlc = _this2.context.isCompareSeries ? _this2.context.yAccessor(d.compare) : _this2.context.yAccessor(d);
-					var x = Math.round(_this2.context.xScale(_this2.context.xAccessor(d))) - (candleWidth === 1 ? 0 : 0.5 * candleWidth),
-					    y = _this2.context.yScale(Math.max(ohlc.open, ohlc.close)),
-					    height = Math.abs(_this2.context.yScale(ohlc.open) - _this2.context.yScale(ohlc.close)),
-					    className = ohlc.open <= ohlc.close ? classNames.up : classNames.down;
-					return {
-						// type: "line"
-						x: x,
-						y: y,
-						height: height,
-						width: candleWidth,
-						className: className,
-						fill: ohlc.open <= ohlc.close ? fill.up : fill.down,
-						stroke: ohlc.open <= ohlc.close ? stroke.up : stroke.down,
-						direction: ohlc.close - ohlc.open
-					};
-				});
-				return candles;
-			}
-		}, {
-			key: "getWicksSVG",
-			value: function getWicksSVG() {
-				var wickData = this.getWickData();
-				var wicks = wickData.map(function (d, idx) {
-					return _react2["default"].createElement("line", { key: idx,
-						className: d.className, stroke: d.stroke, style: { shapeRendering: "crispEdges" },
-						x1: d.x1, y1: d.y1,
-						x2: d.x2, y2: d.y2 });
-				});
-				return wicks;
-			}
-		}, {
-			key: "getCandlesSVG",
-			value: function getCandlesSVG() {
-				var candleData = this.getCandleData();
-				var candles = candleData.map(function (d, idx) {
-					if (d.width < 0) return _react2["default"].createElement("line", { className: d.className, key: idx, x1: d.x, y1: d.y, x2: d.x, y2: d.y + d.height, stroke: d.fill });else if (d.height === 0) return _react2["default"].createElement("line", { key: idx, x1: d.x, y1: d.y, x2: d.x + d.width, y2: d.y + d.height, stroke: d.fill });
-					return _react2["default"].createElement("rect", { className: d.className, key: idx, x: d.x, y: d.y, width: d.width, height: d.height, fill: d.fill, stroke: d.stroke });
-				});
-				return candles;
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				if (this.context.type !== "svg") return null;
+				var props = this.props;
+	
 				return _react2["default"].createElement(
 					"g",
 					{ className: "react-stockcharts-candlestick" },
 					_react2["default"].createElement(
 						"g",
 						{ className: "react-stockcharts-candlestick-wick", key: "wicks" },
-						this.getWicksSVG()
+						CandlestickSeries.getWicksSVG(props)
 					),
 					_react2["default"].createElement(
 						"g",
 						{ className: "react-stockcharts-candlestick-candle", key: "candles" },
-						this.getCandlesSVG()
+						CandlestickSeries.getCandlesSVG(props)
 					)
 				);
 			}
@@ -4281,17 +4731,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		return CandlestickSeries;
 	})(_react2["default"].Component);
-	
-	CandlestickSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		isCompareSeries: _react2["default"].PropTypes.bool.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
-	};
 	
 	CandlestickSeries.propTypes = {
 		classNames: _react2["default"].PropTypes.shape({
@@ -4309,7 +4748,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	CandlestickSeries.defaultProps = {
-		namespace: "ReStock.CandlestickSeries",
 		classNames: {
 			up: "up",
 			down: "down"
@@ -4324,17 +4762,191 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	};
 	
+	CandlestickSeries.getWicksSVG = function (props) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var compareSeries = props.compareSeries;
+		var plotData = props.plotData;
+	
+		var wickData = CandlestickSeries.getWickData(props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData);
+		var wicks = wickData.map(function (d, idx) {
+			return _react2["default"].createElement("line", { key: idx,
+				className: d.className, stroke: d.stroke, style: { shapeRendering: "crispEdges" },
+				x1: d.x1, y1: d.y1,
+				x2: d.x2, y2: d.y2 });
+		});
+		return wicks;
+	};
+	CandlestickSeries.getCandlesSVG = function (props) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var compareSeries = props.compareSeries;
+		var plotData = props.plotData;
+	
+		var candleData = CandlestickSeries.getCandleData(props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData);
+		var candles = candleData.map(function (d, idx) {
+			if (d.width < 0) return _react2["default"].createElement("line", { className: d.className, key: idx, x1: d.x, y1: d.y, x2: d.x, y2: d.y + d.height, stroke: d.fill });else if (d.height === 0) return _react2["default"].createElement("line", { key: idx, x1: d.x, y1: d.y, x2: d.x + d.width, y2: d.y + d.height, stroke: d.fill });
+			return _react2["default"].createElement("rect", { className: d.className, key: idx, x: d.x, y: d.y, width: d.width, height: d.height, fill: d.fill, stroke: d.stroke });
+		});
+		return candles;
+	};
+	
 	CandlestickSeries.yAccessor = function (d) {
 		return { open: d.open, high: d.high, low: d.low, close: d.close };
 	};
 	
-	module.exports = CandlestickSeries;
+	CandlestickSeries.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var compareSeries = props.compareSeries;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var stroke = props.stroke;
+		var fill = props.fill;
+	
+		var wickData = CandlestickSeries.getWickData(props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData);
+		wickData.forEach(function (d) {
+			ctx.beginPath();
+			ctx.moveTo(d.x1, d.y1);
+			ctx.lineTo(d.x2, d.y2);
+			ctx.stroke();
+		});
+		var candleData = CandlestickSeries.getCandleData(props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData);
+	
+		var each,
+		    group = { up: [], down: [] };
+		for (var i = 0; i < candleData.length; i++) {
+			each = candleData[i];
+			if (each.direction >= 0) {
+				group.up.push(each);
+			} else {
+				group.down.push(each);
+			}
+		};
+	
+		ctx.fillStyle = fill.up;
+		group.up.forEach(function (d) {
+			if (d.width < 0) {
+				// <line className={d.className} key={idx} x1={d.x} y1={d.y} x2={d.x} y2={d.y + d.height}/>
+				ctx.beginPath();
+				ctx.moveTo(d.x, d.y);
+				ctx.lineTo(d.x, d.y + d.height);
+				ctx.stroke();
+			} else if (d.height === 0) {
+				// <line key={idx} x1={d.x} y1={d.y} x2={d.x + d.width} y2={d.y + d.height} />
+				ctx.beginPath();
+				ctx.moveTo(d.x, d.y);
+				ctx.lineTo(d.x + d.width, d.y + d.height);
+				ctx.stroke();
+			} else {
+				ctx.beginPath();
+				ctx.rect(d.x, d.y, d.width, d.height);
+				ctx.closePath();
+				ctx.fill();
+			}
+		});
+	
+		ctx.fillStyle = fill.down;
+		group.down.forEach(function (d) {
+			if (d.width < 0) {
+				// <line className={d.className} key={idx} x1={d.x} y1={d.y} x2={d.x} y2={d.y + d.height}/>
+				ctx.beginPath();
+				ctx.moveTo(d.x, d.y);
+				ctx.lineTo(d.x, d.y + d.height);
+				ctx.stroke();
+			} else if (d.height === 0) {
+				// <line key={idx} x1={d.x} y1={d.y} x2={d.x + d.width} y2={d.y + d.height} />
+				ctx.beginPath();
+				ctx.moveTo(d.x, d.y);
+				ctx.lineTo(d.x + d.width, d.y + d.height);
+				ctx.stroke();
+			} else {
+				ctx.beginPath();
+				ctx.rect(d.x, d.y, d.width, d.height);
+				ctx.closePath();
+				ctx.fill();
+			}
+		});
+		// ctx.fillStyle = fillStyle;
+	};
+	
+	CandlestickSeries.getWickData = function (props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData) {
+		var isCompareSeries = compareSeries.length > 0;
+	
+		var classNames = props.classNames;
+	
+		var wickData = plotData.filter(function (d) {
+			return d.close !== undefined;
+		}).map(function (d, idx) {
+			// console.log(yAccessor);
+			var ohlc = isCompareSeries ? yAccessor(d.compare) : yAccessor(d);
+	
+			var x1 = Math.round(xScale(xAccessor(d))),
+			    y1 = yScale(ohlc.high),
+			    x2 = x1,
+			    y2 = yScale(ohlc.low),
+			    className = ohlc.open <= ohlc.close ? classNames.up : classNames.down;
+	
+			return {
+				x1: x1,
+				y1: y1,
+				x2: x2,
+				y2: y2,
+				className: className,
+				direction: ohlc.close - ohlc.open,
+				stroke: "black"
+			};
+		});
+		return wickData;
+	};
+	
+	CandlestickSeries.getCandleData = function (props, xAccessor, yAccessor, xScale, yScale, compareSeries, plotData) {
+		var isCompareSeries = compareSeries.length > 0;
+	
+		var classNames = props.classNames;
+		var fill = props.fill;
+		var stroke = props.stroke;
+	
+		var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
+		var cw = width / plotData.length * 0.5;
+		var candleWidth = Math.round(cw); // Math.floor(cw) % 2 === 0 ? Math.floor(cw) : Math.round(cw);
+		var candles = plotData.filter(function (d) {
+			return d.close !== undefined;
+		}).map(function (d, idx) {
+			var ohlc = isCompareSeries ? yAccessor(d.compare) : yAccessor(d);
+			var x = Math.round(xScale(xAccessor(d))) - (candleWidth === 1 ? 0 : 0.5 * candleWidth),
+			    y = yScale(Math.max(ohlc.open, ohlc.close)),
+			    height = Math.abs(yScale(ohlc.open) - yScale(ohlc.close)),
+			    className = ohlc.open <= ohlc.close ? classNames.up : classNames.down;
+			return {
+				// type: "line"
+				x: x,
+				y: y,
+				height: height,
+				width: candleWidth,
+				className: className,
+				fill: ohlc.open <= ohlc.close ? fill.up : fill.down,
+				stroke: ohlc.open <= ohlc.close ? stroke.up : stroke.down,
+				direction: ohlc.close - ohlc.open
+			};
+		});
+		return candles;
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(CandlestickSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -4350,160 +4962,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var HistogramSeries = (function (_React$Component) {
 		_inherits(HistogramSeries, _React$Component);
 	
-		function HistogramSeries(props) {
+		function HistogramSeries() {
 			_classCallCheck(this, HistogramSeries);
 	
-			_get(Object.getPrototypeOf(HistogramSeries.prototype), "constructor", this).call(this, props);
-			this.getBars = this.getBars.bind(this);
-			this.getBarsSVG = this.getBarsSVG.bind(this);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
+			_get(Object.getPrototypeOf(HistogramSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(HistogramSeries, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var bars = this.getBars();
-	
-				var fillStyle = ctx.fillStyle;
-				var strokeStyle = ctx.strokeStyle;
-				var globalAlpha = ctx.globalAlpha;
-	
-				ctx.globalAlpha = this.props.opacity;
-	
-				bars.forEach(function (d) {
-					if (d.barWidth < 1) {
-						/* <line key={idx} className={d.className}
-	     			stroke={this.props.stroke}
-	     			fill={this.props.fill}
-	     			x1={d.x} y1={d.y}
-	     			x2={d.x} y2={d.y + d.height} />*/
-						// ctx.fillStyle = d.fill;
-						ctx.strokeStyle = d.fill;
-						ctx.beginPath();
-						ctx.moveTo(d.x, d.y);
-						ctx.lineTo(d.x, d.y + d.height);
-						ctx.stroke();
-					} else {
-						/* <rect key={idx} className={d.className}
-	     		stroke={this.props.stroke}
-	     		fill={this.props.fill}
-	     		x={d.x}
-	     		y={d.y}
-	     		width={d.barWidth}
-	     		height={d.height} /> */
-						ctx.fillStyle = d.fill;
-						ctx.strokeStyle = d.stroke;
-						ctx.beginPath();
-						ctx.rect(d.x, d.y, d.barWidth, d.height);
-						ctx.closePath();
-						ctx.fill();
-					}
-				});
-	
-				ctx.fillStyle = fillStyle;
-				ctx.strokeStyle = strokeStyle;
-				ctx.globalAlpha = globalAlpha;
-			}
-		}, {
-			key: "getBars",
-			value: function getBars() {
-				var _this = this;
-	
-				var base = this.props.baseAt === "top" ? 0 : this.props.baseAt === "bottom" ? this.context.yScale.range()[0] : this.props.baseAt === "middle" ? (this.context.yScale.range()[0] + this.context.yScale.range()[1]) / 2 : this.props.baseAt;
-	
-				var dir = this.props.direction === "up" ? -1 : 1;
-	
-				var getClassName = function getClassName() {
-					return _this.props.className;
-				};
-				if (typeof this.props.className === "function") {
-					getClassName = this.props.className;
-				}
-	
-				var getFill = function getFill() {
-					return _this.props.fill;
-				};
-				if (typeof this.props.fill === "function") {
-					getFill = this.props.fill;
-				}
-	
-				var width = this.context.xScale(this.context.xAccessor(this.context.plotData[this.context.plotData.length - 1])) - this.context.xScale(this.context.xAccessor(this.context.plotData[0]));
-				var barWidth = Math.round(width / this.context.plotData.length * 0.5);
-	
-				var bars = this.context.plotData.filter(function (d) {
-					return _this.context.yAccessor(d) !== undefined;
-				}).map(function (d, idx) {
-					var yValue = _this.context.yAccessor(d);
-					var x = Math.round(_this.context.xScale(_this.context.xAccessor(d))) - 0.5 * barWidth,
-					    className = getClassName(d),
-					    y,
-					    height;
-	
-					if (dir > 0) {
-						y = base;
-						height = _this.context.yScale.range()[0] - _this.context.yScale(yValue);
-					} else {
-						y = _this.context.yScale(yValue);
-						height = base - y;
-					}
-	
-					if (height < 0) {
-						y = base;
-						height = -height;
-					}
-					return {
-						barWidth: Math.round(barWidth),
-						height: Math.round(height),
-						x: Math.round(x),
-						y: Math.round(y),
-						className: className,
-						stroke: _this.props.stroke,
-						fill: getFill(d)
-					};
-				});
-				return bars;
-			}
-		}, {
-			key: "getBarsSVG",
-			value: function getBarsSVG() {
-				var _this2 = this;
-	
-				var bars = this.getBars();
-				return bars.map(function (d, idx) {
-					if (d.barWidth <= 1) {
-						return _react2["default"].createElement("line", { key: idx, className: d.className,
-							stroke: d.stroke,
-							fill: d.fill,
-							x1: d.x, y1: d.y,
-							x2: d.x, y2: d.y + d.height });
-					}
-					return _react2["default"].createElement("rect", { key: idx, className: d.className,
-						stroke: d.stroke,
-						fill: d.fill,
-						x: d.x,
-						y: d.y,
-						width: d.barWidth,
-						opacity: _this2.props.opacity,
-						height: d.height });
-				});
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				if (this.context.type !== "svg") return null;
+				var props = this.props;
+	
 				return _react2["default"].createElement(
 					"g",
 					{ className: "histogram" },
-					this.getBarsSVG()
+					HistogramSeries.getBarsSVG(props)
 				);
 			}
 		}]);
@@ -4512,7 +4992,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 	
 	HistogramSeries.propTypes = {
-		baseAt: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.oneOf(["top", "bottom", "middle"]), _react2["default"].PropTypes.number]).isRequired,
+		baseAt: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.oneOf(["top", "bottom", "middle"]), _react2["default"].PropTypes.number, _react2["default"].PropTypes.func]).isRequired,
 		direction: _react2["default"].PropTypes.oneOf(["up", "down"]).isRequired,
 		stroke: _react2["default"].PropTypes.string,
 		opacity: _react2["default"].PropTypes.number.isRequired,
@@ -4521,7 +5001,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	HistogramSeries.defaultProps = {
-		namespace: "ReStock.HistogramSeries",
 		baseAt: "bottom",
 		direction: "up",
 		className: "bar",
@@ -4530,23 +5009,168 @@ return /******/ (function(modules) { // webpackBootstrap
 		opacity: 0.5
 	};
 	
-	HistogramSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
+	HistogramSeries.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var height = props.height;
+		var width = props.width;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+	
+		var bars = HistogramSeries.getBars(props, xAccessor, yAccessor, xScale, yScale, plotData);
+	
+		ctx.globalAlpha = props.opacity;
+	
+		var each,
+		    group = {};
+		for (var i = 0; i < bars.length; i++) {
+			each = bars[i];
+			if (each.x !== undefined) {
+				if (group[each.fill] === undefined) {
+					group[each.fill] = [];
+				}
+				group[each.fill].push(each);
+			}
+		};
+	
+		Object.keys(group).forEach(function (key) {
+			if (group[key][0].barWidth < 1) {
+				ctx.strokeStyle = key;
+			} else {
+				ctx.fillStyle = key;
+			}
+			group[key].forEach(function (d) {
+				if (d.barWidth < 1) {
+					/* <line key={idx} className={d.className}
+	    			stroke={stroke}
+	    			fill={fill}
+	    			x1={d.x} y1={d.y}
+	    			x2={d.x} y2={d.y + d.height} />*/
+					ctx.beginPath();
+					ctx.moveTo(d.x, d.y);
+					ctx.lineTo(d.x, d.y + d.height);
+					ctx.stroke();
+				} else {
+					/* <rect key={idx} className={d.className}
+	    		stroke={stroke}
+	    		fill={fill}
+	    		x={d.x}
+	    		y={d.y}
+	    		width={d.barWidth}
+	    		height={d.height} /> */
+					ctx.beginPath();
+					ctx.rect(d.x, d.y, d.barWidth, d.height);
+					ctx.fill();
+				}
+			});
+		});
 	};
 	
-	module.exports = HistogramSeries;
+	HistogramSeries.getBarsSVG = function (props) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var plotData = props.plotData;
+	
+		var bars = HistogramSeries.getBars(props, xAccessor, yAccessor, xScale, yScale, plotData);
+	
+		return bars.map(function (d, idx) {
+			if (d.barWidth <= 1) {
+				return _react2["default"].createElement("line", { key: idx, className: d.className,
+					stroke: d.stroke,
+					fill: d.fill,
+					x1: d.x, y1: d.y,
+					x2: d.x, y2: d.y + d.height });
+			}
+			return _react2["default"].createElement("rect", { key: idx, className: d.className,
+				stroke: d.stroke,
+				fill: d.fill,
+				x: d.x,
+				y: d.y,
+				width: d.barWidth,
+				opacity: props.opacity,
+				height: d.height });
+		});
+	};
+	
+	HistogramSeries.getBars = function (props, xAccessor, yAccessor, xScale, yScale, plotData) {
+		var baseAt = props.baseAt;
+		var direction = props.direction;
+		var className = props.className;
+		var fill = props.fill;
+		var stroke = props.stroke;
+	
+		var base = baseAt === "top" ? 0 : baseAt === "bottom" ? yScale.range()[0] : baseAt === "middle" ? (yScale.range()[0] + yScale.range()[1]) / 2 : baseAt;
+	
+		var dir = direction === "up" ? -1 : 1;
+	
+		var getClassName = function getClassName() {
+			return className;
+		};
+		if (typeof className === "function") {
+			getClassName = className;
+		}
+	
+		var getFill = function getFill() {
+			return fill;
+		};
+		if (typeof fill === "function") {
+			getFill = fill;
+		}
+	
+		var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
+		var barWidth = width / plotData.length * 0.5;
+	
+		var bars = plotData.filter(function (d) {
+			return yAccessor(d) !== undefined;
+		}).map(function (d, idx) {
+			var yValue = yAccessor(d);
+			var x = xScale(xAccessor(d)) - 0.5 * barWidth,
+			    className = getClassName(d),
+			    y,
+			    height;
+	
+			var newBase = base;
+			if (typeof base === "function") {
+				newBase = base(xScale, yScale, d);
+			}
+	
+			if (dir > 0) {
+				y = newBase;
+				height = yScale.range()[0] - yScale(yValue);
+			} else {
+				y = yScale(yValue);
+				height = newBase - y;
+			}
+	
+			if (height < 0) {
+				y = newBase;
+				height = -height;
+			}
+			return {
+				barWidth: barWidth,
+				height: height,
+				x: x,
+				y: y,
+				className: className,
+				stroke: stroke,
+				fill: getFill(d)
+			};
+		});
+		return bars;
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(HistogramSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -4566,74 +5190,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var KagiSeries = (function (_React$Component) {
 		_inherits(KagiSeries, _React$Component);
 	
-		function KagiSeries(props) {
+		function KagiSeries() {
 			_classCallCheck(this, KagiSeries);
 	
-			_get(Object.getPrototypeOf(KagiSeries.prototype), "constructor", this).call(this, props);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
+			_get(Object.getPrototypeOf(KagiSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(KagiSeries, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				// if (this.context.type !== "svg") this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var _props = this.props;
-				var stroke = _props.stroke;
-				var fill = _props.fill;
-	
-				// TODO implement canvas draw
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				var _this = this;
+				var props = this.props;
+				var className = props.className;
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var strokeWidth = props.strokeWidth;
+				var xAccessor = props.xAccessor;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var plotData = props.plotData;
 	
-				// if (this.context.type !== "svg") return null;
-				var kagiLine = [];
-				var kagi = {};
-				for (var i = 0; i < this.context.plotData.length; i++) {
-					var d = this.context.plotData[i];
-					if (d.close === undefined) continue;
-					if (kagi.type === undefined) kagi.type = d.startAs;
-					if (kagi.plot === undefined) kagi.plot = [];
-					var idx = this.context.xAccessor(d);
-					kagi.plot.push([idx, d.open]);
-	
-					if (d.changePoint !== undefined) {
-						kagi.plot.push([idx, d.changePoint]);
-						kagiLine.push(kagi);
-						kagi = {
-							type: d.changeTo,
-							plot: []
-						};
-						kagi.plot.push([idx, d.changePoint]);
-					}
-				}
-				var _props2 = this.props;
-				var stroke = _props2.stroke;
-				var fill = _props2.fill;
-				var strokeWidth = _props2.strokeWidth;
-	
-				var paths = kagiLine.map(function (each, i) {
+				var paths = KagiSeries.helper(plotData, xAccessor).map(function (each, i) {
 					var dataSeries = _d32["default"].svg.line().x(function (item) {
-						return _this.context.xScale(item[0]);
+						return xScale(item[0]);
 					}).y(function (item) {
-						return _this.context.yScale(item[1]);
+						return yScale(item[1]);
 					}).interpolate("step-before");
 					return _react2["default"].createElement("path", { key: i, d: dataSeries(each.plot), className: each.type,
 						stroke: stroke[each.type], fill: fill[each.type], strokeWidth: strokeWidth });
 				});
 				return _react2["default"].createElement(
 					"g",
-					{ className: this.props.className },
+					{ className: className },
 					paths
 				);
 			}
@@ -4643,12 +5237,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 	
 	KagiSeries.defaultProps = {
-		namespace: "ReStock.KagiSeries",
 		className: "react-stockcharts-kagi",
 		strokeWidth: 2,
 		stroke: {
 			yang: "#6BA583",
-			yin: "red"
+			yin: "#E60000"
 		},
 		fill: {
 			yang: "none",
@@ -4656,27 +5249,91 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	};
 	
-	KagiSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
-	};
-	
 	KagiSeries.yAccessor = function (d) {
 		return { open: d.open, high: d.high, low: d.low, close: d.close };
 	};
 	
-	module.exports = KagiSeries;
+	KagiSeries.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var stroke = props.stroke;
+		var fill = props.fill;
+		var strokeWidth = props.strokeWidth;
+	
+		var begin = true;
+	
+		var paths = KagiSeries.helper(plotData, xAccessor).forEach(function (each, i) {
+			ctx.strokeStyle = stroke[each.type];
+			ctx.lineWidth = strokeWidth;
+	
+			ctx.beginPath();
+			var prevX, prevY;
+			each.plot.forEach(function (d) {
+				var x = xScale(d[0]);
+				var y = yScale(d[1]);
+	
+				if (begin) {
+					ctx.moveTo(x, y);
+					begin = false;
+				} else {
+					if (prevX !== undefined) {
+						ctx.lineTo(prevX, y);
+					}
+					ctx.lineTo(x, y);
+				}
+				prevX = x;
+				prevY = y;
+	
+				// console.log(d);
+			});
+			ctx.stroke();
+		});
+	};
+	
+	KagiSeries.helper = function (plotData, xAccessor) {
+		var kagiLine = [];
+		var kagi = {};
+		for (var i = 0; i < plotData.length; i++) {
+			var d = plotData[i];
+			if (d.close === undefined) continue;
+			if (kagi.type === undefined) kagi.type = d.startAs;
+			if (kagi.plot === undefined) kagi.plot = [];
+			var idx = xAccessor(d);
+			kagi.plot.push([idx, d.open]);
+	
+			if (d.changeTo !== undefined) {
+				kagi.plot.push([idx, d.changePoint]);
+				// console.log(d, idx);
+				kagi.added = true;
+				kagiLine.push(kagi);
+	
+				kagi = {
+					type: d.changeTo,
+					plot: [],
+					added: false
+				};
+				kagi.plot.push([idx, d.changePoint]);
+			}
+		}
+		if (!kagi.added) {
+			kagiLine.push(kagi);
+		}
+	
+		return kagiLine;
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(KagiSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
 	
@@ -4694,139 +5351,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var PointAndFigureSeries = (function (_React$Component) {
 		_inherits(PointAndFigureSeries, _React$Component);
 	
-		function PointAndFigureSeries(props) {
+		function PointAndFigureSeries() {
 			_classCallCheck(this, PointAndFigureSeries);
 	
-			_get(Object.getPrototypeOf(PointAndFigureSeries.prototype), "constructor", this).call(this, props);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
-			this.getColumns = this.getColumns.bind(this);
+			_get(Object.getPrototypeOf(PointAndFigureSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(PointAndFigureSeries, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var fillStyle = ctx.fillStyle;
-				var strokeStyle = ctx.strokeStyle;
-	
-				var columns = this.getColumns();
-				var _props = this.props;
-				var stroke = _props.stroke;
-				var fill = _props.fill;
-				var strokeWidth = _props.strokeWidth;
-				var className = _props.className;
-	
-				columns.forEach(function (col) {
-					var _col$offset = _slicedToArray(col.offset, 2);
-	
-					var offsetX = _col$offset[0];
-					var offsetY = _col$offset[1];
-	
-					col.boxes.forEach(function (box) {
-						if (col.direction > 0) {
-							ctx.fillStyle = fill.up;
-							ctx.strokeStyle = stroke.up;
-	
-							ctx.beginPath();
-	
-							ctx.moveTo(offsetX, offsetY + box.open);
-							ctx.lineTo(offsetX + box.columnWidth, offsetY + box.close);
-							ctx.moveTo(offsetX, offsetY + box.close);
-							ctx.lineTo(offsetX + box.columnWidth, offsetY + box.open);
-	
-							ctx.stroke();
-						} else {
-							ctx.fillStyle = fill.down;
-							ctx.strokeStyle = stroke.down;
-	
-							ctx.beginPath();
-	
-							var x = offsetX + box.columnWidth / 2;
-							var y = offsetY + box.open + box.boxHeight / 2;
-							var rx = box.columnWidth / 2;
-							var ry = box.boxHeight / 2;
-	
-							ctx.ellipse(x, y, rx, ry, 0, 0, 2 * Math.PI);
-							ctx.stroke();
-						}
-					});
-				});
-	
-				// ctx.fill();
-				ctx.stroke();
-	
-				ctx.fillStyle = fillStyle;
-				ctx.strokeStyle = strokeStyle;
-			}
-		}, {
-			key: "handleClick",
-			value: function handleClick(idx) {
-				console.log(this.context.plotData[idx]);
-			}
-		}, {
-			key: "getColumns",
-			value: function getColumns() {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var xAccessor = _context.xAccessor;
-				var yScale = _context.yScale;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-	
-				var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
-	
-				var columnWidth = width / (plotData.length - 1);
-	
-				var anyBox,
-				    j = 0;
-				while (anyBox === undefined) {
-					if (plotData[j].close !== undefined) {
-						anyBox = plotData[j].boxes[0];
-					}
-					j++;
-				}
-	
-				var boxHeight = Math.abs(yScale(anyBox.open) - yScale(anyBox.close));
-	
-				var columns = plotData.filter(function (d) {
-					return d.close !== undefined;
-				}).map(function (d, idx) {
-					var boxes = d.boxes.map(function (box, i) {
-						return {
-							columnWidth: columnWidth,
-							boxHeight: boxHeight,
-							open: yScale(box.open),
-							close: yScale(box.close)
-						};
-					});
-					// y2: yScale(box.close),
-					var xOffset = xScale(xAccessor(d)) - columnWidth / 2;
-					return {
-						boxes: boxes,
-						direction: d.direction,
-						offset: [xOffset, 0]
-					};
-				});
-				return columns;
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				if (this.context.type !== "svg") return null;
-				var columns = this.getColumns();
-				var _props2 = this.props;
-				var stroke = _props2.stroke;
-				var fill = _props2.fill;
-				var strokeWidth = _props2.strokeWidth;
-				var className = _props2.className;
+				var props = this.props;
+				var xScale = props.xScale;
+				var xAccessor = props.xAccessor;
+				var yScale = props.yScale;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+	
+				var columns = PointAndFigureSeries.getColumns(xScale, xAccessor, yScale, yAccessor, plotData);
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var strokeWidth = props.strokeWidth;
+				var className = props.className;
 	
 				return _react2["default"].createElement(
 					"g",
@@ -4860,19 +5412,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		return PointAndFigureSeries;
 	})(_react2["default"].Component);
 	
-	PointAndFigureSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
-	};
-	
 	PointAndFigureSeries.defaultProps = {
 		className: "react-stockcharts-point-and-figure",
-		namespace: "ReStock.PointAndFigureSeries",
 		strokeWidth: 1,
 		stroke: {
 			up: "#6BA583",
@@ -4888,13 +5429,106 @@ return /******/ (function(modules) { // webpackBootstrap
 		return { open: d.open, high: d.high, low: d.low, close: d.close };
 	};
 	
-	module.exports = PointAndFigureSeries;
+	PointAndFigureSeries.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+	
+		var columns = PointAndFigureSeries.getColumns(xScale, xAccessor, yScale, yAccessor, plotData);
+		var stroke = props.stroke;
+		var fill = props.fill;
+		var strokeWidth = props.strokeWidth;
+		var className = props.className;
+	
+		columns.forEach(function (col) {
+			var _col$offset = _slicedToArray(col.offset, 2);
+	
+			var offsetX = _col$offset[0];
+			var offsetY = _col$offset[1];
+	
+			col.boxes.forEach(function (box) {
+				if (col.direction > 0) {
+					ctx.fillStyle = fill.up;
+					ctx.strokeStyle = stroke.up;
+	
+					ctx.beginPath();
+	
+					ctx.moveTo(offsetX, offsetY + box.open);
+					ctx.lineTo(offsetX + box.columnWidth, offsetY + box.close);
+					ctx.moveTo(offsetX, offsetY + box.close);
+					ctx.lineTo(offsetX + box.columnWidth, offsetY + box.open);
+	
+					ctx.stroke();
+				} else {
+					ctx.fillStyle = fill.down;
+					ctx.strokeStyle = stroke.down;
+	
+					ctx.beginPath();
+	
+					var x = offsetX + box.columnWidth / 2;
+					var y = offsetY + box.open + box.boxHeight / 2;
+					var rx = box.columnWidth / 2;
+					var ry = box.boxHeight / 2;
+	
+					ctx.ellipse(x, y, rx, ry, 0, 0, 2 * Math.PI);
+					ctx.stroke();
+				}
+			});
+		});
+	
+		ctx.stroke();
+	};
+	
+	PointAndFigureSeries.getColumns = function (xScale, xAccessor, yScale, yAccessor, plotData) {
+	
+		var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
+	
+		var columnWidth = width / (plotData.length - 1);
+	
+		var anyBox,
+		    j = 0;
+		while (anyBox === undefined) {
+			if (plotData[j].close !== undefined) {
+				anyBox = plotData[j].boxes[0];
+			}
+			j++;
+		}
+	
+		var boxHeight = Math.abs(yScale(anyBox.open) - yScale(anyBox.close));
+	
+		var columns = plotData.filter(function (d) {
+			return d.close !== undefined;
+		}).map(function (d, idx) {
+			var boxes = d.boxes.map(function (box, i) {
+				return {
+					columnWidth: columnWidth,
+					boxHeight: boxHeight,
+					open: yScale(box.open),
+					close: yScale(box.close)
+				};
+			});
+			// y2: yScale(box.close),
+			var xOffset = xScale(xAccessor(d)) - columnWidth / 2;
+			return {
+				boxes: boxes,
+				direction: d.direction,
+				offset: [xOffset, 0]
+			};
+		});
+		return columns;
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(PointAndFigureSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -4910,85 +5544,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var RenkoSeries = (function (_React$Component) {
 		_inherits(RenkoSeries, _React$Component);
 	
-		function RenkoSeries(props) {
+		function RenkoSeries() {
 			_classCallCheck(this, RenkoSeries);
 	
-			_get(Object.getPrototypeOf(RenkoSeries.prototype), "constructor", this).call(this, props);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
-			this.getRenko = this.getRenko.bind(this);
+			_get(Object.getPrototypeOf(RenkoSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(RenkoSeries, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var fillStyle = ctx.fillStyle;
-				var strokeStyle = ctx.strokeStyle;
-	
-				this.getRenko().forEach(function (d) {
-					ctx.beginPath();
-					ctx.fillStyle = d.fill;
-					ctx.strokeStyle = d.stroke;
-					ctx.rect(d.x, d.y, d.width, d.height);
-					ctx.closePath();
-					ctx.fill();
-				});
-	
-				ctx.fillStyle = fillStyle;
-				ctx.strokeStyle = strokeStyle;
-			}
-		}, {
-			key: "getRenko",
-			value: function getRenko() {
-				var _props = this.props;
-				var classNames = _props.classNames;
-				var fill = _props.fill;
-				var _context = this.context;
-				var plotData = _context.plotData;
-				var xScale = _context.xScale;
-				var xAccessor = _context.xAccessor;
-				var yScale = _context.yScale;
-				var yAccessor = _context.yAccessor;
-	
-				var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
-	
-				var candleWidth = width / (plotData.length - 1);
-	
-				var candles = plotData.filter(function (d) {
-					return d.close !== undefined;
-				}).map(function (d, idx) {
-					var ohlc = yAccessor(d);
-					var x = xScale(xAccessor(d)) - 0.5 * candleWidth,
-					    y = yScale(Math.max(ohlc.open, ohlc.close)),
-					    height = Math.abs(yScale(ohlc.open) - yScale(ohlc.close)),
-					    className = ohlc.open <= ohlc.close ? classNames.up : classNames.down,
-					    svgfill = ohlc.open <= ohlc.close ? fill.up : fill.down;
-	
-					return {
-						className: className,
-						fill: svgfill,
-						x: x,
-						y: y,
-						height: height,
-						width: candleWidth
-					};
-				});
-				return candles;
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				if (this.context.type !== "svg") return null;
+				var props = this.props;
+				var plotData = props.plotData;
+				var xScale = props.xScale;
+				var xAccessor = props.xAccessor;
+				var yScale = props.yScale;
+				var yAccessor = props.yAccessor;
 	
-				var candles = this.getRenko().map(function (each, idx) {
+				var candles = RenkoSeries.getRenko(props, plotData, xScale, xAccessor, yScale, yAccessor).map(function (each, idx) {
 					return _react2["default"].createElement("rect", { key: idx, className: each.className,
 						fill: each.fill,
 						x: each.x,
@@ -5027,18 +5606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		})
 	};
 	
-	RenkoSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
-	};
-	
 	RenkoSeries.defaultProps = {
-		namespace: "ReStock.RenkoSeries",
 		classNames: {
 			up: "up",
 			down: "down"
@@ -5057,13 +5625,62 @@ return /******/ (function(modules) { // webpackBootstrap
 		return { open: d.open, high: d.high, low: d.low, close: d.close };
 	};
 	
-	module.exports = RenkoSeries;
+	RenkoSeries.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+	
+		RenkoSeries.getRenko(props, plotData, xScale, xAccessor, yScale, yAccessor).forEach(function (d) {
+			ctx.beginPath();
+			ctx.fillStyle = d.fill;
+			ctx.strokeStyle = d.stroke;
+			ctx.rect(d.x, d.y, d.width, d.height);
+			ctx.closePath();
+			ctx.fill();
+		});
+	};
+	
+	RenkoSeries.getRenko = function (props, plotData, xScale, xAccessor, yScale, yAccessor) {
+		var classNames = props.classNames;
+		var fill = props.fill;
+	
+		var width = xScale(xAccessor(plotData[plotData.length - 1])) - xScale(xAccessor(plotData[0]));
+	
+		var candleWidth = width / (plotData.length - 1);
+	
+		var candles = plotData.filter(function (d) {
+			return d.close !== undefined;
+		}).map(function (d, idx) {
+			var ohlc = yAccessor(d);
+			var x = xScale(xAccessor(d)) - 0.5 * candleWidth,
+			    y = yScale(Math.max(ohlc.open, ohlc.close)),
+			    height = Math.abs(yScale(ohlc.open) - yScale(ohlc.close)),
+			    className = ohlc.open <= ohlc.close ? classNames.up : classNames.down,
+			    svgfill = ohlc.open <= ohlc.close ? fill.up : fill.down;
+	
+			return {
+				className: className,
+				fill: svgfill,
+				x: x,
+				y: y,
+				height: height,
+				width: candleWidth
+			};
+		});
+		return candles;
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(RenkoSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 36 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -5079,89 +5696,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _HistogramSeries = __webpack_require__(32);
+	var _HistogramSeries = __webpack_require__(34);
 	
 	var _HistogramSeries2 = _interopRequireDefault(_HistogramSeries);
 	
-	var _Line = __webpack_require__(27);
+	var _Line = __webpack_require__(28);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _StraightLine = __webpack_require__(37);
+	var _StraightLine = __webpack_require__(39);
 	
 	var _StraightLine2 = _interopRequireDefault(_StraightLine);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	var MACDSeries = (function (_React$Component) {
 		_inherits(MACDSeries, _React$Component);
 	
-		function MACDSeries(props) {
+		function MACDSeries() {
 			_classCallCheck(this, MACDSeries);
 	
-			_get(Object.getPrototypeOf(MACDSeries.prototype), "constructor", this).call(this, props);
-			this.getHorizontalLine = this.getHorizontalLine.bind(this);
+			_get(Object.getPrototypeOf(MACDSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
-		/*
-	 				<path d={this.getMACDLine()} stroke={indicatorOptions.stroke.MACDLine} fill="none"/>
-	 				<path d={this.getSignalLine()} stroke={indicatorOptions.stroke.signalLine} fill="none"/>
-	 
-	 */
-		//  className="macdline"
-		//  className="signalline"
-	
 		_createClass(MACDSeries, [{
-			key: "getChildContext",
-			value: function getChildContext() {
-				var yAccess = this.context.yAccessor;
-				return {
-					yAccessor: function yAccessor(d) {
-						return yAccess(d) && yAccess(d).histogram;
-					}
-				};
-			}
-		}, {
-			key: "getHorizontalLine",
-			value: function getHorizontalLine() {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-	
-				var first = xAccessor(plotData[0]);
-				var last = xAccessor(plotData[plotData.length - 1]);
-	
-				/* return <line x1={xScale(first)}
-	   	y1={yScale(0)}
-	   	x2={xScale(last)}
-	   	y2={yScale(0)} className="horizontal" />; */
-				return _react2["default"].createElement(_StraightLine2["default"], {
-					stroke: "black", opacity: 0.3, type: type,
-					x1: xScale(first),
-					y1: yScale(0),
-					x2: xScale(last),
-					y2: yScale(0) });
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				// if (this.context.type !== "svg") return null;
-				var _context2 = this.context;
-				var indicator = _context2.indicator;
-				var xScale = _context2.xScale;
-				var yScale = _context2.yScale;
-				var xAccessor = _context2.xAccessor;
-				var yAccessor = _context2.yAccessor;
-				var plotData = _context2.plotData;
-				var type = _context2.type;
+				var props = this.props;
+				var indicator = props.indicator;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var type = props.type;
 	
 				var options = indicator.options();
+	
 				return _react2["default"].createElement(
 					"g",
 					{ className: "macd-series" },
@@ -5170,7 +5743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).MACDLine;
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: options.stroke.MACDLine, fill: "none",
 						type: type }),
 					_react2["default"].createElement(_Line2["default"], {
@@ -5178,12 +5751,19 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).signalLine;
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: options.stroke.signalLine, fill: "none",
 						type: type }),
-					_react2["default"].createElement(_HistogramSeries2["default"], { baseAt: this.context.yScale(0), className: "macd-histogram",
-						stroke: options.stroke.histogram, fill: options.fill.histogram }),
-					this.getHorizontalLine()
+					_react2["default"].createElement(_HistogramSeries2["default"], {
+						baseAt: function (xScale, yScale, d) {
+							return yScale(0);
+						},
+						className: "macd-histogram",
+						stroke: options.stroke.histogram, fill: options.fill.histogram,
+						yAccessor: function (d) {
+							return yAccessor(d) && yAccessor(d).histogram;
+						} }),
+					MACDSeries.getHorizontalLine(props)
 				);
 			}
 		}]);
@@ -5191,30 +5771,41 @@ return /******/ (function(modules) { // webpackBootstrap
 		return MACDSeries;
 	})(_react2["default"].Component);
 	
-	MACDSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		indicator: _react2["default"].PropTypes.func.isRequired,
-		canvasContext: _react2["default"].PropTypes.object,
-		type: _react2["default"].PropTypes.string
+	MACDSeries.getHorizontalLine = function (props) {
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var plotData = props.plotData;
+		var type = props.type;
+	
+		var first = xAccessor(plotData[0]);
+		var last = xAccessor(plotData[plotData.length - 1]);
+	
+		return _react2["default"].createElement(_StraightLine2["default"], {
+			stroke: "black", opacity: 0.3, type: type,
+			xScale: xScale, yScale: yScale,
+			xAccessor: xAccessor, yAccessor: yAccessor,
+			plotData: plotData,
+			yValue: 0 });
 	};
 	
 	MACDSeries.childContextTypes = {
 		yAccessor: _react2["default"].PropTypes.func.isRequired
 	};
 	
-	MACDSeries.defaultProps = { namespace: "ReStock.MACDSeries" };
-	
-	module.exports = MACDSeries;
+	exports["default"] = (0, _wrap2["default"])(MACDSeries);
+	module.exports = exports["default"];
 
 /***/ },
-/* 37 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -5230,75 +5821,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
 	var StraightLine = (function (_React$Component) {
 		_inherits(StraightLine, _React$Component);
 	
-		function StraightLine(props) {
+		function StraightLine() {
 			_classCallCheck(this, StraightLine);
 	
-			_get(Object.getPrototypeOf(StraightLine.prototype), "constructor", this).call(this, props);
-			this.drawOnCanvas = this.drawOnCanvas.bind(this);
+			_get(Object.getPrototypeOf(StraightLine.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(StraightLine, [{
-			key: "componentDidUpdate",
-			value: function componentDidUpdate(prevProps, prevState, prevContext) {
-				if (this.context.type !== "svg" && this.context.canvasContext !== undefined) this.drawOnCanvas();
-			}
-		}, {
-			key: "drawOnCanvas",
-			value: function drawOnCanvas() {
-				var ctx = this.context.canvasContext;
-				var _props = this.props;
-				var type = _props.type;
-				var stroke = _props.stroke;
-				var fill = _props.fill;
-				var className = _props.className;
-				var opacity = _props.opacity;
-				var _props2 = this.props;
-				var x1 = _props2.x1;
-				var y1 = _props2.y1;
-				var x2 = _props2.x2;
-				var y2 = _props2.y2;
-	
-				ctx.beginPath();
-	
-				var fillStyle = ctx.fillStyle;
-				var strokeStyle = ctx.strokeStyle;
-				var globalAlpha = ctx.globalAlpha;
-	
-				ctx.strokeStyle = stroke;
-				ctx.globalAlpha = opacity;
-	
-				ctx.moveTo(x1, y1);
-				ctx.lineTo(x2, y2);
-				ctx.stroke();
-	
-				ctx.fillStyle = fillStyle;
-				ctx.strokeStyle = strokeStyle;
-				ctx.globalAlpha = globalAlpha;
-			}
-		}, {
 			key: "render",
 			value: function render() {
-				var _props3 = this.props;
-				var type = _props3.type;
-				var stroke = _props3.stroke;
-				var fill = _props3.fill;
-				var className = _props3.className;
-				var opacity = _props3.opacity;
-				var _props4 = this.props;
-				var x1 = _props4.x1;
-				var y1 = _props4.y1;
-				var x2 = _props4.x2;
-				var y2 = _props4.y2;
+				var props = this.props;
+				var stroke = props.stroke;
+				var fill = props.fill;
+				var className = props.className;
+				var opacity = props.opacity;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var yValue = props.yValue;
 	
-				if (type !== "svg") return null;
+				var first = xAccessor(plotData[0]);
+				var last = xAccessor(plotData[plotData.length - 1]);
 	
 				return _react2["default"].createElement("line", { className: className,
 					stroke: stroke, opacity: opacity,
-					x1: x1, y1: y1,
-					x2: x2, y2: y2 });
+					x1: xScale(first), y1: yScale(yValue),
+					x2: xScale(last), y2: yScale(yValue) });
 			}
 		}]);
 	
@@ -5307,14 +5864,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	StraightLine.propTypes = {
 		className: _react2["default"].PropTypes.string,
-		x1: _react2["default"].PropTypes.number.isRequired,
-		y1: _react2["default"].PropTypes.number.isRequired,
-		x2: _react2["default"].PropTypes.number.isRequired,
-		y2: _react2["default"].PropTypes.number.isRequired,
+		xScale: _react2["default"].PropTypes.func.isRequired,
+		yScale: _react2["default"].PropTypes.func.isRequired,
+		xAccessor: _react2["default"].PropTypes.func.isRequired,
+		yAccessor: _react2["default"].PropTypes.func.isRequired,
 		stroke: _react2["default"].PropTypes.string,
 		fill: _react2["default"].PropTypes.string,
 		type: _react2["default"].PropTypes.string.isRequired,
-		opacity: _react2["default"].PropTypes.number.isRequired
+		opacity: _react2["default"].PropTypes.number.isRequired,
+		yValue: _react2["default"].PropTypes.number.isRequired
 	};
 	StraightLine.defaultProps = {
 		className: "line ",
@@ -5322,17 +5880,42 @@ return /******/ (function(modules) { // webpackBootstrap
 		stroke: "black",
 		opacity: 0.5
 	};
-	StraightLine.contextTypes = {
-		canvasContext: _react2["default"].PropTypes.object
+	
+	StraightLine.drawOnCanvas = function (props, ctx, xScale, yScale, plotData) {
+		var type = props.type;
+		var stroke = props.stroke;
+		var fill = props.fill;
+		var className = props.className;
+		var opacity = props.opacity;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var yValue = props.yValue;
+	
+		var first = xAccessor(plotData[0]);
+		var last = xAccessor(plotData[plotData.length - 1]);
+	
+		ctx.beginPath();
+	
+		ctx.strokeStyle = stroke;
+		ctx.globalAlpha = opacity;
+	
+		ctx.moveTo(xScale(first), yScale(yValue));
+		ctx.lineTo(xScale(last), yScale(yValue));
+		ctx.stroke();
 	};
 	
-	module.exports = StraightLine;
+	exports["default"] = (0, _wrap2["default"])(StraightLine);
+	module.exports = exports["default"];
 
 /***/ },
-/* 38 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -5348,57 +5931,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _HistogramSeries = __webpack_require__(32);
+	var _HistogramSeries = __webpack_require__(34);
 	
 	var _HistogramSeries2 = _interopRequireDefault(_HistogramSeries);
 	
-	var _Line = __webpack_require__(27);
+	var _Line = __webpack_require__(28);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Area = __webpack_require__(28);
+	var _Area = __webpack_require__(30);
 	
 	var _Area2 = _interopRequireDefault(_Area);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
 	
 	var BollingerSeries = (function (_React$Component) {
 		_inherits(BollingerSeries, _React$Component);
 	
-		function BollingerSeries(props) {
+		function BollingerSeries() {
 			_classCallCheck(this, BollingerSeries);
 	
-			_get(Object.getPrototypeOf(BollingerSeries.prototype), "constructor", this).call(this, props);
+			_get(Object.getPrototypeOf(BollingerSeries.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(BollingerSeries, [{
 			key: "render",
 			value: function render() {
-				// if (this.context.type !== "svg") return null;
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-				var _props = this.props;
-				var stroke = _props.stroke;
-				var className = _props.className;
-				var fill = _props.fill;
-				var opacity = _props.opacity;
-	
-				var areaSeries = _d32["default"].svg.area().defined(function (d) {
-					return yAccessor(d) !== undefined;
-				}).x(function (d) {
-					return xScale(xAccessor(d));
-				}).y0(function (d) {
-					return yScale(yAccessor(d).bottom);
-				}).y1(function (d) {
-					return yScale(yAccessor(d).top);
-				});
+				var props = this.props;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var type = props.type;
+				var stroke = props.stroke;
+				var className = props.className;
+				var fill = props.fill;
+				var opacity = props.opacity;
 	
 				return _react2["default"].createElement(
 					"g",
@@ -5408,7 +5979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).top;
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: stroke.top, fill: "none",
 						type: type }),
 					_react2["default"].createElement(_Line2["default"], {
@@ -5416,7 +5987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).middle;
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: stroke.middle, fill: "none",
 						type: type }),
 					_react2["default"].createElement(_Line2["default"], {
@@ -5424,7 +5995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).bottom;
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: stroke.bottom, fill: "none",
 						type: type }),
 					_react2["default"].createElement(_Area2["default"], {
@@ -5433,10 +6004,10 @@ return /******/ (function(modules) { // webpackBootstrap
 						xAccessor: xAccessor, yAccessor: function (d) {
 							return yAccessor(d) && yAccessor(d).top;
 						},
-						base: function (d) {
-							return yScale(yAccessor(d) && yAccessor(d).bottom);
+						base: function (scale, d) {
+							return scale(yAccessor(d) && yAccessor(d).bottom);
 						},
-						data: plotData,
+						plotData: plotData,
 						stroke: "none", fill: fill, opacity: opacity,
 						type: type })
 				);
@@ -5446,21 +6017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		return BollingerSeries;
 	})(_react2["default"].Component);
 	
-	BollingerSeries.contextTypes = {
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		type: _react2["default"].PropTypes.string
-	};
-	
-	/* BollingerSeries.childContextTypes = {
-		yAccessor: React.PropTypes.func.isRequired,
-	};
-	*/
 	BollingerSeries.defaultProps = {
-		namespace: "ReStock.BollingerSeries",
 		stroke: {
 			top: "brown",
 			middle: "black",
@@ -5470,254 +6027,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		opacity: 0.2
 	};
 	
-	module.exports = BollingerSeries;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _Line = __webpack_require__(27);
-	
-	var _Line2 = _interopRequireDefault(_Line);
-	
-	var _StraightLine = __webpack_require__(37);
-	
-	var _StraightLine2 = _interopRequireDefault(_StraightLine);
-	
-	var RSISeries = (function (_React$Component) {
-		_inherits(RSISeries, _React$Component);
-	
-		function RSISeries(props) {
-			_classCallCheck(this, RSISeries);
-	
-			_get(Object.getPrototypeOf(RSISeries.prototype), "constructor", this).call(this, props);
-			this.getHorizontalLine = this.getHorizontalLine.bind(this);
-		}
-	
-		_createClass(RSISeries, [{
-			key: "getHorizontalLine",
-			value: function getHorizontalLine(yValue, stroke) {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-	
-				var first = xAccessor(plotData[0]);
-				var last = xAccessor(plotData[plotData.length - 1]);
-	
-				return _react2["default"].createElement(_StraightLine2["default"], {
-					stroke: stroke, opacity: 0.3, type: type,
-					x1: xScale(first),
-					y1: yScale(yValue),
-					x2: xScale(last),
-					y2: yScale(yValue) });
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var _context2 = this.context;
-				var indicator = _context2.indicator;
-				var xScale = _context2.xScale;
-				var yScale = _context2.yScale;
-				var xAccessor = _context2.xAccessor;
-				var yAccessor = _context2.yAccessor;
-				var plotData = _context2.plotData;
-				var stroke = _context2.stroke;
-				var type = _context2.type;
-	
-				var options = indicator.options();
-				return _react2["default"].createElement(
-					"g",
-					{ className: this.props.className },
-					_react2["default"].createElement(_Line2["default"], {
-						className: this.props.className,
-						xScale: xScale, yScale: yScale,
-						xAccessor: xAccessor, yAccessor: yAccessor,
-						data: plotData,
-						stroke: stroke, fill: "none",
-						type: type }),
-					this.getHorizontalLine(options.overSold, "brown"),
-					this.getHorizontalLine(50, "black"),
-					this.getHorizontalLine(options.overBought, "brown")
-				);
-			}
-		}]);
-	
-		return RSISeries;
-	})(_react2["default"].Component);
-	
-	RSISeries.propTypes = {
-		className: _react2["default"].PropTypes.string
-	};
-	
-	RSISeries.defaultProps = {
-		namespace: "ReStock.RSISeries",
-		className: "react-stockcharts-rsi-series"
-	};
-	
-	RSISeries.contextTypes = {
-		indicator: _react2["default"].PropTypes.func.isRequired,
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		stroke: _react2["default"].PropTypes.string,
-		type: _react2["default"].PropTypes.string
-	};
-	
-	module.exports = RSISeries;
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(5);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _Line = __webpack_require__(27);
-	
-	var _Line2 = _interopRequireDefault(_Line);
-	
-	var _StraightLine = __webpack_require__(37);
-	
-	var _StraightLine2 = _interopRequireDefault(_StraightLine);
-	
-	var StochasticSeries = (function (_React$Component) {
-		_inherits(StochasticSeries, _React$Component);
-	
-		function StochasticSeries(props) {
-			_classCallCheck(this, StochasticSeries);
-	
-			_get(Object.getPrototypeOf(StochasticSeries.prototype), "constructor", this).call(this, props);
-			this.getHorizontalLine = this.getHorizontalLine.bind(this);
-		}
-	
-		_createClass(StochasticSeries, [{
-			key: "getHorizontalLine",
-			value: function getHorizontalLine(yValue, stroke) {
-				var _context = this.context;
-				var xScale = _context.xScale;
-				var yScale = _context.yScale;
-				var xAccessor = _context.xAccessor;
-				var yAccessor = _context.yAccessor;
-				var plotData = _context.plotData;
-				var type = _context.type;
-	
-				var first = xAccessor(plotData[0]);
-				var last = xAccessor(plotData[plotData.length - 1]);
-	
-				return _react2["default"].createElement(_StraightLine2["default"], {
-					stroke: stroke, opacity: 0.3, type: type,
-					x1: xScale(first),
-					y1: yScale(yValue),
-					x2: xScale(last),
-					y2: yScale(yValue) });
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var _context2 = this.context;
-				var indicator = _context2.indicator;
-				var xScale = _context2.xScale;
-				var yScale = _context2.yScale;
-				var xAccessor = _context2.xAccessor;
-				var yAccessor = _context2.yAccessor;
-				var plotData = _context2.plotData;
-				var stroke = _context2.stroke;
-				var type = _context2.type;
-	
-				var options = indicator.options();
-				return _react2["default"].createElement(
-					"g",
-					{ className: this.props.className },
-					_react2["default"].createElement(_Line2["default"], {
-						xScale: xScale, yScale: yScale,
-						xAccessor: xAccessor, yAccessor: function (d) {
-							return yAccessor(d) && yAccessor(d).D;
-						},
-						data: plotData,
-						stroke: options.stroke.D, fill: "none",
-						type: type }),
-					_react2["default"].createElement(_Line2["default"], {
-						xScale: xScale, yScale: yScale,
-						xAccessor: xAccessor, yAccessor: function (d) {
-							return yAccessor(d) && yAccessor(d).K;
-						},
-						data: plotData,
-						stroke: options.stroke.K, fill: "none",
-						type: type }),
-					this.getHorizontalLine(options.overSold, "brown"),
-					this.getHorizontalLine(50, "black"),
-					this.getHorizontalLine(options.overBought, "brown")
-				);
-			}
-		}]);
-	
-		return StochasticSeries;
-	})(_react2["default"].Component);
-	
-	StochasticSeries.propTypes = {
-		className: _react2["default"].PropTypes.string
-	};
-	
-	StochasticSeries.defaultProps = {
-		namespace: "ReStock.StochasticSeries",
-		className: "react-stockcharts-rsi-series"
-	};
-	
-	StochasticSeries.contextTypes = {
-		indicator: _react2["default"].PropTypes.func.isRequired,
-		xScale: _react2["default"].PropTypes.func.isRequired,
-		yScale: _react2["default"].PropTypes.func.isRequired,
-		xAccessor: _react2["default"].PropTypes.func.isRequired,
-		yAccessor: _react2["default"].PropTypes.func.isRequired,
-		plotData: _react2["default"].PropTypes.array.isRequired,
-		stroke: _react2["default"].PropTypes.string,
-		type: _react2["default"].PropTypes.string
-	};
-	
-	module.exports = StochasticSeries;
+	exports["default"] = (0, _wrap2["default"])(BollingerSeries);
+	module.exports = exports["default"];
 
 /***/ },
 /* 41 */
@@ -5729,21 +6040,245 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _EdgeContainer = __webpack_require__(42);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Line = __webpack_require__(28);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _StraightLine = __webpack_require__(39);
+	
+	var _StraightLine2 = _interopRequireDefault(_StraightLine);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
+	var RSISeries = (function (_React$Component) {
+		_inherits(RSISeries, _React$Component);
+	
+		function RSISeries() {
+			_classCallCheck(this, RSISeries);
+	
+			_get(Object.getPrototypeOf(RSISeries.prototype), "constructor", this).apply(this, arguments);
+		}
+	
+		_createClass(RSISeries, [{
+			key: "render",
+			value: function render() {
+				var props = this.props;
+				var className = props.className;
+				var indicator = props.indicator;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var stroke = props.stroke;
+				var type = props.type;
+	
+				var options = indicator.options();
+				return _react2["default"].createElement(
+					"g",
+					{ className: className },
+					_react2["default"].createElement(_Line2["default"], {
+						className: className,
+						xScale: xScale, yScale: yScale,
+						xAccessor: xAccessor, yAccessor: yAccessor,
+						plotData: plotData,
+						stroke: stroke, fill: "none",
+						type: type }),
+					RSISeries.getHorizontalLine(props, options.overSold, "brown"),
+					RSISeries.getHorizontalLine(props, 50, "black"),
+					RSISeries.getHorizontalLine(props, options.overBought, "brown")
+				);
+			}
+		}]);
+	
+		return RSISeries;
+	})(_react2["default"].Component);
+	
+	RSISeries.getHorizontalLine = function (props, yValue, stroke) {
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var plotData = props.plotData;
+		var type = props.type;
+	
+		return _react2["default"].createElement(_StraightLine2["default"], {
+			stroke: stroke, opacity: 0.3, type: type,
+			xScale: xScale, yScale: yScale,
+			xAccessor: xAccessor, yAccessor: yAccessor,
+			plotData: plotData,
+			yValue: yValue });
+	};
+	
+	RSISeries.propTypes = {
+		className: _react2["default"].PropTypes.string
+	};
+	
+	RSISeries.defaultProps = {
+		className: "react-stockcharts-rsi-series"
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(RSISeries);
+	module.exports = exports["default"];
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _wrap = __webpack_require__(29);
+	
+	var _wrap2 = _interopRequireDefault(_wrap);
+	
+	var _Line = __webpack_require__(28);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _StraightLine = __webpack_require__(39);
+	
+	var _StraightLine2 = _interopRequireDefault(_StraightLine);
+	
+	var StochasticSeries = (function (_React$Component) {
+		_inherits(StochasticSeries, _React$Component);
+	
+		function StochasticSeries() {
+			_classCallCheck(this, StochasticSeries);
+	
+			_get(Object.getPrototypeOf(StochasticSeries.prototype), "constructor", this).apply(this, arguments);
+		}
+	
+		_createClass(StochasticSeries, [{
+			key: "render",
+			value: function render() {
+				var props = this.props;
+				var className = props.className;
+				var indicator = props.indicator;
+				var xScale = props.xScale;
+				var yScale = props.yScale;
+				var xAccessor = props.xAccessor;
+				var yAccessor = props.yAccessor;
+				var plotData = props.plotData;
+				var stroke = props.stroke;
+				var type = props.type;
+	
+				var options = indicator.options();
+	
+				return _react2["default"].createElement(
+					"g",
+					{ className: className },
+					_react2["default"].createElement(_Line2["default"], {
+						xScale: xScale, yScale: yScale,
+						xAccessor: xAccessor, yAccessor: function (d) {
+							return yAccessor(d) && yAccessor(d).D;
+						},
+						plotData: plotData,
+						stroke: options.stroke.D, fill: "none",
+						type: type }),
+					_react2["default"].createElement(_Line2["default"], {
+						xScale: xScale, yScale: yScale,
+						xAccessor: xAccessor, yAccessor: function (d) {
+							return yAccessor(d) && yAccessor(d).K;
+						},
+						plotData: plotData,
+						stroke: options.stroke.K, fill: "none",
+						type: type }),
+					StochasticSeries.getHorizontalLine(props, options.overSold, "brown"),
+					StochasticSeries.getHorizontalLine(props, 50, "black"),
+					StochasticSeries.getHorizontalLine(props, options.overBought, "brown")
+				);
+			}
+		}]);
+	
+		return StochasticSeries;
+	})(_react2["default"].Component);
+	
+	StochasticSeries.getHorizontalLine = function (props, yValue, stroke) {
+		var xScale = props.xScale;
+		var yScale = props.yScale;
+		var xAccessor = props.xAccessor;
+		var yAccessor = props.yAccessor;
+		var plotData = props.plotData;
+		var type = props.type;
+	
+		return _react2["default"].createElement(_StraightLine2["default"], {
+			stroke: stroke, opacity: 0.3, type: type,
+			xScale: xScale, yScale: yScale,
+			xAccessor: xAccessor, yAccessor: yAccessor,
+			plotData: plotData,
+			yValue: yValue });
+	};
+	
+	StochasticSeries.propTypes = {
+		className: _react2["default"].PropTypes.string
+	};
+	
+	StochasticSeries.defaultProps = {
+		className: "react-stockcharts-rsi-series"
+	};
+	
+	exports["default"] = (0, _wrap2["default"])(StochasticSeries);
+	module.exports = exports["default"];
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var _EdgeContainer = __webpack_require__(44);
 	
 	var _EdgeContainer2 = _interopRequireDefault(_EdgeContainer);
 	
-	var _EdgeIndicator = __webpack_require__(43);
+	var _EdgeIndicator = __webpack_require__(45);
 	
 	var _EdgeIndicator2 = _interopRequireDefault(_EdgeIndicator);
 	
-	var _MouseCoordinates = __webpack_require__(45);
+	var _MouseCoordinates = __webpack_require__(47);
 	
 	var _MouseCoordinates2 = _interopRequireDefault(_MouseCoordinates);
 	
-	var _CurrentCoordinate = __webpack_require__(47);
+	var _CurrentCoordinate = __webpack_require__(49);
 	
 	var _CurrentCoordinate2 = _interopRequireDefault(_CurrentCoordinate);
 	
@@ -5756,7 +6291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5820,14 +6355,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_utilsPureComponent2["default"]);
 	
 	EdgeContainer.contextTypes = {
+		width: _react2["default"].PropTypes.number.isRequired,
 		chartData: _react2["default"].PropTypes.array.isRequired,
-		currentItems: _react2["default"].PropTypes.array.isRequired
+		// currentItems: React.PropTypes.array.isRequired,
+		axesCanvasContext: _react2["default"].PropTypes.object,
+		type: _react2["default"].PropTypes.string,
+		margin: _react2["default"].PropTypes.object.isRequired,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired
 	};
 	
 	module.exports = EdgeContainer;
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5854,7 +6394,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsUtils2 = _interopRequireDefault(_utilsUtils);
 	
-	var _EdgeCoordinate = __webpack_require__(44);
+	var _EdgeCoordinate = __webpack_require__(46);
 	
 	var _EdgeCoordinate2 = _interopRequireDefault(_EdgeCoordinate);
 	
@@ -5865,58 +6405,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EdgeIndicator = (function (_React$Component) {
 		_inherits(EdgeIndicator, _React$Component);
 	
-		function EdgeIndicator() {
+		function EdgeIndicator(props) {
 			_classCallCheck(this, EdgeIndicator);
 	
-			_get(Object.getPrototypeOf(EdgeIndicator.prototype), "constructor", this).apply(this, arguments);
+			_get(Object.getPrototypeOf(EdgeIndicator.prototype), "constructor", this).call(this, props);
+			this.drawOnCanvas = this.drawOnCanvas.bind(this);
 		}
 	
 		_createClass(EdgeIndicator, [{
+			key: "componentDidMount",
+			value: function componentDidMount() {
+				var type = this.props.type;
+				var getCanvasContexts = this.context.getCanvasContexts;
+	
+				if (type !== "svg" && getCanvasContexts !== undefined) {
+					var contexts = getCanvasContexts();
+					if (contexts) this.drawOnCanvas(contexts.axes);
+				}
+			}
+		}, {
+			key: "componentDidUpdate",
+			value: function componentDidUpdate() {
+				this.componentDidMount();
+			}
+		}, {
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				this.componentWillReceiveProps(this.props, this.context);
+			}
+		}, {
+			key: "componentWillReceiveProps",
+			value: function componentWillReceiveProps(nextProps, nextContext) {
+				var chartData = nextContext.chartData;
+				var margin = nextContext.margin;
+				var width = nextContext.width;
+	
+				var draw = EdgeIndicator.drawOnCanvasStatic.bind(null, margin, nextProps, width);
+	
+				nextContext.secretToSuperFastCanvasDraw.push({
+					type: "axis",
+					draw: draw
+				});
+			}
+		}, {
+			key: "drawOnCanvas",
+			value: function drawOnCanvas(ctx) {
+				var _context = this.context;
+				var chartData = _context.chartData;
+				var margin = _context.margin;
+				var width = _context.width;
+	
+				EdgeIndicator.drawOnCanvasStatic(margin, this.props, width, ctx, chartData);
+			}
+		}, {
 			key: "render",
 			value: function render() {
-				var _this = this;
+				if (this.context.type !== "svg") return null;
 	
-				var chartData = _utilsChartDataUtil2["default"].getChartDataForChart(this.props, this.context);
-				var currentItem = _utilsChartDataUtil2["default"].getCurrentItemForChart(this.props, this.context);
-				var edge = null,
-				    item,
-				    yAccessor;
-				// console.log(chartData.config.compareSeries.length);
-				var displayFormat = chartData.config.compareSeries.length > 0 ? _d32["default"].format(".0%") : this.props.displayFormat;
+				var _context2 = this.context;
+				var width = _context2.width;
+				var chartData = _context2.chartData;
 	
-				if (this.props.forDataSeries !== undefined && chartData.config.overlays.length > 0 && chartData.plot.overlayValues.length > 0) {
+				var edge = EdgeIndicator.helper(this.props, width, chartData);
 	
-					var overlay = chartData.config.overlays.filter(function (eachOverlay) {
-						return eachOverlay.id === _this.props.forDataSeries;
-					});
-					var overlayValue = chartData.plot.overlayValues.filter(function (eachOverlayValue) {
-						return eachOverlayValue.id === _this.props.forDataSeries;
-					});
-	
-					item = this.props.itemType === "first" ? overlayValue[0].first : this.props.itemType === "last" ? overlayValue[0].last : currentItem;
-					yAccessor = overlay[0].yAccessor;
-	
-					if (item !== undefined) {
-						var yValue = yAccessor(item),
-						    xValue = chartData.config.xAccessor(item);
-						var x1 = Math.round(chartData.plot.scales.xScale(xValue)),
-						    y1 = Math.round(chartData.plot.scales.yScale(yValue));
-	
-						var stroke = overlay[0].stroke;
-						var edgeX = this.props.edgeAt === "left" ? 0 - this.props.yAxisPad : this.context.width + this.props.yAxisPad;
-						edge = _react2["default"].createElement(_EdgeCoordinate2["default"], {
-							type: this.props.type,
-							className: "react-stockcharts-edge-coordinate",
-							fill: stroke,
-							show: true,
-							x1: x1 + chartData.config.origin[0], y1: y1 + chartData.config.origin[1],
-							x2: edgeX + chartData.config.origin[0], y2: y1 + chartData.config.origin[1],
-							coordinate: displayFormat(yValue),
-							edgeAt: edgeX,
-							orient: this.props.orient });
-					}
-				}
-				return edge;
+				if (edge === undefined) return null;
+				return _react2["default"].createElement(_EdgeCoordinate2["default"], {
+					type: edge.type,
+					className: "react-stockcharts-edge-coordinate",
+					fill: edge.fill,
+					show: edge.show,
+					x1: edge.x1,
+					y1: edge.y1,
+					x2: edge.x2,
+					y2: edge.y2,
+					coordinate: edge.coordinate,
+					edgeAt: edge.edgeAt,
+					orient: edge.orient });
 			}
 		}]);
 	
@@ -5926,7 +6490,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	EdgeIndicator.contextTypes = {
 		width: _react2["default"].PropTypes.number.isRequired,
 		chartData: _react2["default"].PropTypes.array.isRequired,
-		currentItems: _react2["default"].PropTypes.array.isRequired
+		getCanvasContexts: _react2["default"].PropTypes.func,
+		type: _react2["default"].PropTypes.string,
+		margin: _react2["default"].PropTypes.object.isRequired,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired
 	};
 	
 	EdgeIndicator.propTypes = {
@@ -5949,10 +6516,84 @@ return /******/ (function(modules) { // webpackBootstrap
 		namespace: "ReStock.EdgeIndicator"
 	};
 	
+	EdgeIndicator.drawOnCanvasStatic = function (margin, props, width, ctx, chartDataArray) {
+		var edge = EdgeIndicator.helper(props, width, chartDataArray);
+	
+		if (edge === undefined) return null;
+	
+		var originX = margin.left;
+		var originY = margin.top;
+		ctx.save();
+	
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.translate(originX, originY);
+	
+		_EdgeCoordinate2["default"].drawOnCanvasStatic(ctx, edge);
+		ctx.restore();
+	};
+	
+	EdgeIndicator.helper = function (props, width, chartData) {
+		var edgeType = props.type;
+		var displayFormat = props.displayFormat;
+		var forChart = props.forChart;
+		var forDataSeries = props.forDataSeries;
+		var itemType = props.itemType;
+		var edgeAt = props.edgeAt;
+		var yAxisPad = props.yAxisPad;
+		var orient = props.orient;
+	
+		var currentChartData = _utilsChartDataUtil2["default"].getChartDataForChartNew(chartData, forChart);
+		// var currentItem = ChartDataUtil.getCurrentItemForChartNew(currentItems, forChart);
+		var edge = null,
+		    item,
+		    yAccessor;
+		// console.log(chartData.config.compareSeries.length);
+		var displayFormat = currentChartData.config.compareSeries.length > 0 ? _d32["default"].format(".0%") : displayFormat;
+	
+		if (forDataSeries !== undefined && currentChartData.config.overlays.length > 0 && currentChartData.plot.overlayValues.length > 0) {
+	
+			var overlay = currentChartData.config.overlays.filter(function (eachOverlay) {
+				return eachOverlay.id === forDataSeries;
+			});
+			var overlayValue = currentChartData.plot.overlayValues.filter(function (eachOverlayValue) {
+				return eachOverlayValue.id === forDataSeries;
+			});
+	
+			item = itemType === "first" ? overlayValue[0].first : overlayValue[0].last;
+	
+			yAccessor = overlay[0].yAccessor;
+	
+			if (item !== undefined) {
+				var yValue = yAccessor(item),
+				    xValue = currentChartData.config.xAccessor(item);
+				var x1 = Math.round(currentChartData.plot.scales.xScale(xValue)),
+				    y1 = Math.round(currentChartData.plot.scales.yScale(yValue));
+	
+				var stroke = overlay[0].stroke;
+				var edgeX = edgeAt === "left" ? 0 - yAxisPad : width + yAxisPad;
+	
+				edge = {
+					type: edgeType,
+					fill: stroke,
+					show: true,
+					x1: x1 + currentChartData.config.origin[0],
+					y1: y1 + currentChartData.config.origin[1],
+					x2: edgeX + currentChartData.config.origin[0],
+					y2: y1 + currentChartData.config.origin[1],
+					coordinate: displayFormat(yValue),
+					edgeAt: edgeX,
+					orient: orient,
+					chartOrigin: currentChartData.config.origin
+				};
+			}
+		}
+		return edge;
+	};
+	
 	module.exports = EdgeIndicator;
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5971,6 +6612,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _objectAssign = __webpack_require__(3);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	// "../utils/Object.assign"
+	
 	var EdgeCoordinate = (function (_React$Component) {
 		_inherits(EdgeCoordinate, _React$Component);
 	
@@ -5983,52 +6630,38 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(EdgeCoordinate, [{
 			key: "render",
 			value: function render() {
-				if (!this.props.show) return null;
+				var className = this.props.className;
 	
-				var displayCoordinate = this.props.coordinate;
-				var rectWidth = this.props.rectWidth ? this.props.rectWidth : this.props.type === "horizontal" ? 60 : 100,
-				    rectHeight = 20;
+				var edge = EdgeCoordinate.helper(this.props);
+				if (edge === null) return null;
+				var line, coordinateBase, coordinate;
 	
-				var edgeXRect, edgeYRect, edgeXText, edgeYText;
-	
-				if (this.props.type === "horizontal") {
-	
-					edgeXRect = this.props.orient === "right" ? this.props.edgeAt + 1 : this.props.edgeAt - rectWidth - 1;
-					edgeYRect = this.props.y1 - rectHeight / 2;
-					edgeXText = this.props.orient === "right" ? this.props.edgeAt + rectWidth / 2 : this.props.edgeAt - rectWidth / 2;
-					edgeYText = this.props.y1;
-				} else {
-					edgeXRect = this.props.x1 - rectWidth / 2;
-					edgeYRect = this.props.orient === "bottom" ? this.props.edgeAt : this.props.edgeAt - rectHeight;
-					edgeXText = this.props.x1;
-					edgeYText = this.props.orient === "bottom" ? this.props.edgeAt + rectHeight / 2 : this.props.edgeAt - rectHeight / 2;
+				if (edge.line !== undefined) {
+					line = _react2["default"].createElement("line", {
+						className: "react-stockcharts-cross-hair", opacity: edge.line.opacity, stroke: edge.line.stroke,
+						x1: edge.line.x1, y1: edge.line.y1,
+						x2: edge.line.x2, y2: edge.line.y2 });
 				}
-				var coordinateBase = null,
-				    coordinate = null;
-				if (displayCoordinate !== undefined) {
+				if (edge.coordinateBase !== undefined) {
 					coordinateBase = _react2["default"].createElement("rect", { key: 1, className: "react-stockchart-text-background",
-						x: edgeXRect,
-						y: edgeYRect,
-						height: rectHeight, width: rectWidth,
-						fill: this.props.fill, opacity: this.props.opacity });
+						x: edge.coordinateBase.edgeXRect,
+						y: edge.coordinateBase.edgeYRect,
+						height: edge.coordinateBase.rectHeight, width: edge.coordinateBase.rectWidth,
+						fill: edge.coordinateBase.fill, opacity: edge.coordinateBase.opacity });
 					coordinate = _react2["default"].createElement(
 						"text",
-						{ key: 2, x: edgeXText,
-							y: edgeYText,
-							style: { "textAnchor": "middle" },
-							fontFamily: this.props.fontFamily,
-							fontSize: this.props.fontSize,
-							dy: ".32em", fill: this.props.textFill },
-						displayCoordinate
+						{ key: 2, x: edge.coordinate.edgeXText,
+							y: edge.coordinate.edgeYText,
+							textAnchor: edge.coordinate.textAnchor,
+							fontFamily: edge.coordinate.fontFamily,
+							fontSize: edge.coordinate.fontSize,
+							dy: ".32em", fill: edge.coordinate.textFill },
+						edge.coordinate.displayCoordinate
 					);
 				}
-				var line = this.props.hideLine ? null : _react2["default"].createElement("line", {
-					className: "react-stockcharts-cross-hair", opacity: 0.3, stroke: "black",
-					x1: this.props.x1, y1: this.props.y1,
-					x2: this.props.x2, y2: this.props.y2 });
 				return _react2["default"].createElement(
 					"g",
-					{ className: this.props.className },
+					{ className: className },
 					line,
 					coordinateBase,
 					coordinate
@@ -6064,10 +6697,102 @@ return /******/ (function(modules) { // webpackBootstrap
 		fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
 		fontSize: 13
 	};
+	
+	EdgeCoordinate.helper = function (props) {
+		var displayCoordinate = props.coordinate;
+		var show = props.show;
+		var rectWidth = props.rectWidth;
+		var type = props.type;
+		var orient = props.orient;
+		var edgeAt = props.edgeAt;
+		var hideLine = props.hideLine;
+		var className = props.className;
+		var fill = props.fill;
+		var opacity = props.opacity;
+		var fontFamily = props.fontFamily;
+		var fontSize = props.fontSize;
+		var textFill = props.textFill;
+		var x1 = props.x1;
+		var y1 = props.y1;
+		var x2 = props.x2;
+		var y2 = props.y2;
+	
+		if (!show) return null;
+	
+		rectWidth = rectWidth ? rectWidth : type === "horizontal" ? 60 : 100;
+		var rectHeight = 20;
+	
+		var edgeXRect, edgeYRect, edgeXText, edgeYText;
+	
+		if (type === "horizontal") {
+	
+			edgeXRect = orient === "right" ? edgeAt + 1 : edgeAt - rectWidth - 1;
+			edgeYRect = y1 - rectHeight / 2;
+			edgeXText = orient === "right" ? edgeAt + rectWidth / 2 : edgeAt - rectWidth / 2;
+			edgeYText = y1;
+		} else {
+			edgeXRect = x1 - rectWidth / 2;
+			edgeYRect = orient === "bottom" ? edgeAt : edgeAt - rectHeight;
+			edgeXText = x1;
+			edgeYText = orient === "bottom" ? edgeAt + rectHeight / 2 : edgeAt - rectHeight / 2;
+		}
+		var coordinateBase,
+		    coordinate,
+		    textAnchor = "middle";
+		if (displayCoordinate !== undefined) {
+			coordinateBase = {
+				edgeXRect: edgeXRect, edgeYRect: edgeYRect, rectHeight: rectHeight, rectWidth: rectWidth, fill: fill, opacity: opacity
+			};
+			coordinate = {
+				edgeXText: edgeXText, edgeYText: edgeYText, textAnchor: textAnchor, fontFamily: fontFamily, fontSize: fontSize, textFill: textFill, displayCoordinate: displayCoordinate
+			};
+		}
+		var line = hideLine ? undefined : {
+			opacity: 0.3, stroke: "black", x1: x1, y1: y1, x2: x2, y2: y2
+		};
+		return {
+			coordinateBase: coordinateBase, coordinate: coordinate, line: line
+		};
+	};
+	
+	EdgeCoordinate.drawOnCanvasStatic = function (ctx, props) {
+		props = (0, _objectAssign2["default"])({}, EdgeCoordinate.defaultProps, props);
+	
+		var edge = EdgeCoordinate.helper(props);
+	
+		if (edge === null) return;
+	
+		if (edge.coordinateBase !== undefined) {
+			// var { globalAlpha, fillStyle } = ctx;
+			ctx.globalAlpha = edge.coordinateBase.opacity;
+			ctx.fillStyle = edge.coordinateBase.fill;
+	
+			ctx.beginPath();
+			ctx.rect(edge.coordinateBase.edgeXRect, edge.coordinateBase.edgeYRect, edge.coordinateBase.rectWidth, edge.coordinateBase.rectHeight);
+			ctx.fill();
+	
+			ctx.font = edge.coordinate.fontSize + "px " + edge.coordinate.fontFamily;
+			ctx.fillStyle = edge.coordinate.textFill;
+			ctx.textAlign = edge.coordinate.textAnchor === "middle" ? "center" : edge.coordinate.textAnchor;
+			ctx.textBaseline = "middle";
+	
+			ctx.fillText(edge.coordinate.displayCoordinate, edge.coordinate.edgeXText, edge.coordinate.edgeYText);
+		}
+		if (edge.line !== undefined) {
+			ctx.globalAlpha = edge.line.opacity;
+			ctx.strokeStyle = edge.line.stroke;
+	
+			ctx.beginPath();
+			ctx.moveTo(edge.line.x1, edge.line.y1);
+			ctx.lineTo(edge.line.x2, edge.line.y2);
+			ctx.stroke();
+		}
+	};
+	
 	module.exports = EdgeCoordinate;
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6094,89 +6819,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsPureComponent2 = _interopRequireDefault(_utilsPureComponent);
 	
-	var _CrossHair = __webpack_require__(46);
+	var _CrossHair = __webpack_require__(48);
 	
 	var _CrossHair2 = _interopRequireDefault(_CrossHair);
 	
 	var MouseCoordinates = (function (_PureComponent) {
 		_inherits(MouseCoordinates, _PureComponent);
 	
-		function MouseCoordinates(props, context) {
+		function MouseCoordinates() {
 			_classCallCheck(this, MouseCoordinates);
 	
-			_get(Object.getPrototypeOf(MouseCoordinates.prototype), "constructor", this).call(this, props, context);
-			this.getPointer = this.getPointer.bind(this);
+			_get(Object.getPrototypeOf(MouseCoordinates.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(MouseCoordinates, [{
-			key: "getPointer",
-			value: function getPointer() {
-				var _this = this;
-	
+			key: "componentDidMount",
+			value: function componentDidMount() {
 				var _context = this.context;
-				var currentCharts = _context.currentCharts;
-				var chartData = _context.chartData;
-				var currentItems = _context.currentItems;
+				var type = _context.type;
+				var getCanvasContexts = _context.getCanvasContexts;
 	
-				var edges = chartData.filter(function (eachChartData) {
-					return currentCharts.indexOf(eachChartData.id) > -1;
-				}).map(function (each) {
-					var yDisplayFormat = each.config.compareSeries.length > 0 ? function (d) {
-						return (Math.round(d * 10000) / 100).toFixed(2) + "%";
-					} : each.config.mouseCoordinates.format;
-					var mouseY = _this.context.mouseXY[1] - each.config.origin[1];
-					var yValue = each.plot.scales.yScale.invert(mouseY);
-					return {
-						id: each.id,
-						at: each.config.mouseCoordinates.at,
-						yValue: yValue,
-						yDisplayFormat: yDisplayFormat
-					};
-				}).filter(function (each) {
-					return each.at !== undefined;
-				}).filter(function (each) {
-					return each.yDisplayFormat !== undefined;
-				}).map(function (each) {
-					each.yDisplayValue = each.yDisplayFormat(each.yValue);
-					return each;
+				if (type !== "svg" && getCanvasContexts !== undefined) {
+					var contexts = getCanvasContexts();
+					if (contexts) MouseCoordinates.drawOnCanvas(contexts.mouseCoord, this.context, this.props);
+				}
+			}
+		}, {
+			key: "componentDidUpdate",
+			value: function componentDidUpdate() {
+				this.componentDidMount();
+			}
+		}, {
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				this.componentWillReceiveProps(this.props, this.context);
+			}
+		}, {
+			key: "componentWillReceiveProps",
+			value: function componentWillReceiveProps(nextProps, nextContext) {
+				var draw = MouseCoordinates.drawOnCanvasStatic.bind(null, nextContext, nextProps);
+	
+				var temp = nextContext.secretToSuperFastCanvasDraw.filter(function (each) {
+					return each.type === "mouse";
 				});
-	
-				// console.log(edges);
-				var singleChartData = chartData.filter(function (eachChartData) {
-					return eachChartData.id === _this.context.mainChart;
-				})[0];
-	
-				// var yDisplayFormat = singleChartData.config.compareSeries.length > 0 ? (d) => (Math.round(d * 10000) / 100).toFixed(2) + "%" : this.props.yDisplayFormat;
-	
-				var item = currentItems.filter(function (eachItem) {
-					return eachItem.id === _this.context.mainChart;
-				})[0]; // ChartDataUtil.getCurrentItemForChart(this.props, this.context);
-				if (item === undefined) return null;
-				item = item.data;
-				// console.log(singleChartData, item);
-				var xValue = singleChartData.config.xAccessor(item);
-	
-				var xDisplayValue = this.context.dateAccessor === undefined ? xValue : this.context.dateAccessor(item);
-	
-				// var yValue = singleChartData.plot.scales.yScale.invert(this.context.mouseXY[1]);
-				if (xValue === undefined) return null;
-				var x = this.props.snapX ? Math.round(singleChartData.plot.scales.xScale(xValue)) : this.context.mouseXY[0];
-				var y = this.context.mouseXY[1];
-				switch (this.props.type) {
-					case "crosshair":
-						return _react2["default"].createElement(_CrossHair2["default"], { height: this.context.height, width: this.context.width, mouseXY: [x, y],
-							xDisplayValue: this.props.xDisplayFormat(xDisplayValue), edges: edges });
-					case "vertical":
-						return _react2["default"].createElement(VerticalMousePointer, null);
+				if (temp.length === 0) {
+					nextContext.secretToSuperFastCanvasDraw.push({
+						type: "mouse",
+						draw: draw
+					});
+				} else {
+					temp[0].draw = draw;
 				}
 			}
 		}, {
 			key: "render",
 			value: function render() {
-				if (!this.context.show) return null;
-				var pointer = this.getPointer();
+				var _context2 = this.context;
+				var type = _context2.type;
+				var mouseXY = _context2.mouseXY;
+				var currentCharts = _context2.currentCharts;
+				var chartData = _context2.chartData;
+				var currentItems = _context2.currentItems;
+				var show = _context2.show;
 	
-				return pointer;
+				if (type !== "svg") return null;
+	
+				var pointer = MouseCoordinates.helper(this.context, this.props, show, mouseXY, currentCharts, chartData, currentItems);
+	
+				if (!pointer) return null;
+	
+				return _react2["default"].createElement(_CrossHair2["default"], { height: pointer.height, width: pointer.width, mouseXY: pointer.mouseXY,
+					xDisplayValue: pointer.xDisplayValue, edges: pointer.edges });
 			}
 		}]);
 	
@@ -6192,27 +6905,118 @@ return /******/ (function(modules) { // webpackBootstrap
 		dateAccessor: _react2["default"].PropTypes.func,
 		chartData: _react2["default"].PropTypes.array.isRequired,
 		currentItems: _react2["default"].PropTypes.array.isRequired,
-		currentCharts: _react2["default"].PropTypes.array.isRequired
+		currentCharts: _react2["default"].PropTypes.array.isRequired,
+		getCanvasContexts: _react2["default"].PropTypes.func,
+		margin: _react2["default"].PropTypes.object.isRequired,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired,
+		type: _react2["default"].PropTypes.string.isRequired
 	};
 	
 	MouseCoordinates.propTypes = {
 		xDisplayFormat: _react2["default"].PropTypes.func.isRequired,
 		yDisplayFormat: _react2["default"].PropTypes.func.isRequired,
-		type: _react2["default"].PropTypes.oneOf(["crosshair", "vertical"]).isRequired
+		type: _react2["default"].PropTypes.oneOf(["crosshair"]).isRequired
 	};
 	
 	MouseCoordinates.defaultProps = {
 		namespace: "ReStock.MouseCoordinates",
 		show: false,
 		snapX: true,
+		type: "crosshair",
 		xDisplayFormat: _utilsUtils2["default"].displayDateFormat,
 		yDisplayFormat: _utilsUtils2["default"].displayNumberFormat
+	};
+	
+	MouseCoordinates.drawOnCanvas = function (canvasContext, context, props) {
+		var mouseXY = context.mouseXY;
+		var currentCharts = context.currentCharts;
+		var chartData = context.chartData;
+		var currentItems = context.currentItems;
+		var show = context.show;
+	
+		MouseCoordinates.drawOnCanvasStatic(context, props, canvasContext, show, mouseXY, currentCharts, chartData, currentItems);
+	};
+	MouseCoordinates.drawOnCanvasStatic = function (context, props, ctx, show, mouseXY, currentCharts, chartData, currentItems) {
+		var margin = context.margin;
+	
+		var pointer = MouseCoordinates.helper(context, props, show, mouseXY, currentCharts, chartData, currentItems);
+	
+		if (!pointer) return null;
+	
+		var originX = 0.5 + margin.left;
+		var originY = 0.5 + margin.top;
+	
+		ctx.save();
+	
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.translate(originX, originY);
+	
+		_CrossHair2["default"].drawOnCanvasStatic(ctx, pointer);
+		ctx.restore();
+	};
+	
+	MouseCoordinates.helper = function (context, props, show, mouseXY, currentCharts, chartData, currentItems) {
+		if (!show) return;
+		var mainChart = context.mainChart;
+		var dateAccessor = context.dateAccessor;
+		var height = context.height;
+		var width = context.width;
+		var snapX = props.snapX;
+		var type = props.type;
+		var xDisplayFormat = props.xDisplayFormat;
+	
+		var edges = chartData.filter(function (eachChartData) {
+			return currentCharts.indexOf(eachChartData.id) > -1;
+		}).map(function (each) {
+			var yDisplayFormat = each.config.compareSeries.length > 0 ? function (d) {
+				return (Math.round(d * 10000) / 100).toFixed(2) + "%";
+			} : each.config.mouseCoordinates.format;
+			var mouseY = mouseXY[1] - each.config.origin[1];
+			var yValue = each.plot.scales.yScale.invert(mouseY);
+			return {
+				id: each.id,
+				at: each.config.mouseCoordinates.at,
+				yValue: yValue,
+				yDisplayFormat: yDisplayFormat
+			};
+		}).filter(function (each) {
+			return each.at !== undefined;
+		}).filter(function (each) {
+			return each.yDisplayFormat !== undefined;
+		}).map(function (each) {
+			each.yDisplayValue = each.yDisplayFormat(each.yValue);
+			return each;
+		});
+	
+		// console.log(edges);
+		var singleChartData = chartData.filter(function (eachChartData) {
+			return eachChartData.id === mainChart;
+		})[0];
+	
+		// var yDisplayFormat = singleChartData.config.compareSeries.length > 0 ? (d) => (Math.round(d * 10000) / 100).toFixed(2) + "%" : this.props.yDisplayFormat;
+	
+		var item = currentItems.filter(function (eachItem) {
+			return eachItem.id === mainChart;
+		})[0]; // ChartDataUtil.getCurrentItemForChart(this.props, this.context);
+		if (item === undefined) return null;
+		item = item.data;
+		// console.log(singleChartData, item);
+		var xValue = singleChartData.config.xAccessor(item);
+	
+		var xDisplayValue = dateAccessor === undefined ? xValue : dateAccessor(item);
+	
+		// var yValue = singleChartData.plot.scales.yScale.invert(mouseXY[1]);
+		if (xValue === undefined) return null;
+		var x = snapX ? Math.round(singleChartData.plot.scales.xScale(xValue)) : mouseXY[0];
+		var y = mouseXY[1];
+	
+		return { height: height, width: width, mouseXY: [x, y], xDisplayValue: xDisplayFormat(xDisplayValue), edges: edges };
 	};
 	
 	module.exports = MouseCoordinates;
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6231,17 +7035,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _EdgeCoordinate = __webpack_require__(44);
+	var _EdgeCoordinate = __webpack_require__(46);
 	
 	var _EdgeCoordinate2 = _interopRequireDefault(_EdgeCoordinate);
+	
+	var _objectAssign = __webpack_require__(3);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	// "../utils/Object.assign"
 	
 	var CrossHair = (function (_React$Component) {
 		_inherits(CrossHair, _React$Component);
 	
-		function CrossHair(props) {
+		function CrossHair() {
 			_classCallCheck(this, CrossHair);
 	
-			_get(Object.getPrototypeOf(CrossHair.prototype), "constructor", this).call(this, props);
+			_get(Object.getPrototypeOf(CrossHair.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(CrossHair, [{
@@ -6252,50 +7062,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "render",
 			value: function render() {
-				var _this = this;
+				var result = CrossHair.helper(this.props);
+				var line = result.line;
+				var edges = result.edges;
 	
-				var x1 = 0,
-				    x2 = this.props.width;
-				var edges = this.props.edges.map(function (edge, idx) {
-					if (edge.at === "left") {
-						x1 = -_this.props.yAxisPad;
-					}
-					if (edge.at === "right") {
-						x2 = _this.props.width + _this.props.yAxisPad;
-					}
-					return _react2["default"].createElement(_EdgeCoordinate2["default"], {
-						key: idx,
-						type: "horizontal",
-						className: "horizontal",
-						show: true,
-						x1: 0, y1: _this.props.mouseXY[1],
-						x2: 0, y2: _this.props.mouseXY[1],
-						coordinate: edge.yDisplayValue,
-						edgeAt: edge.at === "left" ? x1 : x2,
-						orient: edge.at,
-						hideLine: true
-					});
-				});
-				var line = null;
-				if (this.props.edges.length > 0) {
-					line = _react2["default"].createElement("line", { className: "react-stockcharts-cross-hair", opacity: 0.3, stroke: "black",
-						x1: x1, y1: this.props.mouseXY[1],
-						x2: x2, y2: this.props.mouseXY[1] });
-				}
+				var svgLine = line !== undefined ? _react2["default"].createElement("line", { className: "react-stockcharts-cross-hair", opacity: line.opacity, stroke: line.stroke,
+					x1: line.x1, y1: line.y1,
+					x2: line.x2, y2: line.y2 }) : null;
 				return _react2["default"].createElement(
 					"g",
 					{ className: "crosshair " },
-					line,
-					edges,
-					_react2["default"].createElement(_EdgeCoordinate2["default"], {
-						type: "vertical",
-						className: "horizontal",
-						show: true,
-						x1: this.props.mouseXY[0], y1: 0,
-						x2: this.props.mouseXY[0], y2: this.props.height,
-						coordinate: this.props.xDisplayValue,
-						edgeAt: this.props.height,
-						orient: "bottom"
+					svgLine,
+					edges.map(function (edge, idx) {
+						return _react2["default"].createElement(_EdgeCoordinate2["default"], {
+							key: idx,
+							type: edge.type,
+							className: "horizontal",
+							show: edge.show,
+							x1: edge.x1, y1: edge.y1,
+							x2: edge.x2, y2: edge.y2,
+							coordinate: edge.coordinate,
+							edgeAt: edge.edgeAt,
+							orient: edge.orient,
+							hideLine: edge.hideLine
+						});
 					})
 				);
 			}
@@ -6318,10 +7108,88 @@ return /******/ (function(modules) { // webpackBootstrap
 		yAxisPad: 5
 	};
 	
+	CrossHair.helper = function (props) {
+		var width = props.width;
+		var edges = props.edges;
+		var yAxisPad = props.yAxisPad;
+		var mouseXY = props.mouseXY;
+		var xDisplayValue = props.xDisplayValue;
+		var height = props.height;
+	
+		var x1 = 0,
+		    x2 = width;
+	
+		var edges = edges.map(function (edge, idx) {
+			if (edge.at === "left") {
+				x1 = -yAxisPad;
+			}
+			if (edge.at === "right") {
+				x2 = width + yAxisPad;
+			}
+			return {
+				type: "horizontal",
+				show: true,
+				x1: 0,
+				y1: mouseXY[1],
+				x2: 0,
+				y2: mouseXY[1],
+				coordinate: edge.yDisplayValue,
+				edgeAt: edge.at === "left" ? x1 : x2,
+				orient: edge.at,
+				hideLine: true
+			};
+		});
+		edges.push({
+			type: "vertical",
+			show: true,
+			x1: mouseXY[0],
+			y1: 0,
+			x2: mouseXY[0],
+			y2: height,
+			coordinate: xDisplayValue,
+			edgeAt: height,
+			orient: "bottom"
+		});
+		var line;
+		if (edges.length > 1) {
+			line = {
+				opacity: 0.3,
+				stroke: "black",
+				x1: x1,
+				y1: mouseXY[1],
+				x2: x2,
+				y2: mouseXY[1]
+			};
+		}
+		return { edges: edges, line: line };
+	};
+	
+	CrossHair.drawOnCanvasStatic = function (ctx, props) {
+		props = (0, _objectAssign2["default"])({}, CrossHair.defaultProps, props);
+	
+		var result = CrossHair.helper(props);
+		var line = result.line;
+		var edges = result.edges;
+	
+		edges.forEach(function (edge) {
+			return _EdgeCoordinate2["default"].drawOnCanvasStatic(ctx, edge);
+		});
+	
+		if (line) {
+			ctx.globalAlpha = line.opacity;
+			ctx.strokeStype = line.stroke;
+	
+			ctx.beginPath();
+			ctx.moveTo(line.x1, line.y1);
+			ctx.lineTo(line.x2, line.y2);
+			ctx.stroke();
+		}
+	};
+	
 	module.exports = CrossHair;
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6343,64 +7211,78 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CurrentCoordinate = (function (_React$Component) {
 		_inherits(CurrentCoordinate, _React$Component);
 	
-		function CurrentCoordinate(props) {
+		function CurrentCoordinate() {
 			_classCallCheck(this, CurrentCoordinate);
 	
-			_get(Object.getPrototypeOf(CurrentCoordinate.prototype), "constructor", this).call(this, props);
+			_get(Object.getPrototypeOf(CurrentCoordinate.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(CurrentCoordinate, [{
+			key: "componentDidMount",
+			value: function componentDidMount() {
+				var _context = this.context;
+				var type = _context.type;
+				var getCanvasContexts = _context.getCanvasContexts;
+	
+				if (type !== "svg" && getCanvasContexts !== undefined) {
+					var contexts = getCanvasContexts();
+					if (contexts) CurrentCoordinate.drawOnCanvas(contexts.mouseCoord, this.context, this.props);
+				}
+			}
+		}, {
+			key: "componentDidUpdate",
+			value: function componentDidUpdate() {
+				this.componentDidMount();
+			}
+		}, {
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				this.componentWillReceiveProps(this.props, this.context);
+			}
+		}, {
+			key: "componentWillReceiveProps",
+			value: function componentWillReceiveProps(nextProps, nextContext) {
+				var draw = CurrentCoordinate.drawOnCanvasStatic.bind(null, nextContext, nextProps);
+	
+				var forChart = nextProps.forChart;
+				var forCompareSeries = nextProps.forCompareSeries;
+				var forDataSeries = nextProps.forDataSeries;
+	
+				var temp = nextContext.secretToSuperFastCanvasDraw.filter(function (each) {
+					return each.type === "currentcoordinate" && each.forChart === forChart && each.forDataSeries === forDataSeries;
+				}).filter(function (each) {
+					return each.forCompareSeries === forCompareSeries;
+				});
+	
+				if (temp.length === 0) {
+					nextContext.secretToSuperFastCanvasDraw.push({
+						type: "currentcoordinate",
+						forChart: forChart,
+						forDataSeries: forDataSeries,
+						forCompareSeries: forCompareSeries,
+						draw: draw
+					});
+				} else {
+					temp[0].draw = draw;
+				}
+			}
+		}, {
 			key: "render",
 			value: function render() {
-				var _this = this;
+				var className = this.props.className;
+				var _context2 = this.context;
+				var type = _context2.type;
+				var show = _context2.show;
+				var chartData = _context2.chartData;
+				var currentItems = _context2.currentItems;
 	
-				var chartData = this.context.chartData.filter(function (each) {
-					return each.id === _this.props.forChart;
-				})[0];
-				var currentItem = this.context.currentItems.filter(function (each) {
-					return each.id === _this.props.forChart;
-				})[0];
-				var item = currentItem ? currentItem.data : undefined;
-				var fill = "black";
+				if (type !== "svg") return null;
 	
-				if (!this.context.show || item === undefined) return null;
-				var yAccessor;
+				var circle = CurrentCoordinate.helper(this.props, show, chartData, currentItems);
 	
-				if (this.props.forCompareSeries !== undefined) {
-					var compSeries = chartData.config.compareSeries.filter(function (each) {
-						return each.id === _this.props.forCompareSeries;
-					});
+				if (!circle) return null;
 	
-					if (compSeries.length !== 1) {
-						console.warn("Unique compareSeries with id={%s} not found", this.props.forCompareSeries);
-						throw new Error("Unique compareSeries not found");
-					}
-					fill = compSeries[0].stroke;
-					yAccessor = compSeries[0].percentYAccessor;
-				} else if (this.props.forDataSeries !== undefined) {
-					var overlays = chartData.config.overlays.filter(function (each) {
-						return each.id === _this.props.forDataSeries;
-					});
-	
-					if (overlays.length !== 1) {
-						console.warn("Unique DataSeries with id={%s} not found", this.props.forDataSeries);
-						throw new Error("Unique DataSeries not found");
-					}
-	
-					fill = overlays[0].stroke;
-	
-					yAccessor = overlays[0].yAccessor;
-				}
-	
-				var xValue = chartData.config.xAccessor(item);
-				var yValue = yAccessor(item);
-	
-				if (yValue === undefined) return null;
-	
-				var x = Math.round(chartData.plot.scales.xScale(xValue)) + chartData.config.origin[0];
-				var y = Math.round(chartData.plot.scales.yScale(yValue)) + chartData.config.origin[1];
-	
-				return _react2["default"].createElement("circle", { className: this.props.className, cx: x, cy: y, r: this.props.r, fill: fill });
+				return _react2["default"].createElement("circle", { className: className, cx: circle.x, cy: circle.y, r: circle.r, fill: circle.fill });
 			}
 		}]);
 	
@@ -6421,13 +7303,106 @@ return /******/ (function(modules) { // webpackBootstrap
 	CurrentCoordinate.contextTypes = {
 		show: _react2["default"].PropTypes.bool.isRequired,
 		currentItems: _react2["default"].PropTypes.array.isRequired,
-		chartData: _react2["default"].PropTypes.array.isRequired
+		chartData: _react2["default"].PropTypes.array.isRequired,
+	
+		getCanvasContexts: _react2["default"].PropTypes.func,
+		margin: _react2["default"].PropTypes.object.isRequired,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired,
+		type: _react2["default"].PropTypes.string.isRequired
+	};
+	
+	CurrentCoordinate.drawOnCanvas = function (canvasContext, context, props) {
+		var mouseXY = context.mouseXY;
+		var currentCharts = context.currentCharts;
+		var chartData = context.chartData;
+		var currentItems = context.currentItems;
+		var show = context.show;
+	
+		CurrentCoordinate.drawOnCanvasStatic(context, props, canvasContext, show, mouseXY, currentCharts, chartData, currentItems);
+	};
+	
+	CurrentCoordinate.drawOnCanvasStatic = function (context, props, ctx, show, mouseXY, currentCharts, chartData, currentItems) {
+		var margin = context.margin;
+	
+		var circle = CurrentCoordinate.helper(props, show, chartData, currentItems);
+	
+		if (!circle) return null;
+	
+		var originX = 0.5 + margin.left;
+		var originY = 0.5 + margin.top;
+	
+		ctx.save();
+	
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.translate(originX, originY);
+	
+		ctx.fillStyle = circle.fill;
+		ctx.beginPath();
+		ctx.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI, false);
+		ctx.fill();
+		// CurrentCoordinate.drawOnCanvasStatic(ctx, pointer);
+		ctx.restore();
+	};
+	
+	CurrentCoordinate.helper = function (props, show, chartData, currentItems) {
+		var forChart = props.forChart;
+		var forCompareSeries = props.forCompareSeries;
+		var forDataSeries = props.forDataSeries;
+		var r = props.r;
+	
+		var chartData = chartData.filter(function (each) {
+			return each.id === forChart;
+		})[0];
+		var currentItem = currentItems.filter(function (each) {
+			return each.id === forChart;
+		})[0];
+		var item = currentItem ? currentItem.data : undefined;
+		var fill = "black";
+	
+		if (!show || item === undefined) return null;
+		var yAccessor;
+	
+		if (forCompareSeries !== undefined) {
+			var compSeries = chartData.config.compareSeries.filter(function (each) {
+				return each.id === forCompareSeries;
+			});
+	
+			if (compSeries.length !== 1) {
+				console.warn("Unique compareSeries with id={%s} not found", forCompareSeries);
+				throw new Error("Unique compareSeries not found");
+			}
+			fill = compSeries[0].stroke;
+			yAccessor = compSeries[0].percentYAccessor;
+		} else if (forDataSeries !== undefined) {
+			var overlays = chartData.config.overlays.filter(function (each) {
+				return each.id === forDataSeries;
+			});
+	
+			if (overlays.length !== 1) {
+				console.warn("Unique DataSeries with id={%s} not found", forDataSeries);
+				throw new Error("Unique DataSeries not found");
+			}
+	
+			fill = overlays[0].stroke;
+	
+			yAccessor = overlays[0].yAccessor;
+		}
+	
+		var xValue = chartData.config.xAccessor(item);
+		var yValue = yAccessor(item);
+	
+		if (yValue === undefined) return null;
+	
+		var x = Math.round(chartData.plot.scales.xScale(xValue)) + chartData.config.origin[0];
+		var y = Math.round(chartData.plot.scales.yScale(yValue)) + chartData.config.origin[1];
+	
+		return { x: x, y: y, r: r, fill: fill };
 	};
 	
 	module.exports = CurrentCoordinate;
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6438,27 +7413,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _MACDIndicator = __webpack_require__(49);
+	var _MACDIndicator = __webpack_require__(51);
 	
 	var _MACDIndicator2 = _interopRequireDefault(_MACDIndicator);
 	
-	var _EMAIndicator = __webpack_require__(50);
+	var _EMAIndicator = __webpack_require__(52);
 	
 	var _EMAIndicator2 = _interopRequireDefault(_EMAIndicator);
 	
-	var _SMAIndicator = __webpack_require__(51);
+	var _SMAIndicator = __webpack_require__(53);
 	
 	var _SMAIndicator2 = _interopRequireDefault(_SMAIndicator);
 	
-	var _BollingerBandIndicator = __webpack_require__(52);
+	var _BollingerBandIndicator = __webpack_require__(54);
 	
 	var _BollingerBandIndicator2 = _interopRequireDefault(_BollingerBandIndicator);
 	
-	var _RSIIndicator = __webpack_require__(53);
+	var _RSIIndicator = __webpack_require__(55);
 	
 	var _RSIIndicator2 = _interopRequireDefault(_RSIIndicator);
 	
-	var _FullStochasticOscillator = __webpack_require__(54);
+	var _FullStochasticOscillator = __webpack_require__(56);
 	
 	var _FullStochasticOscillator2 = _interopRequireDefault(_FullStochasticOscillator);
 	
@@ -6473,10 +7448,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6509,17 +7488,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	};
 	
-	function MACDIndicator(options, chartProps, elementProps) {
+	function MACDIndicator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
-		// var key = "MACD_" + elementProps.id;
-		function MACD() {}
-		MACD.options = function () {
+	
+		function indicator() {}
+		indicator.options = function () {
 			return settings;
 		};
-		MACD.calculate = function (data) {
+		indicator.calculate = function (data) {
 			// console.log(prefix, options);
 			var fastKey = "ema" + settings.fast;
 			var slowKey = "ema" + settings.slow;
@@ -6562,26 +7542,31 @@ return /******/ (function(modules) { // webpackBootstrap
 			// console.log(newData[newData.length - 3]);
 			return newData;
 		};
-		MACD.yAccessor = function () {
+		indicator.yAccessor = function () {
 			return function (d) {
 				if (d && d[prefix] && d[prefix][key]) {
 					return { MACDLine: d[prefix][key].MACDLine, signalLine: d[prefix][key].signalLine, histogram: d[prefix][key].histogram };
 				}
 			};
 		};
-		MACD.isMACD = function () {
+		indicator.isMACD = function () {
 			return true;
 		};
-		return MACD;
+		return indicator;
 	}
 	
-	module.exports = MACDIndicator;
+	exports["default"] = MACDIndicator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6599,9 +7584,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		pluck: "close"
 	};
 	
-	function EMAIndicator(options, chartProps, elementProps) {
+	function EMAIndicator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
 		if (typeof settings.pluck === "string") {
 			var pluck = settings.pluck;
@@ -6610,18 +7597,17 @@ return /******/ (function(modules) { // webpackBootstrap
 				return d[pluck];
 			};
 		}
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
 	
-		var stroke = settings.stroke || (0, _utilsUtils.overlayColors)(elementProps.id);
+		var stroke = settings.stroke || (0, _utilsUtils.overlayColors)(dataSeriesProps.id);
 	
-		function MA() {}
-		MA.options = function () {
+		function indicator() {}
+		indicator.options = function () {
 			return settings;
 		};
-		MA.stroke = function () {
+		indicator.stroke = function () {
 			return stroke;
 		};
-		MA.calculate = function (data) {
+		indicator.calculate = function (data) {
 	
 			var setter = _utilsMovingAverageCalculator2["default"].setter.bind(null, [prefix], key);
 	
@@ -6630,27 +7616,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			return newData;
 		};
-		MA.yAccessor = function () {
+		indicator.yAccessor = function () {
 			return function (d) {
 				if (d && d[prefix]) return d[prefix][key];
 			};
 		};
-		MA.tooltipLabel = function () {
+		indicator.tooltipLabel = function () {
 			return "EMA (" + settings.period + ")";
 		};
-		MA.isMovingAverage = function () {
+		indicator.isMovingAverage = function () {
 			return true;
 		};
-		return MA;
+		return indicator;
 	}
 	
-	module.exports = EMAIndicator;
+	exports["default"] = EMAIndicator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6668,9 +7659,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		pluck: "close"
 	};
 	
-	function SMAIndicator(options, chartProps, elementProps) {
+	function SMAIndicator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
 		if (typeof settings.pluck === "string") {
 			var pluck = settings.pluck;
@@ -6679,44 +7672,48 @@ return /******/ (function(modules) { // webpackBootstrap
 				return d[pluck];
 			};
 		}
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
-		var stroke = settings.stroke || (0, _utilsUtils.overlayColors)(elementProps.id);
+		var stroke = settings.stroke || (0, _utilsUtils.overlayColors)(dataSeriesProps.id);
 	
-		function MA() {}
+		function indicator() {}
 	
-		MA.options = function () {
+		indicator.options = function () {
 			return settings;
 		};
-		MA.stroke = function () {
+		indicator.stroke = function () {
 			return stroke;
 		};
-		MA.calculate = function (data) {
+		indicator.calculate = function (data) {
 			var setter = _utilsMovingAverageCalculator2["default"].setter.bind(null, [prefix], key);
 	
 			var newData = _utilsMovingAverageCalculator2["default"].calculateSMANew(data, settings.period, settings.pluck, setter);
 			return newData;
 		};
-		MA.yAccessor = function () {
+		indicator.yAccessor = function () {
 			return function (d) {
 				if (d && d[prefix]) return d[prefix][key];
 			};
 		};
-		MA.tooltipLabel = function () {
+		indicator.tooltipLabel = function () {
 			return "SMA (" + settings.period + ")";
 		};
-		MA.isMovingAverage = function () {
+		indicator.isMovingAverage = function () {
 			return true;
 		};
-		return MA;
+		return indicator;
 	}
 	
-	module.exports = SMAIndicator;
+	exports["default"] = SMAIndicator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6735,11 +7732,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		maType: "sma"
 	};
 	
-	function BollingerBandIndicator(options, chartProps, elementProps) {
+	function BollingerBandIndicator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
+	
 		function indicator() {}
 		indicator.options = function () {
 			return settings;
@@ -6794,13 +7793,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		return indicator;
 	}
 	
-	module.exports = BollingerBandIndicator;
+	exports["default"] = BollingerBandIndicator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6815,11 +7819,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		overBought: 30
 	};
 	
-	function RSIIndicator(options, chartProps, elementProps) {
+	function RSIIndicator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
 		function indicator() {}
 		indicator.options = function () {
 			return settings;
@@ -6895,13 +7900,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		return indicator;
 	}
 	
-	module.exports = RSIIndicator;
+	exports["default"] = RSIIndicator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -6932,11 +7942,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		overBought: 20
 	};
 	
-	function FullStochasticOscillator(options, chartProps, elementProps) {
+	function FullStochasticOscillator(options, chartProps, dataSeriesProps) {
 	
 		var prefix = "chart_" + chartProps.id;
+		var key = "overlay_" + dataSeriesProps.id;
+	
 		var settings = (0, _objectAssign2["default"])({}, defaultOptions, options);
-		var key = "overlay_" + (elementProps.id !== undefined ? elementProps.id : "default");
 	
 		function indicator() {}
 		indicator.options = function () {
@@ -6997,10 +8008,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		return indicator;
 	}
 	
-	module.exports = FullStochasticOscillator;
+	exports["default"] = FullStochasticOscillator;
+	module.exports = exports["default"];
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7011,11 +8023,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _XAxis = __webpack_require__(56);
+	var _XAxis = __webpack_require__(58);
 	
 	var _XAxis2 = _interopRequireDefault(_XAxis);
 	
-	var _YAxis = __webpack_require__(60);
+	var _YAxis = __webpack_require__(62);
 	
 	var _YAxis2 = _interopRequireDefault(_YAxis);
 	
@@ -7026,7 +8038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7051,7 +8063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Axis = __webpack_require__(57);
+	var _Axis = __webpack_require__(59);
 	
 	var _Axis2 = _interopRequireDefault(_Axis);
 	
@@ -7083,9 +8095,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 	
 				if (ticks) ticks = [ticks];
-				// console.log(axisAt, axisLocation);
 				return _react2["default"].createElement(_Axis2["default"], _extends({}, this.props, {
-					transform: "translate(0, " + axisLocation + ")",
+					transform: [0, axisLocation],
 					showTicks: showTicks, tickFormat: tickFormat, ticks: ticks,
 					scale: this.context.xScale }));
 			}
@@ -7111,8 +8122,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		namespace: "ReStock.XAxis",
 		showGrid: false,
 		showTicks: true,
-		className: "react-stockcharts-x-axis"
+		className: "react-stockcharts-x-axis",
+		ticks: 10
 	};
+	
 	XAxis.contextTypes = {
 		xScale: _react2["default"].PropTypes.func.isRequired,
 		yScale: _react2["default"].PropTypes.func.isRequired,
@@ -7124,7 +8137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7147,26 +8160,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _AxisTicks = __webpack_require__(58);
+	var _AxisTicks = __webpack_require__(60);
 	
 	var _AxisTicks2 = _interopRequireDefault(_AxisTicks);
 	
-	var _AxisLine = __webpack_require__(59);
+	var _AxisLine = __webpack_require__(61);
 	
 	var _AxisLine2 = _interopRequireDefault(_AxisLine);
 	
 	var Axis = (function (_React$Component) {
 		_inherits(Axis, _React$Component);
 	
-		function Axis() {
+		function Axis(props) {
 			_classCallCheck(this, Axis);
 	
-			_get(Object.getPrototypeOf(Axis.prototype), "constructor", this).apply(this, arguments);
+			_get(Object.getPrototypeOf(Axis.prototype), "constructor", this).call(this, props);
+			this.drawOnCanvas = this.drawOnCanvas.bind(this);
 		}
 	
 		_createClass(Axis, [{
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				this.componentWillReceiveProps(this.props, this.context);
+			}
+		}, {
+			key: "componentWillReceiveProps",
+			value: function componentWillReceiveProps(nextProps, nextContext) {
+				var axesCanvasContext = nextContext.axesCanvasContext;
+				var chartData = nextContext.chartData;
+				var margin = nextContext.margin;
+				var chartId = nextContext.chartId;
+				var canvasOriginX = nextContext.canvasOriginX;
+				var canvasOriginY = nextContext.canvasOriginY;
+	
+				var draw = Axis.drawOnCanvasStatic.bind(null, margin, nextProps, [canvasOriginX, canvasOriginY]);
+	
+				nextContext.secretToSuperFastCanvasDraw.push({
+					chartId: chartId,
+					type: "axis",
+					draw: draw
+				});
+			}
+		}, {
+			key: "componentDidMount",
+			value: function componentDidMount() {
+				if (this.props.type !== "svg" && this.context.getCanvasContexts !== undefined) {
+					var contexts = this.context.getCanvasContexts();
+					if (contexts) this.drawOnCanvas(contexts.axes);
+				}
+			}
+		}, {
+			key: "componentDidUpdate",
+			value: function componentDidUpdate(prevProps, prevState, prevContext) {
+				this.componentDidMount();
+			}
+		}, {
+			key: "drawOnCanvas",
+			value: function drawOnCanvas(ctx) {
+				var _context = this.context;
+				var chartData = _context.chartData;
+				var margin = _context.margin;
+				var canvasOriginX = _context.canvasOriginX;
+				var canvasOriginY = _context.canvasOriginY;
+				var scale = this.props.scale;
+	
+				Axis.drawOnCanvasStatic(margin, this.props, [canvasOriginX, canvasOriginY], ctx, chartData, scale, scale);
+			}
+		}, {
 			key: "render",
 			value: function render() {
+				if (this.context.type !== "svg") return null;
+	
 				var domain = this.props.showDomain ? _react2["default"].createElement(_AxisLine2["default"], this.props) : null;
 				var ticks = this.props.showTicks ? _react2["default"].createElement(_AxisTicks2["default"], this.props) : null;
 				var className = "";
@@ -7174,7 +8238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return _react2["default"].createElement(
 					"g",
 					{ className: className,
-						transform: this.props.transform },
+						transform: "translate(" + this.props.transform[0] + ", " + this.props.transform[1] + ")" },
 					ticks,
 					domain
 				);
@@ -7209,11 +8273,38 @@ return /******/ (function(modules) { // webpackBootstrap
 		fontSize: 12
 	};
 	
+	Axis.contextTypes = {
+		getCanvasContexts: _react2["default"].PropTypes.func,
+		type: _react2["default"].PropTypes.string,
+		chartData: _react2["default"].PropTypes.object.isRequired,
+		chartId: _react2["default"].PropTypes.number.isRequired,
+		margin: _react2["default"].PropTypes.object.isRequired,
+		canvasOriginX: _react2["default"].PropTypes.number,
+		canvasOriginY: _react2["default"].PropTypes.number,
+		secretToSuperFastCanvasDraw: _react2["default"].PropTypes.array.isRequired
+	};
+	
+	Axis.drawOnCanvasStatic = function (margin, props, canvasOrigin, ctx, chartData, xScale, yScale) {
+		var transform = props.transform;
+		var showDomain = props.showDomain;
+		var showTicks = props.showTicks;
+	
+		ctx.save();
+	
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.translate(canvasOrigin[0] + transform[0], canvasOrigin[1] + transform[1]);
+	
+		if (showDomain) _AxisLine2["default"].drawOnCanvasStatic(props, ctx, chartData, xScale, yScale);
+		if (showTicks) _AxisTicks2["default"].drawOnCanvasStatic(props, ctx, chartData, xScale, yScale);
+	
+		ctx.restore();
+	};
+	
 	exports["default"] = Axis;
 	module.exports = exports["default"];
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7236,16 +8327,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
+	var _objectAssign = __webpack_require__(3);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
 	function d3_identity(d) {
 		return d;
 	}
 	
 	function tickTransform_svg_axisX(scale, tick) {
-		return "translate(" + scale(tick) + ", 0)";
+		return [scale(tick), 0];
 	}
 	
 	function tickTransform_svg_axisY(scale, tick) {
-		return "translate(0, " + scale(tick) + ")";
+		return [0, scale(tick)];
 	}
 	
 	var Tick = (function (_React$Component) {
@@ -7275,7 +8370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 				return _react2["default"].createElement(
 					"g",
-					{ className: "tick", transform: transform },
+					{ className: "tick", transform: "translate(" + transform[0] + ", " + transform[1] + ")" },
 					_react2["default"].createElement("line", { shapeRendering: "crispEdges", opacity: 1, stroke: tickStroke, x2: x2, y2: y2 }),
 					_react2["default"].createElement(
 						"text",
@@ -7293,6 +8388,36 @@ return /******/ (function(modules) { // webpackBootstrap
 		return Tick;
 	})(_react2["default"].Component);
 	
+	Tick.drawOnCanvasStatic = function (tick, ctx, chartData, result) {
+		var scale = result.scale;
+		var tickTransform = result.tickTransform;
+		var tickStroke = result.tickStroke;
+		var dy = result.dy;
+		var canvas_dy = result.canvas_dy;
+		var x = result.x;
+		var y = result.y;
+		var x2 = result.x2;
+		var y2 = result.y2;
+		var textAnchor = result.textAnchor;
+		var fontSize = result.fontSize;
+		var fontFamily = result.fontFamily;
+		var format = result.format;
+	
+		var origin = tickTransform(scale, tick);
+	
+		ctx.beginPath();
+		ctx.moveTo(origin[0], origin[1]);
+		ctx.lineTo(origin[0] + x2, origin[1] + y2);
+		ctx.stroke();
+	
+		ctx.font = fontSize + "px " + fontFamily;
+		ctx.fillStyle = tickStroke;
+		ctx.textAlign = textAnchor === "middle" ? "center" : textAnchor;
+		ctx.textBaseline = 'middle';
+	
+		ctx.fillText(format(tick), origin[0] + x, origin[1] + y2 + y);
+	};
+	
 	var AxisTicks = (function (_React$Component2) {
 		_inherits(AxisTicks, _React$Component2);
 	
@@ -7305,47 +8430,20 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(AxisTicks, [{
 			key: "render",
 			value: function render() {
-				var _this = this;
-	
-				var _props3 = this.props;
-				var orient = _props3.orient;
-				var innerTickSize = _props3.innerTickSize;
-				var tickFormat = _props3.tickFormat;
-				var tickPadding = _props3.tickPadding;
-				var fontSize = _props3.fontSize;
-				var fontFamily = _props3.fontFamily;
-				var _props4 = this.props;
-				var tickSize = _props4.tickSize;
-				var tickArguments = _props4.ticks;
-				var tickValues = _props4.tickValues;
-				var scale = _props4.scale;
-	
-				var ticks = tickValues === undefined ? scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain() : tickValues;
-	
-				var format = tickFormat === undefined ? scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : d3_identity : tickFormat;
-	
-				var sign = orient === "top" || orient === "left" ? -1 : 1;
-				var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
-	
-				var tickTransform, x, y, x2, y2, dy, textAnchor;
-	
-				if (orient === "bottom" || orient === "top") {
-					tickTransform = tickTransform_svg_axisX;
-					x2 = 0;
-					y2 = sign * innerTickSize;
-					x = 0;
-					y = sign * tickSpacing;
-					dy = sign < 0 ? "0em" : ".71em";
-					textAnchor = "middle";
-				} else {
-					tickTransform = tickTransform_svg_axisY;
-					x2 = sign * innerTickSize;
-					y2 = 0;
-					x = sign * tickSpacing;
-					y = 0;
-					dy = ".32em";
-					textAnchor = sign < 0 ? "end" : "start";
-				}
+				var result = AxisTicks.helper(this.props, this.props.scale);
+				var ticks = result.ticks;
+				var scale = result.scale;
+				var tickTransform = result.tickTransform;
+				var tickStroke = result.tickStroke;
+				var dy = result.dy;
+				var x = result.x;
+				var y = result.y;
+				var x2 = result.x2;
+				var y2 = result.y2;
+				var textAnchor = result.textAnchor;
+				var fontSize = result.fontSize;
+				var fontFamily = result.fontFamily;
+				var format = result.format;
 	
 				return _react2["default"].createElement(
 					"g",
@@ -7353,7 +8451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					ticks.map(function (tick, idx) {
 						return _react2["default"].createElement(
 							Tick,
-							{ key: idx, transform: tickTransform(scale, tick), tickStroke: _this.props.tickStroke,
+							{ key: idx, transform: tickTransform(scale, tick), tickStroke: tickStroke,
 								dy: dy, x: x, y: y,
 								x2: x2, y2: y2, textAnchor: textAnchor,
 								fontSize: fontSize, fontFamily: fontFamily },
@@ -7385,24 +8483,93 @@ return /******/ (function(modules) { // webpackBootstrap
 		tickStroke: "#000"
 	};
 	
+	AxisTicks.helper = function (props, scale) {
+		var orient = props.orient;
+		var innerTickSize = props.innerTickSize;
+		var tickFormat = props.tickFormat;
+		var tickPadding = props.tickPadding;
+		var fontSize = props.fontSize;
+		var fontFamily = props.fontFamily;
+		var tickStroke = props.tickStroke;
+		var tickSize = props.tickSize;
+		var tickArguments = props.ticks;
+		var tickValues = props.tickValues;
+	
+		var ticks = tickValues === undefined ? scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain() : tickValues;
+	
+		var format = tickFormat === undefined ? scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : d3_identity : tickFormat;
+	
+		var sign = orient === "top" || orient === "left" ? -1 : 1;
+		var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
+	
+		var tickTransform, x, y, x2, y2, dy, canvas_dy, textAnchor;
+	
+		if (orient === "bottom" || orient === "top") {
+			tickTransform = tickTransform_svg_axisX;
+			x2 = 0;
+			y2 = sign * innerTickSize;
+			x = 0;
+			y = sign * tickSpacing;
+			dy = sign < 0 ? "0em" : ".71em";
+			canvas_dy = sign < 0 ? 0 : 3;
+			textAnchor = "middle";
+		} else {
+			tickTransform = tickTransform_svg_axisY;
+			x2 = sign * innerTickSize;
+			y2 = 0;
+			x = sign * tickSpacing;
+			y = 0;
+			dy = ".32em";
+			canvas_dy = 3;
+			textAnchor = sign < 0 ? "end" : "start";
+		}
+		return { ticks: ticks, scale: scale, tickTransform: tickTransform, tickStroke: tickStroke, dy: dy, canvas_dy: canvas_dy, x: x, y: y, x2: x2, y2: y2, textAnchor: textAnchor, fontSize: fontSize, fontFamily: fontFamily, format: format };
+	};
+	
+	AxisTicks.drawOnCanvasStatic = function (props, ctx, chartData, xScale, yScale) {
+		props = (0, _objectAssign2["default"])({}, AxisTicks.defaultProps, props);
+	
+		var _props3 = props;
+		var orient = _props3.orient;
+	
+		var xAxis = orient === "bottom" || orient === "top";
+	
+		var result = AxisTicks.helper(props, xAxis ? xScale : yScale);
+	
+		result.ticks.forEach(function (tick) {
+			Tick.drawOnCanvasStatic(tick, ctx, chartData, result);
+		});
+	};
+	
 	module.exports = AxisTicks;
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var React = __webpack_require__(2);
-	var d3 = __webpack_require__(5);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _d3 = __webpack_require__(5);
+	
+	var _d32 = _interopRequireDefault(_d3);
+	
+	var _objectAssign = __webpack_require__(3);
+	
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
 	function d3_scaleExtent(domain) {
 		var start = domain[0],
@@ -7420,11 +8587,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		function AxisLine() {
 			_classCallCheck(this, AxisLine);
 	
-			_get(Object.getPrototypeOf(AxisLine.prototype), 'constructor', this).apply(this, arguments);
+			_get(Object.getPrototypeOf(AxisLine.prototype), "constructor", this).apply(this, arguments);
 		}
 	
 		_createClass(AxisLine, [{
-			key: 'render',
+			key: "render",
 			value: function render() {
 				var _props = this.props;
 				var orient = _props.orient;
@@ -7435,6 +8602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var strokeWidth = _props.strokeWidth;
 				var className = _props.className;
 				var shapeRendering = _props.shapeRendering;
+				var opacity = _props.opacity;
 	
 				var sign = orient === "top" || orient === "left" ? -1 : 1;
 	
@@ -7448,28 +8616,30 @@ return /******/ (function(modules) { // webpackBootstrap
 					d = "M" + sign * outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + sign * outerTickSize;
 				}
 	
-				return React.createElement('path', {
+				return _react2["default"].createElement("path", {
 					className: className,
 					shapeRendering: shapeRendering,
 					d: d,
 					fill: fill,
+					opacity: opacity,
 					stroke: stroke,
 					strokeWidth: strokeWidth });
 			}
 		}]);
 	
 		return AxisLine;
-	})(React.Component);
+	})(_react2["default"].Component);
 	
 	AxisLine.propTypes = {
-		className: React.PropTypes.string,
-		shapeRendering: React.PropTypes.string,
-		orient: React.PropTypes.string.isRequired,
-		scale: React.PropTypes.func.isRequired,
-		outerTickSize: React.PropTypes.number,
-		fill: React.PropTypes.string,
-		stroke: React.PropTypes.string,
-		strokeWidth: React.PropTypes.number
+		className: _react2["default"].PropTypes.string,
+		shapeRendering: _react2["default"].PropTypes.string,
+		orient: _react2["default"].PropTypes.string.isRequired,
+		scale: _react2["default"].PropTypes.func.isRequired,
+		outerTickSize: _react2["default"].PropTypes.number,
+		fill: _react2["default"].PropTypes.string,
+		stroke: _react2["default"].PropTypes.string,
+		strokeWidth: _react2["default"].PropTypes.number,
+		opacity: _react2["default"].PropTypes.number
 	};
 	
 	AxisLine.defaultProps = {
@@ -7478,13 +8648,57 @@ return /******/ (function(modules) { // webpackBootstrap
 		outerTickSize: 6,
 		fill: "none",
 		stroke: "#000",
-		strokeWidth: 1
+		strokeWidth: 1,
+		opacity: 1
+	};
+	
+	AxisLine.drawOnCanvasStatic = function (props, ctx, chartData, xScale, yScale) {
+		props = (0, _objectAssign2["default"])({}, AxisLine.defaultProps, props);
+	
+		var _props2 = props;
+		var orient = _props2.orient;
+		var outerTickSize = _props2.outerTickSize;
+		var fill = _props2.fill;
+		var stroke = _props2.stroke;
+		var strokeWidth = _props2.strokeWidth;
+		var className = _props2.className;
+		var shapeRendering = _props2.shapeRendering;
+		var opacity = _props2.opacity;
+	
+		var sign = orient === "top" || orient === "left" ? -1 : 1;
+		var xAxis = orient === "bottom" || orient === "top";
+	
+		var range = d3_scaleRange(xAxis ? xScale : yScale);
+	
+		var strokeStyle = ctx.strokeStyle;
+		var globalAlpha = ctx.globalAlpha;
+	
+		ctx.strokeStyle = stroke;
+		ctx.globalAlpha = opacity;
+	
+		ctx.beginPath();
+	
+		if (xAxis) {
+			ctx.moveTo(range[0], sign * outerTickSize);
+			ctx.lineTo(range[0], 0);
+			ctx.lineTo(range[1], 0);
+			ctx.lineTo(range[1], sign * outerTickSize);
+		} else {
+			ctx.moveTo(sign * outerTickSize, range[0]);
+			ctx.lineTo(0, range[0]);
+			ctx.lineTo(0, range[1]);
+			ctx.lineTo(sign * outerTickSize, range[1]);
+		}
+		ctx.stroke();
+	
+		ctx.strokeStyle = strokeStyle;
+		ctx.globalAlpha = globalAlpha;
 	};
 	
 	module.exports = AxisLine;
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7509,7 +8723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Axis = __webpack_require__(57);
+	var _Axis = __webpack_require__(59);
 	
 	var _Axis2 = _interopRequireDefault(_Axis);
 	
@@ -7543,12 +8757,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 				if (axisAt === "left") axisLocation = 0;else if (axisAt === "right") axisLocation = this.context.width;else if (axisAt === "middle") axisLocation = this.context.width / 2;else axisLocation = axisAt;
 	
-				if (this.context.isCompareSeries) {
+				if (this.context.compareSeries.length > 0) {
 					tickFormat = d3.format(".0%");
 				}
 	
 				return _react2["default"].createElement(_Axis2["default"], _extends({}, this.props, {
-					transform: "translate(" + axisLocation + ", 0)",
+					transform: [axisLocation, 0],
 					tickFormat: tickFormat, ticks: [ticks], tickValues: tickValues,
 					scale: yScale }));
 			}
@@ -7576,21 +8790,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		namespace: "ReStock.YAxis",
 		showGrid: false,
 		showDomain: false,
-		className: "react-stockcharts-y-axis"
+		className: "react-stockcharts-y-axis",
+		ticks: 10
 	};
 	YAxis.contextTypes = {
 		chartData: _react2["default"].PropTypes.object.isRequired,
 		xScale: _react2["default"].PropTypes.func.isRequired,
 		yScale: _react2["default"].PropTypes.func.isRequired,
 		width: _react2["default"].PropTypes.number.isRequired,
-		isCompareSeries: _react2["default"].PropTypes.bool.isRequired
+		compareSeries: _react2["default"].PropTypes.array.isRequired
 	};
 	
 	exports["default"] = YAxis;
 	module.exports = exports["default"];
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7601,35 +8816,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _MACDTooltip = __webpack_require__(62);
+	var _MACDTooltip = __webpack_require__(64);
 	
 	var _MACDTooltip2 = _interopRequireDefault(_MACDTooltip);
 	
-	var _TooltipContainer = __webpack_require__(65);
+	var _TooltipContainer = __webpack_require__(67);
 	
 	var _TooltipContainer2 = _interopRequireDefault(_TooltipContainer);
 	
-	var _OHLCTooltip = __webpack_require__(66);
+	var _OHLCTooltip = __webpack_require__(68);
 	
 	var _OHLCTooltip2 = _interopRequireDefault(_OHLCTooltip);
 	
-	var _CompareTooltip = __webpack_require__(67);
+	var _CompareTooltip = __webpack_require__(69);
 	
 	var _CompareTooltip2 = _interopRequireDefault(_CompareTooltip);
 	
-	var _MovingAverageTooltip = __webpack_require__(68);
+	var _MovingAverageTooltip = __webpack_require__(70);
 	
 	var _MovingAverageTooltip2 = _interopRequireDefault(_MovingAverageTooltip);
 	
-	var _BollingerBandTooltip = __webpack_require__(69);
+	var _BollingerBandTooltip = __webpack_require__(71);
 	
 	var _BollingerBandTooltip2 = _interopRequireDefault(_BollingerBandTooltip);
 	
-	var _RSITooltip = __webpack_require__(70);
+	var _RSITooltip = __webpack_require__(72);
 	
 	var _RSITooltip2 = _interopRequireDefault(_RSITooltip);
 	
-	var _StochasticTooltip = __webpack_require__(71);
+	var _StochasticTooltip = __webpack_require__(73);
 	
 	var _StochasticTooltip2 = _interopRequireDefault(_StochasticTooltip);
 	
@@ -7646,7 +8861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7673,11 +8888,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -7829,7 +9044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// export default MACDTooltip;
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7889,7 +9104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ToolTipText;
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7936,7 +9151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ToolTipTSpanLabel;
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8009,7 +9224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TooltipContainer;
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8036,11 +9251,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8188,7 +9403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = OHLCTooltip;
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8215,11 +9430,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8306,7 +9521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = CompareTooltip;
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8333,11 +9548,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8479,7 +9694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = MovingAverageTooltip;
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8506,11 +9721,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8616,7 +9831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = BollingerBandTooltip;
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8643,11 +9858,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8752,7 +9967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = RSITooltip;
 
 /***/ },
-/* 71 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8779,11 +9994,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsChartDataUtil2 = _interopRequireDefault(_utilsChartDataUtil);
 	
-	var _ToolTipText = __webpack_require__(63);
+	var _ToolTipText = __webpack_require__(65);
 	
 	var _ToolTipText2 = _interopRequireDefault(_ToolTipText);
 	
-	var _ToolTipTSpanLabel = __webpack_require__(64);
+	var _ToolTipTSpanLabel = __webpack_require__(66);
 	
 	var _ToolTipTSpanLabel2 = _interopRequireDefault(_ToolTipTSpanLabel);
 	
@@ -8914,7 +10129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// export default StochasticTooltip;
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8925,15 +10140,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _TypeChooser = __webpack_require__(73);
+	var _TypeChooser = __webpack_require__(75);
 	
 	var _TypeChooser2 = _interopRequireDefault(_TypeChooser);
 	
-	var _ChartWidthMixin = __webpack_require__(74);
+	var _ChartWidthMixin = __webpack_require__(76);
 	
 	var _ChartWidthMixin2 = _interopRequireDefault(_ChartWidthMixin);
 	
-	var _SaveChartAsImage = __webpack_require__(75);
+	var _SaveChartAsImage = __webpack_require__(77);
 	
 	var _SaveChartAsImage2 = _interopRequireDefault(_SaveChartAsImage);
 	
@@ -8945,7 +10160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9025,7 +10240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TypeChooser;
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9036,9 +10251,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	// import ReactDOM from "react-dom";
+	
 	var ChartWidthMixin = {
 		handleWindowResize: function handleWindowResize() {
 			var el = _react2["default"].findDOMNode(this);
+			// console.log(this.refs, el, this);
+	
 			var w = el.parentNode.clientWidth;
 			// console.log("width = ", w);
 			this.setState({
@@ -9052,6 +10271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentDidMount: function componentDidMount() {
 			window.addEventListener("resize", this.handleWindowResize);
 			var el = _react2["default"].findDOMNode(this);
+			// console.log(this.refs, el);
 			var w = el.parentNode.clientWidth;
 			this.setState({
 				width: w
@@ -9062,12 +10282,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ChartWidthMixin;
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var saveAsPng = __webpack_require__(76);
+	var saveAsPng = __webpack_require__(78);
 	
 	var SaveChartAsImage = {
 		save: function save(doc, container, background, cb) {
@@ -9124,7 +10344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = SaveChartAsImage;
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -9217,17 +10437,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    inlineImages(el, function() {
 	      var outer = document.createElement("div");
 	      var clone = el.cloneNode(true);
-	      var width, height;
+	      var width, height, viewBoxWidth, viewBoxHeight;
 	      if(el.tagName == 'svg') {
 	        var box = el.getBoundingClientRect();
-	        width = parseInt(clone.getAttribute('width') ||
+	        width = (clone.getAttribute('width') !== null && !clone.getAttribute('width').match(/%$/) && parseInt(clone.getAttribute('width'))) ||
 	          box.width ||
-	          clone.style.width ||
-	          window.getComputedStyle(el).getPropertyValue('width'));
-	        height = parseInt(clone.getAttribute('height') ||
+	          parseInt(clone.style.width) ||
+	          parseInt(window.getComputedStyle(el).getPropertyValue('width'));
+	        height = (clone.getAttribute('height') !== null && !clone.getAttribute('height').match(/%$/) && parseInt(clone.getAttribute('height'))) ||
 	          box.height ||
-	          clone.style.height ||
-	          window.getComputedStyle(el).getPropertyValue('height'));
+	          parseInt(clone.style.height) ||
+	          parseInt(window.getComputedStyle(el).getPropertyValue('height'));
 	        if (width === undefined || 
 	            width === null || 
 	            isNaN(parseFloat(width))) {
@@ -9238,11 +10458,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            isNaN(parseFloat(height))) {
 	      	  height = 0;
 	        }
+	        viewBoxWidth = el.viewBox.baseVal.width === 0 ? width : el.viewBox.baseVal.width;
+	        viewBoxHeight = el.viewBox.baseVal.height === 0 ? height : el.viewBox.baseVal.height;
+	
 	      } else {
 	        var box = el.getBBox();
 	        width = box.x + box.width;
 	        height = box.y + box.height;
 	        clone.setAttribute('transform', clone.getAttribute('transform').replace(/translate\(.*?\)/, ''));
+	        viewBoxWidth = width;
+	        viewBoxHeight =  height;
 	
 	        var svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
 	        svg.appendChild(clone)
@@ -9254,7 +10479,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      clone.setAttributeNS(xmlns, "xmlns:xlink", "http://www.w3.org/1999/xlink");
 	      clone.setAttribute("width", width * options.scale);
 	      clone.setAttribute("height", height * options.scale);
-	      clone.setAttribute("viewBox", "0 0 " + width + " " + height);
+	      clone.setAttribute("viewBox", "0 0 " + viewBoxWidth + " " + viewBoxHeight);
+	
 	      outer.appendChild(clone);
 	
 	      var css = styles(el, options.selectorRemap);

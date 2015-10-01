@@ -17,7 +17,7 @@ PasswordPage = React.createClass({
     Accounts.changePassword(old_pass, password, (err)=>{
       if (err) {
         Dispatcher.dispatch({ actionType: 'NEW_NOTIFICATION', payload: { message: {_id:'pass_not_changed',type:'error',icon:'error',title:'Error!',message:err.message,timeout:3000, needShow:true} } });
-      //  console.log(err.message)
+        console.log(err.message)
         this.setState({errorMessage: err.message});
       } else {
         Dispatcher.dispatch({ actionType: 'NEW_NOTIFICATION', payload: { message: {_id:'pass_changed',type:'accept',icon:'accept',title:'Your password changed!',timeout:3000, needShow:true} } });

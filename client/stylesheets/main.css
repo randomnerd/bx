@@ -75,14 +75,16 @@ html, body{
 
 .ui.inverted.newgrey .ui.button{
   background: none !important;
+  color: #767676;
+  border: 1px solid #767676;
 }
 
 .ui.inverted.newgrey .ui.blue.button{color: #2185d0 !important; border: 1px solid #2185d0;}
-.ui.inverted.newgrey .ui.red.button{color: #db2828 !important; border: 1px solid #db2828;}
+.ui.inverted.newgrey .ui.red.button, .ui.inverted.newgrey .ui.negative.button{color: #db2828 !important; border: 1px solid #db2828;}
 .ui.inverted.newgrey .ui.orange.button{color: #f2711c !important; border: 1px solid #f2711c;}
 .ui.inverted.newgrey .ui.yellow.button{color: #fbbd08 !important; border: 1px solid #fbbd08;}
 .ui.inverted.newgrey .ui.olive.button{color: #b5cc18 !important; border: 1px solid #b5cc18;}
-.ui.inverted.newgrey .ui.green.button{color: #21ba45 !important; border: 1px solid #21ba45;}
+.ui.inverted.newgrey .ui.green.button, .ui.inverted.newgrey .ui.positive.button{color: #21ba45 !important; border: 1px solid #21ba45;}
 .ui.inverted.newgrey .ui.teal.button{color: #00b5ad !important; border: 1px solid #00b5ad;}
 .ui.inverted.newgrey .ui.violet.button{color: #6435c9 !important; border: 1px solid #6435c9;}
 .ui.inverted.newgrey .ui.purple.button{color: #a333c8 !important; border: 1px solid #a333c8;}
@@ -153,7 +155,7 @@ html, body{
 
 .main.container{
   height: 100%;
-  padding-top: 4em !important;
+  padding-top: 4.5em !important;
 }
 
 .ui.segments{
@@ -262,6 +264,7 @@ tr.lesspadding th {
   right: 15px;
   bottom: 15px;
   width: 350px;
+  z-index: 9999;
 }
 
 .item .ui.header .icon{

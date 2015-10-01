@@ -10,25 +10,99 @@ var { XAxis, YAxis } = ReStock.axes;
 var { EMA, SMA, BollingerBand } = ReStock.indicator;
 var { ChartWidthMixin } = ReStock.helper;
 
+
+var interval, length = 150, rawData;
+var func;
+var speed = 1000;
+
+
 CandleStickChartWithBollingerBandOverlay = React.createClass({
 	mixins: [ChartWidthMixin],
 	propTypes: {
 		data: React.PropTypes.array.isRequired,
 		type: React.PropTypes.oneOf(["svg", "hybrid"]).isRequired,
 	},
+	getDefaultProps() {
+		return {
+			type: "svg"
+		}
+	},
+	getInitialState() {
+		return {
+			data: this.props.data.slice(0, length),
+		};
+	},
+	onKeyPress(e) {
+		var keyCode = e.which;
+		switch (keyCode) {
+			case 50: {
+				// 2 (50) - Start alter data
+				func = () => {
+					var exceptLast = rawData.slice(0, rawData.length - 1);
+					var last = rawData[rawData.length - 1];
+
+					last = {
+						...last,
+						close: (Math.random() * (last.high - last.low)) + last.close
+					}
+
+					this.refs.chartCanvas.alterData(exceptLast.concat(last));
+
+				};
+				break;
+			}
+			case 49: {
+				// 1 (49) - Start Push data
+				func = () => {
+					var pushMe = this.props.data.slice(length, length + 1);
+					rawData = rawData.concat(pushMe);
+					this.refs.chartCanvas.pushData(pushMe);
+					length ++;
+					if (this.props.data.length === length) clearInterval(interval);
+				};
+				break;
+			}
+			case 48: {
+				// 0 (48) - Clear interval
+				func = null;
+				if (interval) clearInterval(interval);
+				break;
+			}
+			case 43: {
+				// + (43) - increase the speed
+				speed = Math.max(speed / 2, 100);
+				break;
+			}
+			case 45: {
+				// - (45) - reduce the speed
+				var delta = Math.min(speed, 1000);
+				speed = speed + delta;
+				break;
+			}
+		}
+		if (func) {
+			if (interval) clearInterval(interval);
+			console.log("speed  = ", speed);
+			interval = setInterval(func, speed);
+		}
+	},
+	componentDidMount() {
+		document.addEventListener("keypress", this.onKeyPress);
+	},
+	componentWillUnmount() {
+		if (interval) clearInterval(interval);
+		document.removeEventListener("keypress", this.onKeyPress);
+	},
 	render() {
 		if (this.state === null || !this.state.width) return <div />;
 		var { data, type } = this.props;
-
-		var parseDate = d3.time.format("%Y-%m-%d").parse
-		var dateRange = { from: parseDate("2012-12-01"), to: parseDate("2012-12-31")}
 		var dateFormat = d3.time.format("%Y-%m-%d");
-
+		rawData = this.state.data;
 		return (
-			<ChartCanvas width={this.state.width} height={400}
-				margin={{left: 90, right: 70, top:10, bottom: 30}} initialDisplay={300}
+			<ChartCanvas ref="chartCanvas" width={this.state.width} height={400}
+				margin={{left: 10, right: 10, top:10, bottom: 30}} initialDisplay={200}
 				dataTransform={[ { transform: StockscaleTransformer } ]}
-				data={data} type={type}>
+				data={rawData} type={type}>
 				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
 					<XAxis axisAt="bottom" orient="bottom"/>
 					<YAxis axisAt="right" orient="right" ticks={5} />
