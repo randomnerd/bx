@@ -150,11 +150,18 @@ html, body{
 .ui.grid > .column .h50.segment{
   height: 50% !important;
   margin: 0 0 0.2rem 0;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
 .ui.grid > .column .h100.segment{
   height: 100% !important;
   margin-bottom: 0.2rem;
+  padding-top: 4em !important;
+}
+
+h3.ui.header{
+  margin-top: -3rem !important;
 }
 
 .main.container{
