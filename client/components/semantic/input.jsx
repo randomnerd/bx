@@ -17,7 +17,9 @@ Semantic.Input = React.createClass({
   },
 
   sideButtons(side) {
-    if (!this.props.adds && !this.props.adds[side]) return null;
+    if (!this.props.adds) return null;
+    if (!this.props.adds[side]) return null;
+
     let buttons = this.props.adds[side].buttons;
     if (!buttons) return null;
 
@@ -38,7 +40,9 @@ Semantic.Input = React.createClass({
   },
 
   sideLabels(side) {
-    if (!this.props.adds && !this.props.adds[side]) return null;
+    if (!this.props.adds) return null;
+    if (!this.props.adds[side]) return null;
+    
     let labels = this.props.adds[side].labels;
     if (!labels) return null;
     let iconFirst = (side === 'right');
