@@ -2,7 +2,7 @@ TradeGrid = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState: function() {
     return {
-      chartType:"market"
+      chartType:"candle"
     }
   },
   getMeteorData() {
