@@ -147,18 +147,7 @@ html, body{
   margin: 0 !important;
   height: 100% !important;
 }
-.ui.grid > .column .h50.segment{
-  height: 50% !important;
-  margin: 0 0 0.2rem 0;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-}
 
-.ui.grid > .column .h100.segment{
-  height: 100% !important;
-  margin-bottom: 0.2rem;
-  padding-top: 4em !important;
-}
 
 h3.ui.header{
   margin-top: -3rem !important;
@@ -166,7 +155,7 @@ h3.ui.header{
 
 .main.container{
   height: 100%;
-  padding-top: 4.5em !important;
+  padding-top: 3.7em !important;
 }
 
 .ui.segments{
@@ -174,7 +163,84 @@ h3.ui.header{
 }
 /* Semantic new grey */
 
+/* UX grid */
 
+.ux.grid{
+  padding-left: 558px;
+  padding-right: 285px;
+}
+.ux.grid.fullheight, .ux.grid.fullheight .column{
+  height: 100%;
+}
+.ux.column.scroll{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.ux.column{
+  position: relative;
+  float: left;
+}
+.ux.column.left.double{
+  margin-left: -558px;
+  width: 558px
+}
+.ux.column.right{
+  margin-right: -278px;
+  width: 278px;
+}
+.ux.column.center{
+  width: 100%;
+}
+.ux.column.balance{
+  width: 230px;
+}
+.ux.column.orders{
+  width: 328px;
+}
+.ux.column.chart{
+  float: none !important;
+}
+.ux.column.history{
+  width: 278px;
+}
+
+.ux.grid .column.padding{
+  margin: -0.2rem 0 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+}
+.ux.grid > .column .h50.segment{
+  height: 50% !important;
+  margin: 0 0 0.2rem 0;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.ux.grid > .column .h100.segment{
+  height: 100% !important;
+  margin: 0.1rem;
+  padding-top: 4em !important;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.ux.grid > .column .h100.segment.noheader{
+  padding-top: 1em !important;
+}
+
+.ux.container{
+  position: relative;
+  overflow: hidden;
+}
+
+.ux.container.h100{
+  height: 100%;
+}
+
+
+/* UX grid */
 
 
 /*colors*/
@@ -211,10 +277,6 @@ h3.ui.header{
 .ui.black.markered.text{background-color: #1b1c1d !important}
 
 /*     globals     */
-.main.container {
-  padding-top: 5em;
-}
-
 .tiny.button {
   font-size: .85714286rem !important;
 }
@@ -243,6 +305,7 @@ h3.ui.header{
 .scrollable100{
   height: 100% !important;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .ui.form .field.nomargin{
@@ -364,7 +427,7 @@ tr.lesspadding th {
   overflow-y: auto;
   margin-right: -20px;
   overflow-x: hidden;
-  padding: 0 15px 0 10px;
+  padding: 0;
 }
 .pushable > .pusher {
   height: 100% !important;

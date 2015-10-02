@@ -46,10 +46,13 @@ TradePage = React.createClass({
         <div className="seven wide column">
           <div className="ui basic segment h100">
             <h3 className="ui header">PRICE CHART</h3>
-            <div className="ui basic teal segment">
+            <div className="ui basic teal segment h50">
               {this.data.BTPR_Loading?<div className="cube"></div>:
                 this.renderBlockChainIndicator()
               }
+            </div>
+            <div className="ui basic segment h50">
+              <OpenOrders valute1="ANC" valute2='BTC' />
             </div>
           </div>
         </div>

@@ -99,7 +99,7 @@ CandleStickChartWithBollingerBandOverlay = React.createClass({
 		var dateFormat = d3.time.format("%Y-%m-%d");
 		rawData = this.state.data;
 		return (
-			<ChartCanvas ref="chartCanvas" width={this.state.width} height={400}
+			<ChartCanvas ref="chartCanvas" width={this.state.width} height={this.props.height}
 				margin={{left: 10, right: 10, top:10, bottom: 30}} initialDisplay={200}
 				dataTransform={[ { transform: StockscaleTransformer } ]}
 				data={rawData} type={type}>

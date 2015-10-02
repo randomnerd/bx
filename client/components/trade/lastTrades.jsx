@@ -45,7 +45,7 @@ Trades = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="ux container h100">
         <table className="ui selectable very compact very basic striped table nopadding nomargin">
           <thead>
           <tr className="lesspadding">

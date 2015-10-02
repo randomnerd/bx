@@ -6,7 +6,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/pair/:pair_id', {
   action(params) {
-    ReactLayout.render(MainLayout, {active:params.pair_id, content: <TradePage active={params.pair_id}/> });
+    ReactLayout.render(MainLayout, {active:params.pair_id, content: <TradeGrid active={params.pair_id}/> });
   }
 });
 
