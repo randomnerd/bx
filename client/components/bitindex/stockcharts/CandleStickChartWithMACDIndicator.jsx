@@ -102,8 +102,8 @@ CandleStickChartWithMACDIndicator = React.createClass({
 				margin={{left: 70, right: 70, top:20, bottom: 30}} initialDisplay={200}
 				dataTransform={[ { transform: StockscaleTransformer } ]}
 				data={rawData} type={type}>
-				<Chart id={1} yMousePointerDisplayLocation="right" height={400}
-						yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{ top: 10, right: 0, bottom: 20, left: 0 }}>
+				<Chart id={1} yMousePointerDisplayLocation="right" height={200}
+						yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{ top: 10, right: 0, bottom: 20, left: 0 }} origin={(w, h) => [0, h - 200]} >
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
 					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
@@ -141,7 +141,7 @@ CandleStickChartWithMACDIndicator = React.createClass({
 						edgeAt="left" forChart={1} forDataSeries={2} />
 				</EdgeContainer>
 				<Chart id={3} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
-						height={150} origin={(w, h) => [0, h - 150]} padding={{ top: 10, right: 0, bottom: 10, left: 0 }} >
+						height={75} origin={(w, h) => [0, h - 75]} padding={{ top: 10, right: 0, bottom: 10, left: 0 }} >
 					<XAxis axisAt="bottom" orient="bottom"/>
 					<YAxis axisAt="right" orient="right" ticks={2}/>
 					<DataSeries id={0} indicator={MACD} options={{ fast: 12, slow: 26, signal: 9 }} >

@@ -148,30 +148,14 @@ CandleStickChartWithFullStochasticsIndicator = React.createClass({
 						<StochasticSeries />
 					</DataSeries>
 				</Chart>
-				<Chart id={4} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
-						height={125} origin={(w, h) => [0, h - 250]} padding={{ top: 10, right: 0, bottom: 10, left: 0 }} >
-					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
-					<YAxis axisAt="right" orient="right" ticks={2}/>
-					<DataSeries id={1} indicator={FullStochasticOscillator} options={{ period: 14, K: 3, D: 3 }} >
-						<StochasticSeries />
-					</DataSeries>
-				</Chart>
-				<Chart id={5} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
-						height={125} origin={(w, h) => [0, h - 125]} padding={{ top: 10, right: 0, bottom: 10, left: 0 }} >
-					<XAxis axisAt="bottom" orient="bottom"/>
-					<YAxis axisAt="right" orient="right" ticks={2}/>
-					<DataSeries id={1} indicator={FullStochasticOscillator} options={{ period: 14, K: 3, D: 3 }} >
-						<StochasticSeries />
-					</DataSeries>
-				</Chart>
+
 				<MouseCoordinates xDisplayFormat={dateFormat} type="crosshair" />
 				<EventCapture mouseMove={true} zoom={true} pan={true} mainChart={1} defaultFocus={false} />
 				<TooltipContainer>
 					<OHLCTooltip forChart={1} origin={[-40, -10]}/>
 					<MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 5]} />
 					<StochasticTooltip forChart={3} origin={[-38, 15]}>Fast STO</StochasticTooltip>
-					<StochasticTooltip forChart={4} origin={[-38, 15]}>Slow STO</StochasticTooltip>
-					<StochasticTooltip forChart={5} origin={[-38, 15]}>Full STO</StochasticTooltip>
+
 				</TooltipContainer>
 			</ChartCanvas>
 		);

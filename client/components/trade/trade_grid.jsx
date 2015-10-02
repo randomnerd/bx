@@ -53,28 +53,28 @@ TradeGrid = React.createClass({
     switch (this.state.chartType) {
       case "candle":
         return(
-          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
         )
         break;
       case "macd":
         return(
-          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
         )
         break;
       case "rsi":
         return(
-          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
         )
         break;
       case "sto":
         return(
-          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
         )
         break;
 
       case "bollinger":
         return(
-          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)}  type = "svg" height="300" /></div>
         )
         break;
 
@@ -160,7 +160,7 @@ TradeGrid = React.createClass({
               <h3 className="ui header">OPEN ORDERS</h3>
 
                 <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
-              
+
             </div>
           </div>
         </div>
