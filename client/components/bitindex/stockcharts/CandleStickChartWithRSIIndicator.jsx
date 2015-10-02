@@ -103,7 +103,7 @@ CandleStickChartWithRSIIndicator = React.createClass({
 				dataTransform={[ { transform: StockscaleTransformer } ]}
 				data={rawData} type={type}>
 				<Chart id={1} yMousePointerDisplayLocation="right" height={100}
-						yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{ top: 10, right: 0, bottom: 20, left: 0 }}>
+						yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{ top: 10, right: 0, bottom: 10, left: 0 }}>
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
 					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >

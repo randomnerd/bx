@@ -98,7 +98,7 @@ CandleStickStockScaleChartWithVolumeHistogramV3 = React.createClass({
         data={rawData} type={type}>
 
 				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
-						height={400} >
+						height={300} >
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false}/>
 					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
@@ -106,7 +106,7 @@ CandleStickStockScaleChartWithVolumeHistogramV3 = React.createClass({
 					</DataSeries>
 				</Chart>
 				<Chart id={2} yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
-						height={150} origin={(w, h) => [0, h - 150]} >
+						height={100} origin={(w, h) => [0, h - 100]} >
 					<XAxis axisAt="bottom" orient="bottom"/>
 					<YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
 					<DataSeries id={0} yAccessor={(d) => d.volume} >

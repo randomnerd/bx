@@ -53,28 +53,28 @@ TradeGrid = React.createClass({
     switch (this.state.chartType) {
       case "candle":
         return(
-          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
+          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "macd":
         return(
-          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "rsi":
         return(
-          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "sto":
         return(
-          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="300" /></div>
+          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
 
       case "bollinger":
         return(
-          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)}  type = "svg" height="300" /></div>
+          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)}  type = "svg" height="350" /></div>
         )
         break;
 
@@ -91,7 +91,7 @@ TradeGrid = React.createClass({
         <div className="ux column left double fullheight">
           <div className="ux column balance fullheight padding">
             <div className="ui basic segment h100">
-              <h3 className="ui header">AVAILABLE BALANCE</h3>
+              <h3 className="ui header">BALANCE</h3>
               <BuySell currency={this.props.active.toUpperCase()} direction="buy"/>
             </div>
           </div>
@@ -116,7 +116,7 @@ TradeGrid = React.createClass({
               <div className="ux fixchart container">
                 <div className="ui basic segment h100">
                   <h3 className="ui header">PRICE CHART</h3>
-                    <div className="ui basic teal segment">
+                    <div className="ui basic teal segment nopadding">
                       <div className="ui top attached tabular basic menu">
                         <div className="right menu" ref="chartType">
                           <a className="item active" onClick={this.showCandle}>
@@ -136,7 +136,7 @@ TradeGrid = React.createClass({
                           </a>
                         </div>
                       </div>
-                      <div className="ui basic segment">
+                      <div className="ui basic segment nopadding">
                         {
                           this.data.BTPR_Loading?<div className="cube"></div>:
                           this.renderBlockChainIndicator()
@@ -147,7 +147,7 @@ TradeGrid = React.createClass({
               </div>
               <div className="ux fixorders container">
                 <div className="ui basic segment h100">
-                  <h3 className="ui header">PRICE CHART</h3>
+                  <h3 className="ui header">OPEN ORDERS</h3>
                   <OpenOrders valute1="ANC" valute2='BTC' />
                 </div>
               </div>
@@ -157,7 +157,7 @@ TradeGrid = React.createClass({
         <div className="ux column right fullheight">
           <div className="ux column history fullheight padding">
             <div className="ui basic segment h100">
-              <h3 className="ui header">OPEN ORDERS</h3>
+              <h3 className="ui header">TRADE HISTORY</h3>
 
                 <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
 
