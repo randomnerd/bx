@@ -1,5 +1,10 @@
 TradeGrid = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState: function() {
+    return {
+      chartType:"market"
+    }
+  },
   getMeteorData() {
 
     var handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
@@ -11,6 +16,31 @@ TradeGrid = React.createClass({
         BTPR: BitIndexIndicator_BTPR.find().fetch(),
 
     }
+  },
+
+  showCandle(event){
+    //console.log(item)
+    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"candle"})
+  },
+  showMACD(event){
+    //console.log(item)
+    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"macd"})
+  },
+  showRSI(event){
+    //console.log(item)
+    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"rsi"})
+  },
+  showSTO(event){
+    //console.log(item)
+    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"sto"})
   },
 
   renderBlockChainIndicator() {
@@ -50,9 +80,27 @@ TradeGrid = React.createClass({
             <div className="ui basic segment h100">
               <h3 className="ui header">PRICE CHART</h3>
                 <div className="ui basic teal segment">
-                {this.data.BTPR_Loading?<div className="cube"></div>:
-                  this.renderBlockChainIndicator()
-                }
+                  <div className="ui top attached tabular basic menu">
+                    <div className="right menu" ref="chartType">
+                      <a className="item active" onClick={this.showCandle}>
+                        Candle
+                      </a>
+                      <a className="item" onClick={this.showMACD}>
+                        MACD
+                      </a>
+                      <a className="item" onClick={this.showRSI}>
+                        RSI
+                      </a>
+                      <a className="item" onClick={this.showSTO}>
+                        STO
+                      </a>
+                    </div>
+                  </div>
+                  <div className="ui basic segment">
+                    {this.data.BTPR_Loading?<div className="cube"></div>:
+                      this.renderBlockChainIndicator()
+                    }
+                  </div>
               </div>
               <div className="ui basic segment">
                 <OpenOrders valute1="ANC" valute2='BTC' />
