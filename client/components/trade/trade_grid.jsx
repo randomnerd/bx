@@ -42,11 +42,46 @@ TradeGrid = React.createClass({
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"sto"})
   },
+  showBollinger(event){
+    //console.log(item)
+    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"bollinger"})
+  },
 
   renderBlockChainIndicator() {
-    return(
-      <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="400" /></div>
-    )
+    switch (this.state.chartType) {
+      case "candle":
+        return(
+          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR} type = "svg" height="400" /></div>
+        )
+        break;
+      case "macd":
+        return(
+          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+        )
+        break;
+      case "rsi":
+        return(
+          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+        )
+        break;
+      case "sto":
+        return(
+          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+        )
+        break;
+
+      case "bollinger":
+        return(
+          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="400" /></div>
+        )
+        break;
+
+      default:
+
+    }
+
 
   },
 
@@ -94,10 +129,14 @@ TradeGrid = React.createClass({
                       <a className="item" onClick={this.showSTO}>
                         STO
                       </a>
+                      <a className="item" onClick={this.showBollinger}>
+                        Bollinger
+                      </a>
                     </div>
                   </div>
                   <div className="ui basic segment">
-                    {this.data.BTPR_Loading?<div className="cube"></div>:
+                    {
+                      this.data.BTPR_Loading?<div className="cube"></div>:
                       this.renderBlockChainIndicator()
                     }
                   </div>

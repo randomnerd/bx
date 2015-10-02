@@ -100,7 +100,7 @@ CandleStickChartWithBollingerBandOverlay = React.createClass({
 		rawData = this.state.data;
 		return (
 			<ChartCanvas ref="chartCanvas" width={this.state.width} height={this.props.height}
-				margin={{left: 10, right: 10, top:10, bottom: 30}} initialDisplay={200}
+				margin={{left: 70, right: 70, top:10, bottom: 30}} initialDisplay={200}
 				dataTransform={[ { transform: StockscaleTransformer } ]}
 				data={rawData} type={type}>
 				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
