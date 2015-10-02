@@ -43,28 +43,35 @@ OpenOrders = React.createClass({
   },
   render() {
     return (
-      <div>
-        <div>
-          <a className="ui teal button right aligned">Clear all</a>
+      <div className="ui basic teal segment h100 noheader">
+        <div className="ui top attached tabular basic menu">
+          <div className="right menu">
+            <a className="item active">
+              Clear all
+            </a>
+          </div>
         </div>
-        <table className="ui selectable very compact very basic striped table nopadding nomargin">
-          <thead>
-            <tr className="lesspadding">
-              <th className="three wide" >Size</th>
-              <th className="three wide">Filled ({this.props.valute1})</th>
-              <th className="three wide">Price ({this.props.valute2})</th>
-              <th className="three wide">Fee ({this.props.valute2})</th>
-              <th className="two wide">Time</th>
-              <th className="two wide">Status</th>
-            </tr>
-          </thead>
-        </table>
-        <div className="scrollable50">
-        <table className="ui selectable very compact very basic striped table">
-          <tbody>
-            { this.renderOrderItems() }
-          </tbody>
-        </table>
+        <div className="ui basic segment h100">
+
+          <table className="ui selectable very compact very basic striped table nopadding nomargin">
+            <thead>
+              <tr className="lesspadding">
+                <th className="three wide" >Size</th>
+                <th className="three wide">Filled ({this.props.valute1})</th>
+                <th className="three wide">Price ({this.props.valute2})</th>
+                <th className="three wide">Fee ({this.props.valute2})</th>
+                <th className="two wide">Time</th>
+                <th className="two wide">Status</th>
+              </tr>
+            </thead>
+          </table>
+          <div className="scrollable100">
+          <table className="ui selectable very compact very basic striped table">
+            <tbody>
+              { this.renderOrderItems() }
+            </tbody>
+          </table>
+          </div>
         </div>
       </div>
     );

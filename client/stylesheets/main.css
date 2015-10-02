@@ -241,6 +241,19 @@ h3.ui.header{
   height: 100%;
 }
 
+.ux.container.fix400{
+  padding-top: 450px;
+  height: 100%
+}
+
+.ux.container.fixchart{
+  height: 450px;
+  margin-top: -450px;
+}
+
+.ux.container.fixorders{
+  height: 100%;
+}
 
 /* UX grid */
 

@@ -53,28 +53,28 @@ TradeGrid = React.createClass({
     switch (this.state.chartType) {
       case "candle":
         return(
-          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR} type = "svg" height="400" /></div>
+          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR} type = "svg" height="300" /></div>
         )
         break;
       case "macd":
         return(
-          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
         )
         break;
       case "rsi":
         return(
-          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
         )
         break;
       case "sto":
         return(
-          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height="400" /></div>
+          <div><CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
         )
         break;
 
       case "bollinger":
         return(
-          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="400" /></div>
+          <div><CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="300" /></div>
         )
         break;
 
@@ -112,37 +112,44 @@ TradeGrid = React.createClass({
         </div>
         <div className="ux column center fullheight">
           <div className="ux column chart padding">
-            <div className="ui basic segment h100">
-              <h3 className="ui header">PRICE CHART</h3>
-                <div className="ui basic teal segment">
-                  <div className="ui top attached tabular basic menu">
-                    <div className="right menu" ref="chartType">
-                      <a className="item active" onClick={this.showCandle}>
-                        Candle
-                      </a>
-                      <a className="item" onClick={this.showMACD}>
-                        MACD
-                      </a>
-                      <a className="item" onClick={this.showRSI}>
-                        RSI
-                      </a>
-                      <a className="item" onClick={this.showSTO}>
-                        STO
-                      </a>
-                      <a className="item" onClick={this.showBollinger}>
-                        Bollinger
-                      </a>
-                    </div>
+            <div className="ux container fix400">
+              <div className="ux fixchart container">
+                <div className="ui basic segment h100">
+                  <h3 className="ui header">PRICE CHART</h3>
+                    <div className="ui basic teal segment">
+                      <div className="ui top attached tabular basic menu">
+                        <div className="right menu" ref="chartType">
+                          <a className="item active" onClick={this.showCandle}>
+                            Candle
+                          </a>
+                          <a className="item" onClick={this.showMACD}>
+                            MACD
+                          </a>
+                          <a className="item" onClick={this.showRSI}>
+                            RSI
+                          </a>
+                          <a className="item" onClick={this.showSTO}>
+                            STO
+                          </a>
+                          <a className="item" onClick={this.showBollinger}>
+                            Bollinger
+                          </a>
+                        </div>
+                      </div>
+                      <div className="ui basic segment">
+                        {
+                          this.data.BTPR_Loading?<div className="cube"></div>:
+                          this.renderBlockChainIndicator()
+                        }
+                      </div>
                   </div>
-                  <div className="ui basic segment">
-                    {
-                      this.data.BTPR_Loading?<div className="cube"></div>:
-                      this.renderBlockChainIndicator()
-                    }
-                  </div>
+                </div>
               </div>
-              <div className="ui basic segment">
-                <OpenOrders valute1="ANC" valute2='BTC' />
+              <div className="ux fixorders container">
+                <div className="ui basic segment h100">
+                  <h3 className="ui header">PRICE CHART</h3>
+                  <OpenOrders valute1="ANC" valute2='BTC' />
+                </div>
               </div>
             </div>
           </div>
@@ -150,10 +157,10 @@ TradeGrid = React.createClass({
         <div className="ux column right fullheight">
           <div className="ux column history fullheight padding">
             <div className="ui basic segment h100">
-              <h3 className="ui header">TRADE HISTORY</h3>
-              <div className="ui basic teal segment h100 noheader">
+              <h3 className="ui header">OPEN ORDERS</h3>
+
                 <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
-              </div>
+              
             </div>
           </div>
         </div>
