@@ -76,13 +76,13 @@ export default React.createClass({
         break;
       case "sto":
         return(
-          <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height={300} /></div>
+          <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height={350} /></div>
         )
         break;
 
       case "bollinger":
         return(
-          <div><Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height={300} /></div>
+          <div><Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height={350} /></div>
         )
         break;
 
