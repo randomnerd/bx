@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-require('react/addons');
+import classNames from 'classnames';
 
 export default React.createClass({
   mixins: [Formsy.Mixin],
@@ -26,7 +26,7 @@ export default React.createClass({
     if (!buttons) return null;
 
     return buttons.map((button, idx) => {
-      let cls = React.addons.classSet({
+      let cls = classNames({
         'ui icon button': true,
         'right labeled': button.name
       });
@@ -85,7 +85,7 @@ export default React.createClass({
       icon:    this.props.icon
     }
     if (this.props.icon) params[this.props.icon] = true;
-    return React.addons.classSet(params);
+    return classNames(params);
   },
 
   render() {
@@ -96,7 +96,7 @@ export default React.createClass({
       inline:   this.props.showInline
     };
     if (this.props.className) clsParams[this.props.className] = true;
-    let cls = React.addons.classSet(clsParams);
+    let cls = classNames(clsParams);
 
     let errorMessage = this.getErrorMessage();
     let input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;
