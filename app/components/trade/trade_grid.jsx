@@ -61,28 +61,28 @@ export default React.createClass({
     switch (this.state.chartType) {
       case "candle":
         return(
-          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height={350} /></div>
         )
         break;
       case "macd":
         return(
-          <div><Charts.CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height={350} /></div>
         )
         break;
       case "rsi":
         return(
-          <div><Charts.CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height={350} /></div>
         )
         break;
       case "sto":
         return(
-          <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height={300} /></div>
         )
         break;
 
       case "bollinger":
         return(
-          <div><Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height="300" /></div>
+          <div><Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height={300} /></div>
         )
         break;
 
