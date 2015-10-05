@@ -53,9 +53,9 @@ export default React.createClass({
             </a>
           </div>
         </div>
-        <div className="ui basic segment h100">
+        <div className="ui basic segment h100 tabheader">
 
-          <table className="ui selectable very compact very basic striped table nopadding nomargin">
+          <table className="ui selectable very compact very basic striped table nopadding nomargin heading">
             <thead>
               <tr className="lesspadding">
                 <th className="three wide" >Size</th>
@@ -67,12 +67,14 @@ export default React.createClass({
               </tr>
             </thead>
           </table>
-          <div className="scrollable100">
-          <table className="ui selectable very compact very basic striped table">
-            <tbody>
-              { this.renderOrderItems() }
-            </tbody>
-          </table>
+          <div className="ux forscroll">
+            <div className="scrollable100">
+              <table className="ui selectable very compact very basic striped table">
+                <tbody>
+                  { this.renderOrderItems() }
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

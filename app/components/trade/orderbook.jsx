@@ -1,6 +1,11 @@
 import React from 'react';
 
 export default React.createClass({
+  getInitialState: function() {
+    return {
+      spread:0.1
+    }
+  },
   getOrdersItems() {
     return [
       { _id:1, price: 0.001, amount: 0.005467},
@@ -32,14 +37,14 @@ export default React.createClass({
     }});
     //console.log($(e.currentTarget).find('[data-ord-price]').html());
   },
-  renderOrderItems() {
+  renderOrderItems(direction) {
 
-    return this.getOrdersItems(this.props.direction).map((item) => {
+    return this.getOrdersItems(direction).map((item) => {
       return  (
 
-        <tr key={item._id} onClick={this.goBuySell}>
-          <td className="six wide" data-ord-price>{item.price}</td>
-          <td className="five wide" data-ord-amount>{item.amount}</td>
+        <tr key={item._id} onClick={this.goBuySell.bind(this,item)}>
+          <td className={"six wide " + (direction=="buy"?"positive":"negative")}>{item.price}</td>
+          <td className="five wide right aligned">{item.amount}</td>
           <td className="five wide">{(item.price * item.amount).toFixed(8)}</td>
         </tr>
 
@@ -47,10 +52,23 @@ export default React.createClass({
 
     });
   },
+  renderSpread() {
+
+      return  (
+
+        <tr className="ui white text">
+          <td className="six wide"></td>
+          <td className="five wide right aligned">{this.state.spread}</td>
+          <td className="five wide">{this.props.valute1} spread</td>
+        </tr>
+
+      );
+
+  },
   render() {
     return (
-      <div>
-        <table className="ui selectable very compact very basic striped table nopadding nomargin">
+      <div className="ui basic teal segment h100 tabheader">
+        <table className="ui selectable very compact very basic striped table nopadding nomargin heading">
           <thead>
             <tr className="lesspadding">
               <th className="six wide" >Price</th>
@@ -59,12 +77,16 @@ export default React.createClass({
             </tr>
           </thead>
         </table>
-        <div className="scrollable50">
-        <table className="ui selectable very compact very basic striped table">
-          <tbody>
-            { this.renderOrderItems() }
-          </tbody>
-        </table>
+        <div className="ux forscroll">
+          <div className="scrollable100">
+            <table className="ui selectable very compact very basic striped table">
+              <tbody>
+                { this.renderOrderItems("sell") }
+                { this.renderSpread() }
+                { this.renderOrderItems("buy") }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

@@ -34,9 +34,9 @@ export default React.createClass({
     return this.getTradesItems(this.props.direction).map((item) => {
       return  (
 
-        <tr key={Math.random()} className={item.direction=="buy"?"positive":"negative"}>
+        <tr key={Math.random()}>
           <td className="four wide">{item.time}</td>
-          <td className="four wide">{item.price}</td>
+          <td className={"four wide " + (item.direction=="buy"?"positive":"negative")}>{item.price}</td>
           <td className="four wide">{item.amount}</td>
           <td className="four wide">{(item.price*item.amount).toFixed(8)}</td>
         </tr>
@@ -47,8 +47,8 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="ux container h100">
-        <table className="ui selectable very compact very basic striped table nopadding nomargin">
+      <div className="ui basic teal segment h100 tabheader">
+        <table className="ui selectable very compact very basic striped table nopadding nomargin heading">
           <thead>
           <tr className="lesspadding">
             <th className="four wide">Time</th>
@@ -58,12 +58,14 @@ export default React.createClass({
           </tr>
           </thead>
         </table>
-        <div className="scrollable100">
-          <table className="ui selectable very compact very basic table">
-            <tbody>
-            { this.renderTradesItems() }
-            </tbody>
-          </table>
+        <div className="ux forscroll">
+          <div className="scrollable100">
+            <table className="ui selectable very compact very basic table">
+              <tbody>
+              { this.renderTradesItems() }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

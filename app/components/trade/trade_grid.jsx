@@ -108,13 +108,8 @@ export default React.createClass({
 
                 <h3 className="ui header">ORDER BOOK</h3>
 
-                <div className="ui basic small red segment h50">
-                  <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction="sell" />
-                </div>
+                <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction="sell" />
 
-                <div className="ui basic small green segment h50">
-                  <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction="buy" />
-                </div>
             </div>
           </div>
         </div>
