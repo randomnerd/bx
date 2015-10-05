@@ -3,7 +3,7 @@ import {BitIndexIndicator_BTPR} from 'app/collections';
 import BuySell from 'app/components/trade/buysell';
 import Trades from 'app/components/trade/lastTrades';
 import Charts from 'app/components/bitindex';
-import Orders from 'app/components/trade/orders';
+import Orders from 'app/components/trade/orderbook';
 import OpenOrders from 'app/components/trade/open_orders';
 
 export default React.createClass({
