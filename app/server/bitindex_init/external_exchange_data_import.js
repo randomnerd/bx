@@ -1,10 +1,13 @@
+import d3 from './d3.min';
+import {BitIndexIndicator_BTPR} from 'app/collections';
+
 Meteor.startup(function() {
 
   if (BitIndexIndicator_BTPR.find().count() !== 0) {
      return;
   }
 
-  arrayMax = function(arr) {
+  var arrayMax = function(arr) {
       var len, max;
       len = arr.length;
       max = -Infinity;
@@ -20,6 +23,7 @@ Meteor.startup(function() {
     timestamp: 1
   });
     var root_url = process.env.ROOT_URL;
+    if (!root_url) root_url = 'http://localhost:3000/';
 
     var parseDate = d3.time.format("%Y-%m-%d").parse;
     console.log('no BitIndexIndicator_BTPR data found, importing...');
