@@ -25,6 +25,11 @@
     "regenerator": "^0.8.36"
   },
   "dependencies": {
+    "baobab": "^2.0.0",
+    "cerebral": "^0.19.4",
+    "cerebral-baobab": "^0.2.5",
+    "cerebral-react": "^0.2.0",
+    "cerebral-router": "^0.5.1",
     "classnames": "^2.1.5",
     "formsy-react": "^0.14.1",
     "lodash": "^3.10.0",
