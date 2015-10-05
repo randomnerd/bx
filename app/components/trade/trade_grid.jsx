@@ -61,17 +61,17 @@ export default React.createClass({
     switch (this.state.chartType) {
       case "candle":
         return(
-          <div><CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "macd":
         return(
-          <div><CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "rsi":
         return(
-          <div><CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
+          <div><Charts.CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height="350" /></div>
         )
         break;
       case "sto":

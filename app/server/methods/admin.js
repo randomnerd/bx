@@ -1,3 +1,5 @@
+import {Currencies, TradePairs} from 'app/collections';
+
 Meteor.methods({
 
 	currrency_add: function(cur){

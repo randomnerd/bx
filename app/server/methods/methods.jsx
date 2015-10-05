@@ -1,3 +1,5 @@
+import {Notifications, wAddressBook, Chat, Withdrawals} from 'app/collections';
+
 Meteor.methods({
   'jobs/wallet/newWallet': (currId) => {
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
