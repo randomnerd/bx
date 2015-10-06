@@ -35,7 +35,7 @@
     "lodash": "^3.10.0",
     "react": "^0.13.3",
     "react-mixin": "^2.0.2",
-    "react-stockcharts": "^0.2.3"
+    "react-stockcharts": "^0.2.4"
   },
   "scripts": {
     "dev": "webpack/scripts/dev.sh",
