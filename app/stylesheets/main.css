@@ -495,3 +495,49 @@ tr.lesspadding th {
 }
 
 /* Semantic chat */
+
+/* LANDING */
+
+.ld{
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.ld .block{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ld .block.background{
+  display: block;
+  background-image: url("https://exchange.coinbase.com/img/price_chart_anime.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+#video_background{
+  width: 100%;
+}
+
+.ld .block .promo{
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  z-index: 100;
+  padding-top: 30%;
+}
+
+.ld .block.white{
+  background: #fff;
+}
+
+/* LANDING */

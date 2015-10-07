@@ -72,7 +72,7 @@ export default React.createClass({
           <thead>
             <tr className="lesspadding">
               <th className="six wide" >Price</th>
-              <th className="five wide">{this.props.valute1}</th>
+              <th className="five wide right aligned">{this.props.valute1}</th>
               <th className="five wide">{this.props.valute2}</th>
             </tr>
           </thead>
