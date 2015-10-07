@@ -72,10 +72,7 @@ html, body{
 .ui.inverted.newgrey .ui.table thead th{
   color: rgba(220, 220, 220, 1);
 }
-.ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
-    background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
-    color: rgba(240, 150, 150, 0.67) !important;
-}
+
 
 .ui.inverted.newgrey .ui.table td.negative.arr::after{
   font-family: Icons;
@@ -105,6 +102,15 @@ html, body{
 }
 .ui.inverted.newgrey .leveler.positive{
   background-color: rgba(150, 240, 150, 1);
+}
+
+.ui.inverted.newgrey .ui.table td:hover, .ui.inverted.newgrey .ui.table tr:hover td {
+  color: rgba(240, 240, 240, 0.87);
+}
+
+.ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
+    background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
+    color: rgba(240, 150, 150, 0.67) !important;
 }
 
 .ui.inverted.newgrey .ui.table td.positive, .ui.inverted.newgrey .ui.table tr.positive {
