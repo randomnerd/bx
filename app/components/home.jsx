@@ -12,12 +12,12 @@ export default React.createClass({
         <div className="block opacity">
           <div className="promo">
             <h1>Bitcoin Trading You Can Trust</h1>
-            <p>Coinbase Exchange is the leading platform to trade bitcoin.</p>
+            <p>Bit.Exchange is the leading platform to trade bitcoin.</p>
 
             <div>
-              <a className="ui normal big teal button" target="_blank" data-href="signup_url" href="">create account</a>
+              <a className="ui normal big teal button">create account</a>
 
-              <a href="/trade" className="ui white big button">View Demo</a>
+              <a href="/pair/btc" className="ui white big button">View Demo</a>
 
               <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
             </div>

@@ -11,8 +11,16 @@ html, body{
 
 .ui.body{display: block;}
 
-.ui.button{
+:not(.buttons) > .ui.button{
   margin: 0 0.5em 0 0 !important;
+}
+
+.ui.segment.centered{
+  text-align: center;
+}
+
+.ui.segment.centered > .centered{
+  margin: 0 auto;
 }
 
 .ui.fixed.menu{
@@ -68,6 +76,37 @@ html, body{
     background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
     color: rgba(240, 150, 150, 0.67) !important;
 }
+
+.ui.inverted.newgrey .ui.table td.negative.arr::after{
+  font-family: Icons;
+  content: "\f175";
+  display: block;
+  float: right;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.ui.inverted.newgrey .ui.table td.positive.arr::after{
+  font-family: Icons;
+  content: "\f176";
+  display: block;
+  float: right;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.ui.inverted.newgrey .leveler{
+  display: block;
+  height: 2px;
+}
+.ui.inverted.newgrey .leveler.negative{
+  background-color: rgba(240, 150, 150, 1);
+}
+.ui.inverted.newgrey .leveler.positive{
+  background-color: rgba(150, 240, 150, 1);
+}
+
 .ui.inverted.newgrey .ui.table td.positive, .ui.inverted.newgrey .ui.table tr.positive {
     background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
     color: rgba(150, 240, 150, 0.67) !important;
@@ -297,6 +336,15 @@ h3.ui.header{
   width: 1%;
   z-index: 1;
 }
+
+.ux .ui.basic.segment.h100{
+  padding: 0.1em;
+}
+
+.ux .ui.header{
+  padding-left: 0.6em;
+}
+
 /* UX grid */
 
 
@@ -482,7 +530,6 @@ tr.lesspadding th {
 .contwrapper{
   height: 100% !important;
   overflow-y: auto;
-  margin-right: -20px;
   overflow-x: hidden;
   padding: 0;
 }
@@ -555,6 +602,9 @@ tr.lesspadding th {
   top: 50%;
   height: inherit;
   width: inherit;
+}
+.ld .button{
+  text-transform: uppercase;
 }
 
 .ld .block .promo h1{

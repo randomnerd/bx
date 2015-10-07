@@ -84,10 +84,11 @@ export default React.createClass({
               {(parseFloat(this.state.amount*this.state.price*0.002)).toFixed(8)}
             </div>
           </div>
-
-        <div className="ui fluid buttons">
-          <button className="ui button green">Buy {this.props.currency}</button>
-          <button className="ui button red">Sell {this.props.currency}</button>
+        <div className="ui small basic segment centered">
+          <div className="centered">
+            <button className="ui button green">Buy {this.props.currency}</button>
+            <button className="ui button red">Sell {this.props.currency}</button>
+          </div>
         </div>
       </div>
     );

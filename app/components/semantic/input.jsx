@@ -78,7 +78,7 @@ export default React.createClass({
     let rightLabels  = right && right.labels  && right.labels.length;
 
     let params = {
-      action:  true,
+      action:  (leftButtons || rightButtons)?true:false,
       left:    leftButtons  || leftLabels,
       right:   rightButtons || rightLabels,
       labeled: leftLabels   || rightLabels,
