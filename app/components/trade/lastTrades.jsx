@@ -43,10 +43,10 @@ export default React.createClass({
         return (
           <tr key={Math.random()}>
             <td className="four wide">
-              {item.amount}
+              {item.amount.toFixed(8)}
               <span className={"leveler " + (item.direction=="buy"?"positive":"negative")} style={{width: weight + "%"}}></span>
             </td>
-            <td className={"four wide arr " + (item.direction=="buy"?"positive":"negative")}>{item.price}</td>
+            <td className={"four wide arr " + (item.direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
             <td className="four wide">{(item.price*item.amount).toFixed(8)}</td>
             <td className="four wide">{item.time}</td>
           </tr>

@@ -237,8 +237,8 @@ h3.ui.header{
 /* UX grid */
 
 .ux.grid{
-  padding-left: 558px;
-  padding-right: 285px;
+  padding-left: 488px;
+  padding-right: 325px;
 }
 .ux.grid.fullheight, .ux.grid.fullheight .column{
   height: 100%;
@@ -252,8 +252,8 @@ h3.ui.header{
   float: left;
 }
 .ux.column.left.double{
-  margin-left: -558px;
-  width: 558px
+  margin-left: -488px;
+  width: 488px
 }
 .ux.column.right{
   margin-right: -278px;
@@ -266,13 +266,13 @@ h3.ui.header{
   width: 230px;
 }
 .ux.column.orders{
-  width: 328px;
+  width: 258px;
 }
 .ux.column.chart{
   float: none !important;
 }
 .ux.column.history{
-  width: 278px;
+  width: 328px;
 }
 
 .ux.grid .column.padding{
