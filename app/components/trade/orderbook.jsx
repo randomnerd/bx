@@ -70,7 +70,7 @@ export default React.createClass({
     let maper=this.getOrdersItems();
     maper.reverse();
     return this.getOrdersItems(direction).map((item) => {
-      let weight = 40 * (item.amount/max);
+      let weight = 70 * (item.amount/max);
       return  (
         <tr key={item._id} onClick={this.goBuySell.bind(this,item)} className={item.animate?"animate":''}>
           <td className="five wide ">
