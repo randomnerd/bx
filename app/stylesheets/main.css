@@ -67,7 +67,7 @@ html, body{
   background-color: #1e2b34;
 }
 .ui.inverted.newgrey .ui.table {
-    color: rgba(200, 200, 200, 0.67);
+    color: rgba(200, 200, 200, 1);
 }
 .ui.inverted.newgrey .ui.table thead th{
   color: rgba(220, 220, 220, 1);
@@ -93,6 +93,25 @@ html, body{
   transform: rotate(45deg);
 }
 
+@-webkit-keyframes flash {
+  0% {opacity: 1;}
+  100% {opacity: 0.6;}
+}
+@-moz-keyframes flash {
+  0% {opacity: 1;}
+  100% {opacity: 0.6;}
+}
+@-o-keyframes flash {
+  0% {opacity: 1;}
+  100% {opacity: 0.6;}
+}
+@keyframes flash {
+  0% {opacity: 1;}
+  100% {opacity: 0.6;}
+}
+
+
+
 .ui.inverted.newgrey .leveler{
   display: block;
   height: 2px;
@@ -103,25 +122,52 @@ html, body{
 .ui.inverted.newgrey .leveler.positive{
   background-color: rgba(150, 240, 150, 1);
 }
+.ui.inverted.newgrey .ui.table tr.animate {
 
-.ui.inverted.newgrey .ui.table td:hover, .ui.inverted.newgrey .ui.table tr:hover td {
-  color: rgba(240, 240, 240, 0.87);
+  -webkit-animation-name: flash;
+  -moz-animation-name: flash;
+  -o-animation-name: flash;
+  animation-name: flash;
+  /* Задержка перед началом */
+  -webkit-animation-delay: 0s;
+  -moz-animation-delay: 0s;
+  -o-animation-delay: 0s;
+  animation-delay: 0s;
+  /* Продолжительность анимации */
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-duration: 2s;
+  transition-timing-function:ease-in;
+  opacity: 0.6;
 }
-
+.ui.inverted.newgrey .ui.table tr {
+  transition: all .15s ease-in-out;
+  opacity: 0.40;
+}
 .ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
     background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
-    color: rgba(240, 150, 150, 0.67) !important;
+    color: rgba(240, 150, 150, 1) !important;
 }
 
 .ui.inverted.newgrey .ui.table td.positive, .ui.inverted.newgrey .ui.table tr.positive {
     background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
-    color: rgba(150, 240, 150, 0.67) !important;
+    color: rgba(150, 240, 150, 1) !important;
 }
-.ui.inverted.newgrey .ui.table td.negative:hover, .ui.inverted.newgrey .ui.table tr.negative:hover {
-  background: rgba(255, 145, 67, 0.08) none repeat scroll 0 0 !important;
+.ui.inverted.newgrey .ui.table tr:hover, .ui.inverted.newgrey .ui.table tr:hover td{
+  background: rgba(255, 255, 255, 0.09) none repeat scroll 0 0 !important;
+  color: rgba(240, 240, 240, 1);
+  opacity: 0.87 !important;
 }
-.ui.inverted.newgrey .ui.table td.positive:hover, .ui.inverted.newgrey .ui.table tr.positive:hover {
-  background: rgba(132, 247, 102, 0.08) none repeat scroll 0 0 !important;
+.ui.inverted.newgrey .ui.table td.negative:hover, .ui.inverted.newgrey .ui.table tr:hover td.negative{
+  background: rgba(255, 255, 255, 0.09) none repeat scroll 0 0 !important;
+  color: rgba(240, 150, 150, 1) !important;
+  opacity: 0.87;
+}
+.ui.inverted.newgrey .ui.table td.positive:hover, .ui.inverted.newgrey .ui.table tr:hover td.positive{
+  background: rgba(255, 255, 255, 0.09) none repeat scroll 0 0 !important;
+  color: rgba(150, 240, 150, 1) !important;
+  opacity: 0.87;
 }
 
 .ui.inverted.newgrey .ui.table.heading{
@@ -238,9 +284,9 @@ h3.ui.header{
 
 .ux.grid{
   padding-left: 488px;
-  padding-right: 325px;
+  padding-right: 238px;
 }
-.ux.grid.fullheight, .ux.grid.fullheight .column{
+.ux.grid.fullheight, .ux.grid.fullheight .ux.column{
   height: 100%;
 }
 .ux.column.scroll{
@@ -256,8 +302,8 @@ h3.ui.header{
   width: 488px
 }
 .ux.column.right{
-  margin-right: -278px;
-  width: 278px;
+  margin-right: -238px;
+  width: 238px;
 }
 .ux.column.center{
   width: 100%;
@@ -272,7 +318,7 @@ h3.ui.header{
   float: none !important;
 }
 .ux.column.history{
-  width: 328px;
+  width: 238px;
 }
 
 .ux.grid .column.padding{

@@ -3,32 +3,44 @@ import React from 'react';
 export default React.createClass({
   getInitialState: function() {
     return {
-      spread:0.1
+      spread:0.1,
+      data:[
+        { _id:1, price: 0.001, amount: 0.005467},
+        { _id:2, price: 0.00095, amount: 0.005467},
+        { _id:3, price: 0.0009, amount: 0.005467},
+        { _id:4, price: 0.00085, amount: 0.005467},
+        { _id:5, price: 0.0008, amount: 0.005467},
+        { _id:6, price: 0.00075, amount: 0.005467},
+        { _id:7, price: 0.0007, amount: 0.006685},
+        { _id:8, price: 0.00065, amount: 0.0093737},
+        { _id:9, price: 0.0006, amount: 0.009123},
+        { _id:10, price: 0.00055, amount: 0.005467},
+        { _id:11, price: 0.0005, amount: 0.006685},
+        { _id:12, price: 0.00045, amount: 0.0093737},
+        { _id:13, price: 0.0004, amount: 0.009123},
+        { _id:14, price: 0.00035, amount: 0.009123},
+        { _id:15, price: 0.0003, amount: 0.005123},
+        { _id:16, price: 0.00025, amount: 0.004123},
+        { _id:17, price: 0.0002, amount: 0.006123},
+        { _id:18, price: 0.00015, amount: 0.009123},
+        { _id:19, price: 0.0001, amount: 0.003123}
+      ]
     }
   },
   getOrdersItems() {
-    return [
-      { _id:1, price: 0.001, amount: 0.005467},
-      { _id:2, price: 0.00095, amount: 0.005467},
-      { _id:3, price: 0.0009, amount: 0.005467},
-      { _id:4, price: 0.00085, amount: 0.005467},
-      { _id:5, price: 0.0008, amount: 0.005467},
-      { _id:6, price: 0.00075, amount: 0.005467},
-      { _id:7, price: 0.0007, amount: 0.006685},
-      { _id:8, price: 0.00065, amount: 0.0093737},
-      { _id:9, price: 0.0006, amount: 0.009123},
-      { _id:10, price: 0.00055, amount: 0.005467},
-      { _id:11, price: 0.0005, amount: 0.006685},
-      { _id:12, price: 0.00045, amount: 0.0093737},
-      { _id:13, price: 0.0004, amount: 0.009123},
-      { _id:14, price: 0.00035, amount: 0.009123},
-      { _id:15, price: 0.0003, amount: 0.005123},
-      { _id:16, price: 0.00025, amount: 0.004123},
-      { _id:17, price: 0.0002, amount: 0.006123},
-      { _id:18, price: 0.00015, amount: 0.009123},
-      { _id:19, price: 0.0001, amount: 0.003123}
-    ];
+    return this.state.data;
   },
+  componentDidMount() {
+    // let i=20;
+    // if(tick){Meteor.clearInterval(tick)}
+    // let tick = Meteor.setInterval(()=>{
+    //   let arr=this.state.data
+    //   arr.push({_id:i,price:0.002,amount:0.00675});
+    //   i++
+    //   this.setState({data:arr})
+    // },20)
+  },
+
   goBuySell(e){
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE',data:{
       amount:$(e.currentTarget).find('[data-ord-amount]').html(),
@@ -51,8 +63,8 @@ export default React.createClass({
             {item.amount.toFixed(8)}
             <span className={"leveler " + (direction=="buy"?"positive":"negative")} style={{width: weight + "%"}}></span>
           </td>
-          <td className={"six wide " + (direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
-          <td className="five wide">{(item.price * item.amount).toFixed(8)}</td>
+          <td className={"six wide center aligned " + (direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
+          <td className="five wide right aligned">{(item.price * item.amount).toFixed(8)}</td>
         </tr>
 
       );
@@ -64,8 +76,8 @@ export default React.createClass({
       return  (
 
         <tr className="ui white text">
-          <td className="five wide">{this.state.spread}</td>
-          <td className="six wide"></td>
+          <td className="five wide"></td>
+          <td className="six wide right aligned">{this.state.spread}</td>
           <td className="five wide">{this.props.valute1} spread</td>
         </tr>
 
@@ -79,8 +91,8 @@ export default React.createClass({
           <thead>
             <tr className="lesspadding">
               <th className="five wide">{this.props.valute1}</th>
-              <th className="six wide" >Price</th>
-              <th className="five wide">{this.props.valute2}</th>
+              <th className="six wide center aligned" >Price</th>
+              <th className="five wide right aligned">{this.props.valute2}</th>
             </tr>
           </thead>
         </table>

@@ -1,54 +1,78 @@
 import React from 'react';
 
 export default React.createClass({
-  getTradesItems(derection) {
-    return [
-      { time: 'an hour ago', direction:'buy', price: 0.0005, amount: 0.005467},
-      { time: 'an hour ago', direction:'buy', price: 0.00001, amount: 0.006685},
-      { time: 'an hour ago', direction:'buy', price: 0.004, amount: 0.00093737},
-      { time: '5 hours ago', direction:'sell', price: 0.0003, amount: 0.09123},
-      { time: '3 hours ago', direction:'buy', price: 0.0002, amount: 0.065467},
-      { time: 'an hour ago', direction:'buy', price: 0.00002, amount: 0.006685},
-      { time: '2 hours ago', direction:'sell', price: 0.001, amount: 0.05093737},
-      { time: 'an hour ago', direction:'sell', price: 0.0004, amount: 0.09123},
-      { time: 'an hour ago', direction:'buy', price: 0.0005, amount: 0.025467},
-      { time: 'an hour ago', direction:'buy', price: 0.00001, amount: 0.006685},
-      { time: 'an hour ago', direction:'buy', price: 0.004, amount: 0.01093737},
-      { time: '5 hours ago', direction:'sell', price: 0.0003, amount: 0.09123},
-      { time: '3 hours ago', direction:'buy', price: 0.0002, amount: 0.005467},
-      { time: 'an hour ago', direction:'buy', price: 0.00002, amount: 0.006685},
-      { time: '2 hours ago', direction:'sell', price: 0.001, amount: 0.03093737},
-      { time: 'an hour ago', direction:'sell', price: 0.0004, amount: 0.09123},
-      { time: 'an hour ago', direction:'buy', price: 0.0005, amount: 0.005467},
-      { time: 'an hour ago', direction:'buy', price: 0.00001, amount: 0.046685},
-      { time: 'an hour ago', direction:'buy', price: 0.004, amount: 0.00093737},
-      { time: '5 hours ago', direction:'sell', price: 0.0003, amount: 0.09123},
-      { time: '3 hours ago', direction:'buy', price: 0.0002, amount: 0.005467},
-      { time: 'an hour ago', direction:'buy', price: 0.00002, amount: 0.006685},
-      { time: '2 hours ago', direction:'sell', price: 0.001, amount: 0.00093737},
-      { time: 'an hour ago', direction:'sell', price: 0.0004, amount: 0.09123},
-    ];
+  getInitialState: function() {
+    return {
+      data:[
+        {_id:1, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.005467},
+        {_id:2, time: '17:59:22', direction:'buy', price: 0.00001, amount: 0.006685},
+        {_id:3, time: '11:59:22', direction:'buy', price: 0.004, amount: 0.00093737},
+        {_id:4, time: '23:59:22', direction:'sell', price: 0.0003, amount: 0.09123},
+        {_id:5, time: '18:34:22', direction:'buy', price: 0.0002, amount: 0.065467},
+        {_id:6, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685},
+        {_id:7, time: '22:23:22', direction:'sell', price: 0.001, amount: 0.05093737},
+        {_id:8, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
+        {_id:9, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.025467},
+        {_id:10, time: '18:59:22', direction:'buy', price: 0.00001, amount: 0.006685},
+        {_id:11, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.01093737},
+        {_id:12, time: '12:23:22', direction:'sell', price: 0.0003, amount: 0.09123},
+        {_id:13, time: '13:59:22', direction:'buy', price: 0.0002, amount: 0.005467},
+        {_id:14, time: '18:34:22', direction:'buy', price: 0.00002, amount: 0.006685},
+        {_id:15, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.03093737},
+        {_id:16, time: '14:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
+        {_id:17, time: '09:59:22', direction:'buy', price: 0.0005, amount: 0.005467},
+        {_id:18, time: '18:59:22', direction:'buy', price: 0.00001, amount: 0.046685},
+        {_id:19, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.00093737},
+        {_id:20, time: '05:59:22', direction:'sell', price: 0.0003, amount: 0.09123},
+        {_id:21, time: '07:59:22', direction:'buy', price: 0.0002, amount: 0.005467},
+        {_id:22, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685},
+        {_id:23, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.00093737},
+        {_id:24, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
+      ]
+    }
   },
+  getTradesItems(derection) {
+    return this.state.data;
+  },
+
+  componentDidMount() {
+    let i=25;
+    if(this.tick){ Meteor.clearInterval(this.tick); }
+    Meteor.setTimeout(()=>{
+      this.tick = Meteor.setInterval(()=>{
+        let arr = this.state.data;
+        arr.reverse();
+        arr[arr.length-3].animate=false
+        arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: Math.random(), amount:Math.random(),animate:true});
+        i++;
+        arr.reverse();
+        arr=arr.slice(0,-1);
+        this.setState({data:arr});
+        console.log(i);
+      },Math.random()*10000);
+    },2000);
+  },
+
+
   renderTradesItems() {
     let max=0
-    this.getTradesItems(this.props.direction).map((item) => {
+    this.state.data.map((item) => {
       max=(item.amount>max)? item.amount : max;
     })
 
 
 
-    return this.getTradesItems(this.props.direction).map((item) => {
+    return this.getTradesItems().map((item) => {
 
         let weight = 70 * (item.amount/max);
         return (
-          <tr key={Math.random()}>
-            <td className="four wide">
+          <tr key={item._id} className={item.animate?"animate":''}>
+            <td className="six wide">
               {item.amount.toFixed(8)}
               <span className={"leveler " + (item.direction=="buy"?"positive":"negative")} style={{width: weight + "%"}}></span>
             </td>
-            <td className={"four wide arr " + (item.direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
-            <td className="four wide">{(item.price*item.amount).toFixed(8)}</td>
-            <td className="four wide">{item.time}</td>
+            <td className={"six wide arr " + (item.direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
+            <td className="four wide right aligned">{item.time}</td>
           </tr>
         )
 
@@ -62,10 +86,9 @@ export default React.createClass({
         <table className="ui selectable very compact very basic striped table nopadding nomargin heading">
           <thead>
           <tr className="lesspadding">
-            <th className="four wide">{this.props.valute1}</th>
-            <th className="four wide">Price</th>
-            <th className="four wide">{this.props.valute2}</th>
-            <th className="four wide">Time</th>
+            <th className="six wide">{this.props.valute1}</th>
+            <th className="six wide">Price</th>
+            <th className="four wide right aligned">Time</th>
           </tr>
           </thead>
         </table>
