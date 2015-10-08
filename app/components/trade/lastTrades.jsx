@@ -4,30 +4,30 @@ export default React.createClass({
   getInitialState: function() {
     return {
       data:[
-        {_id:1, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.005467},
-        {_id:2, time: '17:59:22', direction:'buy', price: 0.00001, amount: 0.006685},
-        {_id:3, time: '11:59:22', direction:'buy', price: 0.004, amount: 0.00093737},
-        {_id:4, time: '23:59:22', direction:'sell', price: 0.0003, amount: 0.09123},
-        {_id:5, time: '18:34:22', direction:'buy', price: 0.0002, amount: 0.065467},
-        {_id:6, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685},
-        {_id:7, time: '22:23:22', direction:'sell', price: 0.001, amount: 0.05093737},
-        {_id:8, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
-        {_id:9, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.025467},
-        {_id:10, time: '18:59:22', direction:'buy', price: 0.00001, amount: 0.006685},
-        {_id:11, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.01093737},
-        {_id:12, time: '12:23:22', direction:'sell', price: 0.0003, amount: 0.09123},
-        {_id:13, time: '13:59:22', direction:'buy', price: 0.0002, amount: 0.005467},
-        {_id:14, time: '18:34:22', direction:'buy', price: 0.00002, amount: 0.006685},
-        {_id:15, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.03093737},
-        {_id:16, time: '14:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
-        {_id:17, time: '09:59:22', direction:'buy', price: 0.0005, amount: 0.005467},
-        {_id:18, time: '18:59:22', direction:'buy', price: 0.00001, amount: 0.046685},
-        {_id:19, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.00093737},
-        {_id:20, time: '05:59:22', direction:'sell', price: 0.0003, amount: 0.09123},
-        {_id:21, time: '07:59:22', direction:'buy', price: 0.0002, amount: 0.005467},
-        {_id:22, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685},
-        {_id:23, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.00093737},
-        {_id:24, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123},
+        {_id:1, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.005467, animate:false},
+        {_id:2, time: '17:59:22', direction:'buy', price: 0.00001, amount: 0.006685, animate:false},
+        {_id:3, time: '11:59:22', direction:'buy', price: 0.004, amount: 0.00093737, animate:false},
+        {_id:4, time: '23:59:22', direction:'sell', price: 0.0003, amount: 0.09123, animate:false},
+        {_id:5, time: '18:34:22', direction:'buy', price: 0.0002, amount: 0.065467, animate:false},
+        {_id:6, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685, animate:false},
+        {_id:7, time: '22:23:22', direction:'sell', price: 0.001, amount: 0.05093737, animate:false},
+        {_id:8, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123, animate:false},
+        {_id:9, time: '18:59:22', direction:'buy', price: 0.0005, amount: 0.025467, animate:false},
+        {_id:10, time: '18:59:22', direction:'buy', price: 0.00001, amount: 10.006685, animate:false},
+        {_id:11, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.01093737, animate:false},
+        {_id:12, time: '12:23:22', direction:'sell', price: 0.0003, amount: 0.09123, animate:false},
+        {_id:13, time: '13:59:22', direction:'buy', price: 0.0002, amount: 0.005467, animate:false},
+        {_id:14, time: '18:34:22', direction:'buy', price: 0.00002, amount: 0.006685, animate:false},
+        {_id:15, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.03093737, animate:false},
+        {_id:16, time: '14:59:22', direction:'sell', price: 0.0004, amount: 0.09123, animate:false},
+        {_id:17, time: '09:59:22', direction:'buy', price: 0.0005, amount: 0.005467, animate:false},
+        {_id:18, time: '18:59:22', direction:'buy', price: 0.00001, amount: 0.046685, animate:false},
+        {_id:19, time: '18:59:22', direction:'buy', price: 0.004, amount: 0.00093737, animate:false},
+        {_id:20, time: '05:59:22', direction:'sell', price: 0.0003, amount: 0.09123, animate:false},
+        {_id:21, time: '07:59:22', direction:'buy', price: 0.0002, amount: 0.005467, animate:false},
+        {_id:22, time: '18:59:22', direction:'buy', price: 0.00002, amount: 0.006685, animate:false},
+        {_id:23, time: '18:59:22', direction:'sell', price: 0.001, amount: 0.00093737, animate:false},
+        {_id:24, time: '18:59:22', direction:'sell', price: 0.0004, amount: 0.09123, animate:false},
       ]
     }
   },
@@ -41,15 +41,19 @@ export default React.createClass({
     Meteor.setTimeout(()=>{
       this.tick = Meteor.setInterval(()=>{
         let arr = this.state.data;
+        let sl=1;
         arr.reverse();
-        arr[arr.length-3].animate=false
-        arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: Math.random(), amount:Math.random(),animate:true});
-        i++;
+        //arr[arr.length-3].animate=false
+        for(var x=0;x<(Math.random()*10).toFixed();x++){
+          arr[arr.length-7].animate=false
+          arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: Math.random(), amount:Math.random(),animate:true});
+          i++;
+          sl=(x>0?(x+1):1);
+        }
         arr.reverse();
-        arr=arr.slice(0,-1);
+        arr=arr.slice(0,-sl);
         this.setState({data:arr});
-        console.log(i);
-      },Math.random()*10000);
+      },(Math.random()*10000).toFixed());
     },2000);
   },
 
@@ -64,7 +68,7 @@ export default React.createClass({
 
     return this.getTradesItems().map((item) => {
 
-        let weight = 70 * (item.amount/max);
+        let weight = 90 * (item.amount/max);
         return (
           <tr key={item._id} className={item.animate?"animate":''}>
             <td className="six wide">

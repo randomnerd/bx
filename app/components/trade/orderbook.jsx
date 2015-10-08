@@ -27,24 +27,35 @@ export default React.createClass({
       ]
     }
   },
-  getOrdersItems() {
+  getOrdersItems(direction) {
     return this.state.data;
   },
   componentDidMount() {
-    // let i=20;
-    // if(tick){Meteor.clearInterval(tick)}
-    // let tick = Meteor.setInterval(()=>{
-    //   let arr=this.state.data
-    //   arr.push({_id:i,price:0.002,amount:0.00675});
-    //   i++
-    //   this.setState({data:arr})
-    // },20)
+    let i=20;
+    if(this.tick){ Meteor.clearInterval(this.tick); }
+    Meteor.setTimeout(()=>{
+      this.tick = Meteor.setInterval(()=>{
+        let arr = this.state.data;
+        let sl=1;
+        arr.reverse();
+        //arr[arr.length-3].animate=false
+        for(var x=0;x<(Math.random()*5).toFixed();x++){
+          arr[arr.length-7].animate=false
+          arr.push({_id:i, price: Math.random(), amount:Math.random(), animate:true});
+          i++;
+          sl=(x>0?(x+1):1);
+        }
+        arr.reverse();
+        arr=arr.slice(0,-sl);
+        this.setState({data:arr});
+      },(Math.random()*10000).toFixed());
+    },2000);
   },
 
-  goBuySell(e){
+  goBuySell(item,e){
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE',data:{
-      amount:$(e.currentTarget).find('[data-ord-amount]').html(),
-      price:$(e.currentTarget).find('[data-ord-price]').html(),
+      amount:item.amount,
+      price:item.price,
       direction:this.props.direction,
     }});
     //console.log($(e.currentTarget).find('[data-ord-price]').html());
@@ -54,11 +65,12 @@ export default React.createClass({
     this.getOrdersItems(direction).map((item) => {
       max=(item.amount>max)? item.amount : max;
     })
-
+    let maper=this.getOrdersItems();
+    maper.reverse();
     return this.getOrdersItems(direction).map((item) => {
       let weight = 40 * (item.amount/max);
       return  (
-        <tr key={item._id} onClick={this.goBuySell.bind(this,item)}>
+        <tr key={item._id} onClick={this.goBuySell.bind(this,item)} className={item.animate?"animate":''}>
           <td className="five wide ">
             {item.amount.toFixed(8)}
             <span className={"leveler " + (direction=="buy"?"positive":"negative")} style={{width: weight + "%"}}></span>
