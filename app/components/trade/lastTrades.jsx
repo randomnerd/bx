@@ -41,17 +41,19 @@ export default React.createClass({
     Meteor.setTimeout(()=>{
       this.tick = Meteor.setInterval(()=>{
         let arr = this.state.data;
-        let sl=1;
+        let sl=0;
         arr.reverse();
         //arr[arr.length-3].animate=false
         for(var x=0;x<(Math.random()*10).toFixed();x++){
           arr[arr.length-7].animate=false
           arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: Math.random(), amount:Math.random(),animate:true});
           i++;
-          sl=(x>0?(x+1):1);
+          sl = x+1;
         }
         arr.reverse();
-        arr=arr.slice(0,-sl);
+        if(sl>0){
+          arr = arr.slice(0, -sl );
+        }
         this.setState({data:arr});
       },(Math.random()*10000).toFixed());
     },2000);
