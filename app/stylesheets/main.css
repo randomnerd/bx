@@ -115,6 +115,7 @@ html, body{
 .ui.inverted.newgrey .leveler{
   display: block;
   height: 2px;
+  margin-top: 1.2em;
 }
 .ui.inverted.newgrey .leveler.negative{
   background-color: rgba(240, 150, 150, 1);
@@ -122,6 +123,31 @@ html, body{
 .ui.inverted.newgrey .leveler.positive{
   background-color: rgba(150, 240, 150, 1);
 }
+
+.ui.inverted.newgrey .bignum{
+  display: block;
+  float: left;
+}
+.ui.inverted.newgrey .bignum.left{
+  width: 40%;
+  text-align: right;
+}
+.ui.inverted.newgrey .bignum.dot{
+  width: 4%;
+}
+.ui.inverted.newgrey .bignum.right{
+  width: 50%;
+  text-align: left;
+}
+.ui.inverted.newgrey .bignum.right span:first-child{
+  font-weight: bold;
+}
+.ui.inverted.newgrey .bignum.right span:last-child{
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+
 .ui.inverted.newgrey .ui.table tr.animate {
 
   -webkit-animation-name: flash;
@@ -144,7 +170,13 @@ html, body{
 .ui.inverted.newgrey .ui.table tr {
   transition: all .15s ease-in-out;
   opacity: 0.40;
+  font-family: 'opensans', sans-serif;
 }
+
+.ui.inverted.newgrey .ui.table td {
+  padding: 0.3em 0.2em;
+}
+
 .ui.inverted.newgrey .ui.table td.negative, .ui.inverted.newgrey .ui.table tr.negative {
     background: rgba(255, 255, 255, 0.01) none repeat scroll 0 0 !important;
     color: rgba(240, 150, 150, 1) !important;
@@ -283,8 +315,8 @@ h3.ui.header{
 /* UX grid */
 
 .ux.grid{
-  padding-left: 488px;
-  padding-right: 238px;
+  padding-left: 508px;
+  padding-right: 268px;
 }
 .ux.grid.fullheight, .ux.grid.fullheight .ux.column{
   height: 100%;
@@ -298,27 +330,27 @@ h3.ui.header{
   float: left;
 }
 .ux.column.left.double{
-  margin-left: -488px;
-  width: 488px
+  margin-left: -508px;
+  width: 508px
 }
 .ux.column.right{
-  margin-right: -238px;
-  width: 238px;
+  margin-right: -268px;
+  width: 268px;
 }
 .ux.column.center{
   width: 100%;
 }
 .ux.column.balance{
-  width: 230px;
+  width: 200px;
 }
 .ux.column.orders{
-  width: 258px;
+  width: 308px;
 }
 .ux.column.chart{
   float: none !important;
 }
 .ux.column.history{
-  width: 238px;
+  width: 268px;
 }
 
 .ux.grid .column.padding{

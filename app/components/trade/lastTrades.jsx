@@ -34,7 +34,17 @@ export default React.createClass({
   getTradesItems(derection) {
     return this.state.data;
   },
-
+  randNumber(){
+    let leftLength  = Math.random().toFixed(1)*10;
+    let rightLength  = Math.random().toFixed(1)*10;
+    leftLength=leftLength>4?4:leftLength;
+    rightLength=rightLength>8?8:rightLength;
+    leftLength=leftLength<1?1:leftLength;
+    rightLength=rightLength<1?1:rightLength;
+    //console.log(leftLength, rightLength)
+    //console.log(parseFloat((Math.random().toFixed(leftLength)*Math.pow(10,leftLength))+Math.random().toFixed(rightLength)))
+    return ((Math.random().toFixed(leftLength)*Math.pow(10,leftLength-1)).toFixed(0) + Math.random().toFixed(rightLength-1))
+  },
   componentDidMount() {
     let i=25;
     if(this.tick){ Meteor.clearInterval(this.tick); }
@@ -46,7 +56,7 @@ export default React.createClass({
         //arr[arr.length-3].animate=false
         for(var x=0;x<(Math.random()*10).toFixed();x++){
           arr[arr.length-7].animate=false
-          arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: Math.random(), amount:Math.random(),animate:true});
+          arr.push({_id:i, time:'18:59:22', direction:(Math.random()>0.5?'sell':'buy'), price: this.randNumber(), amount:this.randNumber(),animate:true});
           i++;
           sl = x+1;
         }
@@ -61,24 +71,37 @@ export default React.createClass({
 
 
   renderTradesItems() {
-    let max=0
+    let max=0.0001;
+    let nulls="00000000";
     this.state.data.map((item) => {
-      max=(item.amount>max)? item.amount : max;
+      max=(item.amount>max)? parseFloat(item.amount).toFixed(8) : max;
     })
 
 
 
     return this.getTradesItems().map((item) => {
+      let weight = parseFloat(90 * (item.amount/max).toFixed(8));
 
-        let weight = 90 * (item.amount/max);
+      let amount=item.amount.toString().split(".");
+      let price=item.price.toString().split(".");
+      if(!amount[1]){amount[1]=''}
+      if(!price[1]){price[1]=''}
+      if(amount[0]=='00'){amount[1]='0'}
+      if(price[0]=='00'){price[1]='0'}
         return (
           <tr key={item._id} className={item.animate?"animate":''}>
             <td className="six wide">
-              {item.amount.toFixed(8)}
+              <div className="bignum left">{amount[0]}</div>
+              <div className="bignum dot">.</div>
+              <div className="bignum right"><span>{amount[1]}</span>{nulls.substr(0,7-amount[1].length)}</div>
               <span className={"leveler " + (item.direction=="buy"?"positive":"negative")} style={{width: weight + "%"}}></span>
             </td>
-            <td className={"six wide arr " + (item.direction=="buy"?"positive":"negative")}>{item.price.toFixed(8)}</td>
-            <td className="four wide right aligned">{item.time}</td>
+            <td className={"seven wide arr " + (item.direction=="buy"?"positive":"negative")}>
+              <div className="bignum left">{price[0]}</div>
+              <div className="bignum dot">.</div>
+              <div className="bignum right"><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
+            </td>
+            <td className="three wide right aligned">{item.time}</td>
           </tr>
         )
 
@@ -92,8 +115,8 @@ export default React.createClass({
         <table className="ui selectable very compact very basic striped table nopadding nomargin heading">
           <thead>
           <tr className="lesspadding">
-            <th className="six wide">{this.props.valute1}</th>
-            <th className="six wide">Price</th>
+            <th className="six wide center aligned">{this.props.valute1}</th>
+            <th className="six wide center aligned">Price</th>
             <th className="four wide right aligned">Time</th>
           </tr>
           </thead>
