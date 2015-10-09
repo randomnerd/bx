@@ -74,7 +74,7 @@ export default React.createClass({
     let max=0.0001;
     let nulls="00000000";
     this.state.data.map((item) => {
-      max=(item.amount>max)? parseFloat(item.amount).toFixed(8) : max;
+      max=(parseFloat(item.amount)>max)? parseFloat(item.amount).toFixed(8) : max;
     })
 
 
