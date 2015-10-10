@@ -91,9 +91,21 @@ export default React.createClass({
   },
   render() {
     if (this.state === null || !this.state.width) return <div />;
+    var width = this.props.width || this.state !== null && this.state.width;
     var { data, type } = this.props;
     var dateFormat = d3.time.format("%Y-%m-%d");
+    var height = 750;
+    var margin = {left: 70, right: 70, top:20, bottom: 30};
+
+    var gridHeight = height - margin.top - margin.bottom;
+    var gridWidth = width - margin.left - margin.right;
+
+    var showGrid = true;
+    var yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2 } : {};
+    var xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2 } : {};
+
     rawData = this.state.data;
+
     return (
       <ChartCanvas ref="chartCanvas" width={this.state.width} height={this.props.height}
         margin={{left: 70, right: 70, top:20, bottom: 30}} initialDisplay={200}
@@ -102,7 +114,7 @@ export default React.createClass({
 
 				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
 						height={300} >
-					<YAxis axisAt="right" orient="right" ticks={5} />
+					<YAxis axisAt="right" orient="right" ticks={5}  {...yGrid}/>
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false}/>
 					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
 						<CandlestickSeries />
@@ -110,7 +122,7 @@ export default React.createClass({
 				</Chart>
 				<Chart id={2} yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
 						height={100} origin={(w, h) => [0, h - 100]} >
-					<XAxis axisAt="bottom" orient="bottom"/>
+					<XAxis axisAt="bottom" orient="bottom"  {...xGrid}/>
 					<YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
 					<DataSeries id={0} yAccessor={(d) => d.volume} >
 						<HistogramSeries fill={(d) => d.close > d.open ? "#6BA583" : "red"} />
