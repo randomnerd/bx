@@ -1,10 +1,8 @@
 import React from 'react';
-require('react/addons');
 import Formsy from 'formsy-react';
 import Semantic from 'components/semantic';
 
 export default React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {
       amount: 0,
