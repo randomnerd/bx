@@ -1,14 +1,12 @@
-Jobs = JobCollection('jobQueue', {noCollectionSuffix: true});
+export const Jobs = JobCollection('jobQueue', {noCollectionSuffix: true});
 Jobs.allow({
   admin: function(userId, method, params) {
     return (userId ? true : false);
   }
 });
 
-Meteor.startup(function() {
-  Meteor.publish('jobQueue', function() {
-    return Jobs.find({status: 'ready'});
-  });
-
-  return Jobs.startJobServer();
+Meteor.publish('jobQueue', function() {
+  return Jobs.find({status: 'ready'});
 });
+
+Jobs.startJobServer();

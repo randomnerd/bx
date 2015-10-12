@@ -37,7 +37,7 @@ ReactLayout._renderClient = function(layoutClass, regions) {
   this._ready(function() {
     var rootNode = ReactLayout._getRootNode();
     var el = React.createElement(layoutClass, regions);
-    React.render(el, rootNode);
+    ReactDOM.render(el, rootNode);
   });
 };
 
