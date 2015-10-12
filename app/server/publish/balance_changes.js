@@ -1,4 +1,4 @@
-import {BalanceChanges} from 'app/collections';
+import {BalanceChanges} from 'collections';
 
 Meteor.publish('balanceChangeQueue', function () {
   // TODO: authorize worker

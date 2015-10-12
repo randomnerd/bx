@@ -1,4 +1,4 @@
-import {Withdrawals} from 'app/collections';
+import {Withdrawals} from 'collections';
 
 Withdrawals._transform = (obj) => {
   return new Withdrawal(obj);

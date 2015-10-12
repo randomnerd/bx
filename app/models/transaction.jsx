@@ -1,4 +1,4 @@
-import {Transactions} from 'app/collections';
+import {Transactions} from 'collections';
 
 Transactions._transform = (obj) => {
   return new Transaction(obj);

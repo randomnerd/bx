@@ -1,4 +1,4 @@
-import {Wallets} from 'app/collections';
+import {Wallets} from 'collections';
 
 Meteor.publish('wallets', function() {
   if (!this.userId) return;

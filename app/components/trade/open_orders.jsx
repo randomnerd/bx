@@ -35,7 +35,7 @@ export default React.createClass({
           <td className="three wide" data-ord-amount>{item.filled}</td>
           <td className="three wide" data-ord-amount>{item.price}</td>
           <td className="three wide" data-ord-amount>{item.fee}</td>
-          <td className="two wide" data-ord-amount>{item.time}</td>
+          <td className="two wide" data-ord-amount>{item.time.toString()}</td>
           <td className="two wide">{item.status}</td>
         </tr>
 

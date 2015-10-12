@@ -31,7 +31,7 @@ export default React.createClass({
     });
   },
   componentDidMount() {
-    $(this.getDOMNode()).dropdown({on: 'hover', action: 'hide'});
+    $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
   },
   render() {
     return (

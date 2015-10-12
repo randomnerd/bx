@@ -1,5 +1,5 @@
 import React from 'react';
-import {BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTPR, BitIndexIndicator_BTUA} from 'app/collections';
+import {BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTPR, BitIndexIndicator_BTUA} from 'collections';
 
 export default React.createClass({
 

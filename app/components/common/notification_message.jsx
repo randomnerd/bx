@@ -36,7 +36,7 @@ export default React.createClass({
     var $this=this
     //Dispatcher.dispatch({ actionType: 'CHANGE_NOTIFICATION_TIME' })
     if(this.state.hidden&&this.state.needShow){
-      $(this.getDOMNode()).transition({
+      $(ReactDOM.findDOMNode(this)).transition({
         animation  : 'fade',
         onComplete : function() {
           $this.setState({hidden: false});
@@ -55,7 +55,7 @@ export default React.createClass({
     var $this=this;
     if(!this.state.closed){
       //$this.setState({hidden: true});
-      $(this.getDOMNode()).transition({
+      $(ReactDOM.findDOMNode(this)).transition({
         animation  : 'fade',
         onComplete : function() {
           Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })

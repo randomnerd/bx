@@ -1,4 +1,4 @@
-import {BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTUA} from 'app/collections';
+import {BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTUA} from 'collections';
 
 Meteor.startup(function() {
 
@@ -20,8 +20,7 @@ Meteor.startup(function() {
   timestamp: 1
   });
 
-  var root_url = process.env.ROOT_URL;
-  if (!root_url) root_url = 'http://localhost:3000/';
+  var root_url = process.env.ROOT_URL || 'http://localhost:3000/';
 
   console.log('no totalBitcoins data found, importing...');
   HTTP.get(root_url + 'total_bitcoin_circulation.json', function(err, resp) {

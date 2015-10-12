@@ -1,6 +1,6 @@
 import React from 'react';
-import {Notifications} from 'app/collections';
-import DropMessage from 'app/components/common/drop_message';
+import {Notifications} from 'collections';
+import DropMessage from 'components/common/drop_message';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -31,7 +31,7 @@ export default React.createClass({
     };
   },
   componentDidMount() {
-    $(this.getDOMNode()).dropdown({on: 'hover', action: 'nothing'});
+    $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'nothing'});
     //this.setState({messages:this.data.notifications_new});
     var $this=this
     Dispatcher.register((payload) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminOnly from 'app/components/admin/admin_only';
+import AdminOnly from 'components/admin/admin_only';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -23,7 +23,7 @@ export default React.createClass({
     });
   },
   componentDidMount() {
-    $(this.getDOMNode()).dropdown({on: 'hover', action: 'hide'});
+    $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
   },
   render() {
     return (

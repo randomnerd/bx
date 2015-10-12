@@ -1,4 +1,4 @@
-import {TradePairs} from 'app/collections';
+import {TradePairs} from 'collections';
 
 Meteor.publish('tradepairs', function () {
   return TradePairs.find({public: true});

@@ -1,8 +1,8 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {wAddressBook} from 'app/collections';
-import Semantic from 'app/components/semantic';
-import WithdrawAddress from 'app/components/user/withdraw_address';
+import {wAddressBook} from 'collections';
+import Semantic from 'components/semantic';
+import WithdrawAddress from 'components/user/withdraw_address';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

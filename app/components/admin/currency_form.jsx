@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {Currencies} from 'app/collections';
-import Semantic from 'app/components/semantic';
+import {Currencies} from 'collections';
+import Semantic from 'components/semantic';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

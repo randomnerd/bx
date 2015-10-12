@@ -1,4 +1,4 @@
-import {Notifications} from 'app/collections';
+import {Notifications} from 'collections';
 
 Meteor.publish('notifications', function () {
   if (!this.userId) return false;

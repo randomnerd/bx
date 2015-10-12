@@ -1,4 +1,4 @@
-import {Balances} from 'app/collections';
+import {Balances} from 'collections';
 
 Balances._transform = (obj) => {
   return new Balance(obj);

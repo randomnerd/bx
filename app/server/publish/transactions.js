@@ -1,4 +1,4 @@
-import {Transactions} from 'app/collections';
+import {Transactions} from 'collections';
 
 Meteor.publish('transactions', function () {
   // TODO: authorize worker

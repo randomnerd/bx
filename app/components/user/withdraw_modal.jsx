@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react'
-import {Wallets, Balances, Currencies} from 'app/collections';
-import Semantic from 'app/components/semantic';
+import {Wallets, Balances, Currencies} from 'collections';
+import Semantic from 'components/semantic';
 
 Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
   let amount = parseFloat(values.amount);

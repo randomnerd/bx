@@ -1,4 +1,4 @@
-import {Balances} from 'app/collections';
+import {Balances} from 'collections';
 
 Meteor.publish('balances', function () {
   if (!this.userId) return false;

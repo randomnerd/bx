@@ -1,4 +1,4 @@
-import {Withdrawals} from 'app/collections';
+import {Withdrawals} from 'collections';
 
 Meteor.publish('withdrawalQueue', function () {
   // TODO: authorize worker

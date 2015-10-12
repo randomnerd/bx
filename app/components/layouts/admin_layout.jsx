@@ -1,7 +1,7 @@
 import React from 'react';
-import TopMenu from 'app/components/top_menu';
-import AdminOnly from 'app/components/admin/admin_only';
-import AdminSidebar from 'app/components/admin/sidebar';
+import TopMenu from 'components/top_menu';
+import AdminOnly from 'components/admin/admin_only';
+import AdminSidebar from 'components/admin/sidebar';
 
 export default React.createClass({
   render() {

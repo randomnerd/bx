@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {Chat} from 'app/collections';
-import Semantic from 'app/components/semantic';
+import {Chat} from 'collections';
+import Semantic from 'components/semantic';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -38,7 +38,7 @@ export default React.createClass({
       }else{
         Meteor.setTimeout(() => {
           this.refs.form.reset();
-          $(this.refs.messages.getDOMNode()).scrollTop(15000)
+          $(this.refs.messages).scrollTop(15000)
         }, 100);
 
       }
@@ -61,7 +61,7 @@ export default React.createClass({
 
   },
   componentDidMount() {
-    $(this.refs.messages.getDOMNode()).scrollTop(15000)
+    $(this.refs.messages).scrollTop(15000)
   },
   renderWithAva(){
     return(

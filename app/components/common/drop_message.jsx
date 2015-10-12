@@ -43,7 +43,7 @@ export default React.createClass({
   },
   delMessage(){
     var $this=this
-    $(this.getDOMNode()).transition({
+    $(ReactDOM.findDOMNode(this)).transition({
       animation  : 'fade',
       onComplete : function() {
         $this.setState({closed: true});

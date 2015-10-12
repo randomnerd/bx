@@ -1,10 +1,10 @@
 import React from 'react';
-import {BitIndexIndicator_BTPR} from 'app/collections';
-import BuySell from 'app/components/trade/buysell';
-import Trades from 'app/components/trade/lastTrades';
-import Charts from 'app/components/bitindex';
-import Orders from 'app/components/trade/orderbook';
-import OpenOrders from 'app/components/trade/open_orders';
+import {BitIndexIndicator_BTPR} from 'collections';
+import BuySell from 'components/trade/buysell';
+import Trades from 'components/trade/lastTrades';
+import Charts from 'components/bitindex';
+import Orders from 'components/trade/orderbook';
+import OpenOrders from 'components/trade/open_orders';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -28,31 +28,31 @@ export default React.createClass({
 
   showCandle(event){
     //console.log(item)
-    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"candle"})
   },
   showMACD(event){
     //console.log(item)
-    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"macd"})
   },
   showRSI(event){
     //console.log(item)
-    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"rsi"})
   },
   showSTO(event){
     //console.log(item)
-    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"sto"})
   },
   showBollinger(event){
     //console.log(item)
-    $(this.refs.chartType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"bollinger"})
   },

@@ -1,4 +1,4 @@
-import {wAddressBook} from 'app/collections';
+import {wAddressBook} from 'collections';
 
 Meteor.publish('waddressbook', function () {
   if (!this.userId) return false;

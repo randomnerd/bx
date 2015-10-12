@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import Semantic from 'app/components/semantic';
+import Semantic from 'components/semantic';
 
 export default React.createClass({
   getInitialState() {
@@ -27,7 +27,7 @@ export default React.createClass({
   },
   focusLogin() {
     Meteor.setTimeout(() => {
-      this.refs.email.getDOMNode().focus();
+      this.refs.email.focus();
     }, 50);
 
   },

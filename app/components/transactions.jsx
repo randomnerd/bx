@@ -1,5 +1,5 @@
 import React from 'react';
-import {Balances, Currencies, Withdrawals, Transactions} from 'app/collections';
+import {Balances, Currencies, Withdrawals, Transactions} from 'collections';
 
 
 export default React.createClass({

@@ -13,13 +13,13 @@ export default React.createClass({
   componentDidMount() {
     var $that=this;
     if(this.props.className!=" disabled"){
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set enabled')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('set enabled')
     }else{
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set disabled')
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('set disabled')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('uncheck')
     }
-    this.props.isChecked?$(this.getDOMNode()).find('.ui.checkbox').checkbox('check'):false;
-    $(this.getDOMNode()).find('.ui.checkbox').checkbox({
+    this.props.isChecked?$(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('check'):false;
+    $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox({
       onChecked: function() {
         $that.setValue(1);
       },
@@ -31,12 +31,12 @@ export default React.createClass({
   },
   componentWillReceiveProps(newProps) {
     var $that=this;
-    //newProps.isChecked?$(this.getDOMNode()).find('.ui.checkbox').checkbox('check'):$(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck');
+    //newProps.isChecked?$(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('check'):$(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('uncheck');
     if(newProps.className!=" disabled"){
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set enabled')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('set enabled')
     }else{
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('set disabled')
-      $(this.getDOMNode()).find('.ui.checkbox').checkbox('uncheck')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('set disabled')
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('uncheck')
     }
   },
   render() {

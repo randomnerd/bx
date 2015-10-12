@@ -1,5 +1,5 @@
 import React from 'react';
-import {BitIndexIndicator_BTPR} from 'app/collections';
+import {BitIndexIndicator_BTPR} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

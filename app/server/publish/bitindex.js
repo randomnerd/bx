@@ -1,4 +1,4 @@
-import {BitIndexIndicator_BTPR, BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTUA} from 'app/collections';
+import {BitIndexIndicator_BTPR, BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTUA} from 'collections';
 
 Meteor.publish('BitIndexIndicator_BTPR', function () {
   // TODO: authorize worker

@@ -21,7 +21,7 @@ export default React.createClass({
   },
 
   initSearch(source) {
-    var el = $(this.refs.search.getDOMNode());
+    var el = $(this.refs.search);
     el.search({source: source, onSelect: this.onSelect});
   },
 

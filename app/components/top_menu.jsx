@@ -1,7 +1,7 @@
 import React from 'react';
-import TradePairsMenu from 'app/components/trade/trade_pairs_menu';
-import UserTopMenu from 'app/components/user_top_menu';
-import NotificationShow from 'app/components/common/notifications';
+import TradePairsMenu from 'components/trade/trade_pairs_menu';
+import UserTopMenu from 'components/user_top_menu';
+import NotificationShow from 'components/common/notifications';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

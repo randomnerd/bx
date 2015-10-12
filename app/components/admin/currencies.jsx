@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies} from 'app/collections';
+import {Currencies} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

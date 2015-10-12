@@ -15,7 +15,7 @@ export default React.createClass({
   },
   componentDidMount() {
     //$this=this;
-    $(this.getDOMNode()).sidebar({
+    $(ReactDOM.findDOMNode(this)).sidebar({
       context: $('.body'),
       dimPage:false,
       closable:false,
@@ -25,10 +25,10 @@ export default React.createClass({
         $('.body').css('overflow-y','auto')
       }
     });
-    $(this.getDOMNode()).sidebar(this.props.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).sidebar(this.props.show ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
-    $(this.getDOMNode()).sidebar(newProps.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
   },
 
   delAllMessages(){

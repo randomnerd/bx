@@ -11,7 +11,7 @@ export default React.createClass({
     };
   },
   componentDidMount() {
-    $(this.getDOMNode()).modal({
+    $(ReactDOM.findDOMNode(this)).modal({
       context: $('.body'),
       detachable: false,
       autofocus:  true,
@@ -20,10 +20,10 @@ export default React.createClass({
       onVisible:  this.props.onVisible,
     //  onHidden:   this.props.onDeny
     });
-    $(this.getDOMNode()).modal(this.props.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).modal(this.props.show ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
-    $(this.getDOMNode()).modal(newProps.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).modal(newProps.show ? 'show' : 'hide');
   },
   render() {
     return (

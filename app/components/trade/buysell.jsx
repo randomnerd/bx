@@ -1,7 +1,7 @@
 import React from 'react';
 require('react/addons');
 import Formsy from 'formsy-react';
-import Semantic from 'app/components/semantic';
+import Semantic from 'components/semantic';
 
 export default React.createClass({
   mixins: [React.addons.LinkedStateMixin],
@@ -33,13 +33,13 @@ export default React.createClass({
   },
   setMarket(event){
     //console.log(item)
-    $(this.refs.ordType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.ordType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({ordType:"market"})
   },
   setLimit(event){
     //console.log(item)
-    $(this.refs.ordType.getDOMNode()).find('.item').removeClass('active')
+    $(this.refs.ordType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
     this.setState({ordType:"limit"})
   },

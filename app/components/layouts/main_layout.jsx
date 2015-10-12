@@ -1,12 +1,12 @@
 import React from 'react';
-import Sidebar from 'app/components/common/sidebar';
-import TopMenu from 'app/components/top_menu';
-import LoginModal from 'app/components/login_modal';
-import SignUpModal from 'app/components/sign_up_modal';
-import WithdrawModal from 'app/components/user/withdraw_modal';
-import WithdrawAddressModal from 'app/components/user/withdraw_addressbook';
-import NotificationPopups from 'app/components/common/notification_popups';
-import Chats from 'app/components/common/chat';
+import Sidebar from 'components/common/sidebar';
+import TopMenu from 'components/top_menu';
+import LoginModal from 'components/login_modal';
+import SignUpModal from 'components/sign_up_modal';
+import WithdrawModal from 'components/user/withdraw_modal';
+import WithdrawAddressModal from 'components/user/withdraw_addressbook';
+import NotificationPopups from 'components/common/notification_popups';
+import Chats from 'components/common/chat';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

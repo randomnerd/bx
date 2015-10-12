@@ -1,5 +1,5 @@
-import d3 from './d3.min';
-import {BitIndexIndicator_BTPR} from 'app/collections';
+import d3 from 'd3';
+import {BitIndexIndicator_BTPR} from 'collections';
 
 Meteor.startup(function() {
 
@@ -22,8 +22,7 @@ Meteor.startup(function() {
   BitIndexIndicator_BTPR._ensureIndex({
     timestamp: 1
   });
-    var root_url = process.env.ROOT_URL;
-    if (!root_url) root_url = 'http://localhost:3000/';
+    var root_url = process.env.ROOT_URL || 'http://localhost:3000/';
 
     var parseDate = d3.time.format("%Y-%m-%d").parse;
     console.log('no BitIndexIndicator_BTPR data found, importing...');

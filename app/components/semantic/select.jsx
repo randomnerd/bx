@@ -16,7 +16,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    $(this.refs.select.getDOMNode()).dropdown({onChange: (value)=>this.onChange(value)});
+    $(this.refs.select).dropdown({onChange: (value)=>this.onChange(value)});
   },
 
   renderOptions(){

@@ -1,4 +1,4 @@
-import {Currencies, TradePairs} from 'app/collections';
+import {Currencies, TradePairs} from 'collections';
 
 Meteor.methods({
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {wAddressBook} from 'app/collections';
+import {wAddressBook} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],

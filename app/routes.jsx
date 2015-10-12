@@ -1,20 +1,20 @@
 import React from 'react';
-import ReactLayout from 'app/lib/react_layout';
-import AdminLayout from 'app/components/layouts/admin_layout';
-import MainLayout from 'app/components/layouts/main_layout';
-import Home from 'app/components/home';
-import AdminHome from 'app/components/admin/home';
-import TradePage from 'app/components/trade/tradePage';
-import WalletsPage from 'app/components/user/wallets';
-import SettingsPage from 'app/components/user/settings';
-import PasswordPage from 'app/components/user/password';
-import TransactionsPage from 'app/components/transactions';
-import NotificationsPage from 'app/components/user/notifications_page';
-import CurrenciesAdmin from 'app/components/admin/currencies';
-import CurrencyForm from 'app/components/admin/currency_form';
-import TradePairAdmin from 'app/components/admin/TradePairs';
-import TradePairForm from 'app/components/admin/tradepair_form';
-import TradeGrid from 'app/components/trade/trade_grid';
+import ReactLayout from 'lib/react_layout';
+import AdminLayout from 'components/layouts/admin_layout';
+import MainLayout from 'components/layouts/main_layout';
+import Home from 'components/home';
+import AdminHome from 'components/admin/home';
+import TradePage from 'components/trade/tradePage';
+import WalletsPage from 'components/user/wallets';
+import SettingsPage from 'components/user/settings';
+import PasswordPage from 'components/user/password';
+import TransactionsPage from 'components/transactions';
+import NotificationsPage from 'components/user/notifications_page';
+import CurrenciesAdmin from 'components/admin/currencies';
+import CurrencyForm from 'components/admin/currency_form';
+import TradePairAdmin from 'components/admin/TradePairs';
+import TradePairForm from 'components/admin/tradepair_form';
+import TradeGrid from 'components/trade/trade_grid';
 
 FlowRouter.route('/', {
   action() {

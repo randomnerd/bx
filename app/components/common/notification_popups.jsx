@@ -1,5 +1,5 @@
 import React from 'react';
-import {Notifications} from 'app/collections';
+import {Notifications} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
