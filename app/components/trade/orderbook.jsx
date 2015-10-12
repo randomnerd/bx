@@ -65,6 +65,10 @@ export default React.createClass({
     },2000);
   },
 
+  componentWillUnmount() {
+    if (this.tick) Meteor.clearInterval(this.tick);
+  },
+
   goBuySell(item,e){
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE',data:{
       amount:item.amount,

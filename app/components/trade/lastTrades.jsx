@@ -69,6 +69,9 @@ export default React.createClass({
     },2000);
   },
 
+  componentWillUnmount() {
+    if (this.tick) Meteor.clearInterval(this.tick);
+  },
 
   renderTradesItems() {
     let max=0.0001;
