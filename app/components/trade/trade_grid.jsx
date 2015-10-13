@@ -1,5 +1,5 @@
 import React from 'react';
-import {BitIndexIndicator_BTPR} from 'collections';
+import { BitIndexIndicator_BTPR } from 'collections';
 import BuySell from 'components/trade/buysell';
 import Trades from 'components/trade/lastTrades';
 import Charts from 'components/bitindex';
@@ -10,12 +10,11 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState: function() {
     return {
-      chartType:"candle"
+      chartType: "candle"
     }
   },
   getMeteorData() {
-
-    var handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
+    let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
 
     return {
 
@@ -56,6 +55,19 @@ export default React.createClass({
     $(event.currentTarget).addClass('active')
     this.setState({chartType:"bollinger"})
   },
+  showKagi(event){
+    //console.log(item)
+    $(this.refs.chartType).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"kagi"})
+  },
+  showPointandFigure(event){
+    //console.log(item)
+    $(this.refs.chartType).find('.item').removeClass('active')
+    $(event.currentTarget).addClass('active')
+    this.setState({chartType:"pointandfigure"})
+  },
+
 
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
@@ -74,15 +86,31 @@ export default React.createClass({
           <div><Charts.CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" height={350} /></div>
         )
         break;
+
       case "sto":
         return(
           <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" height={350} /></div>
         )
+
         break;
 
       case "bollinger":
-        return(
-          <div><Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height={350} /></div>
+        return (
+          <div>
+            <Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" height={350} />
+          </div>
+        )
+        break;
+
+      case "kagi":
+        return (
+            <div><Charts.Kagi data = {this.data.BTPR} type = "svg" height={350}/></div>
+        )
+        break;
+
+      case "pointandfigure":
+        return (
+            <div><Charts.PointAndFigureWithUpdatingData data = {this.data.BTPR} type = "svg" height={350}/></div>
         )
         break;
 
@@ -137,6 +165,13 @@ export default React.createClass({
                           <a className="item" onClick={this.showBollinger}>
                             Bollinger
                           </a>
+                          <a className="item" onClick={this.showKagi}>
+                            Kagi
+                          </a>
+                          <a className="item" onClick={this.showPointandFigure}>
+                            P & F
+                          </a>
+
                         </div>
                       </div>
                       <div className="ui basic segment nopadding">

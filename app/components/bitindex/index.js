@@ -4,6 +4,8 @@ import CandleStickChartWithMACDIndicator from './stockcharts/CandleStickChartWit
 import CandleStickChartWithRSIIndicator from './stockcharts/CandleStickChartWithRSIIndicator';
 import CandleStickChartWithFullStochasticsIndicator from './stockcharts/CandleStickChartWithFullStochasticsIndicator';
 import CandleStickChartWithBollingerBandOverlay from './stockcharts/CandleStickChartWithBollingerBandOverlay';
+import Kagi from './stockcharts/Kagi';
+import PointAndFigureWithUpdatingData from './stockcharts/PointAndFigureWithUpdatingData';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -11,5 +13,7 @@ export default {
   CandleStickChartWithRSIIndicator,
   CandleStickChartWithFullStochasticsIndicator,
   CandleStickChartWithBollingerBandOverlay,
-  HaikinAshi
+  HaikinAshi,
+  Kagi,
+  PointAndFigureWithUpdatingData
 };
