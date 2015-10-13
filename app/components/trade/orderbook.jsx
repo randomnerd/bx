@@ -71,8 +71,8 @@ export default React.createClass({
 
   goBuySell(item,e){
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE',data:{
-      amount:item.amount,
-      price:item.price,
+      amount:parseFloat(item.amount),
+      price:parseFloat(item.price),
       direction:this.props.direction,
     }});
     //console.log($(e.currentTarget).find('[data-ord-price]').html());
@@ -120,22 +120,27 @@ export default React.createClass({
     });
   },
   renderSpread() {
-
+      let direction=0;
       return  (
 
-        <tr className="ui white text" >
-          <td colSpan="3">
-            <div className="ui horizontal segments">
-              <div className="ui tertiary compact inverted red segment">
-                1000.76243786
-              </div>
-              <div className="ui tertiary compact inverted grey segment">
-                1000.76243786
-              </div>
-              <div className="ui tertiary compact inverted green segment">
-                1000.76243786
-              </div>
-            </div>
+        <tr className="ui white text opacity" >
+          <td className="five wide red markered text">
+            <span className="direction">Lowest <i className="long arrow down icon"></i></span>
+            <div className="bignum left">31</div>
+            <div className="bignum dot">.</div>
+            <div className="bignum right"><span>643</span>00000</div>
+          </td>
+          <td className="six wide center aligned white markered text">
+            <div className="bignum left">32</div>
+            <div className="bignum dot">.</div>
+            <div className="bignum right"><span>467534</span>00</div>
+            <span className={"direction " + (direction==1?"green":"red") + " text"}>-2.84848 (-0.05%)</span>
+          </td>
+          <td className="five wide right aligned green markered text">
+            <span className="direction">Higest <i className="long arrow up icon"></i></span>
+            <div className="bignum left">36</div>
+            <div className="bignum dot">.</div>
+            <div className="bignum right"><span>956734</span>00</div>
           </td>
         </tr>
 
