@@ -1,134 +1,180 @@
 import React from 'react';
 import ReStock from 'react-stockcharts';
 
-var { ChartCanvas, Chart, DataSeries } = ReStock;
-var { CandlestickSeries, HistogramSeries } = ReStock.series;
+let {ChartCanvas, Chart, DataSeries} = ReStock;
+let {CandlestickSeries, HistogramSeries} = ReStock.series;
 
-var { StockscaleTransformer } = ReStock.transforms;
-var { XAxis, YAxis } = ReStock.axes;
-var { ChartWidthMixin } = ReStock.helper;
+let {StockscaleTransformer} = ReStock.transforms;
+let {XAxis, YAxis} = ReStock.axes;
+let {ChartWidthMixin} = ReStock.helper;
 
-var interval, length = 150, rawData;
-var func;
-var speed = 1000;
+let interval,
+  length = 150,
+  rawData;
+let func;
+let speed = 1000;
 
 export default React.createClass({
   mixins: [ChartWidthMixin],
   propTypes: {
     data: React.PropTypes.array.isRequired,
-    type: React.PropTypes.oneOf(["svg", "hybrid"]).isRequired,
+    type: React.PropTypes
+      .oneOf(['svg', 'hybrid'])
+      .isRequired
   },
   getDefaultProps() {
     return {
-      type: "svg"
+      type: 'svg'
     }
   },
   getInitialState() {
     return {
-      data: this.props.data.slice(0, length),
+      data: this.props
+        .data
+        .slice(0, length)
     };
   },
   onKeyPress(e) {
-    var keyCode = e.which;
+    let keyCode = e.which;
     switch (keyCode) {
-      case 50: {
+    case 50 :
+      {
         // 2 (50) - Start alter data
         func = () => {
-          var exceptLast = rawData.slice(0, rawData.length - 1);
-          var last = rawData[rawData.length - 1];
+          let exceptLast = rawData.slice(0, rawData.length - 1);
+          let last = rawData[rawData.length - 1];
 
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
           }
 
-          this.refs.chartCanvas.alterData(exceptLast.concat(last));
+          this.refs
+            .chartCanvas
+            .alterData(exceptLast.concat(last));
 
         };
         break;
       }
-      case 49: {
+    case 49 :
+      {
         // 1 (49) - Start Push data
         func = () => {
-          var pushMe = this.props.data.slice(length, length + 1);
+          let pushMe = this.props
+            .data
+            .slice(length, length + 1);
           rawData = rawData.concat(pushMe);
-          this.refs.chartCanvas.pushData(pushMe);
-          length ++;
-          if (this.props.data.length === length) clearInterval(interval);
+          this.refs
+            .chartCanvas
+            .pushData(pushMe);
+          length++;
+          if (this.props.data.length === length)
+            clearInterval(interval);
         };
         break;
       }
-      case 48: {
+    case 48 :
+      {
         // 0 (48) - Clear interval
         func = null;
-        if (interval) clearInterval(interval);
+        if (interval)
+          clearInterval(interval);
         break;
       }
-      case 43: {
+    case 43 :
+      {
         // + (43) - increase the speed
         speed = Math.max(speed / 2, 100);
         break;
       }
-      case 45: {
+    case 45 :
+      {
         // - (45) - reduce the speed
-        var delta = Math.min(speed, 1000);
+        let delta = Math.min(speed, 1000);
         speed = speed + delta;
         break;
       }
     }
     if (func) {
-      if (interval) clearInterval(interval);
-      console.log("speed  = ", speed);
+      if (interval)
+        clearInterval(interval);
+      console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
   },
   componentDidMount() {
-    document.addEventListener("keypress", this.onKeyPress);
+    document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval) clearInterval(interval);
-    document.removeEventListener("keypress", this.onKeyPress);
+    if (interval)
+      clearInterval(interval);
+    document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width) return <div />;
-    var width = this.props.width || this.state !== null && this.state.width;
-    var { data, type } = this.props;
-    var dateFormat = d3.time.format("%Y-%m-%d");
-    var height = 750;
-    var margin = {left: 70, right: 70, top:20, bottom: 30};
+    if (this.state === null || !this.state.width)
+      return <div/>;
+    let width = this.props.width || this.state !== null && this.state.width;
+    let {data, type} = this.props;
+    let dateFormat = d3.time
+      .format('%Y-%m-%d');
+    let height = 750;
+    let margin = {
+      left: 70,
+      right: 70,
+      top: 20,
+      bottom: 30
+    };
 
-    var gridHeight = height - margin.top - margin.bottom;
-    var gridWidth = width - margin.left - margin.right;
+    let gridHeight = height - margin.top - margin.bottom;
+    let gridWidth = width - margin.left - margin.right;
 
-    var showGrid = true;
-    var yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2 } : {};
-    var xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2 } : {};
+    let showGrid = true;
+    let yGrid = showGrid
+      ? {
+        innerTickSize : -1 * gridWidth,
+        tickStrokeOpacity : 0.2
+      }
+      : {};
+    let xGrid = showGrid
+      ? {
+        innerTickSize : -1 * gridHeight,
+        tickStrokeOpacity : 0.2
+      }
+      : {};
 
     rawData = this.state.data;
 
     return (
-      <ChartCanvas ref="chartCanvas" width={this.state.width} height={this.props.height}
-        margin={{left: 70, right: 70, top:20, bottom: 30}} initialDisplay={200}
-        dataTransform={[ { transform: StockscaleTransformer } ]}
-        data={rawData} type={type}>
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={this.props.height} margin={{
+        left: 70,
+        right: 70,
+        top: 20,
+        bottom: 30
+      }} initialDisplay={200} dataTransform={[{
+          transform: StockscaleTransformer
+        }
+      ]} data={rawData} type={type}>
 
-				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}
-						height={300} >
-					<YAxis axisAt="right" orient="right" ticks={5}  {...yGrid}/>
-					<XAxis axisAt="bottom" orient="bottom" showTicks={false}/>
-					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
-						<CandlestickSeries />
-					</DataSeries>
-				</Chart>
-				<Chart id={2} yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
-						height={100} origin={(w, h) => [0, h - 100]} >
-					<XAxis axisAt="bottom" orient="bottom"  {...xGrid}/>
-					<YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
-					<DataSeries id={0} yAccessor={(d) => d.volume} >
-						<HistogramSeries fill={(d) => d.close > d.open ? "#6BA583" : "red"} />
-					</DataSeries>
-				</Chart>
-			</ChartCanvas>
-		);
-	}
+        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)} height={300}>
+          <YAxis axisAt='right' orient='right' ticks={5} {...yGrid}/>
+          <XAxis axisAt='bottom' orient='bottom' showTicks={false}/>
+          <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
+            <CandlestickSeries/>
+          </DataSeries>
+        </Chart>
+        <Chart id={2} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w,
+        h) => [
+          0, h - 100
+        ]}>
+          <XAxis axisAt='bottom' orient='bottom' {...xGrid}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <DataSeries id={0} yAccessor={(d) => d.volume}>
+            <HistogramSeries fill={(d) => d.close > d.open
+              ? '#6BA583'
+              : 'red'}/>
+          </DataSeries>
+        </Chart>
+      </ChartCanvas>
+    );
+  }
 });
