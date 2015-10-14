@@ -135,7 +135,7 @@ export default React.createClass({
     rawData = this.state.data;
     return (
 
-      <ChartCanvas width={this.state.width} height={this.props.height}
+      <ChartCanvas  ref='chartCanvas' width={this.state.width} height={this.props.height}
       				margin={{left: 70, right: 70, top:10, bottom: 30}} initialDisplay={200}
       				dataTransform={[ { transform: StockscaleTransformer } ]}
       				data={rawData} type={type}>
