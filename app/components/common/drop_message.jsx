@@ -63,7 +63,6 @@ export default React.createClass({
     });
   },
 
-
   render() {
     //console.log(this.props.item._id)
     return (
