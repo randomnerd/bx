@@ -68,27 +68,29 @@ export default React.createClass({
 
   render() {
     return (
-      <div className='ui segments'>
-        <div className='ui secondary segment'>
-          <h4>Wallets</h4>
-        </div>
-        <div className='ui small blue segment'>
-          <table className='ui selectable very compact very basic striped table nomargin'>
-            <thead>
-              <tr className='lesspadding'>
-                <th className='two wide' >Amount</th>
-                <th className='two wide' >Coin</th>
-                <th className='nine wide'>Deposit address</th>
-                <th className='three wide'>Actions</th>
-              </tr>
-            </thead>
-          </table>
-          <div className='scrollable10rows'>
-            <table className='ui selectable very compact very basic sortable table'>
-              <tbody>
-                { this.renderWalletItems() }
-              </tbody>
+      <div className="ui main fluid container">
+        <div className='ui segments'>
+          <div className='ui secondary segment'>
+            <h4>Wallets</h4>
+          </div>
+          <div className='ui small blue segment'>
+            <table className='ui selectable very compact very basic striped table nomargin'>
+              <thead>
+                <tr className='lesspadding'>
+                  <th className='two wide' >Amount</th>
+                  <th className='two wide' >Coin</th>
+                  <th className='nine wide'>Deposit address</th>
+                  <th className='three wide'>Actions</th>
+                </tr>
+              </thead>
             </table>
+            <div className='scrollable10rows'>
+              <table className='ui selectable very compact very basic sortable table'>
+                <tbody>
+                  { this.renderWalletItems() }
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

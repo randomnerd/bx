@@ -136,23 +136,26 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className='ux grid fullheight'>
-        <div className='ux column left double fullheight'>
-          <div className='ux column balance fullheight padding'>
-            <div className='ui basic segment h100'>
-              <h3 className='ui header'>BALANCE</h3>
-              <BuySell currency={this.props.active.toUpperCase()} direction='buy'/>
+      <div className="ui main fluid container">
+        <div className='ux grid fullheight'>
+          <div className='ux column left double fullheight'>
+            <div className='ux column balance fullheight padding'>
+              <div className='ui basic segment h100'>
+                <h3 className='ui header'>BALANCE</h3>
+                <BuySell currency={this.props.active.toUpperCase()} direction='buy'/>
+              </div>
+            </div>
+            <div className='ux column orders fullheight padding'>
+              <div className='ui basic segment h100'>
+
+                  <h3 className='ui header'>ORDER BOOK</h3>
+
+                  <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction='sell' />
+
+              </div>
             </div>
           </div>
-          <div className='ux column orders fullheight padding'>
-            <div className='ui basic segment h100'>
-
-                <h3 className='ui header'>ORDER BOOK</h3>
-
-                <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction='sell' />
-
-            </div>
-          </div>
+<<<<<<< HEAD
         </div>
         <div className='ux column center fullheight'>
           <div className='ux column chart padding'>
@@ -187,33 +190,67 @@ export default React.createClass({
                           <a className='item' onClick={this.showRenko}>
                             Renko
                           </a>
+=======
+          <div className='ux column center fullheight'>
+            <div className='ux column chart padding'>
+              <div className='ux container fix400'>
+                <div className='ux fixchart container'>
+                  <div className='ui basic segment h100'>
+                    <h3 className='ui header'>PRICE CHART</h3>
+                      <div className='ui basic teal segment nopadding'>
+                        <div className='ui top attached tabular basic menu'>
+                          <div className='right menu' ref='chartType'>
+                            <a className='item active' onClick={this.showCandle}>
+                              CandleStick
+                            </a>
+                            <a className='item' onClick={this.showMACD}>
+                              MACD
+                            </a>
+                            <a className='item' onClick={this.showRSI}>
+                              RSI
+                            </a>
+                            <a className='item' onClick={this.showSTO}>
+                              STO
+                            </a>
+                            <a className='item' onClick={this.showBollinger}>
+                              Bollinger
+                            </a>
+                            <a className='item' onClick={this.showKagi}>
+                              Kagi
+                            </a>
+                            <a className='item' onClick={this.showPointandFigure}>
+                              P & F
+                            </a>
+
+                          </div>
+>>>>>>> settings, wallets, admin fix
                         </div>
-                      </div>
-                      <div className='ui basic segment nopadding'>
-                        {
-                          this.data.BTPR_Loading ? <div className='cube'></div> :
-                          this.renderBlockChainIndicator()
-                        }
-                      </div>
+                        <div className='ui basic segment nopadding'>
+                          {
+                            this.data.BTPR_Loading ? <div className='cube'></div> :
+                            this.renderBlockChainIndicator()
+                          }
+                        </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className='ux fixorders container'>
-                <div className='ui basic segment h100'>
-                  <h3 className='ui header'>OPEN ORDERS</h3>
-                  <OpenOrders valute1='ANC' valute2='BTC' />
+                <div className='ux fixorders container'>
+                  <div className='ui basic segment h100'>
+                    <h3 className='ui header'>OPEN ORDERS</h3>
+                    <OpenOrders valute1='ANC' valute2='BTC' />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className='ux column right fullheight'>
-          <div className='ux column history fullheight padding'>
-            <div className='ui basic segment h100'>
-              <h3 className='ui header'>TRADE HISTORY</h3>
+          <div className='ux column right fullheight'>
+            <div className='ux column history fullheight padding'>
+              <div className='ui basic segment h100'>
+                <h3 className='ui header'>TRADE HISTORY</h3>
 
-                <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
+                  <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
 
+              </div>
             </div>
           </div>
         </div>

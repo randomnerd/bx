@@ -301,10 +301,10 @@ html, body{
   color: rgba(200, 200, 200, 0.2);
 }
 
-.ui.grid{
+.ui.inverted.newgrey .ui.grid{
   height: 100%
 }
-.ui.grid > .column{
+.ui.inverted.newgrey .ui.grid > .column{
   padding-left: 0.1rem !important;
   padding-right: 0.1rem !important;
   padding-top: 0.1rem !important;
@@ -317,10 +317,13 @@ html, body{
 h3.ui.header{
   margin-top: -3rem !important;
 }
-
 .main.container{
   height: 100%;
-  padding-top: 3.7em !important;
+  padding-top: 4.7em;
+}
+.ui.inverted.newgrey .main.container{
+  height: 100%;
+  padding-top: 3.7em;
 }
 
 .ui.segments{

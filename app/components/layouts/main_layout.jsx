@@ -117,12 +117,17 @@ export default React.createClass({
               </a>
             </div>
           </div>
+<<<<<<< HEAD
           <div className='contwrapper'>
             <div className='ui main fluid container'>
+=======
+          <div className="contwrapper">
+
+>>>>>>> settings, wallets, admin fix
 
                   {this.props.content}
 
-            </div>
+          
           </div>
         </div>
         <TopMenu title='BitExchange' active={this.props.active} />
