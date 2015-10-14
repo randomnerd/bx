@@ -75,29 +75,28 @@ export default React.createClass({
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
     case 'macd':
       return (
           <div><Charts.CandleStickChartWithMACDIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
     case 'rsi':
       return (
           <div><Charts.CandleStickChartWithRSIIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
 
     case 'sto':
       return (
           <div><Charts.CandleStickChartWithFullStochasticsIndicator
           data = {this.data.BTPR} type = 'svg' height={350} /></div>
         );
-
       break;
 
-      case 'bollinger':
+    case 'bollinger':
       return (
           <div>
             <Charts.CandleStickChartWithBollingerBandOverlay
@@ -106,20 +105,20 @@ export default React.createClass({
         );
         break;
 
-      case 'kagi':
+    case 'kagi':
       return (
             <div><Charts.Kagi data = {this.data.BTPR}
              type = 'svg' height={350}/></div>
         );
       break;
 
-      case 'pointandfigure':
+    case 'pointandfigure':
       return (
             <div><Charts.PointAndFigureWithUpdatingData
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
-      default:
+    default:
 
     }
   },

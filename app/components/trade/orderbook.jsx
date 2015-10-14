@@ -51,7 +51,7 @@ export default React.createClass({
         let sl = 0;
         arr.reverse();
         //arr[arr.length-3].animate=false
-        for (var x = 0; x < (Math.random() * 5).toFixed(); x++) {
+        for (let x = 0; x < (Math.random() * 5).toFixed(); x++) {
           arr[arr.length - 7].animate = false;
           arr.push( {_id: i, price: this.randNumber(), amount: this.randNumber(), animate: true} );
           i++;
@@ -96,28 +96,37 @@ export default React.createClass({
       if (amount[0] === '00') { amount[1] = '0'; }
       if (price[0] === '00') { price[1] = '0'; }
       return  (
-        <tr key = {item._id} onClick = {this.goBuySell.bind(this,item)} className={item.animate ? 'animate' : ''}>
+        <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
+        className={item.animate ? 'animate' : ''}>
           <td className='five wide'>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{amount[1]}</span>{nulls.substr(0,7 - amount[1].length)}</div>
+            <div className='bignum right'><span>{amount[1]}</span>
+            { nulls.substr(0, 7 - amount[1].length) }
+            </div>
 
-            <span className={'leveler ' + (direction=='buy' ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+            <span className={'leveler ' + (direction === 'buy' ? 'positive' : 'negative')}
+                style={{width: weight + '%'}}>
+            </span>
           </td>
-          <td className={'six wide center aligned ' + (direction=='buy'?'positive':'negative')}>
+          <td className={'six wide center aligned '
+            + (direction === 'buy' ? 'positive' : 'negative')}>
+
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
+            <div className='bignum right'><span>{price[1]}</span>
+              {nulls.substr(0, 8 - price[1].length)}
+            </div>
           </td>
           <td className='five wide right aligned'>
-            <div className='bignum left'>{total[0].substr(0,5)}</div>
+            <div className='bignum left'>{total[0].substr(0, 5)}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{total[1]}</span>{nulls.substr(0,8-total[1].length)}</div>
+            <div className='bignum right'><span>{total[1]}</span>
+              {nulls.substr(0, 8 - total[1].length)}
+            </div>
           </td>
         </tr>
-
       );
-
     });
   },
   renderSpread() {
@@ -135,7 +144,9 @@ export default React.createClass({
             <div className='bignum left'>32</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>467534</span>00</div>
-            <span className={'direction ' + (direction == 1 ? 'green' : 'red') + ' text'}>-2.84848 (-0.05%)</span>
+            <span className={'direction ' +
+              (direction === 1 ? 'green' : 'red') + ' text'}>-2.84848 (-0.05%)
+            </span>
           </td>
           <td className='five wide right aligned green markered text'>
             <span className='direction'>Higest <i className='long arrow up icon'></i></span>

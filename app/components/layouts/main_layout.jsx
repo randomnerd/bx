@@ -77,6 +77,7 @@ export default React.createClass({
       case 'HIDE_SIDEBAR':
         this.setState({showSidebar: false});
         break;
+
       }
     });
   },
@@ -125,11 +126,19 @@ export default React.createClass({
           </div>
         </div>
         <TopMenu title='BitExchange' active={this.props.active} />
-        <LoginModal show={this.state.showLoginModal} />
-        <SignUpModal show={this.state.showSignUpModal} />
-        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
-        <WithdrawAddressModal show={this.state.withdrawAddressModal} />
-        <NotificationPopups />
+
+            <LoginModal show={this.state.showLoginModal} />
+
+            <SignUpModal show={this.state.showSignUpModal} />
+
+            <WithdrawModal show={this.state.showWithdrawModal}
+              current={this.state.withdrawCurr}
+              address={this.state.withdrawAddress}
+              amount={this.state.withdrawAmount}
+            />
+
+            <WithdrawAddressModal show={this.state.withdrawAddressModal} />
+            <NotificationPopups />
 
       </div>
     );

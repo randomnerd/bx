@@ -6,7 +6,7 @@ export default React.createClass({
   getMeteorData() {
     return {
       user: Meteor.user(),
-      currencies: Currencies.find({ published:true }, { sort: { name: 1 } }).fetch()
+      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
   },
   getPairItems() {

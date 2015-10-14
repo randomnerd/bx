@@ -57,8 +57,8 @@ export default React.createClass({
     //console.log(this.props.item._id)
     return (
 
-      <tr key={this.props.item._id} className={'item ' + (this.props.item.type?this.types.messageAccent[this.props.item.type]: '')}>
-        <td><i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + ' icon' + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}></i></td>
+      <tr key={this.props.item._id} className={'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type]: '')}>
+        <td><i className={this.types.messagesIcon[(this.props.item.icon ? this.props.item.icon:this.props.item.type)] + ' icon' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}></i></td>
         <td>{this.props.item.title}</td>
         <td>{this.props.item.message}</td>
         <td>{this.props.item.ack ? 'old' : 'new'}</td>
