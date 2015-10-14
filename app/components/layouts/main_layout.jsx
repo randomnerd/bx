@@ -13,21 +13,21 @@ export default React.createClass({
   getMeteorData() {
     return {
       loading: !Meteor.subs.ready()
-    }
+    };
   },
 
   getInitialState() {
     return {
-      showLoginModal:       false,
-      showSignUpModal:      false,
-      showWithdrawModal:    false,
-      showSidebar:          false,
-      sidebarContent:       null,
+      showLoginModal: false,
+      showSignUpModal: false,
+      showWithdrawModal: false,
+      showSidebar: false,
+      sidebarContent: null,
       withdrawAddressModal: false
     };
   },
 
-  chatToggle(){
+  chatToggle() {
     this.setState({ showSidebar: !this.state.showSidebar });
     this.setState({ sidebarContent: 'chat' });
   },
@@ -35,61 +35,60 @@ export default React.createClass({
   componentDidMount() {
     Dispatcher.register((e) => {
       //console.log('new dispatcher event', payload);
-
       switch (e.actionType) {
-        case 'SHOW_LOGIN_MODAL':
-          this.setState({showLoginModal: true});
-          break;
+      case 'SHOW_LOGIN_MODAL':
+        this.setState({showLoginModal: true});
+        break;
 
-        case 'HIDE_LOGIN_MODAL':
-          this.setState({showLoginModal: false});
-          break;
+      case 'HIDE_LOGIN_MODAL':
+        this.setState({showLoginModal: false});
+        break;
 
-        case 'SHOW_SIGN_UP_MODAL':
-          this.setState({showSignUpModal: true});
-          break;
+      case 'SHOW_SIGN_UP_MODAL':
+        this.setState({showSignUpModal: true});
+        break;
 
-        case 'HIDE_SIGN_UP_MODAL':
-          this.setState({showSignUpModal: false});
-          break;
+      case 'HIDE_SIGN_UP_MODAL':
+        this.setState({showSignUpModal: false});
+        break;
 
-        case 'SHOW_WITHDRAW_MODAL':
-          this.setState({showWithdrawModal: true});
-          break;
+      case 'SHOW_WITHDRAW_MODAL':
+        this.setState({showWithdrawModal: true});
+        break;
 
-        case 'HIDE_WITHDRAW_MODAL':
-          this.setState({showWithdrawModal: false});
-          break;
+      case 'HIDE_WITHDRAW_MODAL':
+        this.setState({showWithdrawModal: false});
+        break;
 
-        case 'SHOW_ADDRESSBOOK_MODAL':
-          this.setState({withdrawAddressModal: true});
-          break;
+      case 'SHOW_ADDRESSBOOK_MODAL':
+        this.setState({withdrawAddressModal: true});
+        break;
 
-        case 'HIDE_ADDRESSBOOK_MODAL':
-          this.setState({withdrawAddressModal: false});
-          break;
+      case 'HIDE_ADDRESSBOOK_MODAL':
+        this.setState({withdrawAddressModal: false});
+        break;
 
-        case 'SHOW_SIDEBAR':
-          this.setState({showSidebar: true});
-          this.chatToggle();
+      case 'SHOW_SIDEBAR':
+        this.setState({showSidebar: true});
+        this.chatToggle();
           //this.setState({sidebarContent: payload.payload.content});
-          break;
+        break;
 
-        case 'HIDE_SIDEBAR':
-          this.setState({showSidebar: false});
-          break;
+      case 'HIDE_SIDEBAR':
+        this.setState({showSidebar: false});
+        break;
       }
-    })
+    });
   },
-  renderSidebarContent(){
+  renderSidebarContent() {
     switch (this.state.sidebarContent) {
-      case 'chat':
-        return (
+    case 'chat':
+      return (
 
             <Chats />
 
-        )
-        break;
+      );
+    break;
     }
   },
 

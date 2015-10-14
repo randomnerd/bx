@@ -31,27 +31,26 @@ export default React.createClass({
   },
   setMarket(event) {
     //console.log(item)
-    $(this.refs.ordType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({ordType:'market'})
+    $(this.refs.ordType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({ordType: 'market'});
   },
-  setLimit(event){
+  setLimit(event) {
     //console.log(item)
-    $(this.refs.ordType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({ordType: 'limit'})
+    $(this.refs.ordType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({ordType: 'limit'});
   },
   showPrice() {
-    return(
+    return (
       <div><Semantic.Input name='price' label='Price' icon='shop' value={this.state.price!=0?(parseFloat(this.state.price)).toFixed(8):'0'} placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC' onChg={this.changePrice} /></div>
-    )
+    );
   },
   changeAmount(event) {
     this.setState({amount: event.currentTarget.value});
-
   },
   changePrice(event) {
-    this.setState({price: event.currentTarget.value})
+    this.setState({price: event.currentTarget.value});
   },
   allowSubmit() {
     this.setState({allowSubmit: true});
@@ -79,11 +78,11 @@ export default React.createClass({
           <div className='ui horizontal segments'>
             <div className='ui small basic segment teal'>
               <strong>Total:</strong>
-              {(parseFloat(this.state.amount*this.state.price)).toFixed(8)}
+              {(parseFloat(this.state.amount * this.state.price)).toFixed(8)}
             </div>
             <div className='ui small basic segment teal'>
               <strong>Fee:</strong>
-              {(parseFloat(this.state.amount*this.state.price*0.002)).toFixed(8)}
+              {(parseFloat(this.state.amount * this.state.price * 0.002)).toFixed(8)}
             </div>
           </div>
         <div className='ui small basic segment centered'>

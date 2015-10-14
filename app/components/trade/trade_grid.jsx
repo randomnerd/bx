@@ -70,30 +70,30 @@ export default React.createClass({
 
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
-      case 'candle':
+    case 'candle':
       return (
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
-      case 'macd':
+    break;
+    case 'macd':
       return (
           <div><Charts.CandleStickChartWithMACDIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
-      case 'rsi':
+    break;
+    case 'rsi':
       return (
           <div><Charts.CandleStickChartWithRSIIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
+    break;
 
-      case 'sto':
+    case 'sto':
       return (
           <div><Charts.CandleStickChartWithFullStochasticsIndicator
           data = {this.data.BTPR} type = 'svg' height={350} /></div>
-        )
+        );
 
       break;
 
@@ -103,23 +103,22 @@ export default React.createClass({
             <Charts.CandleStickChartWithBollingerBandOverlay
             data = {this.data.BTPR} type = 'svg' height={350} />
           </div>
-        )
+        );
         break;
 
       case 'kagi':
       return (
             <div><Charts.Kagi data = {this.data.BTPR}
              type = 'svg' height={350}/></div>
-        )
-        break;
+        );
+      break;
 
       case 'pointandfigure':
       return (
             <div><Charts.PointAndFigureWithUpdatingData
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
-        )
+      );
       break;
-
       default:
 
     }

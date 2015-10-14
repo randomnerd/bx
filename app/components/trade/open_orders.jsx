@@ -50,7 +50,6 @@ export default React.createClass({
           </div>
         </div>
         <div className='ui basic segment h100 tabheader'>
-
           <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
             <thead>
               <tr className='lesspadding'>

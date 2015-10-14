@@ -83,8 +83,6 @@ export default React.createClass({
       max = (parseFloat(item.amount) > max) ? parseFloat(item.amount).toFixed(8) : max;
     });
 
-
-
     return this.getTradesItems().map((item) => {
       let weight = parseFloat(90 * (item.amount / max).toFixed(8));
 

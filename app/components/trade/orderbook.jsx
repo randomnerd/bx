@@ -25,12 +25,12 @@ export default React.createClass({
         { _id: 18, price: 0.00015, amount: 0.009123},
         { _id: 19, price: 0.0001, amount: 0.003123}
       ]
-    }
+    };
   },
   getOrdersItems(direction) {
     return this.state.data;
   },
-  randNumber(){
+  randNumber() {
     let leftLength  = Math.random().toFixed(1) * 10;
     let rightLength  = Math.random().toFixed(1) * 10;
     leftLength = leftLength > 4 ? 4 : leftLength;
@@ -39,7 +39,7 @@ export default React.createClass({
     rightLength = rightLength < 1 ? 1 : rightLength;
     //console.log(leftLength, rightLength)
     //console.log(parseFloat((Math.random().toFixed(leftLength)*Math.pow(10,leftLength))+Math.random().toFixed(rightLength)))
-    return ((Math.random().toFixed(leftLength) * Math.pow(10,leftLength - 1)).toFixed(0)
+    return ((Math.random().toFixed(leftLength) * Math.pow(10, leftLength - 1)).toFixed(0)
     + Math.random().toFixed(rightLength - 1));
   },
   componentDidMount() {
@@ -121,8 +121,8 @@ export default React.createClass({
     });
   },
   renderSpread() {
-      let direction=0;
-      return  (
+    let direction = 0;
+    return (
 
         <tr className='ui white text opacity' >
           <td className='five wide red markered text'>
@@ -146,7 +146,6 @@ export default React.createClass({
         </tr>
 
       );
-
   },
   render() {
     return (
