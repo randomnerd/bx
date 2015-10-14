@@ -27,17 +27,13 @@ export default React.createClass({
     };
   },
   renderCurrenciesList() {
-    return this.data
-      .currencies
-      .map((curr) => {
+    return this.data.currencies.map((curr) => {
         return (
           <tr key={curr._id}>
             <td>{curr.name}</td>
             <td>{curr.shortName}</td>
             <td>{curr.status}</td>
-            <td>{curr.published
-                ? 'true'
-                : 'false'}</td>
+            <td>{curr.published ? 'true' : 'false'}</td>
             <td className='right aligned collapsing'>
               <div className='ui tiny icon buttons'>
                 <a className='ui positive button' href={'/admin/currencies/edit/' + curr.shortName}>

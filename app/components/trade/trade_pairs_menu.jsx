@@ -1,10 +1,12 @@
 import React from 'react';
+import {Currencies} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      user: Meteor.user()
+      user: Meteor.user(),
+      currencies: Currencies.find({ published:true }, { sort: { name: 1 } }).fetch()
     };
   },
   getPairItems() {
@@ -16,15 +18,17 @@ export default React.createClass({
     ];
   },
   displayCurrent() {
-    return this.props.active || 'Chose pair';
+    return this.props.active ? this.props.active.toUpperCase() : 'Chose pair';
   },
   renderMenuItems() {
-    return this.getPairItems().map((item) => {
+    let active = this.props.active ? this.props.active.toUpperCase() : false;
+    return this.data.currencies.map((curr) => {
+      let value = '0.09123';
       return (
-        <a className={'item' + (this.props.active === item.href ? ' active' : '') }
-        key = {item.href} href = {'/pair/' + item.href}>
-          <div className='ui label'>{item.value}</div>
-          {item.pair}
+        <a className={'item' + (active === curr.shortName.toUpperCase() ? ' active' : '') }
+        key = {curr.shortName.toLowerCase()} href = {'/pair/' + curr.shortName.toLowerCase()}>
+          <div className='ui label'>{value}</div>
+          {curr.shortName}
         </a>
       );
     });
