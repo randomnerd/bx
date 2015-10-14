@@ -47,7 +47,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -141,8 +141,8 @@ export default React.createClass({
         top: 20,
         bottom: 30
       }} initialDisplay={200} dataTransform={[{
-          transform: StockscaleTransformer
-        }
+        transform: StockscaleTransformer
+      }
       ]} data={rawData} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
           <XAxis axisAt='bottom' orient='bottom'/>

@@ -1,6 +1,6 @@
 import {Balances} from 'collections';
 
-Meteor.publish('balances', function () {
+Meteor.publish('balances', function() {
   if (!this.userId) return false;
-  return Balances.find({userId:this.userId});
+  return Balances.find({userId: this.userId});
 });

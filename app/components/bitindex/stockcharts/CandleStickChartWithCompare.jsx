@@ -28,11 +28,11 @@ export default React.createClass({
 
     let parseDate = d3.time
       .format('%Y-%m-%d')
-      .parse
+      .parse;
     let dateRange = {
       from: parseDate('2012-12-01'),
       to: parseDate('2012-12-31')
-    }
+    };
     let dateFormat = d3.time
       .format('%Y-%m-%d');
 
@@ -43,8 +43,8 @@ export default React.createClass({
         top: 10,
         bottom: 30
       }} initialDisplay={30} dataTransform={[{
-          transform: StockscaleTransformer
-        }
+        transform: StockscaleTransformer
+      }
       ]} data={data} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
           <XAxis axisAt='bottom' orient='bottom'/>

@@ -31,7 +31,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -53,12 +53,10 @@ export default React.createClass({
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
-
+          };
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -74,8 +72,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) { clearInterval(interval); }
         };
         break;
       }
@@ -83,8 +80,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) { clearInterval(interval); }
         break;
       }
     case 43 :
@@ -102,8 +98,7 @@ export default React.createClass({
       }
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) { clearInterval(interval); }
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -112,13 +107,12 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) { clearInterval(interval); }
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) {  return <div/>; }
+
     let {data, type} = this.props;
     let dateFormat = d3.time
       .format('%Y-%m-%d');
@@ -130,8 +124,8 @@ export default React.createClass({
         top: 20,
         bottom: 30
       }} initialDisplay={200} dataTransform={[{
-          transform: StockscaleTransformer
-        }
+        transform: StockscaleTransformer
+      }
       ]} data={rawData} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right' height={200} yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{
           top: 10,

@@ -2,52 +2,59 @@ import {Notifications, wAddressBook, Chat, Withdrawals} from 'collections';
 
 Meteor.methods({
   'jobs/wallet/newWallet': (currId) => {
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
     var job = new Job(Jobs, 'newAddress', {
       currId: currId,
       userId: Meteor.userId()
     });
     job.save();
   },
-  'notifications/del': (_id) =>{
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Notifications.update(
-      {_id: _id, userId: Meteor.userId()},
-      {$set:{ack:true}},
-      (err)=>{
-        if(err){
-          return err
-        }else {
-          return false
-        }
+  'notifications/del': (_id) => {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Notifications.update({
+      _id: _id,
+      userId: Meteor.userId()
+    }, {
+      $set: {
+        ack: true
       }
-    )
-  },
-  'notifications/del_realy': (_id) =>{
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Notifications.remove(
-      {_id: _id},
-      (err)=>{
-        if(err){
-          return err
-        }else {
-          return false
-        }
+    }, (err) => {
+      if (err) {
+        return err
+      } else {
+        return false
       }
-    )
+    })
   },
-  'notifications/clear_all': (_id) =>{
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Notifications.remove({userId: Meteor.userId()},
-      (err)=>{
-        if(err){
-          return err
-        }else {
-          return false
-        }
+  'notifications/del_realy': (_id) => {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Notifications.remove({
+      _id: _id
+    }, (err) => {
+      if (err) {
+        return err
+      } else {
+        return false
       }
-    )
+    })
   },
+  'notifications/clear_all': (_id) => {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Notifications.remove({
+      userId: Meteor.userId()
+    }, (err) => {
+      if (err) {
+        return err
+      } else {
+        return false
+      }
+    })
+  },
+  //
   'notifications/add': () =>{
     //Notifications.remove({},()=>{
       var arr=[
@@ -72,90 +79,114 @@ Meteor.methods({
       }
     //})
   },
+  //
 
-  'address/add': function(address){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    address.userId=Meteor.userId()
-    wAddressBook.insert(address, function (err,id) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
+  'address/add': function(address) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    address.userId = Meteor.userId()
+    wAddressBook
+      .insert(address, function(err, id) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
   },
-  "address/update": function(id,address){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    wAddressBook.update(id,{$set:address}, function (err) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
-  },
-
-
-  'address/remove': function(id){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    wAddressBook.remove(id, function (err) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
+  "address/update": function(id, address) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    wAddressBook
+      .update(id, {
+        $set: address
+      }, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
   },
 
-  'chat/add': function(message){
+  'address/remove': function(id) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    wAddressBook
+      .remove(id, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
+  },
+
+  'chat/add': function(message) {
     //Chat.remove({})
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    message.userId=Meteor.userId()
-    message.userName=Meteor.user().username
-    message.createdAt=new Date()
-    Chat.insert(message, function (err,id) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    message.userId = Meteor.userId()
+    message.userName = Meteor.user()
+      .username
+    message.createdAt = new Date()
+    Chat
+      .insert(message, function(err, id) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
   },
-  "chat/update": function(id,address){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Chat.update(id,{$set:address}, function (err) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
-  },
-
-
-  'chat/remove': function(id){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Chat.remove(id, function (err) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
+  "chat/update": function(id, address) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Chat
+      .update(id, {
+        $set: address
+      }, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
   },
 
-  "chatname/update": function(name){
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    Meteor.users.update(Meteor.userId(),{$set:{username:name}}, function (err) {
-      if (!err) {
-        return false
-      }else{
-        return err
-      }
-    });
+  'chat/remove': function(id) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Chat
+      .remove(id, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
+  },
+
+  "chatname/update": function(name) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Meteor
+      .users
+      .update(Meteor.userId(), {
+        $set: {
+          username: name
+        }
+      }, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
   },
   withdraw: function(params) {
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
     let curr = Currencies.findOne(params.currId);
     Withdrawals.insert({
       userId: Meteor.userId(),
@@ -165,8 +196,7 @@ Meteor.methods({
       amount: parseFloat(params.amount) * Math.pow(10, 8),
       state: 'initial',
       createdAt: new Date()
-    })
+    });
   }
-
 
 });

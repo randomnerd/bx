@@ -9,8 +9,9 @@ export default React.createClass({
     };
   },
   render() {
-    if (!this.data.admin && !this.data.authInProgress && this.props.redirect)
+    if (!this.data.admin && !this.data.authInProgress && this.props.redirect) {
       FlowRouter.go(this.props.redirect);
+    }
     return this.data.admin ? this.props.children : null;
   }
 });
