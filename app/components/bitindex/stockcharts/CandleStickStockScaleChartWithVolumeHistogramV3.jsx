@@ -1,12 +1,12 @@
 import React from 'react';
 import ReStock from 'react-stockcharts';
 
-let {ChartCanvas, Chart, DataSeries, EventCapture} = ReStock;
-let {CandlestickSeries, HistogramSeries} = ReStock.series;
+let { ChartCanvas, Chart, DataSeries, EventCapture } = ReStock;
+let { CandlestickSeries, HistogramSeries } = ReStock.series;
 let { TooltipContainer, OHLCTooltip } = ReStock.tooltip;
 let { MouseCoordinates } = ReStock.coordinates;
-let {StockscaleTransformer} = ReStock.transforms;
-let {XAxis, YAxis} = ReStock.axes;
+let { StockscaleTransformer } = ReStock.transforms;
+let { XAxis, YAxis } = ReStock.axes;
 let {ChartWidthMixin} = ReStock.helper;
 
 let interval,
@@ -157,7 +157,7 @@ export default React.createClass({
       				<EventCapture mouseMove={true} zoom={true} pan={true}
               mainChart={1} defaultFocus={false} />
       				<TooltipContainer>
-      					<OHLCTooltip forChart={1} origin={[-40, 0]}/>
+      					<OHLCTooltip forChart={1} origin={[-10, 0]}/>
       				</TooltipContainer>
       			</ChartCanvas>
 

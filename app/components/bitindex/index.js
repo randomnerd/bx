@@ -6,6 +6,7 @@ import CandleStickChartWithFullStochasticsIndicator from './stockcharts/CandleSt
 import CandleStickChartWithBollingerBandOverlay from './stockcharts/CandleStickChartWithBollingerBandOverlay';
 import Kagi from './stockcharts/Kagi';
 import PointAndFigureWithUpdatingData from './stockcharts/PointAndFigureWithUpdatingData';
+import RenkoWithUpdatingData from './stockcharts/RenkoWithUpdatingData';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -15,5 +16,6 @@ export default {
   CandleStickChartWithBollingerBandOverlay,
   HaikinAshi,
   Kagi,
-  PointAndFigureWithUpdatingData
+  PointAndFigureWithUpdatingData,
+  RenkoWithUpdatingData,
 };

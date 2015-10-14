@@ -66,8 +66,12 @@ export default React.createClass({
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'pointandfigure'});
   },
-
-
+  showRenko(event) {
+    //console.log(item)
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'renko'});
+  },
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
     case 'candle':
@@ -118,6 +122,14 @@ export default React.createClass({
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
+
+    case 'renko':
+      return (
+            <div><Charts.RenkoWithUpdatingData
+            data = {this.data.BTPR} type = 'svg' height={350}/></div>
+      );
+      break;
+
     default:
 
     }
@@ -172,7 +184,9 @@ export default React.createClass({
                           <a className='item' onClick={this.showPointandFigure}>
                             P & F
                           </a>
-
+                          <a className='item' onClick={this.showRenko}>
+                            Renko
+                          </a>
                         </div>
                       </div>
                       <div className='ui basic segment nopadding'>
