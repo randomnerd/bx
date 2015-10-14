@@ -9,22 +9,22 @@ export default React.createClass({
     };
   },
   types: {
-      messageAccent: {
-        error:' red', //red
-        accept:' green', //green
-        warning:' orange', //orange
-        info:' blue', //blue
-        chat:' purple',
-        default:false //gray
-      },
-      messagesIcon:{
-        error:' warning sign',
-        accept:' checkmark',
-        warning:' warning circle',
-        info:' info circle',
-        chat:' comment',
-        default:false
-      }
+    messageAccent: {
+      error: ' red', //red
+      accept: ' green', //green
+      warning: ' orange', //orange
+      info: ' blue', //blue
+      chat: ' purple',
+      default: false //gray
+    },
+    messagesIcon: {
+      error: ' warning sign',
+      accept: ' checkmark',
+      warning: ' warning circle',
+      info: ' info circle',
+      chat: ' comment',
+      default: false
+    }
   },
   getMeteorData() {
     return {
@@ -32,32 +32,32 @@ export default React.createClass({
     };
   },
   componentDidMount() {
-    var $this=this
+    let $this = this;
     Dispatcher.register((payload) => {
-      if(payload.actionType=='DEL_ALL_NOTIFICATION'){
-        if(!$this.state.closed){
-          $this.delMessage()
+      if (payload.actionType === 'DEL_ALL_NOTIFICATION') {
+        if (!$this.state.closed) {
+          $this.delMessage();
         }
       }
-    })
+    });
   },
-  delMessage(){
-    var $this=this
+  delMessage() {
+    let $this = this;
     $(ReactDOM.findDOMNode(this)).transition({
-      animation  : 'fade',
-      onComplete : function() {
+      animation: 'fade',
+      onComplete: function() {
         $this.setState({closed: true});
         Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
-        Meteor.call('notifications/del',$this.props.item._id,function(error, result){
-          if(error||result){
-            console.log(error,result)
+        Meteor.call('notifications/del', $this.props.item._id, function(error, result) {
+          if (error || result) {
+            console.log(error, result);
             $this.setState({errorMessage: error.message});
-          }else{
-            return false
+          }else {
+            return false;
           }
-        })
+        });
       }
-    })
+    });
   },
 
 
@@ -76,6 +76,6 @@ export default React.createClass({
           <p>{this.props.item.message}</p>
 
       </a>
-    )
+    );
   }
 });
