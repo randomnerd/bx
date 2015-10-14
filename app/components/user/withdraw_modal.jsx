@@ -55,21 +55,21 @@ export default React.createClass({
     };
   },
 
-  getAddressbook(){
+  getAddressbook() {
     Dispatcher.dispatch({actionType: 'SHOW_ADDRESSBOOK_MODAL'});
   },
 
-  getAddress(){
+  getAddress() {
     return {
       left: {},
       right: {
         buttons: [{
-          name:   'Addressbook',
+          name: 'Addressbook',
           action: this.getAddressbook,
-          icon:   'user'
+          icon: 'user'
         }]
       }
-    }
+    };
   },
 
   componentDidMount() {
@@ -90,13 +90,13 @@ export default React.createClass({
     Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
   },
 
-  allowSubmit()    { this.setState({allowSubmit: true}) },
-  disallowSubmit() { this.setState({allowSubmit: false}) },
+  allowSubmit()    { this.setState({allowSubmit: true}); },
+  disallowSubmit() { this.setState({allowSubmit: false}); },
 
   withdraw() {
     Meteor.call('withdraw', {
-      currId:  this.data.currency._id,
-      amount:  this.refs.amount.getValue(),
+      currId: this.data.currency._id,
+      amount: this.refs.amount.getValue(),
       address: this.refs.address.getValue()
     });
 
@@ -104,11 +104,11 @@ export default React.createClass({
       actionType: 'NEW_NOTIFICATION',
       payload: {
         message: {
-          _id:      'withdrawal_requested',
-          type:     'accept',
-          icon:     'accept',
-          title:    'Withdrawal request sent',
-          timeout:  3000,
+          _id: 'withdrawal_requested',
+          type: 'accept',
+          icon: 'accept',
+          title: 'Withdrawal request sent',
+          timeout: 3000,
           needShow: true
         }
       }

@@ -44,7 +44,7 @@ export default React.createClass({
       });
     }
   },
-  pick(){
+  pick() {
     Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_ADDRESS', payload: this.props.item.address });
     Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
   },

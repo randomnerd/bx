@@ -23,19 +23,18 @@ export default React.createClass({
     let name = this.refs.chat.getCurrentValues();
     //console.log(message)
     Meteor.call('chatname/update', name.chat_name, (err, result) => {
-       if (err || result) {
-         console.log(err.message);
-       } else {
-
+      if (err || result) {
+        console.log(err.message);
+      } else {
 
        }
-     });
+    });
   },
   getAdds() {
     return {
       right: {
         buttons: [{name: 'Save', icon: 'checkmark', accent: 'blue', action: ()=> {this.saveName()}}]
-      }
+      };
     }
   },
   render() {
