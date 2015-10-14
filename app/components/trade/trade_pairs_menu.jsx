@@ -21,7 +21,7 @@ export default React.createClass({
   renderMenuItems() {
     return this.getPairItems().map((item) => {
       return (
-        <a className={'item' + (this.props.active === item.href ? 'active' : '') }
+        <a className={'item' + (this.props.active === item.href ? ' active' : '') }
         key = {item.href} href = {'/pair/' + item.href}>
           <div className='ui label'>{item.value}</div>
           {item.pair}
