@@ -56,15 +56,15 @@ export default React.createClass({
   },
   showKagi(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType: 'kagi'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'kagi'});
   },
-  showPointandFigure(event){
+  showPointandFigure(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType: 'pointandfigure'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'pointandfigure'});
   },
 
 
