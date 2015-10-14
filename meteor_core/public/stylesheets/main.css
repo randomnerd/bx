@@ -669,6 +669,7 @@ tr.lesspadding th {
   position: relative;
   height: 100%;
   overflow-y: auto;
+  font-family: Arial, sans-serif !important;
 }
 
 .ld .block{
@@ -679,7 +680,7 @@ tr.lesspadding th {
 
 .ld .block.background{
   display: block;
-  background-image: url("https://exchange.coinbase.com/img/price_chart_anime.jpg");
+  background-image: url("/bg_video.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   bottom: 0;
@@ -689,6 +690,16 @@ tr.lesspadding th {
   top: 0;
   z-index: -1;
   overflow: hidden;
+}
+
+.ld .block .videogrid{
+  background-image: url("/bg.png");
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
 }
 
 #video_background{

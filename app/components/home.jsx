@@ -8,6 +8,7 @@ export default React.createClass({
           <video id="video_background"  loop="loop" autoPlay="autoPlay" preload="auto" onended="this.play()">
             <source type="video/mp4" src="/bg.mp4"></source>
           </video>
+          <div className="videogrid"></div>
         </div>
         <div className="block opacity">
           <div className="promo">
