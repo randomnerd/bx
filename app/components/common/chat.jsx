@@ -30,12 +30,12 @@ export default React.createClass({
     };
   },
   writeMessage() {
-   let message = this.refs.form.getCurrentValues();
+    let message = this.refs.form.getCurrentValues();
      //console.log(message)
-   if (this.state.replyId) {
-     message.replyId = this.state.replyId;
-     message.replyName = this.state.replyName;
-   }
+    if (this.state.replyId) {
+      message.replyId = this.state.replyId;
+      message.replyName = this.state.replyName;
+    }
     message.isPrivate = this.state.isPrivate;
     Meteor.call('chat/add', message, (err, result) => {
       if (err || result) {

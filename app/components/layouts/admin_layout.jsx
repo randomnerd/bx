@@ -6,15 +6,15 @@ import AdminSidebar from 'components/admin/sidebar';
 export default React.createClass({
   render() {
     return (
-      <AdminOnly redirect="/">
+      <AdminOnly redirect='/'>
         <div>
           <TopMenu />
-          <div className="ui main container">
-            <div className="ui grid">
-              <div className="four wide column">
+          <div className='ui main container'>
+            <div className='ui grid'>
+              <div className='four wide column'>
                 <AdminSidebar/>
               </div>
-              <div className="twelve wide column">
+              <div className='twelve wide column'>
                 {this.props.content}
               </div>
             </div>

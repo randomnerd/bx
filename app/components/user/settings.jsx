@@ -27,15 +27,19 @@ export default React.createClass({
         console.log(err.message);
       } else {
 
-       }
+      }
     });
   },
   getAdds() {
     return {
       right: {
-        buttons: [{name: 'Save', icon: 'checkmark', accent: 'blue', action: ()=> {this.saveName()}}]
+        buttons: [{name: 'Save', icon: 'checkmark', accent: 'blue', action: ()=>
+        {
+          this.saveName();
+        }
+      }]
       }
-    }
+    };
   },
   render() {
     return (

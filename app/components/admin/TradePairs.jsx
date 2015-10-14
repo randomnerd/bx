@@ -16,7 +16,9 @@ export default React.createClass({
             this.setState({
               errorMessage: err.message
             });
-          } else { }
+          } else {
+
+          }
         });
     }
   },

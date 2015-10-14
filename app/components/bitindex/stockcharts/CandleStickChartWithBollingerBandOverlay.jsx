@@ -69,7 +69,7 @@ export default React.createClass({
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
+          };
 
           this.refs
             .chartCanvas

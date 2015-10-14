@@ -94,7 +94,9 @@ export default React.createClass({
         <i className='alarm icon' />
         <i className='dropdown icon' />
         {this.data.notifications_new.length ?
-          <div className='down floating ui red circular mini label'>{this.data.notifications_new.length }</div>
+          <div className='down floating ui red circular mini label'>
+          {this.data.notifications_new.length}
+          </div>
           : ''
         }
         <div className='menu'>

@@ -28,7 +28,7 @@ export default React.createClass({
   },
   renderCurrenciesList() {
     return this.data.currencies.map((curr) => {
-        return (
+      return (
           <tr key={curr._id}>
             <td>{curr.name}</td>
             <td>{curr.shortName}</td>
@@ -46,7 +46,7 @@ export default React.createClass({
             </td>
           </tr>
         );
-      });
+    });
   },
   render() {
     return (

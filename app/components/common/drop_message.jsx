@@ -47,7 +47,10 @@ export default React.createClass({
       animation: 'fade',
       onComplete: function() {
         $this.setState({closed: true});
-        Dispatcher.dispatch({ actionType: 'DEL_NOTIFICATION', payload: { message:$this.props.item._id } })
+        Dispatcher.dispatch({
+          actionType: 'DEL_NOTIFICATION',
+          payload: { message: $this.props.item._id }
+        });
         Meteor.call('notifications/del', $this.props.item._id, function(error, result) {
           if (error || result) {
             console.log(error, result);
@@ -64,14 +67,20 @@ export default React.createClass({
   render() {
     //console.log(this.props.item._id)
     return (
-      <a className={"item " + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')} onClick={this.props.closable?this.delMessage:""}>
+      <a className=
+      {'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}
+      onClick={this.props.closable ? this.delMessage : ''}>
 
-          {this.props.item.title?
-            <h4 className="ui header">
-              <i className={this.types.messagesIcon[(this.props.item.icon?this.props.item.icon:this.props.item.type)] + " icon" + (this.props.item.type?this.types.messageAccent[this.props.item.type]:'')}></i>
+          {this.props.item.title ?
+            <h4 className='ui header'>
+              <i className={this.types.messagesIcon[(
+                this.props.item.icon ? this.props.item.icon : this.props.item.type
+              )]
+                + ' icon' +
+                (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}></i>
               {this.props.item.title}
             </h4>
-            :""
+            : ''
           }
           <p>{this.props.item.message}</p>
 

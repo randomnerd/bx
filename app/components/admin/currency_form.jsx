@@ -14,16 +14,17 @@ export default React.createClass({
   },
 
   newCurr(event) {
-    let {name, shortName,published} = this.refs.curr.getCurrentValues();
+    let {name, shortName, published} = this.refs.curr.getCurrentValues();
 
-    Meteor.call('currrency_add',{name: name, shortName: shortName, published:published ? true: false}, function(error, result) {
-      if(result){
+    Meteor.call('currrency_add',
+    {name: name, shortName: shortName, published: published ? true : false},
+    function(error, result) {
+      if (result) {
         this.setState({errorMessage: err.message});
       } else {
         FlowRouter.go('/admin/currencies');
       }
     });
-
   },
   saveCurr(event) {
     //console.log(this.refs.curr.getCurrentValues())
@@ -47,7 +48,7 @@ export default React.createClass({
   allowSubmit() { this.setState({allowSubmit: true}); },
   disallowSubmit() { this.setState({allowSubmit: false}); },
   render() {
-    this.published = this.currentVal('published') ? 'checked' : false
+    this.published = this.currentVal('published') ? 'checked' : false;
     return (
       <div>
 
