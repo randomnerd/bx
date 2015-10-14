@@ -40,16 +40,16 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="ui segments">
-        <div className="ui secondary segment">
+      <div className="ui horizontal segments">
+        <div className="ui basic segment">
           <h4>Account settings</h4>
         </div>
-        <div className="ui small blue segment">
+        <div className="ui basic segment">
           <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
             <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" adds={this.getAdds()} required />
           </Formsy.Form>
         </div>
-        <div className="ui small blue segment">
+        <div className="ui basic segment">
           <Formsy.Form key={this.props.k+3} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='auth'>
             <Semantic.Checkbox name="confirmation" label="Don't ask for order confirmation" isChecked={this.published} />
             <h2 className="ui header">Two-factor authentication</h2>
@@ -71,7 +71,7 @@ export default React.createClass({
             </div>
           </Formsy.Form>
         </div>
-        <div className="ui small blue segment">
+        <div className="ui basic segment">
           <div className="ui two column grid">
             <div className="column">
               <h2 className="ui header">
