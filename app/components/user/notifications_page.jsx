@@ -5,36 +5,47 @@ import {Notifications} from 'collections';
 export default React.createClass({
   mixins: [ReactMeteorData],
   clearAll(event) {
-    if (confirm("Clear all notifications&")) {
-      Meteor.call('notifications/clear_all',function(error, result){
-				if(result){
-					this.setState({errorMessage: err.message});
-				}else{
-					//FlowRouter.go('/admin/currencies');
-				}
-			});
+    if (confirm('Clear all notifications&')) {
+      Meteor
+        .call('notifications/clear_all', function(error, result) {
+          if (result) {
+            this.setState({
+              errorMessage: err.message
+            });
+          } else {
+            //FlowRouter.go('/admin/currencies');
+          }
+        });
     }
   },
   getMeteorData() {
     return {
-      notifications: Notifications.find({}, {limit: 50}, {sort: {createdAt: -1}}).fetch()
-    }
+      notifications: Notifications.find({}, {
+        limit: 50
+      }, {
+        sort: {
+          createdAt: -1
+        }
+      }).fetch()
+    };
   },
   renderNotificationsList() {
-    return this.data.notifications.map((item) => {
-      return (
-        <NotificationOne key={item._id} item={item} />
-      )
-    })
+    return this.data
+      .notifications
+      .map((item) => {
+        return (
+          <NotificationOne key={item._id} item={item}/>
+        );
+      });
   },
   render() {
     return (
       <div>
-        <a className="ui blue labeled icon button" onClick={this.clearAll}>
-          <i className="trash icon" />
+        <a className='ui blue labeled icon button' onClick={this.clearAll}>
+          <i className='trash icon'/>
           Clear all
         </a>
-        <table className="ui compact table">
+        <table className='ui compact table'>
           <thead>
             <tr>
               <th></th>

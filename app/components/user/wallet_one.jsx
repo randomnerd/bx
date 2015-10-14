@@ -6,9 +6,9 @@ export default React.createClass({
   getMeteorData() {
     return {
       balance: Balances.findOne({currId: this.props.current}),
-      currency: Currencies.findOne({_id:this.props.current}),
-      wallet: Wallets.findOne({_id:this.props.current})
-    }
+      currency: Currencies.findOne({_id: this.props.current}),
+      wallet: Wallets.findOne({_id: this.props.current})
+    };
   },
   newWallet(item, event) {
     if (!Meteor.user()) { return }

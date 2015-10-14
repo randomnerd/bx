@@ -10,19 +10,18 @@ export default React.createClass({
     return {
       errorMessage: null,
       allowSubmit: false,
-      amount:''
+      amount: ''
     };
   },
   getMeteorData() {
     return {
       addresses: wAddressBook.find().fetch()
-    }
+    };
   },
 
   componentDidMount() {
 
   },
-
 
   hide(e) {
     //if (e) e.preventDefault();
@@ -31,26 +30,24 @@ export default React.createClass({
   },
   saveAddress() {
     //console.log(this.refs.curr.getCurrentValues())
-    var addrVals = this.refs.form.getCurrentValues();
-    Meteor.call('address/add',addrVals,function(err, result){
-      if(result){
+    let addrVals = this.refs.form.getCurrentValues();
+    Meteor.call('address/add', addrVals, function(err, result) {
+      if (result) {
         //console.log(err.message,result)
         //this.setState({errorMessage: err.message});
-      }else{
+      }else {
         //console.log(err.message)
         //FlowRouter.go('/admin/currencies');
       }
     });
   },
-  allowSubmit() { this.setState({allowSubmit: true}) },
-  disallowSubmit() { this.setState({allowSubmit: false}) },
+  allowSubmit() { this.setState({allowSubmit: true}); },
+  disallowSubmit() { this.setState({allowSubmit: false}); },
   renderAddressItems() {
     return this.data.addresses.map((item) => {
-
       return  (
         <WithdrawAddress key={item._id} item={item} />
       );
-
     });
   },
   render() {
