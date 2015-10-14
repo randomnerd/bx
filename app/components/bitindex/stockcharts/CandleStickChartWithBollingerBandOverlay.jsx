@@ -13,6 +13,23 @@ let {XAxis, YAxis} = ReStock.axes;
 let {EMA, SMA, BollingerBand} = ReStock.indicator;
 let {ChartWidthMixin} = ReStock.helper;
 
+let height = 150;
+let width = 350
+let margin = {
+  left: 70,
+  right: 70,
+  top: 20,
+  bottom: 30
+};
+
+let gridHeight = height - margin.top - margin.bottom;
+let gridWidth = width - margin.left - margin.right;
+
+let showGrid = true;
+let yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2 } : {};
+let xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2 } : {};
+
+
 let interval,
   length = 150,
   rawData;
@@ -73,8 +90,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -82,8 +98,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -101,8 +116,7 @@ export default React.createClass({
       }
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -111,13 +125,11 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     let dateFormat = d3.time
       .format('%Y-%m-%d');
@@ -134,7 +146,7 @@ export default React.createClass({
       ]} data={rawData} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
           <XAxis axisAt='bottom' orient='bottom'/>
-          <YAxis axisAt='right' orient='right' ticks={5}/>
+          <YAxis axisAt='right' orient='right' ticks={5} {...yGrid}/>
           <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
             <CandlestickSeries/>
           </DataSeries>

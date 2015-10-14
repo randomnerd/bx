@@ -68,8 +68,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -96,8 +95,7 @@ export default React.createClass({
       }
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -114,10 +112,11 @@ export default React.createClass({
     if (this.state === null || !this.state.width)
       return <div/>;
     let width = this.props.width || this.state !== null && this.state.width;
-    let {data, type} = this.props;
-    let dateFormat = d3.time
-      .format('%Y-%m-%d');
-    let height = 750;
+    let { data, type } = this.props;
+    let dateFormat = d3.time.format('%Y-%m-%d');
+
+    let height = this.state.height;
+
     let margin = {
       left: 70,
       right: 70,
@@ -129,21 +128,10 @@ export default React.createClass({
     let gridWidth = width - margin.left - margin.right;
 
     let showGrid = true;
-    let yGrid = showGrid
-      ? {
-        innerTickSize : -1 * gridWidth,
-        tickStrokeOpacity : 0.2
-      }
-      : {};
-    let xGrid = showGrid
-      ? {
-        innerTickSize : -1 * gridHeight,
-        tickStrokeOpacity : 0.2
-      }
-      : {};
+    let yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2 } : {};
+    let xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2 } : {};
 
     rawData = this.state.data;
-
     return (
       <ChartCanvas ref='chartCanvas' width={this.state.width} height={this.props.height} margin={{
         left: 70,
@@ -166,7 +154,7 @@ export default React.createClass({
         h) => [
           0, h - 100
         ]}>
-          <XAxis axisAt='bottom' orient='bottom' {...xGrid}/>
+          <XAxis axisAt='bottom' orient='bottom'/>
           <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open

@@ -15,19 +15,17 @@ export default React.createClass({
       { pair: 'FTC', value: '0.09123', href: 'ftc'},
     ];
   },
-  displayCurrent(){
-    return this.props.active||"Chose pair"
+  displayCurrent() {
+    return this.props.active || 'Chose pair';
   },
   renderMenuItems() {
     return this.getPairItems().map((item) => {
       return (
-        <a className={"item" + (this.props.active==item.href?" active":"")} key={item.href} href={"/pair/"+item.href}>
-          <div className="ui label">{item.value}</div>
+        <a className={'item' + (this.props.active==item.href?' active':'')} key={item.href} href={'/pair/'+item.href}>
+          <div className='ui label'>{item.value}</div>
           {item.pair}
-
-
         </a>
-      )
+      );
     });
   },
   componentDidMount() {
@@ -35,12 +33,12 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="ui dropdown item">
-        <i className="bar chart icon" />
+      <div className='ui dropdown item'>
+        <i className='bar chart icon' />
         {this.displayCurrent()}
-        <i className="dropdown icon" />
+        <i className='dropdown icon' />
 
-        <div className="ui vertical menu">
+        <div className='ui vertical menu'>
           {this.renderMenuItems()}
         </div>
       </div>

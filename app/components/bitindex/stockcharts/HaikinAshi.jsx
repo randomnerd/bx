@@ -100,8 +100,7 @@ export default React.createClass({
       }
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -110,17 +109,17 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
+
     let dateFormat = d3.time
       .format('%Y-%m-%d');
     rawData = this.state.data;
+
     return (
       <ChartCanvas ref='chartCanvas' width={this.state.width} height={600} margin={{
         left: 90,

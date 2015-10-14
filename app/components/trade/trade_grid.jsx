@@ -11,7 +11,7 @@ export default React.createClass({
   getInitialState: function() {
     return {
       chartType: 'candle'
-    }
+    };
   },
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
@@ -19,106 +19,110 @@ export default React.createClass({
     return {
 
       BTPR_Loading: !handle_BTPR.ready(),
+      BTPR: BitIndexIndicator_BTPR.find().fetch(),
 
-        BTPR: BitIndexIndicator_BTPR.find().fetch(),
-
-    }
+    };
   },
 
-  showCandle(event){
+  showCandle(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType:'candle'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'candle'});
   },
-  showMACD(event){
+  showMACD(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType:'macd'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'macd'});
   },
-  showRSI(event){
+  showRSI(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType:'rsi'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'rsi'});
   },
-  showSTO(event){
+  showSTO(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType:'sto'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'sto'});
   },
-  showBollinger(event){
+  showBollinger(event) {
     //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active')
-    $(event.currentTarget).addClass('active')
-    this.setState({chartType:'bollinger'})
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'bollinger'});
   },
-  showKagi(event){
+  showKagi(event) {
     //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
-    this.setState({chartType:'kagi'})
+    this.setState({chartType: 'kagi'})
   },
   showPointandFigure(event){
     //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active')
     $(event.currentTarget).addClass('active')
-    this.setState({chartType:'pointandfigure'})
+    this.setState({chartType: 'pointandfigure'})
   },
 
 
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
       case 'candle':
-        return(
-          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3 data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
-        )
-        break;
+      return (
+          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
+          data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+        );
+      break;
       case 'macd':
-        return(
-          <div><Charts.CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
-        )
-        break;
+      return (
+          <div><Charts.CandleStickChartWithMACDIndicator
+          data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+        );
+      break;
       case 'rsi':
-        return(
-          <div><Charts.CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
-        )
-        break;
+      return (
+          <div><Charts.CandleStickChartWithRSIIndicator
+          data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+        );
+      break;
 
       case 'sto':
-        return(
-          <div><Charts.CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = 'svg' height={350} /></div>
+      return (
+          <div><Charts.CandleStickChartWithFullStochasticsIndicator
+          data = {this.data.BTPR} type = 'svg' height={350} /></div>
         )
 
-        break;
+      break;
 
       case 'bollinger':
-        return (
+      return (
           <div>
-            <Charts.CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = 'svg' height={350} />
+            <Charts.CandleStickChartWithBollingerBandOverlay
+            data = {this.data.BTPR} type = 'svg' height={350} />
           </div>
         )
         break;
 
       case 'kagi':
-        return (
-            <div><Charts.Kagi data = {this.data.BTPR} type = 'svg' height={350}/></div>
+      return (
+            <div><Charts.Kagi data = {this.data.BTPR}
+             type = 'svg' height={350}/></div>
         )
         break;
 
       case 'pointandfigure':
-        return (
-            <div><Charts.PointAndFigureWithUpdatingData data = {this.data.BTPR} type = 'svg' height={350}/></div>
+      return (
+            <div><Charts.PointAndFigureWithUpdatingData
+            data = {this.data.BTPR} type = 'svg' height={350}/></div>
         )
-        break;
+      break;
 
       default:
 
     }
-
-
   },
   render() {
     return (
@@ -150,7 +154,7 @@ export default React.createClass({
                       <div className='ui top attached tabular basic menu'>
                         <div className='right menu' ref='chartType'>
                           <a className='item active' onClick={this.showCandle}>
-                            Candle
+                            CandleStick
                           </a>
                           <a className='item' onClick={this.showMACD}>
                             MACD
@@ -175,7 +179,7 @@ export default React.createClass({
                       </div>
                       <div className='ui basic segment nopadding'>
                         {
-                          this.data.BTPR_Loading?<div className='cube'></div>:
+                          this.data.BTPR_Loading ? <div className='cube'></div> :
                           this.renderBlockChainIndicator()
                         }
                       </div>

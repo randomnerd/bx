@@ -1,24 +1,24 @@
 import React from 'react';
 import ReStock from 'react-stockcharts';
 
-var {ChartCanvas, Chart, DataSeries, OverlaySeries, EventCapture} = ReStock;
+let {ChartCanvas, Chart, DataSeries, OverlaySeries, EventCapture} = ReStock;
 
-var {CandlestickSeries, HistogramSeries, LineSeries, AreaSeries, MACDSeries} = ReStock.series;
-var {MouseCoordinates, CurrentCoordinate} = ReStock.coordinates;
-var {EdgeContainer, EdgeIndicator} = ReStock.coordinates;
+let {CandlestickSeries, HistogramSeries, LineSeries, AreaSeries, MACDSeries} = ReStock.series;
+let {MouseCoordinates, CurrentCoordinate} = ReStock.coordinates;
+let {EdgeContainer, EdgeIndicator} = ReStock.coordinates;
 
-var {TooltipContainer, OHLCTooltip, MovingAverageTooltip, MACDTooltip} = ReStock.tooltip;
-var {StockscaleTransformer} = ReStock.transforms;
+let {TooltipContainer, OHLCTooltip, MovingAverageTooltip, MACDTooltip} = ReStock.tooltip;
+let {StockscaleTransformer} = ReStock.transforms;
 
-var {XAxis, YAxis} = ReStock.axes;
-var {MACD, EMA, SMA} = ReStock.indicator;
-var {ChartWidthMixin} = ReStock.helper;
+let {XAxis, YAxis} = ReStock.axes;
+let {MACD, EMA, SMA} = ReStock.indicator;
+let {ChartWidthMixin} = ReStock.helper;
 
-var interval,
+let interval,
   length = 150,
   rawData;
-var func;
-var speed = 1000;
+let func;
+let speed = 1000;
 
 export default React.createClass({
   mixins: [ChartWidthMixin],
@@ -41,14 +41,14 @@ export default React.createClass({
     };
   },
   onKeyPress(e) {
-    var keyCode = e.which;
+    let keyCode = e.which;
     switch (keyCode) {
     case 50 :
       {
         // 2 (50) - Start alter data
         func = () => {
-          var exceptLast = rawData.slice(0, rawData.length - 1);
-          var last = rawData[rawData.length - 1];
+          let exceptLast = rawData.slice(0, rawData.length - 1);
+          let last = rawData[rawData.length - 1];
 
           last = {
             ...last,
@@ -66,7 +66,7 @@ export default React.createClass({
       {
         // 1 (49) - Start Push data
         func = () => {
-          var pushMe = this.props
+          let pushMe = this.props
             .data
             .slice(length, length + 1);
           rawData = rawData.concat(pushMe);
@@ -96,7 +96,7 @@ export default React.createClass({
     case 45 :
       {
         // - (45) - reduce the speed
-        var delta = Math.min(speed, 1000);
+        let delta = Math.min(speed, 1000);
         speed = speed + delta;
         break;
       }
@@ -119,8 +119,8 @@ export default React.createClass({
   render() {
     if (this.state === null || !this.state.width)
       return <div/>;
-    var {data, type} = this.props;
-    var dateFormat = d3.time
+    let {data, type} = this.props;
+    let dateFormat = d3.time
       .format('%Y-%m-%d');
     rawData = this.state.data;
     return (
