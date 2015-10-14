@@ -34,7 +34,7 @@ export default React.createClass({
     return {
       right: {
         buttons: [{name: 'Save', icon: 'checkmark', accent: 'blue', action: ()=> {this.saveName()}}]
-      };
+      }
     }
   },
   render() {
