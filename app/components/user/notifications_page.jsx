@@ -40,7 +40,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="ui main container">
         <a className='ui blue labeled icon button' onClick={this.clearAll}>
           <i className='trash icon'/>
           Clear all

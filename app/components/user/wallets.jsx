@@ -68,7 +68,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="ui main fluid container">
+      <div className="ui main container">
         <div className='ui segments'>
           <div className='ui secondary segment'>
             <h4>Wallets</h4>

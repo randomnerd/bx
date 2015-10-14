@@ -66,12 +66,8 @@ export default React.createClass({
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'pointandfigure'});
   },
-  showRenko(event) {
-    //console.log(item)
-    $(this.refs.chartType).find('.item').removeClass('active');
-    $(event.currentTarget).addClass('active');
-    this.setState({chartType: 'renko'});
-  },
+
+
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
     case 'candle':
@@ -79,28 +75,29 @@ export default React.createClass({
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
+    break;
     case 'macd':
       return (
           <div><Charts.CandleStickChartWithMACDIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
+    break;
     case 'rsi':
       return (
           <div><Charts.CandleStickChartWithRSIIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-      break;
+    break;
 
     case 'sto':
       return (
           <div><Charts.CandleStickChartWithFullStochasticsIndicator
           data = {this.data.BTPR} type = 'svg' height={350} /></div>
         );
+
       break;
 
-    case 'bollinger':
+      case 'bollinger':
       return (
           <div>
             <Charts.CandleStickChartWithBollingerBandOverlay
@@ -109,28 +106,20 @@ export default React.createClass({
         );
         break;
 
-    case 'kagi':
+      case 'kagi':
       return (
             <div><Charts.Kagi data = {this.data.BTPR}
              type = 'svg' height={350}/></div>
         );
       break;
 
-    case 'pointandfigure':
+      case 'pointandfigure':
       return (
             <div><Charts.PointAndFigureWithUpdatingData
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
-
-    case 'renko':
-      return (
-            <div><Charts.RenkoWithUpdatingData
-            data = {this.data.BTPR} type = 'svg' height={350}/></div>
-      );
-      break;
-
-    default:
+      default:
 
     }
   },
@@ -155,42 +144,6 @@ export default React.createClass({
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-        </div>
-        <div className='ux column center fullheight'>
-          <div className='ux column chart padding'>
-            <div className='ux container fix400'>
-              <div className='ux fixchart container'>
-                <div className='ui basic segment h100'>
-                  <h3 className='ui header'>PRICE CHART</h3>
-                    <div className='ui basic teal segment nopadding'>
-                      <div className='ui top attached tabular basic menu'>
-                        <div className='right menu' ref='chartType'>
-                          <a className='item active' onClick={this.showCandle}>
-                            CandleStick
-                          </a>
-                          <a className='item' onClick={this.showMACD}>
-                            MACD
-                          </a>
-                          <a className='item' onClick={this.showRSI}>
-                            RSI
-                          </a>
-                          <a className='item' onClick={this.showSTO}>
-                            STO
-                          </a>
-                          <a className='item' onClick={this.showBollinger}>
-                            Bollinger
-                          </a>
-                          <a className='item' onClick={this.showKagi}>
-                            Kagi
-                          </a>
-                          <a className='item' onClick={this.showPointandFigure}>
-                            P & F
-                          </a>
-                          <a className='item' onClick={this.showRenko}>
-                            Renko
-                          </a>
-=======
           <div className='ux column center fullheight'>
             <div className='ux column chart padding'>
               <div className='ux container fix400'>
@@ -223,7 +176,6 @@ export default React.createClass({
                             </a>
 
                           </div>
->>>>>>> settings, wallets, admin fix
                         </div>
                         <div className='ui basic segment nopadding'>
                           {

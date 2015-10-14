@@ -77,7 +77,6 @@ export default React.createClass({
       case 'HIDE_SIDEBAR':
         this.setState({showSidebar: false});
         break;
-
       }
     });
   },
@@ -95,8 +94,8 @@ export default React.createClass({
 
   renderLoading() {
     return (
-      <div className='ui active dimmer'>
-        <div className='ui text loader'>Loading...</div>
+      <div className="ui active dimmer">
+        <div className="ui text loader">Loading...</div>
       </div>
     );
   },
@@ -104,46 +103,29 @@ export default React.createClass({
   render() {
     if (this.data.loading) return this.renderLoading();
     return (
-      <div className='ui inverted newgrey body'>
+      <div className="ui inverted newgrey body">
 
         <Sidebar show={this.state.showSidebar}>
           {this.renderSidebarContent()}
         </Sidebar>
-        <div className='pusher'>
-          <div className='forsidebar above'>
-            <div className='ui vertical fluid tabular labeled icon inverted newgrey menu'>
-              <a className='item active' onClick={this.chatToggle}>
-                <i className='comment icon'></i>
+        <div className="pusher">
+          <div className="forsidebar above">
+            <div className="ui vertical fluid tabular labeled icon inverted newgrey menu">
+              <a className="item active" onClick={this.chatToggle}>
+                <i className="comment icon"></i>
               </a>
             </div>
           </div>
-<<<<<<< HEAD
-          <div className='contwrapper'>
-            <div className='ui main fluid container'>
-=======
           <div className="contwrapper">
-
->>>>>>> settings, wallets, admin fix
-
-                  {this.props.content}
-
-          
+            {this.props.content}
           </div>
         </div>
-        <TopMenu title='BitExchange' active={this.props.active} />
-
-            <LoginModal show={this.state.showLoginModal} />
-
-            <SignUpModal show={this.state.showSignUpModal} />
-
-            <WithdrawModal show={this.state.showWithdrawModal}
-              current={this.state.withdrawCurr}
-              address={this.state.withdrawAddress}
-              amount={this.state.withdrawAmount}
-            />
-
-            <WithdrawAddressModal show={this.state.withdrawAddressModal} />
-            <NotificationPopups />
+        <TopMenu title="BitExchange" active={this.props.active} />
+        <LoginModal show={this.state.showLoginModal} />
+        <SignUpModal show={this.state.showSignUpModal} />
+        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr} address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
+        <WithdrawAddressModal show={this.state.withdrawAddressModal} />
+        <NotificationPopups />
 
       </div>
     );
