@@ -268,6 +268,10 @@ html, body{
     margin: 0.8rem 0;
 }
 
+.ui.inverted.newgrey .ui.form .input{
+    color: rgba(200, 200, 200, 0.67);
+}
+
 
 .ui.inverted.newgrey .ui.form input:not([type]),
 .ui.inverted.newgrey .ui.form input[type="text"],
@@ -331,7 +335,14 @@ html, body{
   color: rgba(0, 0, 0, 0.37);
 }
 
-
+input::-webkit-input-placeholder       {opacity: 0.6; transition: opacity 0.3s ease;}
+input::-moz-placeholder                {opacity: 0.6; transition: opacity 0.3s ease;}
+input:-moz-placeholder                 {opacity: 0.6; transition: opacity 0.3s ease;}
+input:-ms-input-placeholder            {opacity: 0.6; transition: opacity 0.3s ease;}
+input:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
+input:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
+input:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
+input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
 
 
 .ui.inverted.newgrey .sidebar{
