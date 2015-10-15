@@ -129,7 +129,7 @@ export default React.createClass({
         <div className='two fields'>
           <Semantic.Checkbox className={this.state.replyName?'':' disabled'} name='isPrivate' label='private' onClick={this.bePrivate} ref='isPrivate' isChecked={this.state.isPrivate} />
           <div className='field'>
-            <a className='ui positive labeled right aligned icon button' onClick={this.writeMessage}>
+            <a className='ui positive labeled right aligned normal icon button' onClick={this.writeMessage}>
               <i className='checkmark icon' />
               Send
             </a>

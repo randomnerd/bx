@@ -285,10 +285,54 @@ html, body{
     color: rgba(200, 200, 200, 0.67);
     transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
 }
+
 .ui.inverted.newgrey .ui.form input:focus{
   border-color: rgba(206, 210, 213, 0.35);
   color: rgba(200, 200, 200, 0.77);
 }
+
+.ui.inverted.newgrey .ui.form input:-moz-placeholder {
+  color: rgba(200, 200, 200, 0.37);
+}
+
+.ui.inverted.newgrey .ui.form input::-moz-placeholder {
+  color: rgba(200, 200, 200, 0.37);
+}
+
+.ui.inverted.newgrey .ui.form input::-webkit-input-placeholder {
+  color: rgba(200, 200, 200, 0.37);
+}
+
+.ui.inverted.newgrey .ui.modal .ui.form input:not([type]),
+.ui.inverted.newgrey .ui.modal .ui.form input[type="text"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="email"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="search"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="password"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="date"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="datetime-local"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="tel"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="time"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="url"],
+.ui.inverted.newgrey .ui.modal .ui.form input[type="number"] {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.87);
+  transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
+}
+
+.ui.inverted.newgrey .ui.modal .ui.form input:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.37);
+}
+
+.ui.inverted.newgrey .ui.modal .ui.form input::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.37);
+}
+
+.ui.inverted.newgrey .ui.modal .ui.form input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.37);
+}
+
+
+
 
 .ui.inverted.newgrey .sidebar{
   background-color: #2f3d45;
@@ -330,12 +374,12 @@ html, body{
   border: none !important;
 }
 
-.ui.toggle.checkbox .box::before, .ui.toggle.checkbox label::before {
+.ui.inverted.newgrey .ui.toggle.checkbox .box::before, .ui.toggle.checkbox label::before {
     background: rgba(200, 200, 200, 0.77);
 
 }
 
-.ui.toggle.checkbox .box:hover::before, .ui.toggle.checkbox label:hover::before {
+.ui.inverted.newgrey .ui.toggle.checkbox .box:hover::before, .ui.toggle.checkbox label:hover::before {
     background: rgba(150, 160, 170, 0.77);
 
 }
