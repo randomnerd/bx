@@ -314,7 +314,7 @@ html, body{
 }
 
 
-h3.ui.header{
+.ux h3.ui.header{
   margin-top: -3rem !important;
 }
 .main.container{
@@ -329,6 +329,17 @@ h3.ui.header{
 .ui.segments{
   border: none !important;
 }
+
+.ui.toggle.checkbox .box::before, .ui.toggle.checkbox label::before {
+    background: rgba(200, 200, 200, 0.77);
+
+}
+
+.ui.toggle.checkbox .box:hover::before, .ui.toggle.checkbox label:hover::before {
+    background: rgba(150, 160, 170, 0.77);
+
+}
+
 /* Semantic new grey */
 
 /* UX grid */

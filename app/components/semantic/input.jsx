@@ -81,10 +81,9 @@ export default React.createClass({
       action:  (leftButtons || rightButtons)?true:false,
       left:    leftButtons  || leftLabels,
       right:   rightButtons || rightLabels,
-      labeled: leftLabels   || rightLabels,
-      icon:    this.props.icon
+      labeled: leftLabels   || rightLabels
     }
-    if (this.props.icon) params[this.props.icon] = true;
+    if (this.props.icon) params[this.props.icon + " icon"] = true;  //"[iconame] [derection] icon"
     return classNames(params);
   },
 

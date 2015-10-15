@@ -44,19 +44,19 @@ export default React.createClass({
       let address = this.getAddress(item._id);
       let balance = this.getBalance(item._id);
       let allowWithdraw = parseFloat(balance) > 0;
-      let generateBtn = <button className='ui mini button' onClick={this.newWallet.bind(this, item)}>Generate</button>;
+      let generateBtn = <button className='ui normal tiny button' onClick={this.newWallet.bind(this, item)}>Generate</button>;
 
       return  (
-        <tr key={item._id}>
+        <tr key={item._id} className="ui white text opacity">
           <td className='two wide'>{balance}</td>
           <td className='two wide'>{item.shortName}</td>
           <td className='nine wide'>{address ? address : generateBtn}</td>
           <td className='three wide right aligned'>
-            <div className='ui mini buttons'>
-              <a className={'ui blue button' + (allowWithdraw ? '' : ' disabled')} onClick={this.showWithdraw.bind(this, item)}>
+            <div className='ui tiny buttons'>
+              <a className={'ui blue normal button' + (allowWithdraw ? '' : ' disabled')} onClick={this.showWithdraw.bind(this, item)}>
                 Withdraw
               </a>
-              <a className='ui button' href={'/u/wallet/' + item._id}>
+              <a className='ui normal button' href={'/u/wallet/' + item._id}>
                 Details
               </a>
             </div>
@@ -71,10 +71,10 @@ export default React.createClass({
       <div className="ui main container">
         <div className='ui segments'>
           <div className='ui secondary segment'>
-            <h4>Wallets</h4>
+            <h3 className='ui header'>Wallets</h3>
           </div>
           <div className='ui small blue segment'>
-            <table className='ui selectable very compact very basic striped table nomargin'>
+            <table className='ui selectable very basic striped large table nomargin'>
               <thead>
                 <tr className='lesspadding'>
                   <th className='two wide' >Amount</th>

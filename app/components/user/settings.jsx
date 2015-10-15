@@ -43,7 +43,7 @@ export default React.createClass({
       <div className="ui main container">
         <div className="ui segments">
           <div className="ui basic segment">
-            <h4>Account settings</h4>
+            <h3 className='ui header'>Account settings</h3>
           </div>
           <div className="ui basic segment">
             <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
