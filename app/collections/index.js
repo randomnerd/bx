@@ -8,6 +8,8 @@ export const Balances = new Mongo.Collection('balances');
 export const wAddressBook = new Mongo.Collection('waddressbook');
 export const Chat = new Mongo.Collection('chat');
 export const Withdrawals = new Mongo.Collection('withdrawals');
+export const Orders = new Mongo.Collection('orders');
+export const Trades = new Mongo.Collection('trades');
 
 export const BitIndexIndicator_BTTC = new Mongo.Collection('BitIndexIndicator_BTTC');
 export const BitIndexIndicator_BTTN = new Mongo.Collection('BitIndexIndicator_BTTN');
