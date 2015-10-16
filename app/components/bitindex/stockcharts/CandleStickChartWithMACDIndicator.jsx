@@ -212,21 +212,7 @@ export default React.createClass({
 
               <TooltipContainer>
 
-                  <OHLCTooltip forChart={1}
-                  origin={[
-                    -40, -10
-                  ]}/>
-
-                  <MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)}
-                  origin={[
-                    -38, 5
-                  ]}/>
-
-                  <MACDTooltip forChart={3}
-                  origin={[
-                    -38, 15
-                  ]}/>
-
+                
               </TooltipContainer>
 
       </ChartCanvas>
