@@ -30,7 +30,7 @@ export default React.createClass({
   },
   getDefaultProps() {
     return {
-      type: 'svg'
+      type: 'hybrid'
     };
   },
   getInitialState() {
@@ -120,6 +120,7 @@ export default React.createClass({
     rawData = this.state.data;
     return (
       <ChartCanvas ref='chartCanvas' width={this.state.width} height={this.props.height} margin={{
+
         left: 60,
         right: 60,
         top: 5,
@@ -160,14 +161,14 @@ export default React.createClass({
 
                           <DataSeries id={0} yAccessor={(d) => d.volume}>
                             <HistogramSeries fill={(d) => d.close > d.open
-                              ? '#6BA583'
-                              : 'red'} stroke='#767676' tickStroke='#767676'/>
+                              ? '#21ba45'
+                              : '#db2828'} stroke='#767676' tickStroke='#767676'/>
                           </DataSeries>
 
                           <DataSeries id={1} indicator={SMA} options={{
                             period: 10,
                             pluck: 'volume'
-                          }} stroke='steelblue' fill='steelblue'>
+                          }} stroke='#2185d0' fill='#2185d0'>
                             <AreaSeries opacity={0.5} stroke='#767676' tickStroke='#767676'/>
                           </DataSeries>
               </Chart>
@@ -214,6 +215,7 @@ export default React.createClass({
 
 
               </TooltipContainer>
+
 
       </ChartCanvas>
     );

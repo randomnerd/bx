@@ -802,3 +802,39 @@ tr.lesspadding th {
 }
 
 /* LANDING */
+
+/*.ui .blue.text{color: #2185d0 !important}
+.ui .red.text{color: #db2828 !important}
+.ui .orange.text{color: #f2711c !important}
+.ui .yellow.text{color: #fbbd08 !important}
+.ui .olive.text{color: #b5cc18 !important}
+.ui .green.text{color: #21ba45; !important}
+.ui .teal.text{color: #00b5ad !important}
+.ui .violet.text{color: #6435c9 !important}
+.ui .purple.text{color: #a333c8 !important}
+.ui .pink.text{color: #e03997 !important}
+.ui .brown.text{color: #a5673f !important}
+.ui .grey.text{color: #767676 !important}
+.ui .white.text{color: #ffffff !important}
+.ui .black.text{color: #1b1c1d !important}*/
+
+/*CHARTS*/
+
+.react-stockcharts-toottip-hover tspan{
+  fill: #fff;
+}
+.react-stockcharts-toottip-hover tspan.react-stockcharts-tooltip-label{
+  fill: #ccc;
+}
+.react-stockcharts-candlestick-candle .up{
+  fill: #21ba45;
+}
+.react-stockcharts-candlestick-candle .down{
+  fill: #db2828;
+}
+.react-stockcharts-axis .react-stockcharts-x-axis, .react-stockcharts-axis .react-stockcharts-y-axis, .react-stockcharts-axis line{
+  stroke:#767676
+}
+.react-stockcharts-axis .tick text{
+  fill: #ccc;
+}
