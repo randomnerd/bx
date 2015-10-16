@@ -176,10 +176,14 @@ export default React.createClass({
         <CurrentCoordinate forChart={2} forDataSeries={0}/>
         <CurrentCoordinate forChart={2} forDataSeries={1}/>
         <EdgeContainer>
-          <EdgeIndicator itemType='last' orient='right' edgeAt='right' forChart={1} forDataSeries={1}/>
-          <EdgeIndicator itemType='last' orient='right' edgeAt='right' forChart={1} forDataSeries={2}/>
-          <EdgeIndicator itemType='first' orient='left' edgeAt='left' forChart={1} forDataSeries={1}/>
-          <EdgeIndicator itemType='first' orient='left' edgeAt='left' forChart={1} forDataSeries={2}/>
+          <EdgeIndicator itemType='last' orient='right'
+                         edgeAt='right' forChart={1} forDataSeries={1}/>
+          <EdgeIndicator itemType='last' orient='right'
+                         edgeAt='right' forChart={1} forDataSeries={2}/>
+          <EdgeIndicator itemType='first' orient='left'
+                         edgeAt='left' forChart={1} forDataSeries={1}/>
+          <EdgeIndicator itemType='first' orient='left'
+                         edgeAt='left' forChart={1} forDataSeries={2}/>
         </EdgeContainer>
         <Chart id={3} yMousePointerDisplayLocation='right'
                       yMousePointerDisplayFormat={(y) => y.toFixed(2)} height={100}
@@ -190,8 +194,11 @@ export default React.createClass({
           bottom: 10,
           left: 0
         }}>
-          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0} fontSize={10}/>
-          <YAxis axisAt='right' orient='right' ticks={4} fontSize={10}/>
+          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0} fontSize={10}
+                 stroke='#767676' tickStroke='#767676'/>
+          <YAxis axisAt='right' orient='right' ticks={4} fontSize={10}
+                 stroke='#767676' tickStroke='#767676'/>
+
           <DataSeries id={0} indicator={RSI} options={{
             period: 14
           }}>
