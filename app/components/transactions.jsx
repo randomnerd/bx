@@ -32,7 +32,6 @@ export default React.createClass({
         </tr>
 
       );
-
     });
   },
 

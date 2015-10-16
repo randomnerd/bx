@@ -83,7 +83,7 @@ export default React.createClass({
     case 'candle':
       return (
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
-          data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+          data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
         );
       break;
     case 'macd':

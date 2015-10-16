@@ -25,7 +25,7 @@ export default React.createClass({
   },
   getDefaultProps() {
     return {
-      type: 'svg'
+      type: 'hybrid'
     };
   },
   getInitialState() {
@@ -131,7 +131,7 @@ export default React.createClass({
     rawData = this.state.data;
     return (
 
-      <ChartCanvas  ref='chartCanvas' width={this.state.width} height={this.props.height}
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={this.props.height}
       				margin={{left: 70, right: 70, top: 0, bottom: 20}} initialDisplay={30}
       				dataTransform={[ { transform: StockscaleTransformer } ]}
       				data={rawData} type={type}>
@@ -148,7 +148,7 @@ export default React.createClass({
                             yMousePointerDisplayFormat={d3.format('.4s')}
       						          height={150} origin={(w, h) => [0, h - 150]}>
       					<YAxis axisAt='left' orient='left' ticks={5} fontSize={10}
-                tickFormat={d3.format('s')}/>
+                tickFormat={d3.format('s')} stroke='#767676' tickStroke='#767676'/>
 
       					<DataSeries id={0} yAccessor={(d) => d.volume} >
       						<HistogramSeries fill={(d) => d.close > d.open ? '#21ba45' : '#db2828'} />
