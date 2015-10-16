@@ -123,7 +123,7 @@ export default React.createClass({
         right: 70,
         top: 20,
         bottom: 30
-      }} initialDisplay={200} dataTransform={[{
+      }} initialDisplay={30} dataTransform={[{
         transform: StockscaleTransformer
       }
       ]} data={rawData} type={type}>

@@ -41,24 +41,22 @@ export default React.createClass({
     };
   },
   onKeyPress(e) {
-    var keyCode = e.which;
+    let keyCode = e.which;
     switch (keyCode) {
     case 50 :
       {
         // 2 (50) - Start alter data
         func = () => {
-          var exceptLast = rawData.slice(0, rawData.length - 1);
-          var last = rawData[rawData.length - 1];
+          let exceptLast = rawData.slice(0, rawData.length - 1);
+          let last = rawData[rawData.length - 1];
 
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
-
+          };
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -66,7 +64,7 @@ export default React.createClass({
       {
         // 1 (49) - Start Push data
         func = () => {
-          var pushMe = this.props
+          let pushMe = this.props
             .data
             .slice(length, length + 1);
           rawData = rawData.concat(pushMe);
@@ -74,8 +72,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -83,8 +80,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -96,14 +92,14 @@ export default React.createClass({
     case 45 :
       {
         // - (45) - reduce the speed
-        var delta = Math.min(speed, 1000);
+        let delta = Math.min(speed, 1000);
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -112,19 +108,16 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
-    var {data, type} = this.props;
-    var dateFormat = d3.time
-      .format('%Y-%m-%d');
+    if (this.state === null || !this.state.width) return <div/>;
+    let {data, type} = this.props;
+    let dateFormat = d3.time.format('%Y-%m-%d');
     rawData = this.state.data;
     return (
-      <ChartCanvas ref='chartCanvas' width={this.state.width} height={400} margin={{
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={350} margin={{
         left: 70,
         right: 70,
         top: 10,
@@ -136,9 +129,10 @@ export default React.createClass({
           transform: RenkoTransformer
         }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt='bottom' orient='bottom'/>
-          <YAxis axisAt='right' orient='right' ticks={5}/>
+        <Chart id={1} yMousePointerDisplayLocation='right'
+                      yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+          <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
           <DataSeries id={0} yAccessor={RenkoSeries.yAccessor}>
             <RenkoSeries/>
           </DataSeries>
@@ -147,7 +141,7 @@ export default React.createClass({
         h) => [
           0, h - 150
         ]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'

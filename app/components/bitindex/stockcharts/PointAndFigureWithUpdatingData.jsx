@@ -35,7 +35,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -122,7 +122,7 @@ export default React.createClass({
       .format('%Y-%m-%d');
     rawData = this.state.data;
     return (
-      <ChartCanvas ref='chartCanvas' width={this.state.width} height={370} margin={{
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={350} margin={{
         left: 70,
         right: 70,
         top: 10,
@@ -135,7 +135,8 @@ export default React.createClass({
           options: pointAndFigureTransformOptions
         }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+        <Chart id={1} yMousePointerDisplayLocation='right'
+                      yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
           <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
           <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
           <DataSeries id={0} yAccessor={PointAndFigureSeries.yAccessor}>

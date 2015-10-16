@@ -71,6 +71,11 @@ export default React.createClass({
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'haikinashi'});
   },
+  showRenko(event) {
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'renko'});
+  },
 
 
   renderBlockChainIndicator() {
@@ -101,7 +106,7 @@ export default React.createClass({
         );
       break;
 
-      case 'bollinger':
+    case 'bollinger':
       return (
           <div>
             <Charts.CandleStickChartWithBollingerBandOverlay
@@ -110,23 +115,31 @@ export default React.createClass({
         );
       break;
 
-      case 'kagi':
+    case 'kagi':
       return (
             <div><Charts.Kagi data = {this.data.BTPR}
              type = 'svg' height={350}/></div>
         );
       break;
 
-      case 'pointandfigure':
+    case 'pointandfigure':
       return (
             <div><Charts.PointAndFigureWithUpdatingData
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
 
-      case 'haikinashi':
+    case 'haikinashi':
       return (
         <div><Charts.HaikinAshi
+        data = {this.data.BTPR} type = 'svg' height={350}/></div>
+      );
+      break;
+
+    case 'renko':
+
+      return (
+        <div><Charts.RenkoWithUpdatingData
         data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
@@ -187,7 +200,9 @@ export default React.createClass({
                             <a className='item' onClick={this.showHaikinAshi}>
                               HaikinAshi
                             </a>
-
+                            <a className='item' onClick={this.showRenko}>
+                              Renko
+                            </a>
                           </div>
                         </div>
                         <div className='ui basic segment nopadding'>
