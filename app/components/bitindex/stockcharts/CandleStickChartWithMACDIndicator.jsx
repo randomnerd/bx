@@ -125,7 +125,7 @@ export default React.createClass({
         top: 5,
         bottom: 5
       }}
-      initialDisplay={200} dataTransform={[{
+      initialDisplay={30} dataTransform={[{
         transform: StockscaleTransformer
       }
       ]} data={rawData} type={type}>
