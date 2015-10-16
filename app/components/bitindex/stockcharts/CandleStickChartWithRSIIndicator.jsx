@@ -31,7 +31,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -49,16 +49,13 @@ export default React.createClass({
         func = () => {
           let exceptLast = rawData.slice(0, rawData.length - 1);
           let last = rawData[rawData.length - 1];
-
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
-
+          };
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -74,8 +71,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -83,8 +79,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -100,10 +95,10 @@ export default React.createClass({
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -112,17 +107,16 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     let dateFormat = d3.time
       .format('%Y-%m-%d');
     rawData = this.state.data;
+
     return (
       <ChartCanvas ref='chartCanvas' width={this.state.width} height={this.props.height} margin={{
         left: 70,
@@ -130,13 +124,15 @@ export default React.createClass({
         top: 20,
         bottom: 30
       }} initialDisplay={200} dataTransform={[{
-          transform: StockscaleTransformer
-        }
+        transform: StockscaleTransformer
+      }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation='right' height={100} yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{
-          top: 10,
+
+        <Chart id={1} yMousePointerDisplayLocation='right' height={this.props.height - 200}
+        yMousePointerDisplayFormat={(y) => y.toFixed(2)} padding={{
+          top: 0,
           right: 0,
-          bottom: 10,
+          bottom: 0,
           left: 0
         }}>
           <YAxis axisAt='right' orient='right' ticks={5}/>
@@ -165,7 +161,7 @@ export default React.createClass({
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'
-              : 'red'}/>
+              : '#db2828'}/>
           </DataSeries>
           <DataSeries id={1} indicator={SMA} options={{
             period: 10,

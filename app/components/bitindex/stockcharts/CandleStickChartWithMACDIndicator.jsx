@@ -212,7 +212,7 @@ export default React.createClass({
 
               <TooltipContainer>
 
-                
+
               </TooltipContainer>
 
       </ChartCanvas>

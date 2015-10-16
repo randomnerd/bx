@@ -136,31 +136,35 @@ export default React.createClass({
     return (
 
       <ChartCanvas  ref='chartCanvas' width={this.state.width} height={this.props.height}
-      				margin={{left: 70, right: 70, top:10, bottom: 30}} initialDisplay={200}
+      				margin={{left: 70, right: 70, top: 0, bottom: 20}} initialDisplay={200}
       				dataTransform={[ { transform: StockscaleTransformer } ]}
       				data={rawData} type={type}>
-      				<Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-      					<XAxis axisAt="bottom" orient="bottom"/>
-      					<YAxis axisAt="right" orient="right" ticks={5}  {...yGrid}/>
+      				<Chart id={1} yMousePointerDisplayLocation='right'
+                            yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+      					<XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
+      					<YAxis axisAt='right' orient='right' ticks={5}  {...yGrid} fontSize={10}/>
       					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
       						<CandlestickSeries />
       					</DataSeries>
       				</Chart>
-      				<Chart id={2} yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
-      						height={150} origin={(w, h) => [0, h - 150]}>
-      					<YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
+      				<Chart id={2} yMousePointerDisplayLocation='left'
+                            yMousePointerDisplayFormat={d3.format('.4s')}
+      						          height={150} origin={(w, h) => [0, h - 150]}>
+      					<YAxis axisAt='left' orient='left' ticks={5} fontSize={10}
+                tickFormat={d3.format('s')}/>
+
       					<DataSeries id={0} yAccessor={(d) => d.volume} >
-      						<HistogramSeries fill={(d) => d.close > d.open ? "#6BA583" : "red"} />
+      						<HistogramSeries fill={(d) => d.close > d.open ? '#21ba45' : '#db2828'} />
       					</DataSeries>
       				</Chart>
-      				<MouseCoordinates xDisplayFormat={dateFormat} type="crosshair" />
-      				<EventCapture mouseMove={true} zoom={true} pan={true}
-              mainChart={1} defaultFocus={false} />
-      				<TooltipContainer>
-      					<OHLCTooltip forChart={1} origin={[-10, 0]}/>
+
+              <MouseCoordinates  xDisplayFormat={dateFormat} type='crosshair' />
+              <EventCapture mouseMove={true} zoom={true} pan={true}
+              mainChart={1} defaultFocus={false}/>
+      				<TooltipContainer fontSize={10} >
+      					<OHLCTooltip forChart={1} origin={[-40, 5]} />
       				</TooltipContainer>
       			</ChartCanvas>
-
     );
   }
 });
