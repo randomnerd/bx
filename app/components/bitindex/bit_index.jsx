@@ -6,11 +6,10 @@ export default React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-
-    var handle_BTTC = Meteor.subscribe("BitIndexIndicator_BTTC");
-    var handle_BTTN = Meteor.subscribe("BitIndexIndicator_BTTN");
-    var handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
-    var handle_BTUA = Meteor.subscribe("BitIndexIndicator_BTUA");
+    let handle_BTTC = Meteor.subscribe("BitIndexIndicator_BTTC");
+    let handle_BTTN = Meteor.subscribe("BitIndexIndicator_BTTN");
+    let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
+    let handle_BTUA = Meteor.subscribe("BitIndexIndicator_BTUA");
 
     return {
 
@@ -19,12 +18,11 @@ export default React.createClass({
       BTPR_Loading: !handle_BTPR.ready(),
       BTUA_Loading: !handle_BTUA.ready(),
 
-        BTTC: BitIndexIndicator_BTTC.find().fetch(),
-        BTTN: BitIndexIndicator_BTTN.find().fetch(),
-        BTPR: BitIndexIndicator_BTPR.find().fetch(),
-        BTUA: BitIndexIndicator_BTUA.find().fetch(),
-
-    }
+      BTTC: BitIndexIndicator_BTTC.find().fetch(),
+      BTTN: BitIndexIndicator_BTTN.find().fetch(),
+      BTPR: BitIndexIndicator_BTPR.find().fetch(),
+      BTUA: BitIndexIndicator_BTUA.find().fetch(),
+    };
   },
 
   componentDidMount() {
@@ -32,7 +30,6 @@ export default React.createClass({
   },
 
   renderBlockChainIndicator() {
-
     // let data = this.data.BTTC.map( (item) => {
     //   return {
     //     date: item.date,
@@ -103,17 +100,15 @@ export default React.createClass({
 
                  </div>
         );
+     } else {
 
-    } else {
-
-      return (
+       return (
               <div>
                     BitIndex
                     { this.renderBlockChainIndicator() }
                </div>
 
       );
-    }
-
-}
+     }
+  }
 });

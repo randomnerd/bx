@@ -93,22 +93,22 @@ export default React.createClass({
       <div className='ui dropdown item' onClick={this.addNotif}>
         <i className='alarm icon' />
         <i className='dropdown icon' />
-        {this.data.notifications_new.length ?
-          <div className='down floating ui red circular mini label'>
-          {this.data.notifications_new.length}
-          </div>
-          : ''
-        }
+          {this.data.notifications_new.length ?
+            <div className='down floating ui red circular mini label'>
+            {this.data.notifications_new.length}
+            </div>
+            : ''
+          }
         <div className='menu'>
           <div className='scrolling menu'>
             {this.renderDropMessages()}
           </div>
-          {this.data.notifications_new.length ?
-            <a className='item' onClick={this.delAllMessages}>
-              Mark all as read
-            </a>
-            : ''
-          }
+            {this.data.notifications_new.length ?
+              <a className='item' onClick={this.delAllMessages}>
+                Mark all as read
+              </a>
+              : ''
+            }
           <a className='item' href='/u/notifications'>
             See all notifications
           </a>
