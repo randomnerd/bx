@@ -198,7 +198,6 @@ export default React.createClass({
                  stroke='#767676' tickStroke='#767676'/>
           <YAxis axisAt='right' orient='right' ticks={4} fontSize={10}
                  stroke='#767676' tickStroke='#767676'/>
-
           <DataSeries id={0} indicator={RSI} options={{
             period: 14
           }}>
