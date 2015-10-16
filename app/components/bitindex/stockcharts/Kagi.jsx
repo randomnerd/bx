@@ -31,7 +31,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -53,12 +53,10 @@ export default React.createClass({
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
-
+          };
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -74,8 +72,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -83,8 +80,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -100,10 +96,10 @@ export default React.createClass({
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
-      if (interval)
-        clearInterval(interval);
+      if (interval) clearInterval(interval);
       console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
@@ -112,13 +108,11 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     let dateFormat = d3.time
       .format('%Y-%m-%d');
@@ -136,9 +130,10 @@ export default React.createClass({
           transform: KagiTransformer
         }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt='bottom' orient='bottom'/>
-          <YAxis axisAt='right' orient='right' ticks={5}/>
+        <Chart id={1} yMousePointerDisplayLocation='right'
+                      yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+          <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
           <DataSeries id={0} yAccessor={KagiSeries.yAccessor}>
             <KagiSeries/>
           </DataSeries>
@@ -147,7 +142,7 @@ export default React.createClass({
         h) => [
           0, h - 150
         ]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'

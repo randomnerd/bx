@@ -114,6 +114,7 @@ export default React.createClass({
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
       if (interval) clearInterval(interval);
@@ -145,8 +146,8 @@ export default React.createClass({
       }
       ]} data={rawData} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt='bottom' orient='bottom'/>
-          <YAxis axisAt='right' orient='right' ticks={5} {...yGrid}/>
+          <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={5} {...yGrid} fontSize={10}/>
           <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
             <CandlestickSeries/>
           </DataSeries>
@@ -180,7 +181,7 @@ export default React.createClass({
         h) => [
           0, h - 150
         ]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'

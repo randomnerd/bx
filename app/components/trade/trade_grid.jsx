@@ -66,6 +66,11 @@ export default React.createClass({
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'pointandfigure'});
   },
+  showHaikinAshi(event) {
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'haikinashi'});
+  },
 
 
   renderBlockChainIndicator() {
@@ -75,19 +80,19 @@ export default React.createClass({
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
     case 'macd':
       return (
           <div><Charts.CandleStickChartWithMACDIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
     case 'rsi':
       return (
           <div><Charts.CandleStickChartWithRSIIndicator
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
-    break;
+      break;
 
     case 'sto':
       return (
@@ -104,7 +109,7 @@ export default React.createClass({
             data = {this.data.BTPR} type = 'svg' height={350} />
           </div>
         );
-        break;
+      break;
 
       case 'kagi':
       return (
@@ -119,8 +124,15 @@ export default React.createClass({
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
-      default:
 
+      case 'haikinashi':
+      return (
+        <div><Charts.HaikinAshi
+        data = {this.data.BTPR} type = 'svg' height={350}/></div>
+      );
+      break;
+    default:
+      break;
     }
   },
   render() {
@@ -173,6 +185,9 @@ export default React.createClass({
                             </a>
                             <a className='item' onClick={this.showPointandFigure}>
                               P & F
+                            </a>
+                            <a className='item' onClick={this.showHaikinAshi}>
+                              HaikinAshi
                             </a>
 
                           </div>

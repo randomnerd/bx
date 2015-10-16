@@ -134,9 +134,9 @@ export default React.createClass({
                             yMousePointerDisplayFormat={(y) => y.toFixed(2)}
                             padding= {{ top: 10, right: 0, bottom: 20, left: 0 }}
                 origin={(w, h) => [ 0, h - 420]}>
-                            <YAxis axisAt='right' orient='right' ticks={5}/>
+                            <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
                             <XAxis axisAt='bottom' orient='bottom'
-                            showTicks={false} outerTickSize={0}/>
+                            showTicks={false} outerTickSize={0} fontSize={10}/>
 
                             <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
                                 <CandlestickSeries/>
@@ -155,7 +155,8 @@ export default React.createClass({
                             yMousePointerDisplayFormat={d3.format('.4s')} height={this.props.height}
                 origin={(w, h) => [0, h - 420]}>
 
-                          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+                          <YAxis axisAt='left' orient='left' ticks={5} fontSize={10}
+                          tickFormat={d3.format('s')}/>
 
                           <DataSeries id={0} yAccessor={(d) => d.volume}>
                             <HistogramSeries fill={(d) => d.close > d.open
@@ -193,9 +194,9 @@ export default React.createClass({
                               bottom: 10,
                               left: 0
                             }}>
-                            <XAxis axisAt='bottom' orient='bottom'/>
+                            <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
 
-                            <YAxis axisAt='right' orient='right' ticks={2}/>
+                            <YAxis axisAt='right' orient='right' ticks={2} fontSize={10}/>
 
                             <DataSeries id={0} indicator={MACD} options={{
                               fast: 12,

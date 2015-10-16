@@ -29,7 +29,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {

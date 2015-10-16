@@ -135,8 +135,8 @@ export default React.createClass({
           bottom: 0,
           left: 0
         }}>
-          <YAxis axisAt='right' orient='right' ticks={5}/>
-          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0}/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
+          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0} fontSize={10}/>
           <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
             <CandlestickSeries/>
           </DataSeries>
@@ -157,7 +157,7 @@ export default React.createClass({
         h) => [
           0, h - 100
         ]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <YAxis axisAt='left' orient='left' fontSize={10} ticks={5} tickFormat={d3.format('s')}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'
@@ -187,8 +187,8 @@ export default React.createClass({
           bottom: 10,
           left: 0
         }}>
-          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0}/>
-          <YAxis axisAt='right' orient='right' ticks={4}/>
+          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0} fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={4} fontSize={10}/>
           <DataSeries id={0} indicator={RSI} options={{
             period: 14
           }}>
