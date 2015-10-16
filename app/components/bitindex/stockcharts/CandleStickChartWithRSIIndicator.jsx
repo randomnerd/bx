@@ -135,8 +135,10 @@ export default React.createClass({
           bottom: 0,
           left: 0
         }}>
-          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
-          <XAxis axisAt='bottom' orient='bottom' showTicks={false} outerTickSize={0} fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}
+                stroke='#767676' tickStroke='#767676'/>
+          <XAxis axisAt='bottom' orient='bottom' showTicks={false}
+                outerTickSize={0} fontSize={10} stroke='#767676' tickStroke='#767676'/>
           <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
             <CandlestickSeries/>
           </DataSeries>
@@ -153,11 +155,12 @@ export default React.createClass({
         </Chart>
         <CurrentCoordinate forChart={1} forDataSeries={1}/>
         <CurrentCoordinate forChart={1} forDataSeries={2}/>
-        <Chart id={2} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w,
-        h) => [
-          0, h - 100
-        ]}>
-          <YAxis axisAt='left' orient='left' fontSize={10} ticks={5} tickFormat={d3.format('s')}/>
+        <Chart id={2} yMousePointerDisplayLocation='left'
+                      yMousePointerDisplayFormat={d3.format('.4s')} height={100}
+                      origin={(w, h) => [ 0, h - 100]}>
+
+          <YAxis axisAt='left' orient='left' fontSize={10} ticks={5} tickFormat={d3.format('s')}
+                 stroke='#767676' tickStroke='#767676'/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'
@@ -178,10 +181,10 @@ export default React.createClass({
           <EdgeIndicator itemType='first' orient='left' edgeAt='left' forChart={1} forDataSeries={1}/>
           <EdgeIndicator itemType='first' orient='left' edgeAt='left' forChart={1} forDataSeries={2}/>
         </EdgeContainer>
-        <Chart id={3} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)} height={100} origin={(w,
-        h) => [
-          0, h - 200
-        ]} padding={{
+        <Chart id={3} yMousePointerDisplayLocation='right'
+                      yMousePointerDisplayFormat={(y) => y.toFixed(2)} height={100}
+                      origin={(w, h) => [0, h - 200]} padding=
+        {{
           top: 10,
           right: 0,
           bottom: 10,

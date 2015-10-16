@@ -134,8 +134,8 @@ export default React.createClass({
                             yMousePointerDisplayFormat={(y) => y.toFixed(2)}
                             padding= {{ top: 10, right: 0, bottom: 20, left: 0 }}
                 origin={(w, h) => [ 0, h - 420]}>
-                            <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
-                            <XAxis axisAt='bottom' orient='bottom'
+                            <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
+                            <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676'
                             showTicks={false} outerTickSize={0} fontSize={10}/>
 
                             <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
@@ -161,14 +161,14 @@ export default React.createClass({
                           <DataSeries id={0} yAccessor={(d) => d.volume}>
                             <HistogramSeries fill={(d) => d.close > d.open
                               ? '#6BA583'
-                              : 'red'}/>
+                              : 'red'} stroke='#767676' tickStroke='#767676'/>
                           </DataSeries>
 
                           <DataSeries id={1} indicator={SMA} options={{
                             period: 10,
                             pluck: 'volume'
                           }} stroke='steelblue' fill='steelblue'>
-                            <AreaSeries opacity={0.5}/>
+                            <AreaSeries opacity={0.5} stroke='#767676' tickStroke='#767676'/>
                           </DataSeries>
               </Chart>
 
@@ -194,9 +194,8 @@ export default React.createClass({
                               bottom: 10,
                               left: 0
                             }}>
-                            <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
-
-                            <YAxis axisAt='right' orient='right' ticks={2} fontSize={10}/>
+                            <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
+                            <YAxis axisAt='right' orient='right' ticks={2} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
                             <DataSeries id={0} indicator={MACD} options={{
                               fast: 12,

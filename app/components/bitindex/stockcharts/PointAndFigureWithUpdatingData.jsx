@@ -137,14 +137,17 @@ export default React.createClass({
       ]} data={rawData} type={type}>
         <Chart id={1} yMousePointerDisplayLocation='right'
                       yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
-          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
+          <XAxis axisAt='bottom' orient='bottom' fontSize={10}
+                 stroke='#767676' tickStroke='#767676'/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}
+                 stroke='#767676' tickStroke='#767676'/>
           <DataSeries id={0} yAccessor={PointAndFigureSeries.yAccessor}>
             <PointAndFigureSeries/>
           </DataSeries>
         </Chart>
         <Chart id={2} height={150} origin={(w, h) => [0, h - 150]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}
+                 stroke='#767676' tickStroke='#767676'/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'

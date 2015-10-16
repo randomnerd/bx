@@ -137,8 +137,9 @@ export default React.createClass({
       				data={rawData} type={type}>
       				<Chart id={1} yMousePointerDisplayLocation='right'
                             yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-      					<XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
-      					<YAxis axisAt='right' orient='right' ticks={5}  {...yGrid} fontSize={10}/>
+      					<XAxis axisAt='bottom' orient='bottom' fontSize={10}
+                        stroke='#767676' tickStroke='#767676' />
+      					<YAxis axisAt='right' orient='right' ticks={5}  {...yGrid} fontSize={10} troke='#767676' tickStroke='#767676'/>
       					<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor} >
       						<CandlestickSeries />
       					</DataSeries>
