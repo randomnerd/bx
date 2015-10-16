@@ -99,7 +99,6 @@ export default React.createClass({
           <div><Charts.CandleStickChartWithFullStochasticsIndicator
           data = {this.data.BTPR} type = 'svg' height={350} /></div>
         );
-
       break;
 
       case 'bollinger':
@@ -131,6 +130,7 @@ export default React.createClass({
         data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
+
     default:
       break;
     }
@@ -148,11 +148,9 @@ export default React.createClass({
             </div>
             <div className='ux column orders fullheight padding'>
               <div className='ui basic segment h100'>
-
                   <h3 className='ui header'>ORDER BOOK</h3>
-
-                  <Orders valute1={this.props.active.toUpperCase()} valute2='BTC' direction='sell' />
-
+                  <Orders valute1={this.props.active.toUpperCase()}
+                  valute2='BTC' direction='sell' />
               </div>
             </div>
           </div>

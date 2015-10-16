@@ -1,7 +1,7 @@
-import React from "react";
-import d3 from "d3";
+import React from 'react';
+import d3 from 'd3';
 
-import ReStock from "react-stockcharts";
+import ReStock from 'react-stockcharts';
 
 let {ChartCanvas, Chart, DataSeries, OverlaySeries, EventCapture} = ReStock;
 let {HistogramSeries, LineSeries, AreaSeries, RenkoSeries} = ReStock.series;
@@ -25,13 +25,13 @@ export default React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
     type: React.PropTypes
-      .oneOf(["svg", "hybrid"])
+      .oneOf(['svg', 'hybrid'])
       .isRequired
   },
   getDefaultProps() {
     return {
-      type: "svg"
-    }
+      type: 'svg'
+    };
   },
   getInitialState() {
     return {
@@ -104,28 +104,28 @@ export default React.createClass({
     if (func) {
       if (interval)
         clearInterval(interval);
-      console.log("speed  = ", speed);
+      console.log('speed  = ', speed);
       interval = setInterval(func, speed);
     }
   },
   componentDidMount() {
-    document.addEventListener("keypress", this.onKeyPress);
+    document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
     if (interval)
       clearInterval(interval);
-    document.removeEventListener("keypress", this.onKeyPress);
+    document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
     if (this.state === null || !this.state.width)
       return <div/>;
     var {data, type} = this.props;
     var dateFormat = d3.time
-      .format("%Y-%m-%d");
+      .format('%Y-%m-%d');
     rawData = this.state.data;
     return (
-      <ChartCanvas ref="chartCanvas" width={this.state.width} height={400} margin={{
-        left: 90,
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={400} margin={{
+        left: 70,
         right: 70,
         top: 10,
         bottom: 30
@@ -136,9 +136,9 @@ export default React.createClass({
           transform: RenkoTransformer
         }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt="bottom" orient="bottom"/>
-          <YAxis axisAt="right" orient="right" ticks={5}/>
+        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+          <XAxis axisAt='bottom' orient='bottom'/>
+          <YAxis axisAt='right' orient='right' ticks={5}/>
           <DataSeries id={0} yAccessor={RenkoSeries.yAccessor}>
             <RenkoSeries/>
           </DataSeries>
@@ -147,20 +147,20 @@ export default React.createClass({
         h) => [
           0, h - 150
         ]}>
-          <YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
-              ? "#6BA583"
-              : "red"}/>
+              ? '#6BA583'
+              : 'red'}/>
           </DataSeries>
           <DataSeries id={1} indicator={SMA} options={{
             period: 10,
-            pluck: "volume"
+            pluck: 'volume'
           }}>
             <AreaSeries/>
           </DataSeries>
         </Chart>
-        <MouseCoordinates xDisplayFormat={dateFormat} type="crosshair"/>
+        <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair'/>
         <EventCapture mouseMove={true} zoom={true} pan={true} mainChart={1} defaultFocus={false}/>
         <TooltipContainer>
           <OHLCTooltip forChart={1} origin={[

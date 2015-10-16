@@ -26,7 +26,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'svg'
-    }
+    };
   },
   getInitialState() {
     return {
@@ -48,12 +48,10 @@ export default React.createClass({
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
-
+          };
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -77,8 +75,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -94,6 +91,7 @@ export default React.createClass({
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
       if (interval) clearInterval(interval);
@@ -105,13 +103,11 @@ export default React.createClass({
     document.addEventListener('keypress', this.onKeyPress);
   },
   componentWillUnmount() {
-    if (interval)
-      clearInterval(interval);
+    if (interval) clearInterval(interval);
     document.removeEventListener('keypress', this.onKeyPress);
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
+    if (this.state === null || !this.state.width) return <div/>;
     let width = this.props.width || this.state !== null && this.state.width;
     let { data, type } = this.props;
     let dateFormat = d3.time.format('%Y-%m-%d');

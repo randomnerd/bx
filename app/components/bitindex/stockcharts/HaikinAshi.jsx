@@ -51,12 +51,11 @@ export default React.createClass({
           last = {
             ...last,
             close: (Math.random() * (last.high - last.low)) + last.close
-          }
+          };
 
           this.refs
             .chartCanvas
             .alterData(exceptLast.concat(last));
-
         };
         break;
       }
@@ -72,8 +71,7 @@ export default React.createClass({
             .chartCanvas
             .pushData(pushMe);
           length++;
-          if (this.props.data.length === length)
-            clearInterval(interval);
+          if (this.props.data.length === length) clearInterval(interval);
         };
         break;
       }
@@ -81,8 +79,7 @@ export default React.createClass({
       {
         // 0 (48) - Clear interval
         func = null;
-        if (interval)
-          clearInterval(interval);
+        if (interval) clearInterval(interval);
         break;
       }
     case 43 :
@@ -98,6 +95,7 @@ export default React.createClass({
         speed = speed + delta;
         break;
       }
+    default: break;
     }
     if (func) {
       if (interval) clearInterval(interval);
@@ -121,11 +119,11 @@ export default React.createClass({
     rawData = this.state.data;
 
     return (
-      <ChartCanvas ref='chartCanvas' width={this.state.width} height={600} margin={{
-        left: 90,
+      <ChartCanvas ref='chartCanvas' width={this.state.width} height={350} margin={{
+        left: 70,
         right: 70,
-        top: 10,
-        bottom: 30
+        top: 5,
+        bottom: 20
       }} initialDisplay={30} dataTransform={[
         {
           transform: StockscaleTransformer
@@ -133,9 +131,10 @@ export default React.createClass({
           transform: HeikinAshiTransformer
         }
       ]} data={rawData} type={type}>
-        <Chart id={1} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
-          <XAxis axisAt='bottom' orient='bottom'/>
-          <YAxis axisAt='right' orient='right' ticks={5}/>
+        <Chart id={1} yMousePointerDisplayLocation='right'
+                      yMousePointerDisplayFormat={(y) => y.toFixed(2)}>
+          <XAxis axisAt='bottom' orient='bottom' fontSize={10}/>
+          <YAxis axisAt='right' orient='right' ticks={5} fontSize={10}/>
           <DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
             <CandlestickSeries/>
           </DataSeries>
@@ -163,7 +162,7 @@ export default React.createClass({
         h) => [
           0, h - 150
         ]}>
-          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+          <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10}/>
           <DataSeries id={0} yAccessor={(d) => d.volume}>
             <HistogramSeries fill={(d) => d.close > d.open
               ? '#6BA583'
