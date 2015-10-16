@@ -119,10 +119,10 @@ export default React.createClass({
     let height = this.state.height;
 
     let margin = {
-      left: 70,
-      right: 70,
-      top: 20,
-      bottom: 30
+      left: 50,
+      right: 50,
+      top: 10,
+      bottom: 10
     };
 
     let gridHeight = height - margin.top - margin.bottom;
