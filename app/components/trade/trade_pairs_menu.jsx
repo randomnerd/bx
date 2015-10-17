@@ -1,34 +1,36 @@
 import React from 'react';
-import {Currencies} from 'collections';
+import {TradePairs, Currencies} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
       user: Meteor.user(),
+      TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
   },
-  getPairItems() {
-    return [
-      { pair: 'BTC', value: '0.005467', href: 'btc'},
-      { pair: 'LTC', value: '0.006685', href: 'ltc'},
-      { pair: 'GLD', value: '0.00093737', href: 'gld'},
-      { pair: 'FTC', value: '0.09123', href: 'ftc'},
-    ];
+  currName(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
   },
   displayCurrent() {
-    return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
+    return this.props.active ? this.props.active.toUpperCase().replace(/-/," / ") : 'Choose a pair';
   },
   renderMenuItems() {
     let active = this.props.active ? this.props.active.toUpperCase() : false;
-    return this.data.currencies.map((curr) => {
-      let value = '0.09123';
+    return this.data.TradePairs.map((pair) => {
+      let apair = this.currName(pair.currId).toLowerCase() + "-" + this.currName(pair.marketCurrId).toLowerCase();
+
       return (
-        <a className={'item' + (active === curr.shortName.toUpperCase() ? ' active' : '') }
-        key = {curr.shortName.toLowerCase()} href = {'/pair/' + curr.shortName.toLowerCase()}>
-          <div className='ui label'>{value}</div>
-          {curr.shortName}
+        <a className={'item' + (active === apair ? ' active' : '') }
+        key = {apair}
+        href = {'/pair/' + apair}>
+          {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}
         </a>
       );
     });

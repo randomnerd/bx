@@ -67,7 +67,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="block white">
+        <div className="block white footer">
           <div className="ui main container">
             <p className="center aligned">Copyright 2015 Sickoffice</p>
           </div>

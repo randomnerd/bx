@@ -156,14 +156,15 @@ export default React.createClass({
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
-                <BuySell currency={this.props.active.toUpperCase()} direction='buy'/>
+                <BuySell currency={this.props.active.toUpperCase().split("-")[0]} direction='buy'/>
               </div>
             </div>
             <div className='ux column orders fullheight padding'>
               <div className='ui basic segment h100'>
                   <h3 className='ui header'>ORDER BOOK</h3>
-                  <Orders valute1={this.props.active.toUpperCase()}
-                  valute2='BTC' direction='sell' />
+                  <Orders direction='sell'
+                    valute1={this.props.active.toUpperCase().split("-")[0]}
+                    valute2={this.props.active.toUpperCase().split("-")[1]} />
               </div>
             </div>
           </div>
@@ -217,7 +218,9 @@ export default React.createClass({
                 <div className='ux fixorders container'>
                   <div className='ui basic segment h100'>
                     <h3 className='ui header'>OPEN ORDERS</h3>
-                    <OpenOrders valute1='ANC' valute2='BTC' />
+                    <OpenOrders
+                      valute1={this.props.active.toUpperCase().split("-")[0]}
+                      valute2={this.props.active.toUpperCase().split("-")[1]} />
                   </div>
                 </div>
               </div>
@@ -228,7 +231,9 @@ export default React.createClass({
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>TRADE HISTORY</h3>
 
-                  <Trades valute1={this.props.active.toUpperCase()} valute2='BTC' />
+                  <Trades
+                    valute1={this.props.active.toUpperCase().split("-")[0]}
+                    valute2={this.props.active.toUpperCase().split("-")[1]} />
 
               </div>
             </div>

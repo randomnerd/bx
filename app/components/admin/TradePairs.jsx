@@ -32,22 +32,12 @@ export default React.createClass({
   },
   getMeteorData() {
     return {
-      TradePairs: TradePairs.find({}, {
-        sort: {
-          name: 1
-        }
-      }).fetch(),
-      currencies: Currencies.find({}, {
-        sort: {
-          name: 1
-        }
-      }).fetch()
+      TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
+      currencies: Currencies.find({}, { sort: { name: 1 } }).fetch()
     };
   },
   renderPairsList() {
-    return this.data
-      .TradePairs
-      .map((pair) => {
+    return this.data.TradePairs.map((pair) => {
         return (
           <tr key={pair._id}>
             <td>{this.currName(pair.currId)}</td>

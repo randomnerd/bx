@@ -37,7 +37,9 @@ html, body{
   color: #fff;
   font-weight: normal;
 }
-
+.ui.inverted.newgrey .ui.header.lpadding{
+  padding-left: .6em;
+}
 .ui.inverted.newgrey.menu{
   background-color: #2f3d45;
   color:#ced2d5;
@@ -63,23 +65,23 @@ html, body{
   color:#ced2d5;
 }
 
-.ui.inverted.newgrey .menu .item.double{
+.menu .item.double{
   padding-top: 0.4em;
   padding-bottom: 0.4em;
-  display: block;
+  display: block !important;
   float: left;
 }
-.ui.inverted.newgrey .menu .item.double:before{
+.menu .item.double:before{
   background: none;
 }
 
-.ui.inverted.newgrey .menu .item.double.icon{
+.menu .item.double.icon{
   padding-top: .9em;
   padding-bottom: .8em;
   padding-right: 0;
 }
 
-.ui.inverted.newgrey .menu .item.double .ui.header{
+.menu .item.double .ui.header{
   padding: 0;
   margin-bottom: 0.4em;
   color: #767676;
@@ -87,7 +89,7 @@ html, body{
   float: none;
   display: block;
 }
-.ui.inverted.newgrey .menu .item.double p{
+.menu .item.double p{
   padding: 0;
   float: none;
   display: block;
@@ -431,7 +433,11 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
     background: rgba(150, 160, 170, 0.77);
 
 }
-
+.ui.inverted.newgrey .ui.toggle.checkbox label,
+.ui.inverted.newgrey .ui.toggle.checkbox input:checked~label{
+  color: #fff;
+  padding-top: 0;
+}
 /* Semantic new grey */
 
 /* UX grid */
@@ -843,7 +849,7 @@ tr.lesspadding th {
   padding-bottom: 8em;
 }
 .ld .block.white.opacity{
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(100, 100, 100, 0.7);
   height: auto;
 }
 .ld .block .center.aligned{
@@ -855,8 +861,9 @@ tr.lesspadding th {
 }
 
 .ld .ui.segment{
-  background: rgba(255, 255, 255, 0.7) !important;
+  background: rgba(255, 255, 255, 1) !important;
   font-size: 1.2em;
+  height: 12.5em;
 }
 
 .ld .ui.segment:last-child{
@@ -886,7 +893,12 @@ tr.lesspadding th {
 
   text-align: right;
 }
-
+.ld .block.white.footer{
+  padding-bottom: 4em;
+}
+.ld .block.white.footer .container{
+  padding-top: 2em;
+}
 /*
 .ld .ui.segment .ui.header::after{
   font-family: Icons;

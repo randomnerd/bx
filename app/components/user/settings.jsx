@@ -43,7 +43,7 @@ export default React.createClass({
       <div className="ui main container">
         <div className="ui segments">
           <div className="ui basic segment">
-            <h3 className='ui header'>Account settings</h3>
+            <h2 className='ui header'>Account settings</h2>
           </div>
           <div className="ui basic segment">
             <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
@@ -75,7 +75,7 @@ export default React.createClass({
           <div className="ui basic segment">
             <div className="ui two column grid">
               <div className="column">
-                <h2 className="ui header">
+                <h2 className="ui header lpadding">
                   API Access
                 </h2>
               </div>
