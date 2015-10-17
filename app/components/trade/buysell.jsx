@@ -91,11 +91,11 @@ export default React.createClass({
 
           <div className='ui segments fee'>
             <div className='ui small basic segment'>
-              <strong>Total:</strong>
+              <strong>Total: </strong>
               {(parseFloat(this.state.amount * this.state.price)).toFixed(8)}
             </div>
             <div className='ui small basic segment'>
-              <strong>Fee:</strong>
+              <strong>Fee: </strong>
               {(parseFloat(this.state.amount * this.state.price * 0.002)).toFixed(8)}
             </div>
           </div>
