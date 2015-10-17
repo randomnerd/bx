@@ -18,7 +18,7 @@ export default React.createClass({
     ];
   },
   displayCurrent() {
-    return this.props.active ? this.props.active.toUpperCase() : 'Chose pair';
+    return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   renderMenuItems() {
     let active = this.props.active ? this.props.active.toUpperCase() : false;

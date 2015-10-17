@@ -63,6 +63,36 @@ html, body{
   color:#ced2d5;
 }
 
+.ui.inverted.newgrey .menu .item.double{
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  display: block;
+  float: left;
+}
+.ui.inverted.newgrey .menu .item.double:before{
+  background: none;
+}
+
+.ui.inverted.newgrey .menu .item.double.icon{
+  padding-top: .9em;
+  padding-bottom: .8em;
+  padding-right: 0;
+}
+
+.ui.inverted.newgrey .menu .item.double .ui.header{
+  padding: 0;
+  margin-bottom: 0.4em;
+  color: #767676;
+  font-size: 0.8em;
+  float: none;
+  display: block;
+}
+.ui.inverted.newgrey .menu .item.double p{
+  padding: 0;
+  float: none;
+  display: block;
+}
+
 .ui.inverted.newgrey .segment{
   background-color: #1e2b34;
 }
@@ -803,7 +833,8 @@ tr.lesspadding th {
 
 /* LANDING */
 
-/*.ui .blue.text{color: #2185d0 !important}
+/* COLORS
+.ui .blue.text{color: #2185d0 !important}
 .ui .red.text{color: #db2828 !important}
 .ui .orange.text{color: #f2711c !important}
 .ui .yellow.text{color: #fbbd08 !important}

@@ -1,6 +1,7 @@
 import React from 'react';
 import TradePairsMenu from 'components/trade/trade_pairs_menu';
 import UserTopMenu from 'components/user_top_menu';
+import TopInfo from 'components/top_info';
 import NotificationShow from 'components/common/notifications';
 
 export default React.createClass({
@@ -42,6 +43,8 @@ export default React.createClass({
 
           { this.renderMenuItems() }
           <TradePairsMenu active={this.props.active} />
+          <TopInfo active={this.props.active} />
+
             { this.data.user ?
               <div className="right menu"><UserTopMenu /><NotificationShow /></div>
               : this.renderLoginButtons()
