@@ -89,7 +89,7 @@ export default React.createClass({
             </Formsy.Form>
         </div>
 
-          <div className='ui segments'>
+          <div className='ui segments fee'>
             <div className='ui small basic segment'>
               <strong>Total:</strong>
               {(parseFloat(this.state.amount * this.state.price)).toFixed(8)}

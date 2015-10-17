@@ -96,6 +96,13 @@ html, body{
 .ui.inverted.newgrey .segment{
   background-color: #1e2b34;
 }
+.ui.inverted.newgrey .ui.segments.fee{
+  margin-top: -1em;
+}
+.ui.inverted.newgrey .ui.segments.fee .segment{
+  color: rgba(200, 200, 200, .8);
+}
+
 .ui.inverted.newgrey .ui.table {
     color: rgba(200, 200, 200, 1);
 }
