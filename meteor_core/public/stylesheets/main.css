@@ -774,9 +774,10 @@ tr.lesspadding th {
 .ld .block{
   position: relative;
   width: 100%;
+}
+.ld .block.opacity{
   height: 100%;
 }
-
 .ld .block.background{
   display: block;
   background-image: url("/bg_video.jpg");
@@ -789,6 +790,7 @@ tr.lesspadding th {
   top: 0;
   z-index: -1;
   overflow: hidden;
+  height: 100%;
 }
 
 .ld .block .videogrid{
@@ -819,17 +821,76 @@ tr.lesspadding th {
 
 .ld .block .promo h1{
   font-size: 4rem;
-  font-weight: normal;
+  font-family: "Helvetica Neue";
+  font-weight: lighter;
 }
 .ld .block .promo p{
   font-size: 1.5rem;
-  font-weight: normal;
+  font-family: "Helvetica Neue";
+  font-weight: lighter;
 }
 
 
 .ld .block.white{
   background: #fff;
+  padding-bottom: 8em;
 }
+.ld .block.white.opacity{
+  background: rgba(255, 255, 255, 0.7);
+  height: auto;
+}
+.ld .block .center.aligned{
+  text-align: center;;
+}
+.ld .ui.main.container{
+  font-size: 2em;
+  color: #767676;
+}
+
+.ld .ui.segment{
+  background: rgba(255, 255, 255, 0.7) !important;
+  font-size: 1.2em;
+}
+
+.ld .ui.segment:last-child{
+  margin-left: 1em !important;
+}
+.ld .ui.segment:first-child{
+  margin-right: 1em !important;
+}
+
+.ld .ui.segment .ui.header{
+  color: #00b5ad;
+  font-size: 1.5em;
+  font-style: italic;
+  text-align: right;
+  margin-bottom: 0;
+}
+.ld .ui.segment .whois{
+  display: block;
+  color: #bbb;
+  font-size: .5em;
+  text-align: right;
+}
+.ld .ui.segment .whereis{
+  display: block;
+  color: #ccc;
+  font-size: .6em;
+
+  text-align: right;
+}
+
+/*
+.ld .ui.segment .ui.header::after{
+  font-family: Icons;
+  content: '\f10d';
+  font-size: 3em;
+  display: block;
+  position: absolute;
+
+}*/
+
+
 
 /* LANDING */
 

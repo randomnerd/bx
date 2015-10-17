@@ -25,13 +25,52 @@ export default React.createClass({
           </div>
         </div>
         <div className="block white">
-          dfsgdfg
+          <div className="ui main container">
+            <p>We are passionate group of individuals aware of the shift that is
+            occurring in information security and digital assets and we have come
+            together to work towards an anti-fragile future where your data's privacy
+            and security are no longer a luxury but instead a standard.</p>
+
+            <p>Like most things in life, its started with the solution to a simple problem.</p>
+
+            <p>To make digital money more developed, exchanges are crucial, and we want to
+            provide reliable easy to use service for companies and individuals to exchange
+            bitcoins. We aim to bring secure, decentralized technologies to the next billion
+            users through amazingly simple yet feature rich applications focused on ease of use
+            and ease of security. Our focus is to deliver software, services, and products with
+            an amazing user experience, both visually and functionally, simplifying this advanced
+            technology and delivering it to the masses while still retaining core principles of
+            decentralization and privacy. We believe bitcoin is here to stay.</p>
+          </div>
         </div>
-        <div className="block ">
-          dfsgdfg
+        <div className="block white opacity">
+          <div className="ui main container">
+            <div className="ui grid">
+              <div className="eight wide column">
+                <div className="ui piled segment">
+                  <p>Easy to use service for companies and individuals to exchange bitcoins.</p>
+                  <p>All the things that gold does, Bitcoin kind of does better.</p>
+                  <h2 className="ui header">- Bill Gates</h2>
+                  <span className="whereis">quoted from: Fox Business</span>
+                </div>
+              </div>
+              <div className="eight wide column">
+                <div className="ui piled segment">
+                  <p>Bitcoin is a remarkable cryptographic achievement and the ability
+                  to create something that is not duplicable in the digital world
+                  has enormous value.</p>
+                  <h2 className="ui header">- Eric Schmidt</h2>
+                  <span className="whois">Google Chairman (and former CEO)</span>
+                  <span className="whereis">quoted from: NEWSBTC</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="block white">
-          dfsgdfg
+          <div className="ui main container">
+            <p className="center aligned">Copyright 2015 Sickoffice</p>
+          </div>
         </div>
       </div>
     );
