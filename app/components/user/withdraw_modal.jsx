@@ -2,6 +2,7 @@ import React from 'react';
 import Formsy from 'formsy-react'
 import {Wallets, Balances, Currencies} from 'collections';
 import Semantic from 'components/semantic';
+import UserOnly from 'components/user/user_only';
 
 Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
   let amount = parseFloat(values.amount);
@@ -123,20 +124,22 @@ export default React.createClass({
     let balance = this.data.balance.displayAmount();
 
     return (
-      <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
-        onDeny={this.hide} onPositive={this.withdraw} show={this.props.show}
-        errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
+      <UserOnly redirect='/'>
+        <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
+          onDeny={this.hide} onPositive={this.withdraw} show={this.props.show}
+          errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
 
-          <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
-          adds={this.getAmount()} required />
+            <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
+            adds={this.getAmount()} required />
 
-          <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
-          <Semantic.Input name='tfa' label='TFA code' placeholder='Type your TFA code here' ref='tfa' />
-          <input type='submit' className='hidden' />
-        </Formsy.Form>
-      </Semantic.Modal>
+            <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
+            <Semantic.Input name='tfa' label='TFA code' placeholder='Type your TFA code here' ref='tfa' />
+            <input type='submit' className='hidden' />
+          </Formsy.Form>
+        </Semantic.Modal>
+      </UserOnly>
     );
   }
 });

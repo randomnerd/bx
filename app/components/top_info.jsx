@@ -20,21 +20,21 @@ export default React.createClass({
         </div>
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>234.92929291</p>
+          <p>234.9292</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Asc</h4>
           <p>
-            <span className="red text">234.92929291</span> / <span className="green text">234.93494848</span>
+            <span className="red text">234.9292</span> / <span className="green text">234.9349</span>
           </p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Range</h4>
-          <p>234.92929291 - 234.92929291</p>
+          <p>234.9292 - 234.9292</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Volume</h4>
-          <p>2435243.45667567</p>
+          <p>2435243.45</p>
         </div>
       </div>
     );

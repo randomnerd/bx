@@ -11,6 +11,11 @@ export default React.createClass({
       user: Meteor.user()
     }
   },
+  getInitialState() {
+    return {
+      showSidebar: false,
+    };
+  },
   getMenuItems() {
     return [
       { href: '/', label: 'Bit.Exhange', extraCls: '' },
@@ -27,6 +32,13 @@ export default React.createClass({
   },
   showSignUpModal() {
     Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
+  },
+  chatToggle() {
+    this.state.showSidebar ?
+      Dispatcher.dispatch({ actionType: 'HIDE_CHAT' }) :
+      Dispatcher.dispatch({ actionType: 'SHOW_CHAT' });
+
+    this.setState({ showSidebar: !this.state.showSidebar });
   },
   renderLoginButtons() {
     return (
@@ -46,7 +58,13 @@ export default React.createClass({
           <TopInfo active={this.props.active} />
 
             { this.data.user ?
-              <div className="right menu"><UserTopMenu /><NotificationShow /></div>
+              <div className="right menu">
+                <UserTopMenu />
+                <NotificationShow />
+                <a className="icon item" onClick={this.chatToggle}>
+                  <i className="comment icon"></i>
+                </a>
+              </div>
               : this.renderLoginButtons()
             }
 

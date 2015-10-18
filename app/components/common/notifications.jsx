@@ -90,7 +90,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className='ui dropdown item' onClick={this.addNotif}>
+      <div className='ui dropdown right item' onClick={this.addNotif}>
         <i className='alarm icon' />
         <i className='dropdown icon' />
           {this.data.notifications_new.length ?

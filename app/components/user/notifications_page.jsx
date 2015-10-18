@@ -45,7 +45,7 @@ export default React.createClass({
           <i className='trash icon'/>
           Clear all
         </a>
-        <table className='ui compact table'>
+        <table className='ui compact basic table'>
           <thead>
             <tr>
               <th></th>

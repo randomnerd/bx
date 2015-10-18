@@ -1,5 +1,6 @@
 import React from 'react';
 import {Balances, Currencies, Wallets} from 'collections';
+import UserOnly from 'components/user/user_only';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -68,32 +69,34 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="ui main container">
-        <div className='ui segments'>
-          <div className='ui secondary segment'>
-            <h3 className='ui header'>Wallets</h3>
-          </div>
-          <div className='ui small blue segment'>
-            <table className='ui selectable very basic striped large table nomargin'>
-              <thead>
-                <tr className='lesspadding'>
-                  <th className='two wide' >Amount</th>
-                  <th className='two wide' >Coin</th>
-                  <th className='nine wide'>Deposit address</th>
-                  <th className='three wide'>Actions</th>
-                </tr>
-              </thead>
-            </table>
-            <div className='scrollable10rows'>
-              <table className='ui selectable very compact very basic sortable table'>
-                <tbody>
-                  { this.renderWalletItems() }
-                </tbody>
+      <UserOnly redirect='/'>
+        <div className="ui main container">
+          <div className='ui segments'>
+            <div className='ui secondary segment'>
+              <h3 className='ui header'>Wallets</h3>
+            </div>
+            <div className='ui small blue segment'>
+              <table className='ui selectable very basic striped large table nomargin'>
+                <thead>
+                  <tr className='lesspadding'>
+                    <th className='two wide' >Amount</th>
+                    <th className='two wide' >Coin</th>
+                    <th className='nine wide'>Deposit address</th>
+                    <th className='three wide center aligned'>Actions</th>
+                  </tr>
+                </thead>
               </table>
+              <div className='scrollable10rows'>
+                <table className='ui selectable very compact very basic sortable table'>
+                  <tbody>
+                    { this.renderWalletItems() }
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </UserOnly>
     );
   }
 });

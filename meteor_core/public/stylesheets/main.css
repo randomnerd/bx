@@ -100,10 +100,21 @@ html, body{
 }
 .ui.inverted.newgrey .ui.segments.fee{
   margin-top: -1em;
+  padding: 0 .1em;
 }
 .ui.inverted.newgrey .ui.segments.fee .segment{
   color: rgba(200, 200, 200, .8);
 }
+.ui.inverted.newgrey .ui.segments.fee .name{
+  display: inline-block;
+  width: 30%;
+}
+.ui.inverted.newgrey .ui.segments.fee .value{
+  display: inline-block;
+  width: 70%;
+  text-align: right;
+}
+
 
 .ui.inverted.newgrey .ui.table {
     color: rgba(200, 200, 200, 1);
@@ -416,6 +427,11 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   padding-top: 4.7em;
 }
 .ui.inverted.newgrey .main.container{
+  height: 100%;
+  padding-top: 4.7em;
+}
+
+.ui.inverted.newgrey .main.fluid.container{
   height: 100%;
   padding-top: 4.2em;
 }

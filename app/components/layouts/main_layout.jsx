@@ -68,13 +68,13 @@ export default React.createClass({
         this.setState({withdrawAddressModal: false});
         break;
 
-      case 'SHOW_SIDEBAR':
+      case 'SHOW_CHAT':
         this.setState({showSidebar: true});
         this.chatToggle();
           //this.setState({sidebarContent: payload.payload.content});
         break;
 
-      case 'HIDE_SIDEBAR':
+      case 'HIDE_CHAT':
         this.setState({showSidebar: false});
         break;
       }
@@ -109,13 +109,7 @@ export default React.createClass({
           {this.renderSidebarContent()}
         </Sidebar>
         <div className="pusher">
-          <div className="forsidebar above">
-            <div className="ui vertical fluid tabular labeled icon inverted newgrey menu">
-              <a className="item active" onClick={this.chatToggle}>
-                <i className="comment icon"></i>
-              </a>
-            </div>
-          </div>
+
           <div className="contwrapper">
             {this.props.content}
           </div>
