@@ -41,6 +41,9 @@ export default React.createClass({
   },
 
   render() {
+    let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
+    let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
+    let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
     return (
       <div>
         <div className="ui header clearfix">
@@ -58,7 +61,7 @@ export default React.createClass({
                 </div>
                 <div className="ui small blue segment">
                   <h2 className="ui header center aligned">
-                    {this.data.balance.displayAmount()} {this.data.currency.shortName}
+                    {avail} {this.data.currency.shortName}
                   </h2>
                 </div>
               </div>
@@ -70,7 +73,7 @@ export default React.createClass({
                 </div>
                 <div className="ui small blue segment">
                   <h2 className="ui header center aligned">
-                    {this.data.balance.displayHeld()} {this.data.currency.shortName}
+                    {held} {this.data.currency.shortName}
                   </h2>
                 </div>
               </div>
@@ -82,7 +85,7 @@ export default React.createClass({
                 </div>
                 <div className="ui small blue segment">
                   <h2 className="ui header center aligned">
-                    {this.data.balance.displayTotal()} {this.data.currency.shortName}
+                    {total} {this.data.currency.shortName}
                   </h2>
                 </div>
               </div>

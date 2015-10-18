@@ -1,4 +1,5 @@
 import {Notifications, wAddressBook, Chat, Withdrawals} from 'collections';
+import {Jobs} from 'server/job_collection';
 
 Meteor.methods({
   'jobs/wallet/newWallet': (currId) => {
