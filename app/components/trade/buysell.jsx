@@ -11,6 +11,19 @@ export default React.createClass({
     };
   },
   goDeal() {
+  },
+
+  goSell() {
+    let params = {
+      pairId: this.props.pairId,
+      amount: this.state.amount,
+      price: this.state.price
+    };
+    console.log('createOrder', params);
+    Meteor.call('createOrder', params);
+  },
+
+  goBuy() {
 
   },
 
@@ -101,8 +114,8 @@ export default React.createClass({
           </div>
         <div className='ui small basic segment centered'>
           <div className='centered'>
-            <button className='ui button green'>Buy {this.props.currency}</button>
-            <button className='ui button red'>Sell {this.props.currency}</button>
+            <button className='ui button green' onClick={this.goBuy}>Buy {this.props.currency}</button>
+            <button className='ui button red' onClick={this.goSell}>Sell {this.props.currency}</button>
           </div>
         </div>
       </div>
