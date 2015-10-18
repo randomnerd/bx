@@ -19,8 +19,9 @@ html, body{
   text-align: center;
 }
 
-.ui.segment.centered > .centered{
-  margin: 0 auto;
+.ui.segment.centered .centered{
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ui.fixed.menu{

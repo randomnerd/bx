@@ -45,19 +45,19 @@ export default React.createClass({
             <div className='ui secondary segment'>
               <h3 className='ui header'>Change password</h3>
             </div>
-            <div className='ui small blue segment'>
+            <div className='ui small blue segment centered'>
               <Formsy.Form key={this.props.k} className='ui form' onValidSubmit={this.newPassword}
                 onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='pass'>
 
-                <Semantic.Input name='old_pass' ref='old_password'
+                <Semantic.Input name='old_pass' ref='old_password' className="eight wide centered"
                 type='password' label='Old password' validations='minLength:3'
                 placeholder='Enter old password' required />
 
                 <Semantic.Input name='password' ref='password'
-                validations='passwordConfirmationMatch' type='password' label='New password'
+                validations='passwordConfirmationMatch' type='password' label='New password' className="eight wide centered"
                 placeholder='Enter new password' required />
 
-                <Semantic.Input name='password_confirm' ref='password_confirm'
+                <Semantic.Input name='password_confirm' ref='password_confirm' className="eight wide centered"
                 validations='passwordConfirmationMatch' type='password' label='Confirm new password'
                 placeholder='Re-enter new password' required />
 
