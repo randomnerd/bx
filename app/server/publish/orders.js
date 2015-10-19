@@ -4,3 +4,12 @@ Meteor.publish('orderQueue', function() {
   // TODO: authorize worker
   return Orders.find({complete: false, canceled: false});
 });
+
+Meteor.publish('myOrders', function() {
+  if (!this.userId) throw new Meteor.Error('unauthorized');
+  return Orders.find({
+    userId:   this.userId,
+    complete: false,
+    canceled: false
+  });
+})

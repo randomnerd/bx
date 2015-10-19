@@ -36,5 +36,13 @@ Meteor.methods({
       buy:    params.buy
     });
     job.save();
+  },
+
+  cancelOrder: function(id) {
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    let order = Orders.findOne({_id: id});
+    if (!order) throw new Meteor.Error('Order not found');
+    if (order.userId !== Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    order.cancel();
   }
 })

@@ -13,6 +13,7 @@ Tracker.autorun(() => {
     Meteor.subs.subscribe('transactions');
     Meteor.subs.subscribe('withdrawals');
     Meteor.subs.subscribe('waddressbook');
+    Meteor.subs.subscribe('myOrders');
     if (user.isAdmin()) {
       Meteor.subs.subscribe('currenciesAdmin');
       Meteor.subs.subscribe('tradepairsAdmin');

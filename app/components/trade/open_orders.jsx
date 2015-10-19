@@ -1,7 +1,20 @@
 import React from 'react';
+import {Orders} from 'collections';
 
 export default React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    return {
+      orders: Orders.find({pairId: this.props.pair._id}).fetch()
+    }
+  },
+
+  cancelOrder(order) {
+    order.cancel();
+  },
+
   getOrdersItems() {
+    return this.data.orders;
     return [
       { _id: 1, price: 0.001, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
       { _id: 2, price: 0.00095, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
@@ -29,12 +42,13 @@ export default React.createClass({
     return this.getOrdersItems(this.props.direction).map((item) => {
       return  (
         <tr key={item._id} >
-          <td className='three wide' data-ord-price>{(item.price * item.amount).toFixed(8)}</td>
-          <td className='three wide' data-ord-amount>{item.filled}</td>
-          <td className='three wide' data-ord-amount>{item.price}</td>
-          <td className='three wide' data-ord-amount>{item.fee}</td>
-          <td className='two wide' data-ord-amount>{item.time.format("hh:mm:ss")}</td>
-          <td className='two wide'>{item.status}</td>
+          <td className='three wide' data-ord-price>{item.displayAmount()}</td>
+          <td className='three wide' data-ord-amount>{item.displayRemain()}</td>
+          <td className='three wide' data-ord-amount>{item.displayPrice()}</td>
+          <td className='two wide' data-ord-amount>{moment(item.createdAt).format("hh:mm:ss")}</td>
+          <td data-ord-amount className='one wide'>
+            <a href='javascript:;' onClick={this.cancelOrder.bind(this, item)}>Cancel</a>
+          </td>
         </tr>
       );
     });
@@ -54,11 +68,10 @@ export default React.createClass({
             <thead>
               <tr className='lesspadding'>
                 <th className='three wide' >Size</th>
-                <th className='three wide'>Filled ({this.props.valute1})</th>
+                <th className='three wide'>Remain ({this.props.valute1})</th>
                 <th className='three wide'>Price ({this.props.valute2})</th>
-                <th className='three wide'>Fee ({this.props.valute2})</th>
                 <th className='two wide'>Time</th>
-                <th className='two wide'>Status</th>
+                <th className='one wide'></th>
               </tr>
             </thead>
           </table>

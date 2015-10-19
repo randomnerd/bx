@@ -218,8 +218,9 @@ export default React.createClass({
                 </div>
                 <div className='ux fixorders container'>
                   <div className='ui basic segment h100'>
-                    <h3 className='ui header'>OPEN ORDERS</h3>
+                    <h3 className='ui header'>MY ORDERS</h3>
                     <OpenOrders
+                      pair={this.data.pair}
                       valute1={this.props.active.toUpperCase().split("-")[0]}
                       valute2={this.props.active.toUpperCase().split("-")[1]} />
                   </div>
