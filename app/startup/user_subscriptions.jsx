@@ -1,3 +1,5 @@
+import {TradePairs} from 'collections';
+
 Meteor.subs = new SubsManager();
 
 Meteor.subs.subscribe('currencies');
@@ -18,5 +20,14 @@ Tracker.autorun(() => {
       Meteor.subs.subscribe('currenciesAdmin');
       Meteor.subs.subscribe('tradepairsAdmin');
     }
+  }
+});
+
+Tracker.autorun(() => {
+  let route = FlowRouter.current();
+  if (route.path.match(/^\/pair/)) {
+    let pair = TradePairs.findOne({permalink: route.params.pair_id});
+    if (!pair) return;
+    Meteor.subs.subscribe('orderbook', pair._id);
   }
 });

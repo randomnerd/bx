@@ -164,6 +164,7 @@ export default React.createClass({
               <div className='ui basic segment h100'>
                   <h3 className='ui header'>ORDER BOOK</h3>
                   <Orders direction='sell'
+                    pair={this.data.pair}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
               </div>

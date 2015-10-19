@@ -1,4 +1,4 @@
-import {Orders} from 'collections';
+import {Orders, OrderBookItems} from 'collections';
 
 Meteor.publish('orderQueue', function() {
   // TODO: authorize worker
@@ -13,3 +13,7 @@ Meteor.publish('myOrders', function() {
     canceled: false
   });
 })
+
+Meteor.publish('orderbook', function(pairId) {
+  return OrderBookItems.find({pairId: pairId}, {sort: {price: -1}});
+});

@@ -1,6 +1,13 @@
 import React from 'react';
+import {OrderBookItems} from 'collections';
 
 export default React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData: function() {
+    return {
+      orders: OrderBookItems.find({pairId: this.props.pair._id}, {sort: {price: -1}}).fetch()
+    };
+  },
   getInitialState: function() {
     return {
       spread: 0.1,
