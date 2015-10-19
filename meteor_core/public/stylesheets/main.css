@@ -52,7 +52,7 @@ html, body{
   padding-bottom: 11px;
 }
 
-.ui.inverted.newgrey .basic.menu .item.active{
+.ui.inverted.newgrey .basic.tabular.menu .item.active{
   color:#fff;
   border-style: none none solid;
   border-bottom: 2px solid #fff;
@@ -60,6 +60,59 @@ html, body{
   margin-bottom: -1px;
   padding-bottom: 9px;
 }
+
+.ui.inverted.newgrey .basic.tabular.nounderline.menu, .ui.inverted.newgrey .basic.tabular.nounderline.menu .item.active{
+  border-bottom: none;
+}
+
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item{
+  padding:0 2em 0 0.7em;
+}
+
+
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.blue{
+  border-left: 2px solid #2185d0;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.red{
+  border-left: 2px solid #db2828;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.orange{
+  border-left: 2px solid #f2711c;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.yellow{
+  border-left: 2px solid #fbbd08;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.olive{
+  border-left: 2px solid #b5cc18;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.green{
+  border-left: 2px solid #21ba45;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.teal{
+  border-left: 2px solid #00b5ad;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.violet{
+  border-left: 2px solid #6435c9;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.purple{
+  border-left: 2px solid #a333c8;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.pink{
+  border-left: 2px solid #e03997;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.brown{
+  border-left: 2px solid #a5673f;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.grey{
+  border-left: 2px solid #767676;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.black{
+  border-left: 2px solid #1b1c1d;
+}
+.ui.inverted.newgrey .basic.tabular.leftline.menu .item.white{
+  border-left: 2px solid #fff;
+}
+
 
 .ui.inverted.newgrey.menu .item.active{
   background-color: rgba(255, 255, 255, 0.15);
@@ -94,6 +147,7 @@ html, body{
   padding: 0;
   float: none;
   display: block;
+  font-weight: normal;
 }
 
 .ui.inverted.newgrey .segment{
@@ -756,6 +810,11 @@ tr.lesspadding th {
     transition: padding-left 500ms, transform 500ms ease 0s;
 }
 
+.ui.inverted.newgrey .ui.top.sidebar.panel{
+  top: 4.1em !important;
+  padding: 2em;
+}
+
 .contwrapper{
   height: 100% !important;
   overflow-y: auto;
@@ -927,6 +986,27 @@ tr.lesspadding th {
 }*/
 
 
+/* INFO PANEL */
+
+
+.ui.inverted.newgrey .panel .menu .item.double.negative p::after{
+  font-family: Icons;
+  content: "\f175";
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #db2828;
+  font-weight: normal;
+}
+.ui.inverted.newgrey .panel .menu .item.double.positive p::after{
+  font-family: Icons;
+  content: "\f176";
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #21ba45;
+  font-weight: normal;
+}
 
 /* LANDING */
 

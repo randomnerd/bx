@@ -9,15 +9,28 @@ export default React.createClass({
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
   },
+  getInitialState() {
+    return {
+      showInfo: false,
+    };
+  },
+  infoToggle(){
+    this.state.showInfo ?
+      Dispatcher.dispatch({ actionType: 'HIDE_PANEL' }) :
+      Dispatcher.dispatch({ actionType: 'SHOW_PANEL' });
+
+    this.setState({ showInfo: !this.state.showInfo });
+
+  },
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   render() {
     return (
       <div>
-        <div className='ui icon item double'>
-          <i className="chevron right large grey text icon"></i>
-        </div>
+        <a className="icon item double" onClick={this.infoToggle}>
+          <p><i className="dropdown large icon"></i></p>
+        </a>
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
           <p>234.9292</p>
