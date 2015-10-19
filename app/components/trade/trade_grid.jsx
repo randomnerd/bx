@@ -235,6 +235,7 @@ export default React.createClass({
                 <h3 className='ui header'>TRADE HISTORY</h3>
 
                   <Trades
+                    pair={this.data.pair}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
 

@@ -1,6 +1,13 @@
 import React from 'react';
+import {Trades} from 'collections';
 
 export default React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData: function() {
+    return {
+      trades: Trades.find({pairId: this.props.pair._id}, {sort: {createdAt: -1}}).fetch()
+    };
+  },
   getInitialState: function() {
     return {
       data: [

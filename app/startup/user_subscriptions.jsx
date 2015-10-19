@@ -29,5 +29,6 @@ Tracker.autorun(() => {
     let pair = TradePairs.findOne({permalink: route.params.pair_id});
     if (!pair) return;
     Meteor.subs.subscribe('orderbook', pair._id);
+    Meteor.subs.subscribe('trades', pair._id);
   }
 });
