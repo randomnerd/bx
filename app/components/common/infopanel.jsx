@@ -98,17 +98,32 @@ export default React.createClass({
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>ANC</td>
                       <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "svg"/></td>
+                      <td className='five wide right aligned'>
+                        {
+                          this.data.BTPR_Loading ? <div className='cube'></div> :
+                          <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid"/>
+                        }
+                      </td>
                     </tr>
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>GLD</td>
                       <td className='six wide center aligned' >21.45 <span className="red text">(-32.58%)</span></td>
-                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "svg"/></td>
+                      <td className='five wide right aligned'>
+                        {
+                          this.data.BTPR_Loading ? <div className='cube'></div> :
+                          <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                        }
+                      </td>
                     </tr>
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>DRC</td>
                       <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "svg"/></td>
+                      <td className='five wide right aligned'>
+                        {
+                          this.data.BTPR_Loading ? <div className='cube'></div> :
+                          <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid"/>
+                        }
+                      </td>
                     </tr>
                   </thead>
                 </table>
