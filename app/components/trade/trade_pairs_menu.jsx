@@ -28,8 +28,8 @@ export default React.createClass({
 
       return (
         <a className={'item' + (active === apair ? ' active' : '') }
-        key = {apair}
-        href = {'/pair/' + apair}>
+        key = {pair.permalink}
+        href = {'/pair/' + pair.permalink}>
           {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}
         </a>
       );
