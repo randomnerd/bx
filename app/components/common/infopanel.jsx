@@ -1,6 +1,6 @@
 import React from 'react';
-import AreaChart from 'components/bitindex/stockcharts/areachart_infopanel';
-
+import Charts from 'components/bitindex';
+import { BitIndexIndicator_BTPR } from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -11,9 +11,14 @@ export default React.createClass({
   },
 
   getMeteorData() {
-    return {
 
-    };
+   let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
+
+   return {
+
+   BTPR_Loading: !handle_BTPR.ready(),
+   BTPR: BitIndexIndicator_BTPR.find().fetch(),
+   };
   },
   componentDidMount() {
     //$this=this;
@@ -93,17 +98,17 @@ export default React.createClass({
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>ANC</td>
                       <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                      <td className='five wide right aligned'><AreaChart /></td>
+                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "hybrid"/></td>
                     </tr>
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>GLD</td>
                       <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                      <td className='five wide right aligned'><AreaChart /></td>
+                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "hybrid"/></td>
                     </tr>
                     <tr className='lesspadding'>
                       <td className='five wide center aligned'>DRC</td>
                       <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                      <td className='five wide right aligned'><AreaChart /></td>
+                      <td className='five wide right aligned'><Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "hybrid"/></td>
                     </tr>
                   </thead>
                 </table>
