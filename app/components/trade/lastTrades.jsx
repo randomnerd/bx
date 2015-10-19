@@ -5,7 +5,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     return {
-      trades: Trades.find({pairId: this.props.pair._id}, {sort: {createdAt: -1}}).fetch()
+      trades: Trades.find({pairId: (this.props.pair ? this.props.pair._id : null)}, {sort: {createdAt: -1}}).fetch()
     };
   },
   getInitialState: function() {

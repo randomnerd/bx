@@ -5,7 +5,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     return {
-      orders: OrderBookItems.find({pairId: this.props.pair._id}, {sort: {price: -1}}).fetch()
+      orders: OrderBookItems.find({pairId: (this.props.pair ? this.props.pair._id : null)}, {sort: {price: -1}}).fetch()
     };
   },
   getInitialState: function() {

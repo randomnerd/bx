@@ -5,7 +5,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      orders: Orders.find({pairId: this.props.pair._id}).fetch()
+      orders: Orders.find({pairId: (this.props.pair ? this.props.pair._id : null)}).fetch()
     }
   },
 

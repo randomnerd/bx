@@ -11,14 +11,12 @@ export default React.createClass({
   },
 
   getMeteorData() {
+    let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
 
-   let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
-
-   return {
-
-   BTPR_Loading: !handle_BTPR.ready(),
-   BTPR: BitIndexIndicator_BTPR.find().fetch(),
-   };
+    return {
+     BTPR_Loading: !handle_BTPR.ready(),
+     BTPR: BitIndexIndicator_BTPR.find().fetch(),
+    };
   },
   componentDidMount() {
     //$this=this;

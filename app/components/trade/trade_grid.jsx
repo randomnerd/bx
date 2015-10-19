@@ -15,10 +15,12 @@ export default React.createClass({
   },
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
+    let handle_Pair = Meteor.subscribe('TradePairs');
 
     return {
 
       BTPR_Loading: !handle_BTPR.ready(),
+      Pair_Loading: !handle_Pair.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pair: TradePairs.findOne({permalink: this.props.active})
 
@@ -157,14 +159,14 @@ export default React.createClass({
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
-                <BuySell currency={this.props.active.toUpperCase().split("-")[0]} pair={this.data.pair} direction='buy'/>
+                <BuySell currency={this.props.active.toUpperCase().split("-")[0]} pair={this.data.Pair_Loading ? null : this.data.pair} direction='buy'/>
               </div>
             </div>
             <div className='ux column orders fullheight padding'>
               <div className='ui basic segment h100'>
                   <h3 className='ui header'>ORDER BOOK</h3>
                   <Orders direction='sell'
-                    pair={this.data.pair}
+                    pair={this.data.Pair_Loading ? null : this.data.pair}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
               </div>
@@ -221,7 +223,7 @@ export default React.createClass({
                   <div className='ui basic segment h100'>
                     <h3 className='ui header'>MY ORDERS</h3>
                     <OpenOrders
-                      pair={this.data.pair}
+                      pair={this.data.Pair_Loading ? null : this.data.pair}
                       valute1={this.props.active.toUpperCase().split("-")[0]}
                       valute2={this.props.active.toUpperCase().split("-")[1]} />
                   </div>
@@ -235,7 +237,7 @@ export default React.createClass({
                 <h3 className='ui header'>TRADE HISTORY</h3>
 
                   <Trades
-                    pair={this.data.pair}
+                    pair={this.data.Pair_Loading ? null : this.data.pair}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
 
