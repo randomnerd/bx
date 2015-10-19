@@ -15,16 +15,24 @@ export default React.createClass({
 
   goSell() {
     let params = {
-      pairId: this.props.pairId,
-      amount: this.state.amount,
-      price: this.state.price
+      pairId: this.props.pair._id,
+      amount: parseFloat(this.state.amount),
+      price:  parseFloat(this.state.price),
+      buy:    false
     };
     console.log('createOrder', params);
     Meteor.call('createOrder', params);
   },
 
   goBuy() {
-
+    let params = {
+      pairId: this.props.pair._id,
+      amount: parseFloat(this.state.amount),
+      price:  parseFloat(this.state.price),
+      buy:    true
+    };
+    console.log('createOrder', params);
+    Meteor.call('createOrder', params);
   },
 
   componentDidMount() {
@@ -62,7 +70,7 @@ export default React.createClass({
   showPrice() {
     return (
       <div><Semantic.Input name='price' label='Price' icon='shop'
-      value={this.state.price !== 0 ? (parseFloat(this.state.price)).toFixed(8) : '0'}
+      value={this.state.price}
       placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
       onChg={this.changePrice} /></div>
     );
@@ -93,9 +101,9 @@ export default React.createClass({
             onInvalid={this.disallowSubmit} ref='form'>
 
               <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-              value={this.state.amount !== 0 ? (parseFloat(this.state.amount)).toFixed(8) : '0'}
+              value={this.state.amount} onChg={this.changeAmount}
               placeholder='0.0000' ref='amount' validations='isNumeric'
-              labeled labelName={this.props.currency} onChg={this.changeAmount} />
+              labeled labelName={this.props.currency}/>
               {this.state.ordType === 'limit' ? this.showPrice() : null}
               {this.state.ordType === 'stop' ? this.showPrice() : null}
 

@@ -9,3 +9,4 @@ import './transactions';
 import './waddressbook';
 import './wallets';
 import './withdrawals';
+import './orders';

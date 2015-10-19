@@ -4,7 +4,7 @@ Balances._transform = (obj) => {
   return new Balance(obj);
 };
 
-class Balance {
+export default class Balance {
   constructor(data) {
     _.extend(this, data);
   }

@@ -1,3 +1,5 @@
+import {Balances} from 'collections';
+
 Meteor.users._transform = (user) => {
   return new User(user);
 };
@@ -11,5 +13,8 @@ class User {
   }
   isAdmin() {
     return Roles.userIsInRole(this._id, 'admin');
+  }
+  balanceFor(currId) {
+    return Balances.findOne({userId: this._id, currId: currId});
   }
 }

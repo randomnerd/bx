@@ -14,12 +14,18 @@ export default React.createClass({
   },
 
   newPair(event) {
-    let {currId, marketCurrId, buyFee, sellFee, published} = this.refs.curr.getCurrentValues();
+    let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
     //console.log({currId: currId, marketCurrId: marketCurrId, buyFee:buyFee,
     //sellFee:sellFee, published:published?true:false})
 
-    Meteor.call('tradepair_add', {currId: currId, marketCurrId: marketCurrId, buyFee: buyFee,
-      sellFee: sellFee, published: published ? true : false }, function(error, result) {
+    Meteor.call('tradepair_add', {
+      currId: currId,
+      marketCurrId: marketCurrId,
+      buyFee: buyFee,
+      sellFee: sellFee,
+      published: !!published,
+      permalink: permalink
+    }, function(error, result) {
         if (result || error) {
           this.setState({errorMessage: error.message});
         }else {
@@ -29,10 +35,15 @@ export default React.createClass({
   },
   savePair(event) {
     //console.log(this.refs.curr.getCurrentValues())
-    let {currId, marketCurrId, buyFee, sellFee, published} = this.refs.curr.getCurrentValues();
-    Meteor.call('tradepair_update', this.data.tradePairs._id,
-    {currId: currId, marketCurrId: marketCurrId, buyFee: buyFee,
-      sellFee: sellFee, published: published ? true : false },
+    let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
+    Meteor.call('tradepair_update', this.data.tradePairs._id, {
+      currId: currId,
+      marketCurrId: marketCurrId,
+      buyFee: buyFee,
+      sellFee: sellFee,
+      published: !!published,
+      permalink: permalink
+    },
     function(error, result) {
       if (result) {
         this.setState({errorMessage: err.message});
@@ -86,6 +97,9 @@ export default React.createClass({
           <Semantic.Select name='marketCurrId' label='Market currency'
           validations='minLength:3' placeholder='Select currency'
           required value={this.currentVal('marketCurrId')} content={this.currsForSearch()} />
+
+          <Semantic.Input name='permalink' label='Permalink' placeholder='ltc-btc'
+          required value={this.currentVal('permalink')} />
 
           <Semantic.Input name='buyFee' label='Buy fee'
           validations='isNumeric' placeholder='Enter name of currency'
