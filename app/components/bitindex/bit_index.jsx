@@ -1,27 +1,28 @@
 import React from 'react';
-import {BitIndexIndicator_BTTC, BitIndexIndicator_BTTN, BitIndexIndicator_BTPR, BitIndexIndicator_BTUA} from 'collections';
+import { BitIndexIndicator_BTPR } from 'collections';
+import Charts from 'components/bitindex';
 
 export default React.createClass({
 
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    let handle_BTTC = Meteor.subscribe("BitIndexIndicator_BTTC");
-    let handle_BTTN = Meteor.subscribe("BitIndexIndicator_BTTN");
+    // let handle_BTTC = Meteor.subscribe("BitIndexIndicator_BTTC");
+    // let handle_BTTN = Meteor.subscribe("BitIndexIndicator_BTTN");
     let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
-    let handle_BTUA = Meteor.subscribe("BitIndexIndicator_BTUA");
+    // let handle_BTUA = Meteor.subscribe("BitIndexIndicator_BTUA");
 
     return {
 
-      BTTC_Loading: !handle_BTTC.ready(),
-      BTTN_Loading: !handle_BTTN.ready(),
+      // BTTC_Loading: !handle_BTTC.ready(),
+      // BTTN_Loading: !handle_BTTN.ready(),
       BTPR_Loading: !handle_BTPR.ready(),
-      BTUA_Loading: !handle_BTUA.ready(),
+      // BTUA_Loading: !handle_BTUA.ready(),
 
-      BTTC: BitIndexIndicator_BTTC.find().fetch(),
-      BTTN: BitIndexIndicator_BTTN.find().fetch(),
+      // BTTC: BitIndexIndicator_BTTC.find().fetch(),
+      // BTTN: BitIndexIndicator_BTTN.find().fetch(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
-      BTUA: BitIndexIndicator_BTUA.find().fetch(),
+      // BTUA: BitIndexIndicator_BTUA.find().fetch(),
     };
   },
 
@@ -67,11 +68,8 @@ export default React.createClass({
     return (
 
       <div>
-        <HaikinAshi data = {this.data.BTPR.slice(200)} type = "svg" />
-        <CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
-        <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
-        <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg"/>
-        <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = "svg"/>
+
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "svg"/>
 
       </div>
     );

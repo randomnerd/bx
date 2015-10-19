@@ -3,6 +3,7 @@ import ReactLayout from 'lib/react_layout';
 import AdminLayout from 'components/layouts/admin_layout';
 import MainLayout from 'components/layouts/main_layout';
 import Home from 'components/home';
+import BitIndex from 'components/bitindex/bit_index';
 import AdminHome from 'components/admin/home';
 import TradePage from 'components/trade/tradePage';
 import WalletsPage from 'components/user/wallets';
@@ -31,10 +32,10 @@ FlowRouter.route('/pair/:pair_id', {
 
 FlowRouter.route('/BitIndex', {
   subscriptions() {
-    this.register('BTTC', Meteor.subscribe('BitIndexIndicator_BTTC'));
-    this.register('BTTN', Meteor.subscribe('BitIndexIndicator_BTTN'));
+    // this.register('BTTC', Meteor.subscribe('BitIndexIndicator_BTTC'));
+    // this.register('BTTN', Meteor.subscribe('BitIndexIndicator_BTTN'));
     this.register('BTPR', Meteor.subscribe('BitIndexIndicator_BTPR'));
-    this.register('BTUA', Meteor.subscribe('BitIndexIndicator_BTUA'));
+    // this.register('BTUA', Meteor.subscribe('BitIndexIndicator_BTUA'));
   },
   action() {
     ReactLayout.render(MainLayout, {content: <BitIndex /> });
