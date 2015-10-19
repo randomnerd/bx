@@ -88,25 +88,25 @@ export default React.createClass({
                 </a>
               </div>
               <div className="ui basic segment">
-              <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
-                <thead>
-                  <tr className='lesspadding'>
-                    <td className='five wide center aligned'>ANC</td>
-                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                    <td className='five wide right aligned'><AreaChart /></td>
-                  </tr>
-                  <tr className='lesspadding'>
-                    <td className='five wide center aligned'>GLD</td>
-                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                    <td className='five wide right aligned'><AreaChart /></td>
-                  </tr>
-                  <tr className='lesspadding'>
-                    <td className='five wide center aligned'>DRC</td>
-                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
-                    <td className='five wide right aligned'><AreaChart /></td>
-                  </tr>
-                </thead>
-              </table>
+                <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
+                  <thead>
+                    <tr className='lesspadding'>
+                      <td className='five wide center aligned'>ANC</td>
+                      <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                      <td className='five wide right aligned'><AreaChart /></td>
+                    </tr>
+                    <tr className='lesspadding'>
+                      <td className='five wide center aligned'>GLD</td>
+                      <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                      <td className='five wide right aligned'><AreaChart /></td>
+                    </tr>
+                    <tr className='lesspadding'>
+                      <td className='five wide center aligned'>DRC</td>
+                      <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                      <td className='five wide right aligned'><AreaChart /></td>
+                    </tr>
+                  </thead>
+                </table>
               </div>
             </div>
             <div className="column">
