@@ -8,6 +8,7 @@ import HaikinAshi from './stockcharts/HaikinAshi';
 import Kagi from './stockcharts/Kagi';
 import PointAndFigureWithUpdatingData from './stockcharts/PointAndFigureWithUpdatingData';
 import RenkoWithUpdatingData from './stockcharts/RenkoWithUpdatingData';
+import areachart_infopanel from './stockcharts/areachart_infopanel';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -19,4 +20,5 @@ export default {
   Kagi,
   PointAndFigureWithUpdatingData,
   RenkoWithUpdatingData,
+  areachart_infopanel,
 };
