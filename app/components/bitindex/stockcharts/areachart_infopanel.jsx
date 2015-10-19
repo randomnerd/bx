@@ -16,19 +16,11 @@ export default React.createClass({
       .isRequired
   },
   render() {
-    if (this.state === null || !this.state.width)
-      return <div/>;
-    var {data, type} = this.props;
+    if (this.state === null || !this.state.width) return <div/>;
+    let {data, type} = this.props;
     return (
-      <ChartCanvas width={this.state.width} height={200} margin={{
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0
-      }} data={data} type={type}>
+      <ChartCanvas width={this.state.width} height={70} data={data} type={type}>
         <Chart id={0} xAccessor={(d) => d.date}>
-          <XAxis axisAt='bottom' orient='bottom' ticks={6}/>
-          <YAxis axisAt='left' orient='left'/>
           <DataSeries id={0} yAccessor={(d) => d.close}>
             <AreaSeries/>
           </DataSeries>
