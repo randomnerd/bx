@@ -7,10 +7,10 @@ export default React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    // let handle_BTTC = Meteor.subscribe("BitIndexIndicator_BTTC");
-    // let handle_BTTN = Meteor.subscribe("BitIndexIndicator_BTTN");
-    let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
-    // let handle_BTUA = Meteor.subscribe("BitIndexIndicator_BTUA");
+    // let handle_BTTC = Meteor.subscribe('BitIndexIndicator_BTTC');
+    // let handle_BTTN = Meteor.subscribe('BitIndexIndicator_BTTN');
+    let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
+    // let handle_BTUA = Meteor.subscribe('BitIndexIndicator_BTUA');
 
     return {
 
@@ -42,34 +42,37 @@ export default React.createClass({
     // <AreaChart data={this.data.BTTC} />
     // <AreaChart data={this.data.BTTN} />
     //
-    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = "svg" />
-    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = "svg" />
+    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR} type = 'svg' />
+    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR} type = 'svg' />
     //
     // <CandleStickChartWithUpdatingData
     //
-    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = "svg" />
+    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR} type = 'svg' />
     //
-    // <HaikinAshi data = {this.data.BTPR} type = "hybrid"/>
+    // <HaikinAshi data = {this.data.BTPR} type = 'hybrid'/>
     //
     //
-    // <AreaChartFixed data = {this.data.BTTC} type = "svg"/>
-    // <AreaChartFixed data = {this.data.BTTN} type = "svg"/>
-    // <AreaChartFixed data = {this.data.BTUA} type = "svg"/>
+    // <AreaChartFixed data = {this.data.BTTC} type = 'svg'/>
+    // <AreaChartFixed data = {this.data.BTTN} type = 'svg'/>
+    // <AreaChartFixed data = {this.data.BTUA} type = 'svg'/>
     //
-    // <CandleStickChartWithUpdatingData data = {this.data.BTPR.slice(200)} type = "svg" />
-    // <HaikinAshi data = {this.data.BTPR.slice(200)} type = "svg" />
-    // <Kagi data = {this.data.BTPR.slice(200)} type = "svg" />
+    // <CandleStickChartWithUpdatingData data = {this.data.BTPR.slice(200)} type = 'svg' />
+    // <HaikinAshi data = {this.data.BTPR.slice(200)} type = 'svg' />
+    // <Kagi data = {this.data.BTPR.slice(200)} type = 'svg' />
     //
-    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
-    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = "svg" />
-    // <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = "svg"/>
-    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = "svg"/>
+    // <CandleStickChartWithRSIIndicator data = {this.data.BTPR.slice(200)} type = 'svg' />
+    // <CandleStickChartWithFullStochasticsIndicator data = {this.data.BTPR.slice(200)} type = 'svg' />
+    // <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = 'svg'/>
+    // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = 'svg'/>
 
     return (
 
       <div>
 
-        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = "svg"/>
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'svg'/>
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'svg'/>
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'svg'/>
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'svg'/>
 
       </div>
     );
@@ -84,17 +87,17 @@ export default React.createClass({
 
         return (
 
-          			<div className={"cube-grid"}>
+          			<div className={'cube-grid'}>
 
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
-                     <div className="cube"></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
+                     <div className='cube'></div>
 
                  </div>
         );
