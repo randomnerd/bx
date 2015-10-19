@@ -1,4 +1,6 @@
 import React from 'react';
+import AreaChart from 'components/bitindex/stockcharts/areachart_infopanel';
+
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -52,6 +54,9 @@ export default React.createClass({
                   <p>234.9292</p>
                 </a>
               </div>
+              <div className="ui basic segment">
+
+              </div>
             </div>
             <div className="column">
               <div className='ui tabular basic menu nounderline leftline' ref='currType'>
@@ -81,6 +86,27 @@ export default React.createClass({
                 <a className='item' onClick={this.setLimit}>
                   Most Loosers
                 </a>
+              </div>
+              <div className="ui basic segment">
+              <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
+                <thead>
+                  <tr className='lesspadding'>
+                    <td className='five wide center aligned'>ANC</td>
+                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                    <td className='five wide right aligned'><AreaChart /></td>
+                  </tr>
+                  <tr className='lesspadding'>
+                    <td className='five wide center aligned'>GLD</td>
+                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                    <td className='five wide right aligned'><AreaChart /></td>
+                  </tr>
+                  <tr className='lesspadding'>
+                    <td className='five wide center aligned'>DRC</td>
+                    <td className='six wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
+                    <td className='five wide right aligned'><AreaChart /></td>
+                  </tr>
+                </thead>
+              </table>
               </div>
             </div>
             <div className="column">
