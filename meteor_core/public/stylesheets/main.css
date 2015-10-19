@@ -153,6 +153,10 @@ html, body{
 .ui.inverted.newgrey .segment{
   background-color: #1e2b34;
 }
+.ui.inverted.newgrey .segment.nobg{
+  background: none !important;
+}
+
 .ui.inverted.newgrey .ui.segments.fee{
   margin-top: -1em;
   padding: 0 .1em;
