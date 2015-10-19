@@ -43,6 +43,8 @@ Meteor.methods({
     let order = Orders.findOne({_id: id});
     if (!order) throw new Meteor.Error('Order not found');
     if (order.userId !== Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    order.cancel();
+
+    var job = new Job(Jobs, 'cancelOrder', {id: id});
+    job.save();
   }
 })
