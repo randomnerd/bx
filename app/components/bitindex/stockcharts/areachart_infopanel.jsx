@@ -15,6 +15,18 @@ export default React.createClass({
       .oneOf(['svg', 'hybrid'])
       .isRequired
   },
+  getDefaultProps() {
+    return {
+      type: 'svg'
+    };
+  },
+  getInitialState() {
+    return {
+      data: this.props
+        .data
+        .slice(0, length)
+    };
+  },
   render() {
     if (this.state === null || !this.state.width) return <div/>;
 
@@ -27,13 +39,18 @@ export default React.createClass({
         top: 0,
         bottom: 0
       }} data={data} type={type}>
+
         <Chart id={0} xAccessor={(d) => d.date}>
           <XAxis axisAt='bottom' orient='bottom' ticks={6}/>
+
           <YAxis axisAt='left' orient='left'/>
+
           <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue' fill='steelblue'>
             <AreaSeries/>
           </DataSeries>
+
         </Chart>
+
       </ChartCanvas>
     );
   }
