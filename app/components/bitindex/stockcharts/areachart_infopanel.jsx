@@ -19,7 +19,12 @@ export default React.createClass({
     if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     return (
-      <ChartCanvas width={this.state.width} height={70} data={data} type={type}>
+      <ChartCanvas width={this.state.width} height={70} data={data} type={type} margin={{
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      }}>
         <Chart id={0} xAccessor={(d) => d.date}>
           <DataSeries id={0} yAccessor={(d) => d.close}>
             <AreaSeries/>
