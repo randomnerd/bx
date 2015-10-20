@@ -4,7 +4,7 @@ import {OrderBookItems} from 'collections';
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
-    if (!this.props.pair) return;
+    if (!this.props.pair) return {};
     return {
       ordersSell : OrderBookItems.find({pairId: this.props.pair._id , buy:false}, {sort: {price: -1}},{limit:20}).fetch(),
       ordersBuy  : OrderBookItems.find({pairId: this.props.pair._id , buy:true}, {sort: {price: 1}},{limit:20}).fetch(),
@@ -178,6 +178,7 @@ export default React.createClass({
       );
   },
   render() {
+    if (!this.props.pair) return null;
     return (
       <div className='ui basic teal segment h100 tabheader'>
         <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
