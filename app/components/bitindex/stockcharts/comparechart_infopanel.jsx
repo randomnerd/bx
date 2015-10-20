@@ -20,9 +20,9 @@ export default React.createClass({
     let {data, type} = this.props;
     return (
       <ChartCanvas width={this.state.width} height={270} margin={{
-        left: 10,
-        right: 10,
-        top: 0,
+        left: 0,
+        right: 30,
+        top: 10,
         bottom: 0
       }} data={data} type={type}>
         <Chart id={0} xAccessor={(d) => d.date}>
