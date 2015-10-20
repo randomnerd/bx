@@ -9,6 +9,7 @@ import Kagi from './stockcharts/Kagi';
 import PointAndFigureWithUpdatingData from './stockcharts/PointAndFigureWithUpdatingData';
 import RenkoWithUpdatingData from './stockcharts/RenkoWithUpdatingData';
 import areachart_infopanel from './stockcharts/areachart_infopanel';
+import comparechart_infopanel from './stockcharts/comparechart_infopanel';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -21,4 +22,5 @@ export default {
   PointAndFigureWithUpdatingData,
   RenkoWithUpdatingData,
   areachart_infopanel,
+  comparechart_infopanel,
 };
