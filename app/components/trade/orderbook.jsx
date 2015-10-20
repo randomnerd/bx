@@ -1,15 +1,17 @@
 import React from 'react';
-import {OrderBookItems} from 'collections';
+import {OrderBookItems,Trades} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     if (!this.props.pair) return{};
     return {
-      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } }, { limit: 20} ).fetch(),
-      ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: 1 } }, { limit: 20} ).fetch(),
-      ordersSellMax: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ),
-      ordersBuyMax: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
+      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
+      ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
+      ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
+      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+      tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
+      tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
     };
   },
   getInitialState: function() {
@@ -17,28 +19,6 @@ export default React.createClass({
       spread: 0.1,
     };
   },
-  // getOrdersItems(direction) {
-  //   return this.state.data;
-  // },
-  // randNumber() {
-  //   let leftLength  = Math.random().toFixed(1) * 10;
-  //   let rightLength  = Math.random().toFixed(1) * 10;
-  //   leftLength = leftLength > 4 ? 4 : leftLength;
-  //   rightLength = rightLength > 8 ? 8 : rightLength;
-  //   leftLength = leftLength < 1 ? 1 : leftLength;
-  //   rightLength = rightLength < 1 ? 1 : rightLength;
-  //   //console.log(leftLength, rightLength)
-  //   //console.log(parseFloat((Math.random().toFixed(leftLength)*Math.pow(10,leftLength))+Math.random().toFixed(rightLength)))
-  //   return ((Math.random().toFixed(leftLength) * Math.pow(10, leftLength - 1)).toFixed(0)
-  //   + Math.random().toFixed(rightLength - 1));
-  // },
-  componentDidMount() {
-
-  },
-
-  // componentWillUnmount() {
-  //   if (this.tick) Meteor.clearInterval(this.tick);
-  // },
 
   goBuySell(item, e) {
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE', data: {
@@ -50,16 +30,16 @@ export default React.createClass({
   },
   renderSellItems() {
     let nulls = '00000000';
+    if (!this.props.pair) return null;
 
-    let max =this.data.ordersSellMax;
-    if(this.data.ordersSell)
+    let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
     return this.data.ordersSell.map((item) => {
-      item.displayAmount()
+
       //.displayRemain() и .displayPrice()
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
-      let amount = item.displayAmount().toString().split('.');
-      let price = item.displayPrice().toString().split('.');
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
+      let amount = parseFloat(item.displayAmount()).toString().split('.');
+      let price = parseFloat(item.displayPrice()).toString().split('.');
+      let total = parseFloat(item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       if (!amount[1]) { amount[1] = ''; }
       if (!price[1]) { price[1] = ''; }
       if (amount[0] === '00') { amount[1] = '0'; }
@@ -100,16 +80,16 @@ export default React.createClass({
 
   renderBuyItems() {
     let nulls = '00000000';
+    if (!this.props.pair) return null;
 
-    let max =this.data.ordersBuyMax;
-    if(this.data.ordersBuy)
+    let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
     return this.data.ordersBuy.map((item) => {
-      item.displayAmount()
       //.displayRemain() и .displayPrice()
-      let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
-      let amount = item.displayAmount().toString().split('.');
-      let price = item.displayPrice().toString().split('.');
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
+
+      let weight = parseFloat(70 * (parseFloat(item.displayAmount()) / max).toFixed(8));
+      let amount = parseFloat(item.displayAmount()).toString().split('.');
+      let price = parseFloat(item.displayPrice()).toString().split('.');
+      let total = parseFloat(item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       if (!amount[1]) { amount[1] = ''; }
       if (!price[1]) { price[1] = ''; }
       if (amount[0] === '00') { amount[1] = '0'; }
@@ -149,29 +129,54 @@ export default React.createClass({
   },
 
   renderSpread() {
-    let direction = 0;
+    let nulls = '00000000';
+    let i=0;
+    let lastOne=[];
+    this.data.tradesLast.map((item) => {
+      lastOne[i] = parseFloat(item.displayPrice());
+      i++;
+    });
+    let direction = !!( lastOne[0] > lastOne[1] );
+    let diff = ( lastOne[0] - lastOne[1] ).toFixed(4);
+    let diffPerc = ( ( diff / lastOne[1] ) * 100 ).toFixed(2);
+    let lastPrice = lastOne[0].toString().split('.');
+    lastPrice[1] = lastPrice[1] ? lastPrice[1] : '';
+
+    let hiPrice = this.data.tradesHi.displayPrice().toString().split('.');
+    let lowPrice = this.data.tradesLo.displayPrice().toString().split('.');
+    hiPrice[1] = hiPrice[1] ? hiPrice[1] : '';
+    lowPrice[1] = lowPrice[1] ? lowPrice[1] : '';
+
+
     return (
 
         <tr className='ui white text opacity' >
           <td className='five wide red markered text'>
             <span className='direction'>Lowest <i className='long arrow down icon'></i></span>
-            <div className='bignum left'>31</div>
+            <div className='bignum left'>{ lowPrice[0] }</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>643</span>00000</div>
+            <div className='bignum right'><span>{ lowPrice[1] }</span>
+              { nulls.substr(0, 8 - lowPrice[1].length) }
+            </div>
           </td>
           <td className='six wide center aligned white markered text'>
-            <div className='bignum left'>32</div>
+            <div className='bignum left'>{ lastPrice[0] }</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>467534</span>00</div>
-            <span className={'direction ' +
-              (direction === 1 ? 'green' : 'red') + ' text'}>-2.84848 (-0.05%)
+            <div className='bignum right'><span>{ lastPrice[1] }</span>
+              { nulls.substr(0, 8 - lastPrice[1].length) }
+            </div>
+            <span className={'direction ' + (direction ? 'green' : 'red') + ' text'}>
+              {diff}
+              ({diffPerc}%)
             </span>
           </td>
           <td className='five wide right aligned green markered text'>
             <span className='direction'>Higest <i className='long arrow up icon'></i></span>
-            <div className='bignum left'>36</div>
+            <div className='bignum left'>{ hiPrice[0] }</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>956734</span>00</div>
+            <div className='bignum right'><span>{ hiPrice[1] }</span>
+              { nulls.substr(0, 8 - hiPrice[1].length) }
+            </div>
           </td>
         </tr>
 

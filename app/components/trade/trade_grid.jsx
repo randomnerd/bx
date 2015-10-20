@@ -15,12 +15,10 @@ export default React.createClass({
   },
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
-    let handle_Pair = Meteor.subscribe('TradePairs');
 
     return {
 
       BTPR_Loading: !handle_BTPR.ready(),
-      Pair_Loading: !handle_Pair.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pair: TradePairs.findOne({permalink: this.props.active})
 
@@ -159,7 +157,7 @@ export default React.createClass({
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
-                <BuySell currency={this.props.active.toUpperCase().split("-")[0]} pair={this.data.Pair_Loading ? null : this.data.pair} direction='buy'/>
+                <BuySell pair={this.data.pair} />
               </div>
             </div>
             <div className='ux column orders fullheight padding'>

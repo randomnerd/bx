@@ -62,7 +62,10 @@ export default React.createClass({
                 </a>
               </div>
               <div className="ui basic segment nobg">
-
+                {
+                  this.data.BTPR_Loading ? <div className='cube'></div> :
+                  <Charts.comparechart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                }
               </div>
             </div>
             <div className="column">

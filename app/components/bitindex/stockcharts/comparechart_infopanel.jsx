@@ -21,7 +21,7 @@ export default React.createClass({
     return (
       <ChartCanvas width={this.state.width} height={135} margin={{
         left: 0,
-        right: 30,
+        right: 50,
         top: 10,
         bottom: 0
       }} data={data} type={type}>
