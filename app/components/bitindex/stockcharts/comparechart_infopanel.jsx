@@ -19,7 +19,7 @@ export default React.createClass({
     if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     return (
-      <ChartCanvas width={this.state.width} height={270} margin={{
+      <ChartCanvas width={this.state.width} height={135} margin={{
         left: 0,
         right: 30,
         top: 10,
