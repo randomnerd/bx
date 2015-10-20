@@ -4,12 +4,12 @@ import {OrderBookItems} from 'collections';
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
-    if (!this.props.pair) return {};
+    if (!this.props.pair) return{};
     return {
-      ordersSell : OrderBookItems.find({pairId: this.props.pair._id , buy:false}, {sort: {price: -1}},{limit:20}).fetch(),
-      ordersBuy  : OrderBookItems.find({pairId: this.props.pair._id , buy:true}, {sort: {price: 1}},{limit:20}).fetch(),
-      ordersSellMax  : OrderBookItems.findOne({pairId: this.props.pair._id , buy:false}, {sort: {price: -1}}),
-      ordersBuyMax  : OrderBookItems.findOne({pairId: this.props.pair._id , buy:true}, {sort: {price: -1}}),
+      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } }, { limit: 20} ).fetch(),
+      ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: 1 } }, { limit: 20} ).fetch(),
+      ordersSellMax: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ),
+      ordersBuyMax: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
     };
   },
   getInitialState: function() {
@@ -17,28 +17,28 @@ export default React.createClass({
       spread: 0.1,
     };
   },
-  getOrdersItems(direction) {
-    return this.state.data;
-  },
-  randNumber() {
-    let leftLength  = Math.random().toFixed(1) * 10;
-    let rightLength  = Math.random().toFixed(1) * 10;
-    leftLength = leftLength > 4 ? 4 : leftLength;
-    rightLength = rightLength > 8 ? 8 : rightLength;
-    leftLength = leftLength < 1 ? 1 : leftLength;
-    rightLength = rightLength < 1 ? 1 : rightLength;
-    //console.log(leftLength, rightLength)
-    //console.log(parseFloat((Math.random().toFixed(leftLength)*Math.pow(10,leftLength))+Math.random().toFixed(rightLength)))
-    return ((Math.random().toFixed(leftLength) * Math.pow(10, leftLength - 1)).toFixed(0)
-    + Math.random().toFixed(rightLength - 1));
-  },
+  // getOrdersItems(direction) {
+  //   return this.state.data;
+  // },
+  // randNumber() {
+  //   let leftLength  = Math.random().toFixed(1) * 10;
+  //   let rightLength  = Math.random().toFixed(1) * 10;
+  //   leftLength = leftLength > 4 ? 4 : leftLength;
+  //   rightLength = rightLength > 8 ? 8 : rightLength;
+  //   leftLength = leftLength < 1 ? 1 : leftLength;
+  //   rightLength = rightLength < 1 ? 1 : rightLength;
+  //   //console.log(leftLength, rightLength)
+  //   //console.log(parseFloat((Math.random().toFixed(leftLength)*Math.pow(10,leftLength))+Math.random().toFixed(rightLength)))
+  //   return ((Math.random().toFixed(leftLength) * Math.pow(10, leftLength - 1)).toFixed(0)
+  //   + Math.random().toFixed(rightLength - 1));
+  // },
   componentDidMount() {
 
   },
 
-  componentWillUnmount() {
-    if (this.tick) Meteor.clearInterval(this.tick);
-  },
+  // componentWillUnmount() {
+  //   if (this.tick) Meteor.clearInterval(this.tick);
+  // },
 
   goBuySell(item, e) {
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE', data: {
@@ -51,7 +51,8 @@ export default React.createClass({
   renderSellItems() {
     let nulls = '00000000';
 
-    let max =this.data.ordersSellMax
+    let max =this.data.ordersSellMax;
+    if(this.data.ordersSell)
     return this.data.ordersSell.map((item) => {
       item.displayAmount()
       //.displayRemain() и .displayPrice()
@@ -65,7 +66,7 @@ export default React.createClass({
       if (price[0] === '00') { price[1] = '0'; }
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
-        className={item.animate ? 'animate' : ''}>
+        className={!item.animate ? 'animate' : ''}>
           <td className='five wide'>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
@@ -73,12 +74,11 @@ export default React.createClass({
             { nulls.substr(0, 7 - amount[1].length) }
             </div>
 
-            <span className={'leveler ' + (direction === 'buy' ? 'positive' : 'negative')}
+            <span className='leveler negative'
                 style={{width: weight + '%'}}>
             </span>
           </td>
-          <td className={'six wide center aligned '
-            + (direction === 'buy' ? 'positive' : 'negative')}>
+          <td className='six wide center aligned negative'>
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
@@ -101,7 +101,8 @@ export default React.createClass({
   renderBuyItems() {
     let nulls = '00000000';
 
-    let max =this.data.ordersBuyMax
+    let max =this.data.ordersBuyMax;
+    if(this.data.ordersBuy)
     return this.data.ordersBuy.map((item) => {
       item.displayAmount()
       //.displayRemain() и .displayPrice()
@@ -115,7 +116,7 @@ export default React.createClass({
       if (price[0] === '00') { price[1] = '0'; }
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
-        className={item.animate ? 'animate' : ''}>
+        className={!item.animate ? 'animate' : ''}>
           <td className='five wide'>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
@@ -123,12 +124,11 @@ export default React.createClass({
             { nulls.substr(0, 7 - amount[1].length) }
             </div>
 
-            <span className={'leveler ' + (direction === 'buy' ? 'positive' : 'negative')}
+            <span className='leveler positive'
                 style={{width: weight + '%'}}>
             </span>
           </td>
-          <td className={'six wide center aligned '
-            + (direction === 'buy' ? 'positive' : 'negative')}>
+          <td className='six wide center aligned positive'>
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
@@ -178,7 +178,6 @@ export default React.createClass({
       );
   },
   render() {
-    if (!this.props.pair) return null;
     return (
       <div className='ui basic teal segment h100 tabheader'>
         <table className='ui selectable very compact very basic striped table nopadding nomargin heading'>
@@ -194,9 +193,9 @@ export default React.createClass({
           <div className='scrollable100'>
             <table className='ui selectable very compact very basic striped table'>
               <tbody>
-                { this.renderSellItems('sell') }
+                { this.props.pair ? this.renderSellItems() : null }
                 { this.renderSpread() }
-                { this.renderBuyItems('buy') }
+                { this.props.pair ? this.renderBuyItems() : null }
               </tbody>
             </table>
           </div>
