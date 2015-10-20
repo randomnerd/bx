@@ -132,6 +132,7 @@ export default React.createClass({
     let nulls = '00000000';
     let i=0;
     let lastOne=[];
+    if (!this.props.pair) return null;
     this.data.tradesLast.map((item) => {
       lastOne[i] = parseFloat(item.displayPrice());
       i++;
