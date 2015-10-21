@@ -22,8 +22,8 @@ export default React.createClass({
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({
       context: $('.pusher'),
-      dimPage: false,
-      closable: false,
+      dimPage: true,
+      closable: true,
       //scrollLock: true,
       transition: 'overlay',
     });

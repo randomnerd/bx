@@ -19,6 +19,70 @@ export default React.createClass({
           </div>
         </div>
         <div className="block white">
+        <div className="ui main container">
+          <div className="ui grid icons">
+            <div className="three column row">
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge fa fa-tint icon" />
+                    Liquidity
+                  </h2>
+                  Fast funding. Low fees
+                </div>
+              </div>
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge fa fa-clock-o icon" />
+                    Reliability
+                  </h2>
+                  24/7 Support/ Legally compliant
+                </div>
+              </div>
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge security icon" />
+                    Security
+                  </h2>
+                  Strong security. Encrypted cold storage
+                </div>
+              </div>
+            </div>
+            <div className="three column row">
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge marging icon" />
+                    Bitcoin Marging Trading
+                  </h2>
+                  Leveraged trading up to 5x. Shorting allowed
+                </div>
+              </div>
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge advanced icon" />
+                    Advanced order types
+                  </h2>
+                  Stop-loss orders. Automate your strategy
+                </div>
+              </div>
+              <div className="column">
+                <div className="ui basic segment">
+                  <h2 className="ui icon header">
+                    <i className="ui huge reserves icon" />
+                    Proof of reserves Audits
+                  </h2>
+                  Cryptographically verified/ Created the industry standard
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div className="block white">
           <div className="ui main container">
             <p>We are passionate group of individuals aware of the shift that is
             occurring in information security and digital assets and we have come

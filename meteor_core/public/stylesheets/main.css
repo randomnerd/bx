@@ -805,7 +805,7 @@ tr.lesspadding th {
 }
 
 .ui.visible.right.sidebar ~ .fixed, .ui.visible.right.sidebar ~ .pusher {
-    padding-left: 260px;
+    padding-left: 260px !important;
     transition: padding-left 500ms, transform 500ms ease 0s;
 }
 
@@ -942,14 +942,16 @@ tr.lesspadding th {
 
 .ld .ui.segment{
   background: rgba(255, 255, 255, 1) !important;
+}
+.ld .ui.piled.segment{
   font-size: 1.2em;
   height: 12.5em;
 }
 
-.ld .ui.segment:last-child{
+.ld .ui.piled.segment:last-child{
   margin-left: 1em !important;
 }
-.ld .ui.segment:first-child{
+.ld .ui.piled.segment:first-child{
   margin-right: 1em !important;
 }
 
@@ -979,6 +981,16 @@ tr.lesspadding th {
 .ld .block.white.footer .container{
   padding-top: 2em;
 }
+
+.ld .icons .ui.segment .ui.header::after{
+  font-family: Icons;
+  content: '\f10d';
+  font-size: 3em;
+  display: block;
+  position: absolute;
+
+}
+
 /*
 .ld .ui.segment .ui.header::after{
   font-family: Icons;

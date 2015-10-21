@@ -16,7 +16,6 @@ export default React.createClass({
     let nulls = '00000000';
     if (!this.props.pair) return null;
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
-    console.log(max)
     return this.data.trades.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
