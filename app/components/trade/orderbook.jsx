@@ -42,8 +42,6 @@ export default React.createClass({
       let total = parseFloat(item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       if (!amount[1]) { amount[1] = ''; }
       if (!price[1]) { price[1] = ''; }
-      if (amount[0] === '00') { amount[1] = '0'; }
-      if (price[0] === '00') { price[1] = '0'; }
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
@@ -92,8 +90,6 @@ export default React.createClass({
       let total = parseFloat(item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       if (!amount[1]) { amount[1] = ''; }
       if (!price[1]) { price[1] = ''; }
-      if (amount[0] === '00') { amount[1] = '0'; }
-      if (price[0] === '00') { price[1] = '0'; }
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
@@ -201,7 +197,7 @@ export default React.createClass({
             <table className='ui selectable very compact very basic striped table'>
               <tbody>
                 { this.props.pair ? this.renderSellItems() : null }
-                { this.renderSpread() }
+                { this.dat.ordersSell&&this.dat.ordersBuy ? this.renderSpread() : null }
                 { this.props.pair ? this.renderBuyItems() : null }
               </tbody>
             </table>
