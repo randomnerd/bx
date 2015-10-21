@@ -71,7 +71,7 @@ export default React.createClass({
 
         <Charts.comparechart_infopanel data = {this.data.BTPR.slice(200)} type = 'hybrid'/>
         <Charts.comparechart_infopanel data = {this.data.BTPR.slice(200)} type = 'hybrid'/>
-        <Charts.comparechart_infopanel data = {this.data.BTPR.slice(200)} type = 'hybrid'/>
+        <Charts.linechart data = {this.data.BTPR.slice(200)} type = 'hybrid'/>
 
       </div>
     );

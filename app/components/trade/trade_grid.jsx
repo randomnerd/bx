@@ -24,7 +24,12 @@ export default React.createClass({
 
     };
   },
-
+  showLine() {
+    //console.log(item)
+    $(this.refs.chartType).find('.item').removeClass('active');
+    $(event.currentTarget).addClass('active');
+    this.setState({chartType: 'line'});
+  },
   showCandle(event) {
     //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
@@ -81,6 +86,14 @@ export default React.createClass({
 
   renderBlockChainIndicator() {
     switch (this.state.chartType) {
+
+    case 'line':
+
+    return (
+        <div><Charts.linechart data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
+      );
+    break;
+
     case 'candle':
       return (
           <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
@@ -179,7 +192,10 @@ export default React.createClass({
                       <div className='ui basic teal segment nopadding'>
                         <div className='ui top attached tabular basic menu'>
                           <div className='right menu' ref='chartType'>
-                            <a className='item active' onClick={this.showCandle}>
+                            <a className='item active' onClick={this.showLine}>
+                              Line
+                            </a>
+                              <a className='item active' onClick={this.showCandle}>
                               CandleStick
                             </a>
                             <a className='item' onClick={this.showMACD}>

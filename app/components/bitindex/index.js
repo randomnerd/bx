@@ -10,6 +10,8 @@ import PointAndFigureWithUpdatingData from './stockcharts/PointAndFigureWithUpda
 import RenkoWithUpdatingData from './stockcharts/RenkoWithUpdatingData';
 import areachart_infopanel from './stockcharts/areachart_infopanel';
 import comparechart_infopanel from './stockcharts/comparechart_infopanel';
+import linechart from './stockcharts/linechart';
+
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -23,4 +25,5 @@ export default {
   RenkoWithUpdatingData,
   areachart_infopanel,
   comparechart_infopanel,
+  linechart,
 };
