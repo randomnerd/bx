@@ -12,8 +12,7 @@ export default React.createClass({
         </div>
         <div className="block opacity">
           <div className="promo">
-            <h1>Bitcoin Trading You Can Trust</h1>
-            <p>Bit.Exchange is the leading platform to trade bitcoin.</p>
+            <h1>Bit.Exchange - is the internet of digital currencies</h1>
 
             <div>
               <a className="ui normal big teal button">create account</a>
