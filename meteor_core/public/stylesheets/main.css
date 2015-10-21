@@ -982,16 +982,34 @@ tr.lesspadding th {
   padding-top: 2em;
 }
 
-.ld .icons .ui.segment .ui.header{
-  font-size: 1.5em;
+.ld .icons .ui.segment{
+  padding: 1em .5em;
+}
+
+
+.ld .icons .ui.segment .ui.header .icon{
   font-style: normal;
   display: block;
   text-align: center;
+  color: #ccc;
+}
+
+.ld .icons .ui.segment .ui.header{
+  font-size: 1.7em;
+  font-style: normal;
+  display: block;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica;
+  font-weight: lighter;
+  color: #00b5ad;
 }
 .ld .icons .ui.segment > span{
   font-size: 1em;
   display: block;
   text-align: center;
+  color: #aaa;
+  font-family: "Helvetica Neue", Helvetica;
+  line-height: 1em;
 }
 
 /*
