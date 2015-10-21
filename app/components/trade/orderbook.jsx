@@ -137,6 +137,7 @@ export default React.createClass({
       lastOne[i] = parseFloat(item.displayPrice());
       i++;
     });
+    f (!lastOne[0]) return null;
     let direction = !!( lastOne[0] > lastOne[1] );
     let diff = ( lastOne[0] - lastOne[1] ).toFixed(4);
     let diffPerc = ( ( diff / lastOne[1] ) * 100 ).toFixed(2);
