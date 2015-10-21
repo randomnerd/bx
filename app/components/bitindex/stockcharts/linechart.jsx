@@ -26,20 +26,22 @@ export default React.createClass({
     if (this.state === null || !this.state.width) return <div/>;
     let {data, type} = this.props;
     return (
-      <ChartCanvas width={this.state.width} height={135} margin={{
-        left: 0,
+      <ChartCanvas width={this.state.width} height={320} margin={{
+        left: 20,
         right: 50,
         top: 10,
-        bottom: 0
+        bottom: 20
       }} data={data} type={type}>
         <Chart id={0} xAccessor={(d) => d.date}>
+          <XAxis axisAt="bottom" orient="bottom" ticks={6} stroke='#767676' tickStroke='#767676' fontSize={10}/>
           <YAxis axisAt='right' orient='right' percentScale={true}
-                tickFormat={d3.format('.0%')} stroke='#767676' tickStroke='#767676' fontSize={8}/>
+                tickFormat={d3.format('.0%')} stroke='#767676' tickStroke='#767676' fontSize={10}/>
+
           <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue'>
             <LineSeries/>
           </DataSeries>
         </Chart>
-        
+
       </ChartCanvas>
     );
   }

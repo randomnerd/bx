@@ -96,7 +96,6 @@ export default React.createClass({
       break;
 
     case 'line':
-
       return (
           <div><Charts.linechart data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
         );
@@ -195,7 +194,7 @@ export default React.createClass({
                       <div className='ui basic teal segment nopadding'>
                         <div className='ui top attached tabular basic menu'>
                           <div className='right menu' ref='chartType'>
-                              <a className='item active' onClick={this.showCandle}>
+                            <a className='item active' onClick={this.showCandle}>
                               CandleStick
                             </a>
                             <a className='item' onClick={this.showLine}>
