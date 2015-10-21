@@ -982,13 +982,16 @@ tr.lesspadding th {
   padding-top: 2em;
 }
 
-.ld .icons .ui.segment .ui.header::after{
-  font-family: Icons;
-  content: '\f10d';
-  font-size: 3em;
+.ld .icons .ui.segment .ui.header{
+  font-size: 1.5em;
+  font-style: normal;
   display: block;
-  position: absolute;
-
+  text-align: center;
+}
+.ld .icons .ui.segment > span{
+  font-size: 1em;
+  display: block;
+  text-align: center;
 }
 
 /*

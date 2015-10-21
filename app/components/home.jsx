@@ -48,7 +48,7 @@ export default React.createClass({
               <div className="column">
                 <div className="ui basic segment">
                   <h2 className="ui icon header">
-                    <i className="ui huge security icon" />
+                    <i className="ui huge fa fa-shield icon" />
                     Security
                   </h2>
                   Strong security. Encrypted cold storage
@@ -59,7 +59,7 @@ export default React.createClass({
               <div className="column">
                 <div className="ui basic segment">
                   <h2 className="ui icon header">
-                    <i className="ui huge marging icon" />
+                    <i className="ui huge fa fa-arrow-circle-up icon" />
                     Bitcoin Marging Trading
                   </h2>
                   Leveraged trading up to 5x. Shorting allowed
