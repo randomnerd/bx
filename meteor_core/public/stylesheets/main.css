@@ -375,6 +375,7 @@ html, body{
 .ui.inverted.newgrey .ui.form .field > label {
     color: #ced2d5;
     margin: 0.8rem 0;
+    text-align: left;
 }
 
 .ui.inverted.newgrey .ui.form .input{

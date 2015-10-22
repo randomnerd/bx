@@ -36,7 +36,7 @@ export default React.createClass({
           <p>234.9292</p>
         </div>
         <div className='item double'>
-          <h4 className="ui header">Bid/Asc</h4>
+          <h4 className="ui header">Bid/Ask</h4>
           <p>
             <span className="red text">234.9292</span> / <span className="green text">234.9349</span>
           </p>
