@@ -41,12 +41,7 @@ export default React.createClass({
       onComplete: function() {
         $this.setState({closed: true});
         Meteor.call('notifications/del_realy', $this.props.item._id, function(error, result) {
-          if (error || result) {
-            console.log(error, result);
-            $this.setState({errorMessage: error.message});
-          }else {
-            return false;
-          }
+          if (error) $this.setState({errorMessage: error.message});
         });
       }
     });
@@ -54,20 +49,16 @@ export default React.createClass({
 
 
   render() {
-    //console.log(this.props.item._id)
     return (
-
       <tr key={this.props.item._id} className={'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type]: '')}>
         <td><i className={this.types.messagesIcon[(this.props.item.icon ? this.props.item.icon:this.props.item.type)] + ' icon' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}></i></td>
         <td>{this.props.item.title}</td>
         <td>{this.props.item.message}</td>
         <td>{this.props.item.ack ? 'old' : 'new'}</td>
         <td className='right aligned collapsing'>
-
-            <div className='ui tiny normal icon negative button' onClick={this.delMessage}>
-              <i className='remove icon'></i>
-            </div>
-
+          <div className='ui tiny normal icon negative button' onClick={this.delMessage}>
+            <i className='remove icon'></i>
+          </div>
         </td>
       </tr>
     );

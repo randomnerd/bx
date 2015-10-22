@@ -18,7 +18,6 @@ export default React.createClass({
   },
   newPassword() {
     let {old_pass, password} = this.refs.pass.getCurrentValues();
-    console.log(password);
     Accounts.changePassword(old_pass, password, (err)=>{
       if (err) {
         Dispatcher.dispatch({ actionType: 'NEW_NOTIFICATION', payload:

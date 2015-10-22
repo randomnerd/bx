@@ -22,9 +22,6 @@ export default React.createClass({
   componentDidMount() {
     let $this = this;
     Dispatcher.register((payload) => {
-      //console.log(this.state.messages);
-      //console.log('new dispatcher event', payload);
-
       if (payload.actionType === 'CHANGE_NOTIFICATION_TIME') {
         $this.setState({ nowDate: new Date().valueOf() });
       }
@@ -44,14 +41,11 @@ export default React.createClass({
           }
         }
         )});
-
-        //console.log(this.state.messages);
       }
       if (payload.actionType === 'CHANGE_NOTIFICATION') {
         //???
       }
     });
-    //this.setState({messages: mess});
   },
 
   renderMessages() {

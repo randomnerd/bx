@@ -25,22 +25,12 @@ export default React.createClass({
   },
 
   hide(e) {
-    //if (e) e.preventDefault();
     this.setState({errorMessage: null});
     Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
   },
   saveAddress() {
-    //console.log(this.refs.curr.getCurrentValues())
     let addrVals = this.refs.form.getCurrentValues();
-    Meteor.call('address/add', addrVals, function(err, result) {
-      if (result) {
-        //console.log(err.message,result)
-        //this.setState({errorMessage: err.message});
-      }else {
-        //console.log(err.message)
-        //FlowRouter.go('/admin/currencies');
-      }
-    });
+    Meteor.call('address/add', addrVals);
   },
   allowSubmit() { this.setState({allowSubmit: true}); },
   disallowSubmit() { this.setState({allowSubmit: false}); },

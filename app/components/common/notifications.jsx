@@ -12,17 +12,6 @@ export default React.createClass({
       nowDate: new Date().valueOf()
     };
   },
-  addNotif() {
-    // console.log('ok');
-    // Meteor.call('notifications/add',function(error, result){
-    //   if(error||result){
-    //     console.log(error.message);
-    //     this.setState({errorMessage: error.message});
-    //   }else{
-    //       console.log('added');
-    //   }
-    // })
-  },
   getMeteorData() {
     return {
       notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
@@ -34,12 +23,8 @@ export default React.createClass({
   },
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'nothing'});
-    //this.setState({messages:this.data.notifications_new});
     let $this = this;
     Dispatcher.register((payload) => {
-      //console.log(this.state.messages);
-      //console.log('new dispatcher event', payload);
-
       if (payload.actionType === 'CHANGE_NOTIFICATION_TIME') {
         $this.setState({ nowDate: new Date().valueOf() });
       }
@@ -60,8 +45,6 @@ export default React.createClass({
             return false;
           }
         } ) });
-
-        //console.log(this.state.messages);
       }
       if (payload.actionType === 'CHANGE_NOTIFICATION') {
         //???
@@ -90,7 +73,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className='ui dropdown right item notifications' onClick={this.addNotif}>
+      <div className='ui dropdown right item notifications'>
         <i className='alarm icon' />
         <i className='dropdown icon' />
           {this.data.notifications_new.length ?

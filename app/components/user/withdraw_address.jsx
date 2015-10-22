@@ -20,29 +20,12 @@ export default React.createClass({
   },
   save() {
     let addrVals = this.refs.form.getCurrentValues();
-    Meteor.call('address/update', this.props.item._id, addrVals, function(err, result) {
-      if (result) {
-        //console.log(err.message,result)
-        //this.setState({errorMessage: err.message});
-      }else {
-        //console.log(err.message)
-        //FlowRouter.go('/admin/currencies');
-      }
-    });
+    Meteor.call('address/update', this.props.item._id, addrVals);
     this.setState({editable: false});
   },
   del() {
-    if (confirm('Delete?')) {
-      Meteor.call('address/remove', this.props.item._id, function(err, result) {
-        if (result) {
-          //console.log(err.message,result)
-          //this.setState({errorMessage: err.message});
-        }else {
-          //console.log(err.message)
-          //FlowRouter.go('/admin/currencies');
-        }
-      });
-    }
+    if (!confirm('Delete?')) return;
+    Meteor.call('address/remove', this.props.item._id);
   },
   pick() {
     Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_ADDRESS', payload: this.props.item.address });

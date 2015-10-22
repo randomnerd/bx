@@ -10,35 +10,18 @@ export default React.createClass({
       ordType: 'market'
     };
   },
-  goDeal() {
-  },
-
-  goSell() {
+  createOrder(buy) {
     let params = {
       pairId: this.props.pairId,
       amount: parseFloat(this.state.amount),
       price:  parseFloat(this.state.price),
-      buy:    false
+      buy:    buy
     };
-    console.log('createOrder', params);
-    Meteor.call('createOrder', params);
-  },
-
-  goBuy() {
-    let params = {
-      pairId: this.props.pairId,
-      amount: parseFloat(this.state.amount),
-      price:  parseFloat(this.state.price),
-      buy:    true
-    };
-    console.log('createOrder', params);
     Meteor.call('createOrder', params);
   },
 
   componentDidMount() {
     Dispatcher.register((payload) => {
-      //console.log('new dispatcher event', payload);
-
       switch (payload.actionType) {
       case 'BUY_SELL_AUTOCOMPLETE':
         if (payload.data.direction !== this.props.direction) {
@@ -51,13 +34,11 @@ export default React.createClass({
     });
   },
   setMarket(event) {
-    //console.log(item)
     $(this.refs.ordType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({ordType: 'market'});
   },
   setLimit(event) {
-    //console.log(item)
     $(this.refs.ordType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({ordType: 'limit'});
@@ -97,7 +78,7 @@ export default React.createClass({
               <a className='item' onClick={this.setStop}>Stop</a>
             </div>
 
-            <Formsy.Form className='ui form' onValidSubmit={this.goDeal} onValid={this.allowSubmit}
+            <Formsy.Form className='ui form' onValid={this.allowSubmit}
             onInvalid={this.disallowSubmit} ref='form'>
 
               <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
@@ -122,8 +103,8 @@ export default React.createClass({
         </div>
         <div className='ui small basic segment centered'>
           <div className='centered'>
-            <button className='ui button green' onClick={this.goBuy}>Buy {this.props.currency}</button>
-            <button className='ui button red' onClick={this.goSell}>Sell {this.props.currency}</button>
+            <button className='ui button green' onClick={this.createOrder.bind(this, true)}>Buy {this.props.currency}</button>
+            <button className='ui button red' onClick={this.createOrder.bind(this, false)}>Sell {this.props.currency}</button>
           </div>
         </div>
       </div>

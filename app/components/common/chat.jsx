@@ -31,16 +31,16 @@ export default React.createClass({
   },
   writeMessage() {
     let message = this.refs.form.getCurrentValues();
-     //console.log(message)
+
     if (this.state.replyId) {
       message.replyId = this.state.replyId;
       message.replyName = this.state.replyName;
     }
     message.isPrivate = this.state.isPrivate;
     Meteor.call('chat/add', message, (err, result) => {
-      if (err || result) {
-        console.log('err');
-      }else {
+      if (err) {
+        console.log(err);
+      } else {
         Meteor.setTimeout(() => {
           this.refs.form.reset();
           $(this.refs.messages).scrollTop(15000);
@@ -59,7 +59,6 @@ export default React.createClass({
   },
   bePrivate() {
     this.setState({isPrivate: (this.state.isPrivate ? false : true)});
-    //  console.log(this.state.isPrivate)
   },
   beAnon() {
 

@@ -61,8 +61,7 @@ export default React.createClass({
           payload: { message: $this.props.item._id }
         });
         Meteor.call('notifications/del', $this.props.item._id, function(error, result) {
-          if (error || result) {
-            console.log(error, result);
+          if (error) {
             $this.setState({errorMessage: error.message});
           }else {
             return false;

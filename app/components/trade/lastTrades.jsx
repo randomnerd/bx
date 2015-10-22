@@ -36,7 +36,6 @@ export default React.createClass({
       if (!price[1]) {
         price[1] = '';
       }
-      console.log(item.direction);
       return (
           <tr key={item._id} className='animate'>
             <td className='six wide'>

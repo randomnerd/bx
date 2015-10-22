@@ -27,49 +27,41 @@ export default React.createClass({
     };
   },
   showCandle(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'candle'});
   },
   showLine() {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'line'});
   },
   showMACD(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'macd'});
   },
   showRSI(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'rsi'});
   },
   showSTO(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'sto'});
   },
   showBollinger(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'bollinger'});
   },
   showKagi(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'kagi'});
   },
   showPointandFigure(event) {
-    //console.log(item)
     $(this.refs.chartType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({chartType: 'pointandfigure'});
