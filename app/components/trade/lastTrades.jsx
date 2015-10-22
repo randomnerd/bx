@@ -4,17 +4,15 @@ import {Trades} from 'collections';
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
-    if (!this.props.pair) return{};
     return {
-      trades: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
+      trades: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}).fetch(),
+      tradesMax: Trades.findOne({ pairId: this.props.paiId }, {sort: {amount: -1}}),
     };
   },
 
 
   renderTradesItems() {
     let nulls = '00000000';
-    if (!this.props.pair) return null;
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
     return this.data.trades.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
