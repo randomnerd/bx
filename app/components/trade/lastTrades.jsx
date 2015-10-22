@@ -7,14 +7,24 @@ export default React.createClass({
     return {
       trades: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}).fetch(),
       tradesMax: Trades.findOne({ pairId: this.props.pairId }, {sort: {amount: -1}}),
+      tradesLast: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
     };
   },
 
 
   renderTradesItems() {
     let nulls = '00000000';
+    let data =this.data.trades;
+    data.reverse();
+    let prev = 1;
+    data.map((item) => {
+      item.direction = !!(prev < parseFloat(item.displayPrice()) );
+      prev = item.displayPrice();
+    });
+    data.reverse();
+
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
-    return this.data.trades.map((item) => {
+    return data.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
       let amount = parseFloat(item.displayAmount()).toString().split('.');
@@ -26,16 +36,16 @@ export default React.createClass({
       if (!price[1]) {
         price[1] = '';
       }
-
+      console.log(item.direction);
       return (
           <tr key={item._id} className='animate'>
             <td className='six wide'>
               <div className='bignum left'>{ amount[0] }</div>
               <div className='bignum dot'>.</div>
               <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) }</div>
-              <span className={'leveler ' + (item.direction=='buy' ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+              <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
             </td>
-            <td className={'seven wide arr ' + (item.direction == 'buy' ? 'positive' : 'negative') }>
+            <td className={'seven wide arr ' + (item.direction ? 'positive' : 'negative') }>
               <div className='bignum left'>{price[0]}</div>
               <div className='bignum dot'>.</div>
               <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>

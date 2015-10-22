@@ -21,8 +21,8 @@ export default React.createClass({
 
   goBuySell(item, e) {
     Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE', data: {
-      amount: parseFloat(item.amount),
-      price: parseFloat(item.price),
+      amount: parseFloat(item.displayAmount()),
+      price: parseFloat(item.displayPrice()),
       direction: this.props.direction,
     }});
   },
