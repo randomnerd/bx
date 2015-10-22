@@ -193,11 +193,9 @@ export default React.createClass({
             <table className='ui selectable very compact very basic striped table'>
               <tbody>
 
-                { this.props.pair ? this.renderSellItems() : null }
-                { !!( this.data.ordersSell && this.data.ordersSell.length ) ||
-                  !!( this.data.ordersBuy && this.data.ordersBuy.length )
-                  ? this.renderSpread() : null }
-                { this.props.pair ? this.renderBuyItems() : null }
+                { this.renderSellItems() }
+                { this.renderSpread() }
+                { this.renderBuyItems() }
 
               </tbody>
             </table>
