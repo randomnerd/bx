@@ -64,7 +64,7 @@ export default React.createClass({
         <td>{this.props.item.ack ? 'old' : 'new'}</td>
         <td className='right aligned collapsing'>
 
-            <div className='ui tiny icon negative button' onClick={this.delMessage}>
+            <div className='ui tiny normal icon negative button' onClick={this.delMessage}>
               <i className='remove icon'></i>
             </div>
 
