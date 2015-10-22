@@ -126,6 +126,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       XBT / EUR
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     234.747773
                   </div>
                 </div>
@@ -134,6 +137,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       XBT / USD
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     42.783489
                   </div>
                 </div>
@@ -142,6 +148,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       BTC / USD
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     231.453545
                   </div>
                 </div>
@@ -150,6 +159,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       BTC / CNY
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     72373.3773
                   </div>
                 </div>
@@ -160,6 +172,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       BTC / ANC
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     4535.45345
                   </div>
                 </div>
@@ -168,6 +183,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       BTC / GLD
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     35345.43434
                   </div>
                 </div>
@@ -176,6 +194,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       ANC / USD
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down icon"></i>
+                    </div>
                     0.231232
                   </div>
                 </div>
@@ -184,6 +205,9 @@ export default React.createClass({
                     <h2 className="ui icon header">
                       ANC / CNY
                     </h2>
+                    <div className="ui horizontal divider">
+                      <i className="fa fa-arrow-circle-down"></i>
+                    </div>
                     3.4535543
                   </div>
                 </div>
