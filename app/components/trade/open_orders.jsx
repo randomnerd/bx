@@ -5,7 +5,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      orders: Orders.find({pairId: (this.props.pairId)}).fetch()
+      orders: Orders.find({pairId: (this.props.pairId)}, {sort: {createdAt: -1}}).fetch()
     }
   },
 
@@ -13,33 +13,8 @@ export default React.createClass({
     order.cancel();
   },
 
-  getOrdersItems() {
-    return this.data.orders;
-    return [
-      { _id: 1, price: 0.001, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 2, price: 0.00095, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 3, price: 0.0009, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 4, price: 0.00085, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 5, price: 0.0008, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 6, price: 0.00075, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 7, price: 0.0007, amount: 0.006685, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 8, price: 0.00065, amount: 0.00093737, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 9, price: 0.0006, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 10, price: 0.00055, amount: 0.005467, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 11, price: 0.0005, amount: 0.006685, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 12, price: 0.00045, amount: 0.00093737, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 13, price: 0.0004, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 14, price: 0.00035, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 15, price: 0.0003, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 16, price: 0.00025, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 17, price: 0.0002, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 18, price: 0.00015, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1},
-      { _id: 19, price: 0.0001, amount: 0.09123, filled: 0.095467, fee: 0.000067, time: moment(), status: 1}
-    ];
-  },
-
   renderOrderItems() {
-    return this.getOrdersItems(this.props.direction).map((item) => {
+    return this.data.orders.map((item) => {
       return  (
         <tr key={item._id} >
           <td className='three wide' data-ord-price>{item.displayAmount()}</td>
