@@ -11,8 +11,13 @@ export default React.createClass({
   },
   types: {
     vitalyTypes:{
-      'newTransaction': 'info',
-      'addBalance': 'accept',
+      newTransaction: 'info',
+      addBalance: 'accept',
+      error: 'error', //red
+      accept: 'accept', //green
+      warning: 'warning', //orange
+      info: 'info', //blue
+      chat: 'chat',
     },
     messageAccent: {
       error: ' negative', //red
@@ -85,13 +90,13 @@ export default React.createClass({
     return(
       <i className={this.types.messagesIcon[(item.icon
           ? item.icon
-          : this.vitalyTypes[ item.type ] )] + ' icon'}></i>
+          : this.types.vitalyTypes[ item.type ] )] + ' icon'}></i>
     )
   },
   render() {
     return (
           <div className={'ui' + (this.state.hidden ? ' hidden' : '') + ' small icon message' + (this.props.item.type
-            ? this.types.messageAccent[ this.vitalyTypes [ this.props.item.type ] ]
+            ? this.types.messageAccent[ this.types.vitalyTypes [ this.props.item.type ] ]
             : '')}>
             <i className='close icon' onClick={this.delMessage}></i>
             {this.addIcon(this.props.item)}
