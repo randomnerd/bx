@@ -6,7 +6,7 @@ export default React.createClass({
   getMeteorData: function() {
     return {
       trades: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.paiId }, {sort: {amount: -1}}),
+      tradesMax: Trades.findOne({ pairId: this.props.pairId }, {sort: {amount: -1}}),
     };
   },
 
