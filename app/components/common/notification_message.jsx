@@ -79,7 +79,6 @@ export default React.createClass({
   },
 
   render() {
-        //console.log(this.props.item._id)
     return (
           <div className={'ui' + (this.state.hidden
             ? ' hidden'

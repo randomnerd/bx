@@ -15,8 +15,6 @@ export default React.createClass({
 
   newPair(event) {
     let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
-    //console.log({currId: currId, marketCurrId: marketCurrId, buyFee:buyFee,
-    //sellFee:sellFee, published:published?true:false})
 
     Meteor.call('tradepair_add', {
       currId: currId,
@@ -34,7 +32,6 @@ export default React.createClass({
       });
   },
   savePair(event) {
-    //console.log(this.refs.curr.getCurrentValues())
     let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
     Meteor.call('tradepair_update', this.data.tradePairs._id, {
       currId: currId,

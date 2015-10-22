@@ -27,7 +27,6 @@ export default React.createClass({
     });
   },
   saveCurr(event) {
-    //console.log(this.refs.curr.getCurrentValues())
     let currVals = this.refs.curr.getCurrentValues();
     Meteor.call('currrency_update', this.data.currency._id, currVals, function(error, result) {
       if (result) {

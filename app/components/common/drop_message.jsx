@@ -64,7 +64,6 @@ export default React.createClass({
   },
 
   render() {
-    //console.log(this.props.item._id)
     return (
       <a className=
       {'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}
