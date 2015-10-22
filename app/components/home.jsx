@@ -24,113 +24,176 @@ export default React.createClass({
           </div>
         </div>
         <div className="block white">
-        <div className="ui main container">
-          <div className="ui grid icons">
-            <div className="three column row">
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-tint icon" />
-                    Liquidity
-                  </h2>
-                  Fast funding. Low fees
-                </div>
-              </div>
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-clock-o icon" />
-                    Reliability
-                  </h2>
-                  24/7 Support/ Legally compliant
-                </div>
-              </div>
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-user-secret icon" />
-                    Security
-                  </h2>
-                  Strong security. Encrypted cold storage
-                </div>
-              </div>
-            </div>
-            <div className="three column row">
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-university icon" />
-                    Bitcoin Marging Trading
-                  </h2>
-                  Leveraged trading up to 5x. Shorting allowed
-                </div>
-              </div>
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-rocket icon" />
-                    Advanced order types
-                  </h2>
-                  Stop-loss orders. Automate your strategy
-                </div>
-              </div>
-              <div className="column">
-                <div className="ui basic segment">
-                  <h2 className="ui icon header">
-                    <i className="ui huge fa fa-area-chart icon" />
-                    Proof of reserves Audits
-                  </h2>
-                  Cryptographically verified/ Created the industry standard
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div className="block white">
           <div className="ui main container">
-            <p>We are passionate group of individuals aware of the shift that is
-            occurring in information security and digital assets and we have come
-            together to work towards an anti-fragile future where your data's privacy
-            and security are no longer a luxury but instead a standard.</p>
-
-            <p>Like most things in life, its started with the solution to a simple problem.</p>
-
-            <p>To make digital money more developed, exchanges are crucial, and we want to
-            provide reliable easy to use service for companies and individuals to exchange
-            bitcoins. We aim to bring secure, decentralized technologies to the next billion
-            users through amazingly simple yet feature rich applications focused on ease of use
-            and ease of security. Our focus is to deliver software, services, and products with
-            an amazing user experience, both visually and functionally, simplifying this advanced
-            technology and delivering it to the masses while still retaining core principles of
-            decentralization and privacy. We believe bitcoin is here to stay.</p>
+            <div className="ui grid icons">
+              <div className="three column row">
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge fa fa-tint icon" />
+                      Liquidity
+                    </h2>
+                    Fast funding. Low fees
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge fa fa-clock-o icon" />
+                      Reliability
+                    </h2>
+                    24/7 Support/ Legally compliant
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge fa fa-user-secret icon" />
+                      Security
+                    </h2>
+                    Strong security. Encrypted cold storage
+                  </div>
+                </div>
+              </div>
+              <div className="three column row">
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge fa fa-university icon" />
+                      Bitcoin Marging Trading
+                    </h2>
+                    Leveraged trading up to 5x. Shorting allowed
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge li_params icon" />
+                      Advanced order types
+                    </h2>
+                    Stop-loss orders. Automate your strategy
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      <i className="ui huge fa fa-area-chart icon" />
+                      Proof of reserves Audits
+                    </h2>
+                    Cryptographically verified/ Created the industry standard
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="block white opacity">
           <div className="ui main container">
-            <div className="ui grid">
-              <div className="eight wide column">
-                <div className="ui piled segment">
-                  <p>Easy to use service for companies and individuals to exchange bitcoins.</p>
-                  <p>All the things that gold does, Bitcoin kind of does better.</p>
-                  <h2 className="ui header">- Bill Gates</h2>
-                  <span className="whereis">quoted from: Fox Business</span>
+            <div className="ui grid bignumber">
+              <div className="three column row">
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h1 className="ui icon header">
+                      $2.5B
+                    </h1>
+                    In bitcoin traded
+                  </div>
                 </div>
-              </div>
-              <div className="eight wide column">
-                <div className="ui piled segment">
-                  <p>Bitcoin is a remarkable cryptographic achievement and the ability
-                  to create something that is not duplicable in the digital world
-                  has enormous value.</p>
-                  <h2 className="ui header">- Eric Schmidt</h2>
-                  <span className="whois">Google Chairman (and former CEO)</span>
-                  <span className="whereis">quoted from: NEWSBTC</span>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h1 className="ui icon header">
+                      32
+                    </h1>
+                    Countries supported
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h1 className="ui icon header">
+                      2.7M
+                    </h1>
+                    Customers served
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="block white footer">
+        <div className="block white">
+          <div className="ui main container">
+            <div className="ui grid currs">
+              <div className="four column row">
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      XBT / EUR
+                    </h2>
+                    234.747773
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      XBT / USD
+                    </h2>
+                    42.783489
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      BTC / USD
+                    </h2>
+                    231.453545
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      BTC / CNY
+                    </h2>
+                    72373.3773
+                  </div>
+                </div>
+              </div>
+              <div className="four column row">
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      BTC / ANC
+                    </h2>
+                    4535.45345
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      BTC / GLD
+                    </h2>
+                    35345.43434
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      ANC / USD
+                    </h2>
+                    0.231232
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="ui basic segment">
+                    <h2 className="ui icon header">
+                      ANC / CNY
+                    </h2>
+                    3.4535543
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="block teal footer">
           <div className="ui main container">
             <p className="center aligned">Copyright 2015 Sickoffice</p>
           </div>

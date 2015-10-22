@@ -928,8 +928,20 @@ tr.lesspadding th {
   background: #fff;
   padding-bottom: 8em;
 }
+.ld .block.grey{
+  background: #767676;
+  padding-bottom: 8em;
+}
+
+.ld .block.teal{
+  background: #00b5ad;
+  padding-bottom: 8em;
+}
+.ld .block.teal p{
+  color:#fff;
+}
 .ld .block.white.opacity{
-  background: rgba(100, 100, 100, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   height: auto;
 }
 .ld .block .center.aligned{
@@ -938,10 +950,11 @@ tr.lesspadding th {
 .ld .ui.main.container{
   font-size: 2em;
   color: #767676;
+  padding-top: 4em !important;
 }
 
 .ld .ui.segment{
-  background: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0) !important;
 }
 .ld .ui.piled.segment{
   font-size: 1.2em;
@@ -962,19 +975,7 @@ tr.lesspadding th {
   text-align: right;
   margin-bottom: 0;
 }
-.ld .ui.segment .whois{
-  display: block;
-  color: #bbb;
-  font-size: .5em;
-  text-align: right;
-}
-.ld .ui.segment .whereis{
-  display: block;
-  color: #ccc;
-  font-size: .6em;
 
-  text-align: right;
-}
 .ld .block.white.footer{
   padding-bottom: 4em;
 }
@@ -982,7 +983,7 @@ tr.lesspadding th {
   padding-top: 2em;
 }
 
-.ld .icons .ui.segment{
+.ld .icons .ui.segment, .ld .bignumber .ui.segment, .ld .currs .ui.segment{
   padding: 1em .5em;
 }
 
@@ -994,7 +995,7 @@ tr.lesspadding th {
   color: #ccc;
 }
 
-.ld .icons .ui.segment .ui.header{
+.ld .icons .ui.segment .ui.header, .ld .bignumber .ui.segment .ui.header, .ld .currs .ui.segment .ui.header{
   font-size: 1.7em;
   font-style: normal;
   display: block;
@@ -1003,7 +1004,11 @@ tr.lesspadding th {
   font-weight: lighter;
   color: #00b5ad;
 }
-.ld .icons .ui.segment > span{
+.ld .bignumber .ui.segment h1.ui.header{
+  font-size: 3em;
+}
+
+.ld .icons .ui.segment > span, .ld .bignumber .ui.segment > span, .ld .currs .ui.segment > span{
   font-size: 1em;
   display: block;
   text-align: center;
@@ -1011,7 +1016,11 @@ tr.lesspadding th {
   font-family: "Helvetica Neue", Helvetica;
   line-height: 1em;
 }
-
+.ld .bignumber .ui.segment > span{
+  text-transform: uppercase;
+  font-weight: lighter;
+  color: #eee;
+}
 /*
 .ld .ui.segment .ui.header::after{
   font-family: Icons;

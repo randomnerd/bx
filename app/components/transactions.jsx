@@ -45,7 +45,7 @@ export default React.createClass({
     let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
     let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
     return (
-      <div>
+      <div className="ui main container">
         <div className="ui header clearfix">
           <button className="ui right floated blue button" onClick={this.showWithdraw}>
             Withdraw {this.data.currency.shortName}

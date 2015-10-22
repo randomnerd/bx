@@ -192,9 +192,13 @@ export default React.createClass({
           <div className='scrollable100'>
             <table className='ui selectable very compact very basic striped table'>
               <tbody>
-                { this.renderSellItems() }
-                { this.renderSpread() }
-                { this.renderBuyItems() }
+
+                { this.props.pair ? this.renderSellItems() : null }
+                { !!( this.data.ordersSell && this.data.ordersSell.length ) ||
+                  !!( this.data.ordersBuy && this.data.ordersBuy.length )
+                  ? this.renderSpread() : null }
+                { this.props.pair ? this.renderBuyItems() : null }
+
               </tbody>
             </table>
           </div>
