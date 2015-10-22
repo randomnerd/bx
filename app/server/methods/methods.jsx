@@ -1,4 +1,4 @@
-import {Notifications, wAddressBook, Chat, Withdrawals} from 'collections';
+import {Currencies, Notifications, wAddressBook, Chat, Withdrawals} from 'collections';
 import {Jobs} from 'server/job_collection';
 
 Meteor.methods({
