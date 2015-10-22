@@ -2,11 +2,11 @@ import {TradePairs} from 'collections';
 
 Meteor.subs = new SubsManager({ cacheLimit: 20 });
 
-Meteor.subs.subscribe('currencies');
-Meteor.subs.subscribe('tradepairs');
-Meteor.subs.subscribe('chat');
-
 Tracker.autorun(() => {
+  Meteor.subs.subscribe('currencies');
+  Meteor.subs.subscribe('tradepairs');
+  Meteor.subs.subscribe('chat');
+
   let user = Meteor.user();
   if (user) {
     Meteor.subs.subscribe('balances');
