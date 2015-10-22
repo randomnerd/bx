@@ -1,6 +1,6 @@
 import {TradePairs} from 'collections';
 
-Meteor.subs = new SubsManager();
+Meteor.subs = new SubsManager({ cacheLimit: 20 });
 
 Meteor.subs.subscribe('currencies');
 Meteor.subs.subscribe('tradepairs');
@@ -26,9 +26,7 @@ Tracker.autorun(() => {
 Tracker.autorun(() => {
   let route = FlowRouter.current();
   if (route.path.match(/^\/pair/)) {
-    let pair = TradePairs.findOne({permalink: route.params.pair_id});
-    if (!pair) return;
-    Meteor.subs.subscribe('orderbook', pair._id);
-    Meteor.subs.subscribe('trades', pair._id);
+    Meteor.subs.subscribe('orderbook', null, route.params.pair_id);
+    Meteor.subs.subscribe('trades', null, route.params.pair_id);
   }
 });
