@@ -70,10 +70,10 @@ export default React.createClass({
     return(
       <h4 className='ui header'>
         <i className={this.types.messagesIcon[(
-          item.icon ? item.icon : vitalyTypes[ item.type ]
+          item.icon ? item.icon : this.vitalyTypes[ item.type ]
         )]
           + ' icon ' +
-          (item.type ? this.types.messageAccent[ vitalyTypes[ item.type ] ] : '')}></i>
+          (item.type ? this.types.messageAccent[ this.vitalyTypes[ item.type ] ] : '')}></i>
         {item.title}
       </h4>
     )
@@ -81,7 +81,7 @@ export default React.createClass({
   render() {
     return (
       <a className=
-      {'item ' + (this.props.item.type ? this.types.messageAccent[ vitalyTypes[ this.props.item.type ] ] : '')}
+      {'item ' + (this.props.item.type ? this.types.messageAccent[ this.vitalyTypes[ this.props.item.type ] ] : '')}
       onClick={this.props.closable ? this.delMessage : ''}>
 
           {this.props.item.title ?

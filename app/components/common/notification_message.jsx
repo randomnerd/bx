@@ -85,13 +85,13 @@ export default React.createClass({
     return(
       <i className={this.types.messagesIcon[(item.icon
           ? item.icon
-          : vitalyTypes[ item.type ] )] + ' icon'}></i>
+          : this.vitalyTypes[ item.type ] )] + ' icon'}></i>
     )
   },
   render() {
     return (
           <div className={'ui' + (this.state.hidden ? ' hidden' : '') + ' small icon message' + (this.props.item.type
-            ? this.types.messageAccent[ vitalyTypes [ this.props.item.type ] ]
+            ? this.types.messageAccent[ this.vitalyTypes [ this.props.item.type ] ]
             : '')}>
             <i className='close icon' onClick={this.delMessage}></i>
             {this.addIcon(this.props.item)}
