@@ -729,13 +729,18 @@ tr.lesspadding th {
 
 /* notifications */
 
-.ui.down.floating{
+.notifications .ui.down.floating{
   top:1.8em !important;
   left:53% !important;
 }
-.ui.item.pointer{
+.notifications .ui.item.pointer{
   cursor: pointer;
 }
+
+.notifications .ui.item .ui.header{
+  color: #1b1c1d !important;
+}
+
 .notification.container{
   position: fixed;
   right: 15px;
@@ -744,7 +749,7 @@ tr.lesspadding th {
   z-index: 9999;
 }
 
-.item .ui.header .icon{
+.notifications .item .ui.header .icon{
   vertical-align: inherit !important;
 
 }

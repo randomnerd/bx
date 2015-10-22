@@ -9,6 +9,10 @@ export default React.createClass({
     };
   },
   types: {
+    vitalyTypes:{
+      'newTransaction': 'info',
+      'addBalance': 'accept',
+    },
     messageAccent: {
       error: ' red', //red
       accept: ' green', //green
@@ -62,22 +66,26 @@ export default React.createClass({
       }
     });
   },
-
+  addHeader(item){
+    return(
+      <h4 className='ui header'>
+        <i className={this.types.messagesIcon[(
+          item.icon ? item.icon : vitalyTypes[ item.type ]
+        )]
+          + ' icon ' +
+          (item.type ? this.types.messageAccent[ vitalyTypes[ item.type ] ] : '')}></i>
+        {item.title}
+      </h4>
+    )
+  },
   render() {
     return (
       <a className=
-      {'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}
+      {'item ' + (this.props.item.type ? this.types.messageAccent[ vitalyTypes[ this.props.item.type ] ] : '')}
       onClick={this.props.closable ? this.delMessage : ''}>
 
           {this.props.item.title ?
-            <h4 className='ui header'>
-              <i className={this.types.messagesIcon[(
-                this.props.item.icon ? this.props.item.icon : this.props.item.type
-              )]
-                + ' icon' +
-                (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}></i>
-              {this.props.item.title}
-            </h4>
+            this.addHeader(this.props.item)
             : ''
           }
           <p>{this.props.item.message}</p>
