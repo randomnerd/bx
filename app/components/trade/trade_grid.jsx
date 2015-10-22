@@ -15,12 +15,13 @@ export default React.createClass({
   },
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
+    let pair = TradePairs.findOne({permalink: this.props.active});
 
     return {
 
       BTPR_Loading: !handle_BTPR.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
-      pair: TradePairs.findOne({permalink: this.props.active})
+      pairId: pair && pair._id
 
     };
   },
@@ -172,14 +173,14 @@ export default React.createClass({
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
-                <BuySell pair={this.data.pair} />
+                <BuySell pairId={this.data.pairId} />
               </div>
             </div>
             <div className='ux column orders fullheight padding'>
               <div className='ui basic segment h100'>
                   <h3 className='ui header'>ORDER BOOK</h3>
                   <Orders direction='sell'
-                    pair={this.data.Pair_Loading ? null : this.data.pair}
+                    pairId={this.data.pairId}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
               </div>
@@ -239,7 +240,7 @@ export default React.createClass({
                   <div className='ui basic segment h100'>
                     <h3 className='ui header'>MY ORDERS</h3>
                     <OpenOrders
-                      pair={this.data.Pair_Loading ? null : this.data.pair}
+                      pairId={this.data.pairId}
                       valute1={this.props.active.toUpperCase().split("-")[0]}
                       valute2={this.props.active.toUpperCase().split("-")[1]} />
                   </div>
@@ -253,7 +254,7 @@ export default React.createClass({
                 <h3 className='ui header'>TRADE HISTORY</h3>
 
                   <Trades
-                    pair={this.data.Pair_Loading ? null : this.data.pair}
+                    pairId={this.data.pairId}
                     valute1={this.props.active.toUpperCase().split("-")[0]}
                     valute2={this.props.active.toUpperCase().split("-")[1]} />
 

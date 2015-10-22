@@ -15,7 +15,7 @@ export default React.createClass({
 
   goSell() {
     let params = {
-      pairId: this.props.pair._id,
+      pairId: this.props.pairId,
       amount: parseFloat(this.state.amount),
       price:  parseFloat(this.state.price),
       buy:    false
@@ -26,7 +26,7 @@ export default React.createClass({
 
   goBuy() {
     let params = {
-      pairId: this.props.pair._id,
+      pairId: this.props.pairId,
       amount: parseFloat(this.state.amount),
       price:  parseFloat(this.state.price),
       buy:    true

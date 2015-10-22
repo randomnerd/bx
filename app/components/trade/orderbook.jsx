@@ -4,14 +4,13 @@ import {OrderBookItems,Trades} from 'collections';
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
-    if (!this.props.pair) return{};
     return {
-      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
-      ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
-      ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
-      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-      tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
-      tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
+      ordersSell: OrderBookItems.find( { pairId: this.props.pairId , buy: false}, { sort: { price: -1 } } ).fetch(),
+      ordersBuy: OrderBookItems.find( { pairId: this.props.pairId , buy: true}, { sort: { price: -1 } } ).fetch(),
+      ordersMax: OrderBookItems.findOne( { pairId: this.props.pairId }, { sort: { amount: -1 } } ),
+      tradesLast: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+      tradesHi: Trades.findOne({ pairId: this.props.pairId }, {sort: {price: -1}}),
+      tradesLo: Trades.findOne({ pairId: this.props.pairId }, {sort: {price: 1}}),
     };
   },
   getInitialState: function() {
@@ -26,11 +25,9 @@ export default React.createClass({
       price: parseFloat(item.price),
       direction: this.props.direction,
     }});
-    //console.log($(e.currentTarget).find('[data-ord-price]').html());
   },
   renderSellItems() {
     let nulls = '00000000';
-    if (!this.props.pair) return null;
 
     let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
     return this.data.ordersSell.map((item) => {
@@ -78,7 +75,6 @@ export default React.createClass({
 
   renderBuyItems() {
     let nulls = '00000000';
-    if (!this.props.pair) return null;
 
     let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
     return this.data.ordersBuy.map((item) => {
@@ -196,9 +192,9 @@ export default React.createClass({
           <div className='scrollable100'>
             <table className='ui selectable very compact very basic striped table'>
               <tbody>
-                { this.props.pair ? this.renderSellItems() : null }
-                { this.data.ordersSell&&this.data.ordersBuy ? this.renderSpread() : null }
-                { this.props.pair ? this.renderBuyItems() : null }
+                { this.renderSellItems() }
+                { this.renderSpread() }
+                { this.renderBuyItems() }
               </tbody>
             </table>
           </div>
