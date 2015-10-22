@@ -482,6 +482,12 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 .ux h3.ui.header{
   margin-top: -3rem !important;
 }
+.ux.balance h4.ui.header{
+  margin-top: .3rem;
+  font-size: 1.28rem;
+  padding-left: 0.3em;
+  margin-bottom: 1.3em;
+}
 .main.container{
   height: 100%;
   padding-top: 4.7em;

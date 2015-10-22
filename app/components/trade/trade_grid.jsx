@@ -5,6 +5,7 @@ import Trades from 'components/trade/lastTrades';
 import Charts from 'components/bitindex';
 import Orders from 'components/trade/orderbook';
 import OpenOrders from 'components/trade/open_orders';
+import Balance from 'components/trade/balance';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -18,7 +19,7 @@ export default React.createClass({
     let pair = TradePairs.findOne({permalink: this.props.active});
 
     return {
-
+      pair: pair,
       BTPR_Loading: !handle_BTPR.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id
@@ -173,6 +174,7 @@ export default React.createClass({
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
+                <Balance pairId={this.data.pairId} pair={this.data.pair} />
                 <BuySell pairId={this.data.pairId} />
               </div>
             </div>
