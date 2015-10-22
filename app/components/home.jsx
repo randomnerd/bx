@@ -15,9 +15,7 @@ export default React.createClass({
             <h1>Bit.Exchange - is the internet of digital currencies</h1>
 
             <div>
-              <a className="ui normal big teal button">create account</a>
-
-              <a href="/pair/btc" className="ui white big button">View Demo</a>
+              <a className="ui  massive teal button">create account</a>
 
               <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
             </div>
