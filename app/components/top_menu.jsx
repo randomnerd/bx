@@ -18,7 +18,7 @@ export default React.createClass({
   },
   getMenuItems() {
     return [
-      { href: '/', label: 'Bit.Exhange', extraCls: '' },
+      { href: '/', label: 'Bit.Exchange', extraCls: '' },
       //{ href: '/pair', label: 'Pairs', extraCls: '' }
     ];
   },
