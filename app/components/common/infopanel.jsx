@@ -32,52 +32,52 @@ export default React.createClass({
         return false;
       }
     });
-    //console.log(newProps.show);
+    this.setState({most: 'active'});
+    this.setState({pair: 'btc'});
   },
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
-    console.log(newProps.show);
   },
 
   delAllMessages() {
     //Dispatcher.dispatch({ actionType: 'SHOW_SIDEBAR', payload: { addr: this.props.item } })
   },
 
-    mostActive(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({most: 'active'});
-    },
-    mostMined(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({most: 'mined'});
-    },
+  mostActive(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({most: 'active'});
+  },
+  mostMined(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({most: 'mined'});
+  },
 
-    mostGainers(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({most: 'gainers'});
-    },
+  mostGainers(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({most: 'gainers'});
+  },
 
-    mostLoosers(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({most: 'loosers'});
-    },
+  mostLoosers(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({most: 'loosers'});
+  },
 
 
 
-    pairBTC(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({pair: 'btc'});
-    },
+  pairBTC(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({pair: 'btc'});
+  },
 
-    pairUSD(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({pair: 'usd'});
-    },
+  pairUSD(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({pair: 'usd'});
+  },
 
-    pairCNY(){
-      $(this.refs.most).find('.item').removeClass('active');
-      this.setState({pair: 'cny'});
-    },
+  pairCNY(){
+    $(this.refs.most).find('.item').removeClass('active');
+    this.setState({pair: 'cny'});
+  },
 
   render() {
     return (

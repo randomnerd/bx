@@ -1,9 +1,72 @@
 import React from 'react';
 
 export default React.createClass({
+  getInitialState() {
+    return {
+      panel: false,
+      icons: false
+    };
+  },
+  componentDidMount() {
+
+    Dispatcher.register((e) => {
+      //console.log('new dispatcher event', payload);
+      switch (e.actionType) {
+
+        case 'SHOW_PANEL':
+          break;
+
+        case 'HIDE_PANEL':
+          //$(this.refs.ld).removeClass('pressed');
+          //this.setState({ panel : false });
+          break;
+      }
+    });
+    this.setState({ icons : false });
+    let h = $(this.refs.ld).height() - 270;
+    let ld=$(this.refs.ld);
+    $(this.refs.ld).scroll(()=>{
+      let lds=ld.scrollTop();
+      if( lds >= 10 && lds < h && !this.state.icons){
+        //this.setState({ icons : true });
+        this.scrollAll();
+      }
+      if( lds <= 10 || lds > h*2 ){
+        this.setState({ icons : false });
+      }
+      if((lds < h*1.5)  && (lds >= 10) && !this.state.panel){
+
+        Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+        this.setState({ panel : true });
+        $(this.refs.ld).addClass('pressed');
+
+      }
+      if((lds > h*1.5 || lds <= 10) && this.state.panel){
+
+        Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
+        this.setState({ panel : false });
+        $(this.refs.ld).removeClass('pressed');
+
+      }
+    });
+  },
+  scrollOut(){
+    $(this.refs.ld).animate({scrollTop:0});
+  },
+  scrollAll(){
+    //$('#video_background').hide();
+    let h = $(this.refs.ld).height() - 270;
+    $(this.refs.ld).animate(
+      {scrollTop:h+35},0.5,0,()=>{
+        this.setState({ icons : true });
+        //$('#video_background').show();
+      }
+    );
+
+  },
   render() {
     return (
-      <div className="ld">
+      <div className="ld" ref="ld">
         <div className="block background">
           <video id="video_background"  loop="loop" autoPlay="autoPlay" preload="auto" onended="this.play()">
             <source type="video/mp4" src="/bg.mp4"></source>
@@ -19,6 +82,9 @@ export default React.createClass({
 
               <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
             </div>
+            <a className="ui massive icon button scrolldown" onClick={this.scrollAll}>
+              <i className="down arrow icon" />
+            </a>
           </div>
         </div>
         <div className="block white">
@@ -28,7 +94,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge fa fa-tint icon" />
+                      <i className={"ui huge fa fa-tint icon " + (!this.state.icons?"invisible":"")} />
                       Liquidity
                     </h2>
                     Fast funding. Low fees
@@ -37,7 +103,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge fa fa-clock-o icon" />
+                      <i className={"ui huge fa fa-clock-o icon " + (!this.state.icons?"invisible":"")} />
                       Reliability
                     </h2>
                     24/7 Support/ Legally compliant
@@ -46,7 +112,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge fa fa-user-secret icon" />
+                      <i className={"ui huge fa fa-user-secret icon " + (!this.state.icons?"invisible":"")} />
                       Security
                     </h2>
                     Strong security. Encrypted cold storage
@@ -57,7 +123,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge fa fa-university icon" />
+                      <i className={"ui huge fa fa-university icon " + (!this.state.icons?"invisible":"")} />
                       Bitcoin Marging Trading
                     </h2>
                     Leveraged trading up to 5x. Shorting allowed
@@ -66,7 +132,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge li_params icon" />
+                      <i className={"ui huge li_params icon " + (!this.state.icons?"invisible":"")} />
                       Advanced order types
                     </h2>
                     Stop-loss orders. Automate your strategy
@@ -75,7 +141,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className="ui huge fa fa-area-chart icon" />
+                      <i className={"ui huge fa fa-area-chart icon " + (!this.state.icons?"invisible":"")} />
                       Proof of reserves Audits
                     </h2>
                     Cryptographically verified/ Created the industry standard
