@@ -1,6 +1,7 @@
 .DS_Store
 .idea
 .npm
+meteor_core/client/client.bundle.min.js
 node_modules
 dist
 npm-debug.log

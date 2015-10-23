@@ -11,7 +11,7 @@
   "setupNode": true,
   "nodeVersion": "0.10.40",
   "setupPhantom": false,
-  "enableUploadProgressBar": true,
+  "enableUploadProgressBar": false,
   "appName": "bx",
   "app": "~/Sites/bx/meteor_core",
 
