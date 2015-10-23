@@ -6,7 +6,8 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-
+      mosts: 'active',
+      pairs: 'btc',
     };
   },
 
@@ -36,6 +37,42 @@ export default React.createClass({
   delAllMessages() {
     //Dispatcher.dispatch({ actionType: 'SHOW_SIDEBAR', payload: { addr: this.props.item } })
   },
+
+    mostActive(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({most: 'active'});
+    },
+    mostMined(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({most: 'mined'});
+    },
+
+    mostGainers(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({most: 'gainers'});
+    },
+
+    mostLoosers(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({most: 'loosers'});
+    },
+
+
+
+    pairBTC(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({pair: 'btc'});
+    },
+
+    pairUSD(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({pair: 'usd'});
+    },
+
+    pairCNY(){
+      $(this.refs.most).find('.item').removeClass('active');
+      this.setState({pair: 'cny'});
+    },
 
   render() {
     return (
@@ -70,17 +107,17 @@ export default React.createClass({
             </div>
             <div className="column">
 
-              <div className='ui tabular basic menu' ref='currType'>
-                <a className='item active' onClick={this.setMarket}>
+              <div className='ui tabular basic menu' ref='most'>
+                <a className={'item' + (this.state.most == 'active' ? ' active' : '')} onClick={this.mostActive}>
                   Most Actives
                 </a>
-                <a className='item' onClick={this.setLimit}>
+                <a className={'item' + (this.state.most == 'mined' ? ' active' : '')} onClick={this.mostMined}>
                   Most Mined
                 </a>
-                <a className='item' onClick={this.setLimit}>
+                <a className={'item' + (this.state.most == 'gainers' ? ' active' : '')} onClick={this.mostGainers}>
                   Most Gainers
                 </a>
-                <a className='item' onClick={this.setLimit}>
+                <a className={'item' + (this.state.most == 'loosers' ? ' active' : '')} onClick={this.mostLoosers}>
                   Most Loosers
                 </a>
               </div>
@@ -142,13 +179,13 @@ export default React.createClass({
             </div>
             <div className="column">
               <div className='ui tabular basic menu' ref='currType'>
-                <a className='item active' onClick={this.setMarket}>
+                <a className={'item' + (this.state.pair == 'btc' ? ' active' : '')} onClick={this.pairBTC}>
                   ALT / BTC
                 </a>
-                <a className='item' onClick={this.setLimit}>
+                <a className={'item' + (this.state.pair == 'usd' ? ' active' : '')} onClick={this.pairUSD}>
                   ALT / USD
                 </a>
-                <a className='item' onClick={this.setLimit}>
+                <a className={'item' + (this.state.pair == 'cny' ? ' active' : '')} onClick={this.pairCNY}>
                   ALT / CNY
                 </a>
               </div>
