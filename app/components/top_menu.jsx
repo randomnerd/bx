@@ -13,7 +13,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      showSidebar: false,
+      
     };
   },
   getMenuItems() {
@@ -34,11 +34,7 @@ export default React.createClass({
     Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   chatToggle() {
-    this.state.showSidebar ?
-      Dispatcher.dispatch({ actionType: 'HIDE_CHAT' }) :
-      Dispatcher.dispatch({ actionType: 'SHOW_CHAT' });
-
-    this.setState({ showSidebar: !this.state.showSidebar });
+    Dispatcher.dispatch({ actionType: 'SHOW_CHAT' });
   },
   renderLoginButtons() {
     return (

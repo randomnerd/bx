@@ -71,7 +71,7 @@ export default React.createClass({
           break;
 
         case 'SHOW_CHAT':
-          this.setState({showSidebar: true});
+          //this.setState({showSidebar: !this.state.showSidebar});
           this.setState({showPanel: false});
           this.chatToggle();
             //this.setState({sidebarContent: payload.payload.content});
@@ -82,7 +82,7 @@ export default React.createClass({
           break;
 
         case 'SHOW_PANEL':
-          this.setState({showPanel: true});
+          this.setState({showPanel: !this.state.showPanel});
           this.setState({showSidebar: false});
             //this.setState({sidebarContent: payload.payload.content});
           break;

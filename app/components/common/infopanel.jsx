@@ -23,15 +23,20 @@ export default React.createClass({
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({
       context: $('.pusher'),
-      dimPage: true,
+      dimPage: false,
       closable: true,
       //scrollLock: true,
       transition: 'overlay',
+      onHidden: ()=>{
+        Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
+        return false;
+      }
     });
-    $(ReactDOM.findDOMNode(this)).sidebar(this.props.show ? 'show' : 'hide');
+    //console.log(newProps.show);
   },
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
+    console.log(newProps.show);
   },
 
   delAllMessages() {

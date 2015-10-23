@@ -11,16 +11,11 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      showInfo: false,
+      
     };
   },
   infoToggle(){
-    this.state.showInfo ?
-      Dispatcher.dispatch({ actionType: 'HIDE_PANEL' }) :
-      Dispatcher.dispatch({ actionType: 'SHOW_PANEL' });
-
-    this.setState({ showInfo: !this.state.showInfo });
-
+      Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
   },
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
