@@ -4,65 +4,77 @@ export default React.createClass({
   getInitialState() {
     return {
       panel: false,
-      icons: false
+      icons: true,
+      holder: false,
+      scroller: 0,
+      scroll: 1
     };
   },
   componentDidMount() {
 
-    Dispatcher.register((e) => {
-      //console.log('new dispatcher event', payload);
-      switch (e.actionType) {
+    let ld = $(this.refs.ld);
 
-        case 'SHOW_PANEL':
-          break;
+    let h = ld.height();
+    let hIco = $(this.refs.icons).height();
+    let hBignum = $(this.refs.bignum).height();
+    let hCurrs = $(this.refs.currs).height();
 
-        case 'HIDE_PANEL':
-          //$(this.refs.ld).removeClass('pressed');
-          //this.setState({ panel : false });
-          break;
-      }
-    });
-    this.setState({ icons : false });
-    let h = $(this.refs.ld).height() - 270;
-    let ld=$(this.refs.ld);
+    let hPanel = h - 270;
+
+    let $this = this;
+
+
     $(this.refs.ld).scroll(()=>{
-      let lds=ld.scrollTop();
-      if( lds >= 10 && lds < h && !this.state.icons){
-        //this.setState({ icons : true });
-        this.scrollAll();
-      }
-      if( lds <= 10 || lds > h*2 ){
-        this.setState({ icons : false });
-      }
-      if((lds < h*1.5)  && (lds >= 10) && !this.state.panel){
 
-        Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
-        this.setState({ panel : true });
-        $(this.refs.ld).addClass('pressed');
-
+      if(!$this.state.holder){
+        $this.setState({ holder : true });
+        let realScroll = ld.scrollTop();
+        if($this.state.scroll == 1 && realScroll > $this.state.scroller){
+          $this.scrollingTo(hPanel, 2);
+          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else if($this.state.scroll == 2 && realScroll < $this.state.scroller){
+          $this.scrollingTo(0, 1);
+          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else if($this.state.scroll == 2 && realScroll > $this.state.scroller){
+          $this.scrollingTo(h + hIco, 3);
+          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else if($this.state.scroll == 3 && realScroll < $this.state.scroller){
+          $this.scrollingTo(hPanel,2);
+          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else{
+          $this.setState({ holder : false });
+        }
       }
-      if((lds > h*1.5 || lds <= 10) && this.state.panel){
 
-        Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
-        this.setState({ panel : false });
-        $(this.refs.ld).removeClass('pressed');
 
-      }
     });
   },
-  scrollOut(){
-    $(this.refs.ld).animate({scrollTop:0});
-  },
-  scrollAll(){
-    //$('#video_background').hide();
-    let h = $(this.refs.ld).height() - 270;
+  scrollingTo(h,$scroll){
+    let $this = this;
     $(this.refs.ld).animate(
-      {scrollTop:h+35},0.5,0,()=>{
-        this.setState({ icons : true });
-        //$('#video_background').show();
+      {scrollTop:h+35},
+      {
+        duration: 500,
+        easing: 'swing',
+        complete: ()=>{
+          $this.setState({ scroller : $(this.refs.ld).scrollTop() });
+          $this.setState({ scroll : $scroll });
+          Meteor.setTimeout(
+            () => {
+              $this.setState({ holder : false });
+            },
+            100
+          )
+        }
       }
     );
-
+  },
+  scrollAll(){
+    $(this.refs.ld).scrollTop(1).scroll();
   },
   render() {
     return (
@@ -87,14 +99,14 @@ export default React.createClass({
             </a>
           </div>
         </div>
-        <div className="block white">
+        <div className="block white" ref="icons">
           <div className="ui main container">
-            <div className="ui grid icons">
+            <div className={"ui grid icons " + (!this.state.icons?"invisible":"")}>
               <div className="three column row">
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge fa fa-tint icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge fa fa-tint icon" />
                       Liquidity
                     </h2>
                     Fast funding. Low fees
@@ -103,7 +115,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge fa fa-clock-o icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge fa fa-clock-o icon" />
                       Reliability
                     </h2>
                     24/7 Support/ Legally compliant
@@ -112,7 +124,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge fa fa-user-secret icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge fa fa-user-secret icon" />
                       Security
                     </h2>
                     Strong security. Encrypted cold storage
@@ -123,7 +135,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge fa fa-university icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge fa fa-university icon" />
                       Bitcoin Marging Trading
                     </h2>
                     Leveraged trading up to 5x. Shorting allowed
@@ -132,7 +144,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge li_params icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge li_params icon" />
                       Advanced order types
                     </h2>
                     Stop-loss orders. Automate your strategy
@@ -141,7 +153,7 @@ export default React.createClass({
                 <div className="column">
                   <div className="ui basic segment">
                     <h2 className="ui icon header">
-                      <i className={"ui huge fa fa-area-chart icon " + (!this.state.icons?"invisible":"")} />
+                      <i className="ui huge fa fa-area-chart icon" />
                       Proof of reserves Audits
                     </h2>
                     Cryptographically verified/ Created the industry standard
@@ -151,7 +163,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="block white opacity">
+        <div className="block white opacity" ref="bignum">
           <div className="ui main container">
             <div className="ui grid bignumber">
               <div className="three column row">
@@ -183,7 +195,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="block white">
+        <div className="block white" ref="currs">
           <div className="ui main container">
             <div className="ui grid currs">
               <div className="four column row">

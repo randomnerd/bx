@@ -1019,7 +1019,7 @@ tr.lesspadding th {
 }
 
 
-.ld .icons .ui.segment .ui.header .icon.invisible{
+.ld .icons.invisible .ui.segment .ui.header .icon{
   font-style: normal;
   display: block;
   text-align: center;
@@ -1034,6 +1034,8 @@ tr.lesspadding th {
   text-align: center;
   color: #ccc;
   font-size: 3em;
+  width: 50%;
+  height: 110px;
   transition: font-size 500ms, transform 500ms ease 0s;
 }
 
