@@ -19,10 +19,10 @@ export default React.createClass({
       : '';
   },
   displayCurrent() {
-    return this.props.active ? this.props.active.toUpperCase().replace(/-/," / ") : 'Choose a pair';
+    return this.props.pair.shortName ? this.props.pair.shortName.toUpperCase().replace(/-/," / ") : 'Choose a pair';
   },
   renderMenuItems() {
-    let active = this.props.active ? this.props.active.toUpperCase() : false;
+    let active = this.props.pair.shortName ? this.props.pair.shortName.toUpperCase() : false;
     return this.data.TradePairs.map((pair) => {
       let apair = this.currName(pair.currId).toLowerCase() + "-" + this.currName(pair.marketCurrId).toLowerCase();
 

@@ -13,7 +13,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      
+
     };
   },
   getMenuItems() {
@@ -50,8 +50,8 @@ export default React.createClass({
         <div className="ui fluid container">
 
           { this.renderMenuItems() }
-          <TradePairsMenu active={this.props.active} />
-          <TopInfo active={this.props.active} />
+          <TradePairsMenu pair={this.props.pair} />
+          <TopInfo pair={this.props.pair} />
 
             { this.data.user ?
               <div className="right menu">

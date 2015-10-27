@@ -8,6 +8,7 @@ import WithdrawModal from 'components/user/withdraw_modal';
 import WithdrawAddressModal from 'components/user/withdraw_addressbook';
 import NotificationPopups from 'components/common/notification_popups';
 import Chats from 'components/common/chat';
+import {TradePairs, Currencies} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -16,7 +17,16 @@ export default React.createClass({
       loading: !Meteor.subs.ready()
     };
   },
+  getMeteorData() {
+    let pair = TradePairs.findOne({permalink: this.props.active});
 
+    return {
+      pair: pair,
+      pairId: pair && pair._id,
+      loading: !Meteor.subs.ready()
+
+    };
+  },
   getInitialState() {
     return {
       showLoginModal: false,
@@ -126,7 +136,7 @@ export default React.createClass({
             {this.props.content}
           </div>
         </div>
-        <TopMenu title="BitExchange" active={this.props.active} />
+        <TopMenu title="BitExchange" pair={this.data.pair} />
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
         <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr}
