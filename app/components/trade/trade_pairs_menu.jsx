@@ -19,15 +19,15 @@ export default React.createClass({
       : '';
   },
   displayCurrent() {
-    return this.props.pair.shortName ? this.props.pair.shortName.toUpperCase().replace(/-/," / ") : 'Choose a pair';
+    return this.props.pair ?
+      (this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)) :
+      'Choose a pair';
   },
   renderMenuItems() {
-    let active = this.props.pair.shortName ? this.props.pair.shortName.toUpperCase() : false;
+    let active = this.props.pair ? this.props.pair : false;
     return this.data.TradePairs.map((pair) => {
-      let apair = this.currName(pair.currId).toLowerCase() + "-" + this.currName(pair.marketCurrId).toLowerCase();
-
       return (
-        <a className={'item' + (active === apair ? ' active' : '') }
+        <a className={'item' + (active._id === pair._id ? ' active' : '') }
         key = {pair.permalink}
         href = {'/pair/' + pair.permalink}>
           {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}

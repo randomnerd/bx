@@ -36,6 +36,7 @@ export default React.createClass({
   chatToggle() {
     Dispatcher.dispatch({ actionType: 'SHOW_CHAT' });
   },
+  
   renderLoginButtons() {
     return (
       <div className="right menu">
@@ -51,7 +52,7 @@ export default React.createClass({
 
           { this.renderMenuItems() }
           <TradePairsMenu pair={this.props.pair} />
-          <TopInfo pair={this.props.pair} />
+          {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
 
             { this.data.user ?
               <div className="right menu">

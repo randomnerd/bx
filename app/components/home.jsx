@@ -35,11 +35,11 @@ export default React.createClass({
           //$this.setState({ icons : !$this.state.icons });
         }else if($this.state.scroll == 2 && realScroll < $this.state.scroller){
           $this.scrollingTo(0, 1);
-          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
           //$this.setState({ icons : !$this.state.icons });
         }else if($this.state.scroll == 2 && realScroll > $this.state.scroller){
           $this.scrollingTo(h + hIco, 3);
-          Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
+          Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
           //$this.setState({ icons : !$this.state.icons });
         }else if($this.state.scroll == 3 && realScroll < $this.state.scroller){
           $this.scrollingTo(hPanel,2);

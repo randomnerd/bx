@@ -24,8 +24,9 @@ html, body{
   margin-right: auto;
 }
 
-.ui.fixed.menu{
+.ui.fixed.large.menu{
   position: absolute !important;
+  min-height: 3.4em;
 }
 
 /* Semantic new grey */
@@ -827,7 +828,7 @@ tr.lesspadding th {
 }
 
 .ui.inverted.newgrey .ui.top.sidebar.panel{
-  top: 4.1em !important;
+  top: 4em !important;
   padding: 2em;
 }
 
