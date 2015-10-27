@@ -65,17 +65,17 @@ export default React.createClass({
 
 
   pairBTC(){
-    $(this.refs.most).find('.item').removeClass('active');
+    $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'btc'});
   },
 
   pairUSD(){
-    $(this.refs.most).find('.item').removeClass('active');
+    $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'usd'});
   },
 
   pairCNY(){
-    $(this.refs.most).find('.item').removeClass('active');
+    $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'cny'});
   },
 
@@ -183,7 +183,7 @@ export default React.createClass({
               </table>
             </div>
             <div className="column">
-              <div className='ui tabular basic menu' ref='currType'>
+              <div className='ui tabular basic menu' ref='currTypes'>
                 <a className={'item' + (this.state.pair == 'btc' ? ' active' : '')} onClick={this.pairBTC}>
                   ALT / BTC
                 </a>

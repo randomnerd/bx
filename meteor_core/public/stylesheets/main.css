@@ -526,8 +526,8 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 /* UX grid */
 
 .ux.grid{
-  padding-left: 508px;
-  padding-right: 268px;
+  padding-left: 200px;
+  padding-right: 576px;
 }
 .ux.grid.fullheight, .ux.grid.fullheight .ux.column{
   height: 100%;
@@ -540,6 +540,10 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   position: relative;
   float: left;
 }
+.ux.column.left{
+  margin-left: -200px;
+  width: 200px
+}
 .ux.column.left.double{
   margin-left: -508px;
   width: 508px
@@ -547,6 +551,10 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 .ux.column.right{
   margin-right: -268px;
   width: 268px;
+}
+.ux.column.right.double{
+  margin-right: -576px;
+  width: 576px;
 }
 .ux.column.center{
   width: 100%;

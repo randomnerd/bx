@@ -162,21 +162,12 @@ export default React.createClass({
     return (
       <div className="ui main fluid container">
         <div className='ux grid fullheight'>
-          <div className='ux column left double fullheight'>
+          <div className='ux column left fullheight'>
             <div className='ux column balance fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>BALANCE</h3>
                 <Balance pairId={this.data.pairId} pair={this.data.pair} />
                 <BuySell pairId={this.data.pairId} />
-              </div>
-            </div>
-            <div className='ux column orders fullheight padding'>
-              <div className='ui basic segment h100'>
-                  <h3 className='ui header'>ORDER BOOK</h3>
-                  <Orders direction='sell'
-                    pairId={this.data.pairId}
-                    valute1={this.props.active.toUpperCase().split("-")[0]}
-                    valute2={this.props.active.toUpperCase().split("-")[1]} />
               </div>
             </div>
           </div>
@@ -242,7 +233,16 @@ export default React.createClass({
               </div>
             </div>
           </div>
-          <div className='ux column right fullheight'>
+          <div className='ux column right double fullheight'>
+            <div className='ux column orders fullheight padding'>
+              <div className='ui basic segment h100'>
+                  <h3 className='ui header'>ORDER BOOK</h3>
+                  <Orders direction='sell'
+                    pairId={this.data.pairId}
+                    valute1={this.props.active.toUpperCase().split("-")[0]}
+                    valute2={this.props.active.toUpperCase().split("-")[1]} />
+              </div>
+            </div>
             <div className='ux column history fullheight padding'>
               <div className='ui basic segment h100'>
                 <h3 className='ui header'>TRADE HISTORY</h3>
