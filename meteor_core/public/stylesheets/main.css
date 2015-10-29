@@ -154,6 +154,7 @@ html, body{
 .ui.inverted.newgrey .segment{
   background-color: #1e2b34;
 }
+
 .ui.inverted.newgrey .segment.nobg{
   background: none !important;
 }
@@ -395,15 +396,19 @@ html, body{
 .ui.inverted.newgrey .ui.form input[type="time"],
 .ui.inverted.newgrey .ui.form input[type="url"],
 .ui.inverted.newgrey .ui.form input[type="number"] {
-    background: rgba(206, 210, 213, 0.05) none repeat scroll 0 0;
-    border: 1px solid rgba(206, 210, 213, 0.15);
+    background: rgba(206, 210, 213, 0.05) repeat scroll 0 0;
     color: rgba(200, 200, 200, 0.67);
     transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
+    border-width: 0 1px 1px 0;
+    border-color: rgba(206, 210, 213, 0.15);
+    transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
+    box-shadow: -1px -1px 0 rgba(6, 10, 10, .4);
 }
 
 .ui.inverted.newgrey .ui.form input:focus{
-  border-color: rgba(206, 210, 213, 0.35);
+  border-color: rgba(206, 210, 213, 0.25);
   color: rgba(200, 200, 200, 0.77);
+  background: rgba(206, 210, 213, 0.07) repeat scroll 0 0;
 }
 
 .ui.inverted.newgrey .ui.form input:-moz-placeholder {
@@ -429,6 +434,7 @@ html, body{
 .ui.inverted.newgrey .ui.modal .ui.form input[type="time"],
 .ui.inverted.newgrey .ui.modal .ui.form input[type="url"],
 .ui.inverted.newgrey .ui.modal .ui.form input[type="number"] {
+  box-shadow: none;
   border: 1px solid rgba(34, 36, 38, 0.15);
   color: rgba(0, 0, 0, 0.87);
   transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
@@ -605,6 +611,10 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 .ux.container{
   position: relative;
   overflow: hidden;
+  /*border-style: solid !important;
+  border-width: 1px 0 0 1px !important;
+  border-color: rgba(206, 210, 213, 0.15) !important;
+  box-shadow: 1px 1px 0 rgba(6, 10, 10, .4) !important;*/
 }
 
 .ux.container.h100{
@@ -619,6 +629,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 .ux.container.fixchart{
   height: 450px;
   margin-top: -450px;
+  margin-bottom: 1px;
 }
 
 .ux.container.fixorders{

@@ -19,18 +19,14 @@ export default React.createClass({
 
     };
   },
-  infoToggle(){
-      Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
-  },
+  
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   render() {
     return (
       <div>
-        <a className="icon item double" onClick={this.infoToggle}>
-          <p><i className="dropdown large icon"></i></p>
-        </a>
+
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
           <p>{this.data.tradesLast? parseFloat(this.data.tradesLast.displayPrice()).toFixed(4) : 0.0000}</p>
