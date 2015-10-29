@@ -37,15 +37,17 @@ export default React.createClass({
           $this.scrollingTo(0, 1);
           Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
           //$this.setState({ icons : !$this.state.icons });
-        }else if($this.state.scroll == 2 && realScroll > $this.state.scroller){
-          $this.scrollingTo(h + hIco, 3);
+        }
+        else if($this.state.scroll == 2 && realScroll > $this.state.scroller){
+          $this.scrollingTo(h, 3);
           Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
           //$this.setState({ icons : !$this.state.icons });
         }else if($this.state.scroll == 3 && realScroll < $this.state.scroller){
           $this.scrollingTo(hPanel,2);
           Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
           //$this.setState({ icons : !$this.state.icons });
-        }else{
+        }
+        else{
           $this.setState({ holder : false });
         }
       }
@@ -56,7 +58,7 @@ export default React.createClass({
   scrollingTo(h,$scroll){
     let $this = this;
     $(this.refs.ld).animate(
-      {scrollTop:h+35},
+      {scrollTop:h},
       {
         duration: 500,
         easing: 'swing',
@@ -67,7 +69,7 @@ export default React.createClass({
             () => {
               $this.setState({ holder : false });
             },
-            100
+            500
           )
         }
       }
@@ -78,7 +80,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="ld" ref="ld">
+      <div className={"ld" + (this.state.holder?" noscroll":"")} ref="ld">
         <div className="block background">
           <video id="video_background"  loop="loop" autoPlay="autoPlay" preload="auto" onended="this.play()">
             <source type="video/mp4" src="/bg.mp4"></source>

@@ -926,6 +926,9 @@ tr.lesspadding th {
   padding-bottom: 0;
   transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
 }
+.ld.noscroll{
+  overflow: hidden !important;
+}
 .ld.pressed{
   margin-top: 270px;
   padding-bottom: 270px;
