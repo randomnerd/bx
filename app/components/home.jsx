@@ -61,7 +61,7 @@ export default React.createClass({
       {scrollTop:h},
       {
         duration: 500,
-        easing: 'swing',
+        //easing: 'swing',
         complete: ()=>{
           $this.setState({ scroller : $(this.refs.ld).scrollTop() });
           $this.setState({ scroll : $scroll });

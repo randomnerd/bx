@@ -31,7 +31,7 @@ html, body{
 
 /* Semantic new grey */
 .ui.inverted.newgrey{
-  background-color: #15232c;
+  background-color: #212e3e;
   color:#fff;
 }
 
@@ -152,9 +152,11 @@ html, body{
 }
 
 .ui.inverted.newgrey .segment{
-  background-color: #1e2b34;
+  background-color: #28394d;
 }
-
+.ui.teal.segment:not(.inverted) {
+    border-top: 2px solid #0288AD;
+}
 .ui.inverted.newgrey .segment.nobg{
   background: none !important;
 }
@@ -491,7 +493,6 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 }
 .ux.balance h4.ui.header{
   margin-top: .3rem;
-  font-size: 1.28rem;
   padding-left: 0.3em;
   margin-bottom: 1.3em;
 }
@@ -849,6 +850,7 @@ tr.lesspadding th {
 .ui.inverted.newgrey .ui.top.sidebar.panel{
   top: 4em !important;
   padding: 2em;
+  background-color: #3a526d;
 }
 
 .contwrapper{
@@ -936,9 +938,11 @@ tr.lesspadding th {
   margin-top: 0;
   padding-bottom: 0;
   transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
+  width: 101%;
 }
 .ld.noscroll{
   overflow: hidden !important;
+  width: 100%;
 }
 .ld.pressed{
   margin-top: 270px;
@@ -946,6 +950,12 @@ tr.lesspadding th {
   transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
 }
 
+.ui.inverted.newgrey .ld .ui.teal.button {
+    color: #0288AD;
+    border: 1px solid #0288AD;
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 1px 1px 0 #212e3e;
+}
 
 .ld .block .promo{
   margin: -70px auto 0;
@@ -988,7 +998,7 @@ tr.lesspadding th {
 }
 
 .ld .block.teal{
-  background: #00b5ad;
+  background: #0288AD;
   padding-bottom: 8em;
 }
 .ld .block.teal p{
@@ -1023,7 +1033,7 @@ tr.lesspadding th {
 }
 
 .ld .ui.segment .ui.header{
-  color: #00b5ad;
+  color: #0288AD;
   font-size: 1.5em;
   font-style: italic;
   text-align: right;
@@ -1069,7 +1079,7 @@ tr.lesspadding th {
   text-align: center;
   font-family: "Helvetica Neue", Helvetica;
   font-weight: lighter;
-  color: #00b5ad;
+  color: #0288AD;
 }
 .ld .bignumber .ui.segment h1.ui.header{
   font-size: 3em;
