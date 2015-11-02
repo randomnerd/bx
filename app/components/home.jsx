@@ -23,6 +23,16 @@ export default React.createClass({
 
     let $this = this;
 
+    $(window).resize(function(){
+      ld = $($this.refs.ld);
+
+      h = ld.height();
+      hIco = $($this.refs.icons).height();
+      hBignum = $($this.refs.bignum).height();
+      hCurrs = $($this.refs.currs).height();
+
+      hPanel = h - 270;
+    });
 
     $(this.refs.ld).scroll(()=>{
 
