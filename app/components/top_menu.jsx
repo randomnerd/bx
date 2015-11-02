@@ -18,7 +18,7 @@ export default React.createClass({
   },
   getMenuItems() {
     return [
-      { href: '/', label: 'Bit.Exchange', extraCls: '' },
+      //{ href: '/', label: 'Bit.Exchange', extraCls: '' },
       //{ href: '/pair', label: 'Pairs', extraCls: '' }
     ];
   },
@@ -51,7 +51,7 @@ export default React.createClass({
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container">
-
+          <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
           { this.renderMenuItems() }
           <TradePairsMenu pair={this.props.pair} />
           <a className="icon item double" onClick={this.infoToggle}>

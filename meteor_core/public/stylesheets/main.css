@@ -894,8 +894,32 @@ tr.lesspadding th {
 .ld{
   position: relative;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   font-family: Arial, sans-serif !important;
+  margin-top: 0;
+  padding-bottom: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+.ld.noscroll{
+  overflow-y: hidden !important;
+}
+.ld2{
+  position: relative;
+  margin-top: 0;
+  padding-bottom: 0;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+  width: 101%;
+  height: 100%;
+}
+.ld2.scroll{
+  overflow-y: hidden !important;
+}
+.ld.pressed{
+  margin-top: 270px;
+  padding-bottom: 270px;
+  transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
 }
 
 .ld .block{
@@ -904,6 +928,8 @@ tr.lesspadding th {
 }
 .ld .block.opacity{
   height: 100%;
+  margin-top: 0;
+  padding-bottom: 0;
 }
 .ld .block.background{
   display: block;
@@ -932,22 +958,6 @@ tr.lesspadding th {
 
 #video_background{
   width: 100%;
-}
-
-.ld{
-  margin-top: 0;
-  padding-bottom: 0;
-  transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
-  width: 101%;
-}
-.ld.noscroll{
-  overflow: hidden !important;
-  width: 100%;
-}
-.ld.pressed{
-  margin-top: 270px;
-  padding-bottom: 270px;
-  transition: margin-top 500ms, padding-bottom 500ms, transform 500ms ease 0s;
 }
 
 .ui.inverted.newgrey .ld .ui.teal.button {
