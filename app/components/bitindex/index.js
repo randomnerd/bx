@@ -11,7 +11,7 @@ import RenkoWithUpdatingData from './stockcharts/RenkoWithUpdatingData';
 import areachart_infopanel from './stockcharts/areachart_infopanel';
 import comparechart_infopanel from './stockcharts/comparechart_infopanel';
 import linechart from './stockcharts/linechart';
-
+import CandleStickChartWithInteractiveIndicator from './stockcharts/CandleStickChartWithInteractiveIndicator';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -26,4 +26,5 @@ export default {
   areachart_infopanel,
   comparechart_infopanel,
   linechart,
+  CandleStickChartWithInteractiveIndicator,
 };
