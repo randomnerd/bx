@@ -12,6 +12,7 @@ import areachart_infopanel from './stockcharts/areachart_infopanel';
 import comparechart_infopanel from './stockcharts/comparechart_infopanel';
 import linechart from './stockcharts/linechart';
 import CandleStickChartWithInteractiveIndicator from './stockcharts/CandleStickChartWithInteractiveIndicator';
+import CandleStickChartWithFibonacciInteractiveIndicator from './stockcharts/CandleStickChartWithFibonacciInteractiveIndicator';
 
 export default {
   CandleStickStockScaleChartWithVolumeHistogramV3,
@@ -27,4 +28,5 @@ export default {
   comparechart_infopanel,
   linechart,
   CandleStickChartWithInteractiveIndicator,
+  CandleStickChartWithFibonacciInteractiveIndicator,
 };

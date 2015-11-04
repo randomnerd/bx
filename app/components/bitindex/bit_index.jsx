@@ -65,12 +65,11 @@ export default React.createClass({
     // <CandleStickChartWithMACDIndicator data = {this.data.BTPR.slice(200)} type = 'svg'/>
     // <CandleStickChartWithBollingerBandOverlay data = {this.data.BTPR.slice(200)} type = 'svg'/>
 
+            // <Charts.CandleStickChartWithInteractiveIndicator data = {this.data.BTPR.slice(200)} type = 'hybrid' />
     return (
 
       <div>
-
-    
-        <Charts.CandleStickChartWithInteractiveIndicator data = {this.data.BTPR.slice(200)} type = 'hybrid' />
+        <Charts.CandleStickChartWithFibonacciInteractiveIndicator data = {this.data.BTPR.slice(200)} type = 'hybrid' />
 
       </div>
     );
