@@ -242,14 +242,14 @@ html, body{
   float: left;
 }
 .ui.inverted.newgrey .bignum.left{
-  width: 40%;
+  width: 35%;
   text-align: right;
 }
 .ui.inverted.newgrey .bignum.dot{
   width: 4%;
 }
 .ui.inverted.newgrey .bignum.right{
-  width: 50%;
+  width: 55%;
   text-align: left;
 }
 .ui.inverted.newgrey .bignum.right span:first-child{
@@ -473,7 +473,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 
 
 .ui.inverted.newgrey .sidebar{
-  background-color: #2f3d45;
+  background-color: #212e3e;
   color:#ced2d5 ;
 }
 .ui.inverted.newgrey .ui.comments .comment .author, .ui.inverted.newgrey .ui.comments .comment .text{
@@ -515,7 +515,8 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 
 .ui.inverted.newgrey .main.fluid.container{
   height: 100%;
-  padding-top: 4.2em;
+  padding-top: 4em;
+  overflow: hidden;
 }
 
 .ui.segments{
@@ -540,13 +541,53 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 
 /* UX grid */
 
-.ux.grid{
-  padding-left: 200px;
+
+.ux.grid.lsingle{
+  padding-left: 288px;
+}
+.ux.grid.rsingle{
+  padding-right: 288px;
+}
+.ux.grid.ldouble{
+  padding-left: 576px;
+}
+.ux.grid.rdouble{
   padding-right: 576px;
 }
+.ux.grid.lbalance{
+  padding-left: 200px;
+}
+.ux.grid.rbalance{
+  padding-right: 200px;
+}
+.ux.grid.lbalance.lsingle{
+  padding-left: 488px;
+}
+.ux.grid.rbalance.rsingle{
+  padding-right: 488px;
+}
+.ux.grid.lbalance.ldouble{
+  padding-left: 776px;
+}
+.ux.grid.rbalance.rdouble{
+  padding-right: 776px;
+}
+
+
 .ux.grid.fullheight, .ux.grid.fullheight .ux.column{
   height: 100%;
 }
+.ux.grid.semiheight, .ux.grid .ux.column.semiheight{
+  height: 50% !important;
+  margin-bottom: 2px;
+}
+
+.ux.grid.semiheight, .ux.grid .ux.column.semiheight.fixclass{
+  margin-left: -288px !important;
+  top: 50% !important;
+  margin-top: 2px;
+}
+
 .ux.column.scroll{
   overflow-y: auto;
   overflow-x: hidden;
@@ -555,46 +596,87 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   position: relative;
   float: left;
 }
-.ux.column.left{
+/*////////*/
+.ux.column.left.single{
+  margin-left: -288px;
+  width: 288px
+}
+.ux.column.left.double{
+  margin-left: -576px;
+  width: 576px
+}
+.ux.column.left.balance{
   margin-left: -200px;
   width: 200px
 }
-.ux.column.left.double{
-  margin-left: -508px;
-  width: 508px
+.ux.column.left.balance.single{
+  margin-left: -488px;
+  width: 488px
 }
-.ux.column.right{
-  margin-right: -268px;
-  width: 268px;
+.ux.column.left.balance.double{
+  margin-left: -776px;
+  width: 776px
+}
+/*////////*/
+.ux.column.right.single{
+  margin-right: -288px;
+  width: 288px;
 }
 .ux.column.right.double{
   margin-right: -576px;
   width: 576px;
 }
+.ux.column.right.balance{
+  margin-right: -200px;
+  width: 200px
+}
+.ux.column.right.balance.single{
+  margin-right: -488px;
+  width: 488px
+}
+.ux.column.right.balance.double{
+  margin-right: -776px;
+  width: 776px
+}
+/*////////*/
 .ux.column.center{
   width: 100%;
 }
+/*////////*/
 .ux.column.balance{
   width: 200px;
 }
+.ux.column.semiheight.balance{
+  width: 288px;
+}
 .ux.column.orders{
-  width: 308px;
+  width: 288px;
 }
 .ux.column.chart{
   float: none !important;
 }
 .ux.column.history{
-  width: 268px;
+  width: 288px;
+}
+
+.ux.column h3.ui-draggable-handle{
+  cursor: move;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: -4rem !important;
+  margin-bottom: 0rem !important;
+  background-color: rgba(200, 220, 250, 0.2);
 }
 
 .ux.grid .column.padding{
-  margin: -0.2rem 0 0 !important;
   padding: 0 !important;
   height: 100% !important;
 }
 .ux.grid > .column .h50.segment{
   height: 50% !important;
-  margin: 0 0 0.2rem 0;
+  margin: 0.1rem;
+
+  padding-top: 4em !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overflow-y: hidden;
@@ -615,6 +697,10 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 
 .ux.grid > .column .h100.segment.tabheader{
   padding-top: 3em !important;
+  margin: 0;
+}
+.ux.grid > .column .segment.teal{
+  margin: 0;
 }
 
 .ux.container{
@@ -632,7 +718,8 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 
 .ux.container.fix400{
   padding-top: 450px;
-  height: 100%
+  height: 100%;
+  overflow: visible;
 }
 
 .ux.container.fixchart{
@@ -660,12 +747,106 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   z-index: 1;
 }
 
-.ux .ui.basic.segment.h100{
+.ux .ui.basic.segment.h100, .ux .ui.basic.segment.h50{
   padding: 0.1em;
 }
 
 .ux .ui.header{
   padding-left: 0.6em;
+}
+
+.ux .dragholders{
+  position: absolute;
+  top: 0;
+  z-index: 1001;
+  height: 100%;
+  bottom: 0;
+  margin: 0 !important;
+}
+.ux .dragholders.right{
+  right: 0;
+  left: -70px;
+}
+.ux .dragholders.left{
+  left: 0;
+  right: -70px;
+}
+
+.ux .dragholders .column{
+  height: 99% !important;
+  padding: .1rem !important;
+}
+
+.ux .dragholder{
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: #28394d;
+  opacity: .4;
+  border: 3px dashed #ddd;
+  font-size: 14rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ddd;
+  top: 0;
+  left: 0;
+  padding-top: 25%;
+  vertical-align: bottom;
+  z-index: 100;
+}
+.ux .dragholder.small{
+  height: 49.9%;
+  margin-bottom: 1%;
+}
+
+.ux .dragholder::after{
+  position: absolute;
+  display: block;
+  content: "+";
+  font-size: 14rem;
+  font-weight: bold;
+  color: #ddd;
+  top: 50%;
+  left: 50%;
+  margin-top: -2rem;
+  margin-left: -4rem;
+}
+
+.ux .dragholder.morevisible{
+  opacity: 0.6;
+}
+
+.ux .dragholder.hidden{
+  display: none;
+}
+
+.ux .dragholder.underdouble{
+  height: 50%;
+  top: 50%;
+  width: 100%;
+}
+.ux .dragholder.undertrades{
+  height: 50%;
+  top: 50%;
+  width: 288px;
+  padding-top: 50%;
+}
+.ux .dragholder.abovetrades{
+  height: 50%;
+  top: 0;
+  width: 288px;
+  padding-top: 50%;
+}
+.ux .dragholder.underorders{
+  height: 50%;
+  top: 50%;
+  width: 288px;
+  padding-top: 50%;
+}
+.ux .dragholder.leftofcharts{
+  height: 100%;
+  width: 288px;
+  padding-top: 30%;
 }
 
 /* UX grid */

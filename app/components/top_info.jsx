@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies, Trades, OrderBookItems} from 'collections';
+import {Currencies, Trades, OrderBookItems, TradePairs} from 'collections';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -19,7 +19,7 @@ export default React.createClass({
 
     };
   },
-  
+
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
@@ -29,7 +29,7 @@ export default React.createClass({
 
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>{this.data.tradesLast? parseFloat(this.data.tradesLast.displayPrice()).toFixed(4) : 0.0000}</p>
+          <p>{this.props.pair.lastPrice? parseFloat(this.props.pair.lastPrice).toFixed(4) : 0.0000}</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Ask</h4>
@@ -47,7 +47,7 @@ export default React.createClass({
         </div>
         <div className='item double'>
           <h4 className="ui header">Volume</h4>
-          <p>2435243.45</p>
+          <p>{this.props.pair.dayVolume? parseFloat(this.props.pair.dayVolume).toFixed(4) : 0.0000}</p>
         </div>
       </div>
     );

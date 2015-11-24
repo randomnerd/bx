@@ -48,6 +48,8 @@ meteorhacks:subs-manager@1.6.2
 mindfront:why-reminify@1.0.0
 minifiers@1.1.7
 minimongo@1.0.10
+mizzao:build-fetcher@0.2.0
+mizzao:jquery-ui@1.11.4
 momentjs:moment@2.10.6
 mongo@1.1.3
 mongo-id@1.0.1

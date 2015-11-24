@@ -93,7 +93,7 @@ export default React.createClass({
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{amount[1]}</span>
-            { nulls.substr(0, 7 - amount[1].length) }
+            { nulls.substr(0, 8 - amount[1].length) }
             </div>
 
             <span className='leveler positive'

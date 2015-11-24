@@ -13,7 +13,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-
+      drag:false
     };
   },
   getMenuItems() {
@@ -39,6 +39,10 @@ export default React.createClass({
   infoToggle(){
       Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
   },
+  dragToggle(){
+      Dispatcher.dispatch({ actionType: 'DRAG' } );
+      this.setState({drag: !this.state.drag});
+  },
   renderLoginButtons() {
     return (
       <div className="right menu">
@@ -61,6 +65,9 @@ export default React.createClass({
 
             { this.data.user ?
               <div className="right menu">
+                <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
+                  <i className="block layout icon"></i>
+                </a>
                 <UserTopMenu />
                 <NotificationShow />
                 <a className="icon item" onClick={this.chatToggle}>
