@@ -500,9 +500,9 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   margin-top: -3rem !important;
 }
 .ux.balance h4.ui.header{
-  margin-top: .3rem;
+  margin-top: .8rem;
   padding-left: 0.3em;
-  margin-bottom: 1.3em;
+  margin-bottom: 1em;
 }
 .main.container{
   height: 100%;
@@ -665,7 +665,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   padding-bottom: 1rem;
   margin-top: -4rem !important;
   margin-bottom: 0rem !important;
-  background-color: rgba(200, 220, 250, 0.2);
+  background-color: rgba(200, 220, 250, 0.1);
 }
 
 .ux.grid .column.padding{
@@ -700,7 +700,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   margin: 0;
 }
 .ux.grid > .column .segment.teal{
-  margin: 0;
+  margin-top: 0;
 }
 
 .ux.container{
