@@ -820,6 +820,25 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   display: none;
 }
 
+.ux .selfholder{
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: #28394d;
+  opacity: .1;
+  border: 3px dashed #ddd;
+  font-size: 14rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ddd;
+  top: 0;
+  left: 0;
+  padding-top: 25%;
+  vertical-align: bottom;
+  z-index: 100;
+}
+
+
 .ux .dragholder.underdouble{
   height: 50%;
   top: 50%;

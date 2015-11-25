@@ -15,13 +15,9 @@ export default React.createClass({
 
       drag_on: false,
 
-      leftofcharts: false,
-      underdouble: false,
-      undertrades: false,
-      underorders: false,
-      abovedouble: false,
-      abovetrades: false,
-      aboveorders: false,
+      dragging: false,
+
+      drag_el: false,
 
       left: 'balance',
       right: 'double',
@@ -53,17 +49,20 @@ export default React.createClass({
     orders: {
       column: 'right',
       place: 1,
-      size: "big"
+      size: "big",
+      top: false
     },
     trades: {
       column: 'right',
       place: 2,
-      size: "big"
+      size: "big",
+      top: false
     },
     balance: {
       column: 'left',
       place: 1,
-      size: "big"
+      size: "big",
+      top: false
     },
     openorders: {
       column: 'center',
@@ -524,21 +523,19 @@ export default React.createClass({
         start: function() {
           let el = $(this).attr('data-block');
           $this.previousPlace[el]=this;
-          $this.setState({leftofcharts : true});
-          $this.setState({undertrades : true});
-          $this.setState({abovetrades : true});
+          $this.setState({dragging : $this.positions[el].column});
+          $this.setState({drag_el : $this.positions[el]});
         },
         stop: function() {
-          $this.setState({leftofcharts : false});
-          $this.setState({undertrades : false});
-          $this.setState({abovetrades : false});
+          $this.setState({dragging : false});
+          $this.setState({drag_el : false});
         },
         drag:function(event, ui){
 
         }
       });
       $this.setState({dragorders : true});
-    },300);
+    },100);
 
   },
   componentDidMount() {
@@ -568,6 +565,7 @@ export default React.createClass({
       hoverClass: "morevisible",
       tolerance: "pointer",
       drop: function( event, ui ) {
+        if(!$(this).hasClass('dragholder')) return;
         let places = $this.state.places;
         let el = $(ui.draggable).attr('data-block');
         let oldPosition = $this.positions[el];
@@ -575,7 +573,8 @@ export default React.createClass({
         let newPosition = {
           column: position[0],
           place: parseInt(position[1]),
-          size: position[2]
+          size: position[2],
+          top: position[3]?true:false
         };
 
         let fix1=false;
@@ -593,23 +592,23 @@ export default React.createClass({
             if(place && key != el){ // change elements not dragged
               if(oldPosition.size == "small" && newPosition.size == "big"){
                 $this.positions[key].size = "big";
-                console.log(key + "1");
+                //console.log(key + "1");
               }else{
                 if (newPosition.place == oldPosition.place ) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
                     if($this.positions[key].size == "small"){
                       $this.positions[key].size = "big";
-                      console.log(key + "2");
+                      //console.log(key + "2");
                     }else {
                       $this.positions[key].size = "small"
-                      console.log(key + "3");
+                      //console.log(key + "3");
                     }
                   }else if(newPosition.size == "small") {
                     $this.positions[key].size = (
                       ( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ?
                       "small" : "big"
                     );
-                    console.log(key + "4");
+                    //console.log(key + "4");
                   }
                 }else if(newPosition.place == oldPosition.place+1){
                   if(oldPosition.size == "small" && newPosition.size == "small"){
@@ -617,13 +616,13 @@ export default React.createClass({
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    console.log(key + "5");
+                    //console.log(key + "5");
                   }else if(newPosition.size == "small") {
                     $this.positions[key].size = (
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    console.log(key + "6");
+                    //console.log(key + "6");
                   }
                 }else if (newPosition.place == oldPosition.place-1) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
@@ -631,18 +630,18 @@ export default React.createClass({
                       ( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    console.log(key + "7");
+                    //console.log(key + "7");
                   }else if(newPosition.size == "small") {
                     $this.positions[key].size = (
                       ( place == newPosition.place ) ?
                       "small" : "big"
                     );
-                    console.log(key + "8");
+                    //console.log(key + "8");
                   }
                 }else if ( ( newPosition.place == oldPosition.place + 2 ) || ( newPosition.place == oldPosition.place - 2 ) ) {
                   if(newPosition.size == "small") {
                     $this.positions[key].size = ( ( (place == newPosition.place) ) ? "small" : "big" );
-                    console.log(key + "9");
+                    //console.log(key + "9");
                   }
                 }
               }
@@ -651,22 +650,22 @@ export default React.createClass({
                 console.log(place + " >= " + oldPosition.place + " && " + place + " >= " + newPosition.place);
                 if( places[oldPosition.column][key] > 1 ){
                   places[oldPosition.column][key]--;
-                  console.log(key + " - " + " : " + places[oldPosition.column][key]);
+                  //console.log(key + " - " + " : " + places[oldPosition.column][key]);
                 }
               }else if(place <= oldPosition.place && place >= newPosition.place){
                 if( places[oldPosition.column][key] < 3 ){
                   places[oldPosition.column][key]++;
-                  console.log(key + " + " + " : " + places[oldPosition.column][key]);
+                  //console.log(key + " + " + " : " + places[oldPosition.column][key]);
                 }
               }
               if( places[oldPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
-                console.log("fix 1");
-                console.log(key);
+                //console.log("fix 1");
+                //console.log(key);
               }
             }else if(key == el){
               places[oldPosition.column][key] = newPosition.place;
-              console.log(key + " : " + places[oldPosition.column][key]);
+              //console.log(key + " : " + places[oldPosition.column][key]);
             }
 
 
@@ -703,17 +702,17 @@ export default React.createClass({
               }
               if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
-                console.log("fix 2");
+                //console.log("fix 2");
               }
             }else if(key == el){
               places[newPosition.column][key] = newPosition.place;
               $this.positions[key].place = newPosition.place;
-              console.log(key + " : " + places[newPosition.column][key]);
+              //console.log(key + " : " + places[newPosition.column][key]);
             }
             if( place >= newPosition.place ){
               places[newPosition.column][key]++;
               $this.positions[key].place = places[newPosition.column][key];
-              console.log(key + " : " + places[newPosition.column][key]);
+              //console.log(key + " : " + places[newPosition.column][key]);
             }
 
           });
@@ -721,7 +720,7 @@ export default React.createClass({
 
         if(newPosition.place == 3 && newPosition.size == "big"){
           fix1 = true;
-          console.log("fix 3");
+          //console.log("fix 3");
         }
 
         $this.setState({places: places});
@@ -731,10 +730,10 @@ export default React.createClass({
 
 
         Meteor.setTimeout(()=>{
-          console.log(places);
+          //console.log($this.positions);
           $this.dragBlocks();
           $this.wides();
-        },500);
+        },200);
       }
     });
 
@@ -744,6 +743,18 @@ export default React.createClass({
   },
 
   render() {
+    let lcol = this.state.lcol;
+    let rcol = this.state.rcol;
+    let invisible = this.state.drag_el.column + "-" + this.state.drag_el.place + "-" + this.state.drag_el.size+(this.state.drag_el.top?"-top":"");
+    if(this.state.dragging == "left"){
+      rcol++;
+      //lcol=lcol==1?0:lcol;
+      //lcol--;
+    }else if(this.state.dragging == "right"){
+      lcol++;
+      //rcol=rcol==1?0:rcol;
+      //rcol--;
+    }
     return (
       <div className="ui main fluid container">
         <div className={"ux grid fullheight " + ( this.state.drag_on ? "dragcontainer " : "") + this.state.center}>
@@ -752,24 +763,24 @@ export default React.createClass({
             {this.renderLeft(2)}
             {this.renderLeft(3)}
 
-            <div className={"dragholders left ui grid" + (this.state.undertrades?"":" hidden")} ref="ldragholders">
-              <div className="five column row">
+            <div className={"dragholders left ui grid" + (this.state.dragging?"":" hidden")} ref="ldragholders">
+              <div className={( lcol > 2 ? "five" : (lcol > 1? "three" : "one")) + " column row"} >
                 <div className="column">
-                  <div className={"dragholder first big" + (this.state.undertrades?"":" hidden")} data-place="left-1-big"></div>
+                  <div className={"first big" + ((lcol > 0)?"":" hidden") + ((invisible != "left-1-big")?" dragholder":" selfholder")} data-place="left-1-big"></div>
                 </div>
                 <div className="column">
-                  <div className={"dragholder first small" + (this.state.undertrades?"":" hidden")} data-place="left-1-small-2"></div>
-                  <div className={"dragholder second small" + (this.state.undertrades?"":" hidden")} data-place="left-2-small"></div>
+                  <div className={"first small" + ((lcol > 1)?"":" hidden") + ((invisible != "left-1-small-top")?" dragholder":" selfholder")} data-place="left-1-small-top"></div>
+                  <div className={"second small" + ((lcol > 1)?"":" hidden") + ((invisible != "left-2-small")?" dragholder":" selfholder")} data-place="left-2-small"></div>
                 </div>
                 <div className="column">
-                  <div className={"dragholder second big" + (this.state.undertrades?"":" hidden")} data-place="left-2-big"></div>
+                  <div className={"second big" + ((lcol > 1)?"":" hidden") + ((invisible != "left-2-big")?" dragholder":" selfholder")} data-place="left-2-big"></div>
                 </div>
                 <div className="column">
-                  <div className={"dragholder second small" + (this.state.undertrades?"":" hidden")} data-place="left-2-small-2"></div>
-                  <div className={"dragholder third small" + (this.state.undertrades?"":" hidden")} data-place="left-3-small"></div>
+                  <div className={"second small" + ((lcol > 2)?"":" hidden") + ((invisible != "left-2-small-top")?" dragholder":" selfholder")} data-place="left-2-small-top"></div>
+                  <div className={"third small" + ((lcol > 2)?"":" hidden") + ((invisible != "left-3-small")?" dragholder":" selfholder")} data-place="left-3-small"></div>
                 </div>
                 <div className="column">
-                  <div className={"dragholder third big" + (this.state.undertrades?"":" hidden")} data-place="left-3-big"></div>
+                  <div className={"third big" + ((lcol > 2)?"":" hidden") + ((invisible != "left-3-big")?" dragholder":" selfholder")} data-place="left-3-big"></div>
                 </div>
               </div>
             </div>
@@ -845,26 +856,26 @@ export default React.createClass({
             { this.renderRight(2) }
             { this.renderRight(3) }
 
-            <div className={"dragholders right ui grid" + (this.state.undertrades?"":" hidden")} ref="ldragholders">
-              <div className="five column row">
-                <div className="column">
-                  <div className={"dragholder first big" + (this.state.undertrades?"":" hidden")} data-place="right-1-big"></div>
-                </div>
-                <div className="column">
-                  <div className={"dragholder first small" + (this.state.undertrades?"":" hidden")} data-place="right-1-small-2"></div>
-                  <div className={"dragholder second small" + (this.state.undertrades?"":" hidden")} data-place="right-2-small"></div>
-                </div>
-                <div className="column">
-                  <div className={"dragholder second big" + (this.state.undertrades?"":" hidden")} data-place="right-2-big"></div>
-                </div>
-                <div className="column">
-                  <div className={"dragholder second small" + (this.state.undertrades?"":" hidden")} data-place="right-2-small-2"></div>
-                  <div className={"dragholder third small" + (this.state.undertrades?"":" hidden")} data-place="right-3-small"></div>
-                </div>
-                <div className="column">
-                  <div className={"dragholder third big" + (this.state.undertrades?"":" hidden")} data-place="right-3-big"></div>
-                </div>
+            <div className={"dragholders right ui grid" + (this.state.dragging?"":" hidden")} ref="rdragholders" >
+            <div className={( rcol > 2 ? "five" : (rcol > 1 ? "three" : "one" )) + " column row"} >
+              <div className="column">
+                <div className={"first big" + ((rcol > 0)?"":" hidden") + ((invisible != "right-1-big")?" dragholder":" selfholder")} data-place="right-1-big"></div>
               </div>
+              <div className="column">
+                <div className={"first small" + ((rcol > 1)?"":" hidden") + ((invisible != "right-1-small-top")?" dragholder":" selfholder")} data-place="right-1-small-top"></div>
+                <div className={"second small" + ((rcol > 1)?"":" hidden") + ((invisible != "right-2-small")?" dragholder":" selfholder")} data-place="right-2-small"></div>
+              </div>
+              <div className="column">
+                <div className={"second big" + ((rcol > 1)?"":" hidden") + ((invisible != "right-2-big")?" dragholder":" selfholder")} data-place="right-2-big"></div>
+              </div>
+              <div className="column">
+                <div className={"second small" + ((rcol > 2)?"":" hidden") + ((invisible != "right-2-small-top")?" dragholder":" selfholder")} data-place="right-2-small-top"></div>
+                <div className={"third small" + ((rcol > 2)?"":" hidden") + ((invisible != "right-3-small")?" dragholder":" selfholder")} data-place="right-3-small"></div>
+              </div>
+              <div className="column">
+                <div className={"third big" + ((rcol > 2)?"":" hidden") + ((invisible != "right-3-big")?" dragholder":" selfholder")} data-place="right-3-big"></div>
+              </div>
+            </div>
             </div>
 
           </div>
