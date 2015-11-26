@@ -385,8 +385,8 @@ export default React.createClass({
       <div key={k} className={"ux column balance " + (this.positions.balance.size == "big" ? "fullheight" : "semiheight" ) + fixclass + " padding drag"} ref="balance" data-block="balance">
         <div className='ui basic segment h100'>
           <h3 className='ui header'>BALANCE</h3>
-          <Balance pairId={this.data.pairId} pair={this.data.pair} />
-          <BuySell pairId={this.data.pairId} />
+          <Balance pairId={this.data.pairId} pair={this.data.pair} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <BuySell pairId={this.data.pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
         </div>
       </div>
     );
@@ -576,102 +576,131 @@ export default React.createClass({
           size: position[2],
           top: position[3]?true:false
         };
-
+        let ct="";
         let fix1=false;
-        //console.log("oldPosition");
-        //console.log(oldPosition);
-        // console.log({
-        //   places: places,
-        //   el: el,
-        //   oldPosition: oldPosition,
-        //   newPosition: newPosition,
-        // });
+        console.log($this.positions);
+        console.log(oldPosition);
+        console.log({
+          places: places,
+          el: el,
+          oldPosition: oldPosition,
+          newPosition: newPosition,
+        });
 
         if(oldPosition.column == newPosition.column){ // column not changed
+          ct += "column not changed, ";
           _.each(places[oldPosition.column],(place, key)=>{
             if(place && key != el){ // change elements not dragged
               if(oldPosition.size == "small" && newPosition.size == "big"){
                 $this.positions[key].size = "big";
-                //console.log(key + "1");
+                ct += key + " was small and now is big, ";
               }else{
                 if (newPosition.place == oldPosition.place ) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
                     if($this.positions[key].size == "small"){
                       $this.positions[key].size = "big";
-                      //console.log(key + "2");
+                      ct += key + " was small and now is big without dragged, ";
                     }else {
                       $this.positions[key].size = "small"
-                      //console.log(key + "3");
+                      ct += key + " was big and now is small with dragged, ";
                     }
                   }else if(newPosition.size == "small") {
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = (
                       ( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ?
                       "small" : "big"
                     );
-                    //console.log(key + "4");
+                  }else{
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + ", ";
                   }
                 }else if(newPosition.place == oldPosition.place+1){
                   if(oldPosition.size == "small" && newPosition.size == "small"){
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = (
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    //console.log(key + "5");
                   }else if(newPosition.size == "small") {
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = (
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    //console.log(key + "6");
+                  }else{
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
                   }
                 }else if (newPosition.place == oldPosition.place-1) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = (
                       ( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ?
                       "small" : "big"
                     );
-                    //console.log(key + "7");
                   }else if(newPosition.size == "small") {
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place + " and now is " +
+                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = (
                       ( place == newPosition.place ) ?
                       "small" : "big"
                     );
-                    //console.log(key + "8");
+                  }else{
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place + " and now is " +
+                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
                   }
                 }else if ( ( newPosition.place == oldPosition.place + 2 ) || ( newPosition.place == oldPosition.place - 2 ) ) {
                   if(newPosition.size == "small") {
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+
                     $this.positions[key].size = ( ( (place == newPosition.place) ) ? "small" : "big" );
-                    //console.log(key + "9");
+                  }else{
+                    ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
+                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
                   }
                 }
               }
 
               if(place >= oldPosition.place && place <= newPosition.place){
-                console.log(place + " >= " + oldPosition.place + " && " + place + " >= " + newPosition.place);
+                console.log(place + " >= " + oldPosition.place + " && " + place + " <= " + newPosition.place);
                 if( places[oldPosition.column][key] > 1 ){
                   places[oldPosition.column][key]--;
-                  //console.log(key + " - " + " : " + places[oldPosition.column][key]);
+                  $this.positions[key].place = places[oldPosition.column][key];
+                  console.log(key + " - " + " : " + places[oldPosition.column][key]);
                 }
               }else if(place <= oldPosition.place && place >= newPosition.place){
                 if( places[oldPosition.column][key] < 3 ){
                   places[oldPosition.column][key]++;
-                  //console.log(key + " + " + " : " + places[oldPosition.column][key]);
+                  $this.positions[key].place = places[oldPosition.column][key];
+                  console.log(key + " + " + " : " + places[oldPosition.column][key]);
                 }
               }
               if( places[oldPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
-                //console.log("fix 1");
-                //console.log(key);
+                console.log("fix 1");
+                console.log(key);
               }
             }else if(key == el){
               places[oldPosition.column][key] = newPosition.place;
-              //console.log(key + " : " + places[oldPosition.column][key]);
+              console.log(key + " : " + places[oldPosition.column][key]);
             }
+
 
 
 
           });
         }else{ // column changed
+          ct += "column was changed, ";
           _.each(places[oldPosition.column],(place, key)=>{ // changes in column where it goes from
             if(place && key != el){
               if(oldPosition.size == "small"){
@@ -685,7 +714,9 @@ export default React.createClass({
             }else if(key == el){
               places[oldPosition.column][key] = false;
             }
+            $this.positions[key].place = places[oldPosition.column][key];
           });
+
           _.each(places[newPosition.column],(place, key)=>{ // changes in column where it goes to
             if(place && key != el){ // change elements not dragged
               if(newPosition.size == "small"){
@@ -700,27 +731,27 @@ export default React.createClass({
                   $this.positions[key].size = ( ( (place == newPosition.place - 1) ) ? "small" : "big" );
                 }
               }
-              if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
-                fix1 = true;
-                //console.log("fix 2");
-              }
+
             }else if(key == el){
               places[newPosition.column][key] = newPosition.place;
               $this.positions[key].place = newPosition.place;
-              //console.log(key + " : " + places[newPosition.column][key]);
+              console.log(key + " : " + places[newPosition.column][key]);
             }
             if( place >= newPosition.place ){
               places[newPosition.column][key]++;
               $this.positions[key].place = places[newPosition.column][key];
-              //console.log(key + " : " + places[newPosition.column][key]);
+              console.log(key + " : " + places[newPosition.column][key]);
             }
-
+            if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
+              fix1 = true;
+              console.log("fix 2");
+            }
           });
         }
 
         if(newPosition.place == 3 && newPosition.size == "big"){
           fix1 = true;
-          //console.log("fix 3");
+          console.log("fix 3");
         }
 
         $this.setState({places: places});
@@ -730,7 +761,7 @@ export default React.createClass({
 
 
         Meteor.setTimeout(()=>{
-          //console.log($this.positions);
+          console.log(ct);
           $this.dragBlocks();
           $this.wides();
         },200);

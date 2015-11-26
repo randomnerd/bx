@@ -156,9 +156,17 @@ html, body{
 }
 .ui.teal.segment:not(.inverted) {
     border-top: 2px solid #0288AD;
+    margin-bottom: 0.3em;
 }
 .ui.inverted.newgrey .segment.nobg{
   background: none !important;
+}
+
+.ui.inverted.newgrey .ui.segments{
+  box-shadow: none !important;
+  padding: 0 !important;
+  border: none !important;
+  margin-bottom: 0 !important;
 }
 
 .ui.inverted.newgrey .ui.segments.fee{

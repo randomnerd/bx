@@ -48,12 +48,29 @@ export default React.createClass({
     $(event.currentTarget).addClass('active');
     this.setState({ordType: 'stop'});
   },
-  showPrice() {
+  showWithPrice() {
     return (
-      <div><Semantic.Input name='price' label='Price' icon='shop'
-      value={this.state.price}
-      placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
-      onChg={this.changePrice} /></div>
+      <div className={this.props.wide ? "two fields" : ""}>
+        <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
+        value={this.state.amount} onChg={this.changeAmount}
+        placeholder='0.0000' ref='amount' validations='isNumeric'
+        labeled labelName={this.props.currency}/>
+        <Semantic.Input name='price' label='Price' icon='shop'
+        value={this.state.price}
+        placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
+        onChg={this.changePrice} />
+      </div>
+    );
+  },
+  showWithoutPrice() {
+    return (
+      <div>
+        <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
+        value={this.state.amount} onChg={this.changeAmount}
+        placeholder='0.0000' ref='amount' validations='isNumeric'
+        labeled labelName={this.props.currency}/>
+
+      </div>
     );
   },
   changeAmount(event) {
@@ -81,17 +98,12 @@ export default React.createClass({
             <Formsy.Form className='ui form' onValid={this.allowSubmit}
             onInvalid={this.disallowSubmit} ref='form'>
 
-              <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-              value={this.state.amount} onChg={this.changeAmount}
-              placeholder='0.0000' ref='amount' validations='isNumeric'
-              labeled labelName={this.props.currency}/>
-              {this.state.ordType === 'limit' ? this.showPrice() : null}
-              {this.state.ordType === 'stop' ? this.showPrice() : null}
+                {this.state.ordType === 'limit' || this.state.ordType === 'stop' ? this.showWithPrice() : this.showWithoutPrice()}
 
             </Formsy.Form>
         </div>
 
-        <div className='ui segments fee'>
+        <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">Total: </strong>
             <span className="value">{(parseFloat(this.state.amount * this.state.price)).toFixed(8)}</span>

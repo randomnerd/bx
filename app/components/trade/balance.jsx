@@ -27,7 +27,7 @@ export default React.createClass({
     return (
       <div className='ui small basic segment teal' >
         <h4 className='ui header'>AVALABLE</h4>
-        <div className='ui segments fee'>
+        <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">{this.data.currency1.shortName}: </strong>
             <span className="value">{balance1}</span>
