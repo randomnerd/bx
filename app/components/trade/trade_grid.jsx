@@ -97,8 +97,8 @@ export default React.createClass({
       pair: pair,
       BTPR_Loading: !handle_BTPR.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
-      pairId: pair && pair._id
-
+      pairId: pair && pair._id,
+      user: Meteor.user()
     };
   },
   showCandle(event) {
@@ -539,12 +539,31 @@ export default React.createClass({
 
   },
   componentDidMount() {
-
+    if(this.data.user.profile.blocs){
+      let places = this.state.places;
+      this.positions = this.data.user.profile.blocs;
+      _.each(this.data.user.profile.blocs, (item, key)=>{
+        if(item.column == "right"){
+          places.right[key]=item.place;
+          places.left[key]=false;
+        }else if(item.column == "left"){
+          places.left[key]=item.place;
+          places.right[key]=false;
+        }
+      });
+      Meteor.setTimeout(()=>{
+        console.log(places);
+        this.setState({places: places});
+      },200);
+    }
     Dispatcher.register((e) => {
       //console.log('new dispatcher event', payload);
       switch (e.actionType) {
         case 'DRAG':
           if(!this.state.drag_on){
+
+
+
             this.dragBlocks();
             this.setState({drag_on: !this.state.drag_on});
           }else{
@@ -553,6 +572,9 @@ export default React.createClass({
                 $(place).draggable( "destroy" );
               }
             })
+            Meteor.call('userblocs/update', this.positions , (err, result) => {
+               if(err) console.log(err.message);
+            });
             this.setState({drag_on: !this.state.drag_on});
           }
           break;

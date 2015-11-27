@@ -171,11 +171,26 @@ Meteor.methods({
   "chatname/update": function(name) {
     if (!Meteor.userId())
       throw new Meteor.Error('Unauthorized');
-    Meteor
-      .users
+    Meteor.users
       .update(Meteor.userId(), {
         $set: {
           username: name
+        }
+      }, function(err) {
+        if (!err) {
+          return false
+        } else {
+          return err
+        }
+      });
+  },
+  "userblocs/update": function(sets) {
+    if (!Meteor.userId())
+      throw new Meteor.Error('Unauthorized');
+    Meteor.users
+      .update(Meteor.userId(), {
+        $set: {
+          profile: {blocs :sets}
         }
       }, function(err) {
         if (!err) {
