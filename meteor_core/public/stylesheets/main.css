@@ -591,8 +591,8 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 }
 
 .ux.grid.semiheight, .ux.grid .ux.column.semiheight.fixclass{
-  margin-left: -288px !important;
-  top: 50% !important;
+  margin-left: -288px;
+  top: 50%;
   margin-top: 2px;
 }
 
@@ -773,11 +773,11 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 }
 .ux .dragholders.right{
   right: 0;
-  left: -70px;
+  left: -150px;
 }
 .ux .dragholders.left{
   left: 0;
-  right: -70px;
+  right: -150px;
 }
 
 .ux .dragholders .column{
@@ -802,7 +802,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   vertical-align: bottom;
   z-index: 100;
 }
-.ux .dragholder.small{
+.ux .dragholder.small, .ux .selfholder.small{
   height: 49.9%;
   margin-bottom: 1%;
 }
@@ -845,7 +845,6 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   vertical-align: bottom;
   z-index: 100;
 }
-
 
 .ux .dragholder.underdouble{
   height: 50%;

@@ -524,7 +524,7 @@ export default React.createClass({
           let el = $(this).attr('data-block');
           $this.previousPlace[el]=this;
           $this.setState({dragging : $this.positions[el].column});
-          $this.setState({drag_el : $this.positions[el]});
+          $this.setState({drag_el : el});
         },
         stop: function() {
           $this.setState({dragging : false});
@@ -593,20 +593,20 @@ export default React.createClass({
             if(place && key != el){ // change elements not dragged
               if(oldPosition.size == "small" && newPosition.size == "big"){
                 $this.positions[key].size = "big";
-                ct += key + " was small and now is big, ";
+                ct += key + " was small and now is big (case 1), ";
               }else{
                 if (newPosition.place == oldPosition.place ) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
                     if($this.positions[key].size == "small"){
                       $this.positions[key].size = "big";
-                      ct += key + " was small and now is big without dragged, ";
+                      ct += key + " was small and now is big without dragged (case 2), ";
                     }else {
                       $this.positions[key].size = "small"
-                      ct += key + " was big and now is small with dragged, ";
+                      ct += key + " was big and now is small without dragged (case 3), ";
                     }
                   }else if(newPosition.size == "small") {
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + " (case 4), ";
 
                     $this.positions[key].size = (
                       ( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ?
@@ -614,12 +614,12 @@ export default React.createClass({
                     );
                   }else{
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place == (newPosition.place+1) && position[3]) || (place == (newPosition.place-1) && !position[3]) ) ? "small" : "big")  + " (case 5), ";
                   }
                 }else if(newPosition.place == oldPosition.place+1){
                   if(oldPosition.size == "small" && newPosition.size == "small"){
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + " (case 6), ";
 
                     $this.positions[key].size = (
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
@@ -627,7 +627,7 @@ export default React.createClass({
                     );
                   }else if(newPosition.size == "small") {
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + " (case 7), ";
 
                     $this.positions[key].size = (
                       ( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ?
@@ -635,20 +635,20 @@ export default React.createClass({
                     );
                   }else{
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place > newPosition.place && position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + " (case 8), ";
                   }
                 }else if (newPosition.place == oldPosition.place-1) {
                   if(oldPosition.size == "small" && newPosition.size == "small"){
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + ", ";
+                    (( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ? "small" : "big")  + " (case 9), ";
 
                     $this.positions[key].size = (
-                      ( (place < newPosition.place && !position[3]) || (place == newPosition.place && !position[3]) ) ?
+                      ( (place < newPosition.place && !position[3]) || (place == newPosition.place && position[3]) ) ?
                       "small" : "big"
                     );
                   }else if(newPosition.size == "small") {
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place + " and now is " +
-                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+                    (( place == newPosition.place ) ? "small" : "big")  + " (case 10), ";
 
                     $this.positions[key].size = (
                       ( place == newPosition.place ) ?
@@ -656,17 +656,17 @@ export default React.createClass({
                     );
                   }else{
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place + " and now is " +
-                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+                    (( place == newPosition.place ) ? "small" : "big")  + " (case 11), ";
                   }
                 }else if ( ( newPosition.place == oldPosition.place + 2 ) || ( newPosition.place == oldPosition.place - 2 ) ) {
                   if(newPosition.size == "small") {
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+                    (( place == newPosition.place ) ? "small" : "big")  + " (case 12), ";
 
                     $this.positions[key].size = ( ( (place == newPosition.place) ) ? "small" : "big" );
                   }else{
                     ct += key + " was " + $this.positions[key].size + " on " + $this.positions[key].place  + " and now is " +
-                    (( place == newPosition.place ) ? "small" : "big")  + ", ";
+                    (( place == newPosition.place ) ? "small" : "big")  + " (case 13), ";
                   }
                 }
               }
@@ -711,10 +711,10 @@ export default React.createClass({
                   places[oldPosition.column][key]--;
                 }
               }
+              $this.positions[key].place = places[oldPosition.column][key];
             }else if(key == el){
               places[oldPosition.column][key] = false;
             }
-            $this.positions[key].place = places[oldPosition.column][key];
           });
 
           _.each(places[newPosition.column],(place, key)=>{ // changes in column where it goes to
@@ -728,24 +728,32 @@ export default React.createClass({
                      "small" : "big"
                    );
                 }else if(newPosition.place == 3){
-                  $this.positions[key].size = ( ( (place == newPosition.place - 1) ) ? "small" : "big" );
+                  $this.positions[key].size = ( (place == 2) ? "small" : "big" );
                 }
+
+
+
               }
 
             }else if(key == el){
               places[newPosition.column][key] = newPosition.place;
               $this.positions[key].place = newPosition.place;
               console.log(key + " : " + places[newPosition.column][key]);
+              if(newPosition.place == 3 && newPosition.size == "big"){
+                fix1 = true;
+                console.log("fix 2");
+              }
             }
             if( place >= newPosition.place ){
               places[newPosition.column][key]++;
               $this.positions[key].place = places[newPosition.column][key];
               console.log(key + " : " + places[newPosition.column][key]);
+              if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
+                fix1 = true;
+                console.log("fix 2");
+              }
             }
-            if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
-              fix1 = true;
-              console.log("fix 2");
-            }
+
           });
         }
 
@@ -762,6 +770,7 @@ export default React.createClass({
 
         Meteor.setTimeout(()=>{
           console.log(ct);
+          $(ui.draggable).css("top","");
           $this.dragBlocks();
           $this.wides();
         },200);
@@ -776,7 +785,11 @@ export default React.createClass({
   render() {
     let lcol = this.state.lcol;
     let rcol = this.state.rcol;
-    let invisible = this.state.drag_el.column + "-" + this.state.drag_el.place + "-" + this.state.drag_el.size+(this.state.drag_el.top?"-top":"");
+    let invisible = "";
+    if(this.state.drag_el){
+      let drag_el = this.positions[this.state.drag_el];
+      invisible = drag_el.column + "-" + drag_el.place + "-" + drag_el.size+(drag_el.top?"-top":"");
+    }
     if(this.state.dragging == "left"){
       rcol++;
       //lcol=lcol==1?0:lcol;
