@@ -543,6 +543,9 @@ export default React.createClass({
       let places = this.state.places;
       this.positions = this.data.user.profile.blocs;
       _.each(this.data.user.profile.blocs, (item, key)=>{
+        if(item.place == 3 && item.size == "big"){
+          this.setState({fixclass: true});
+        }
         if(item.column == "right"){
           places.right[key]=item.place;
           places.left[key]=false;
