@@ -578,14 +578,14 @@ export default React.createClass({
         };
         let ct="";
         let fix1=false;
-        console.log($this.positions);
-        console.log(oldPosition);
-        console.log({
-          places: places,
-          el: el,
-          oldPosition: oldPosition,
-          newPosition: newPosition,
-        });
+        //console.log($this.positions);
+        // console.log(oldPosition);
+        // console.log({
+        //   places: places,
+        //   el: el,
+        //   oldPosition: oldPosition,
+        //   newPosition: newPosition,
+        // });
 
         if(oldPosition.column == newPosition.column){ // column not changed
           ct += "column not changed, ";
@@ -676,23 +676,23 @@ export default React.createClass({
                 if( places[oldPosition.column][key] > 1 ){
                   places[oldPosition.column][key]--;
                   $this.positions[key].place = places[oldPosition.column][key];
-                  console.log(key + " - " + " : " + places[oldPosition.column][key]);
+                  //console.log(key + " - " + " : " + places[oldPosition.column][key]);
                 }
               }else if(place <= oldPosition.place && place >= newPosition.place){
                 if( places[oldPosition.column][key] < 3 ){
                   places[oldPosition.column][key]++;
                   $this.positions[key].place = places[oldPosition.column][key];
-                  console.log(key + " + " + " : " + places[oldPosition.column][key]);
+                  //console.log(key + " + " + " : " + places[oldPosition.column][key]);
                 }
               }
               if( places[oldPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
-                console.log("fix 1");
-                console.log(key);
+                //console.log("fix 1");
+                //console.log(key);
               }
             }else if(key == el){
               places[oldPosition.column][key] = newPosition.place;
-              console.log(key + " : " + places[oldPosition.column][key]);
+              //console.log(key + " : " + places[oldPosition.column][key]);
             }
 
 
@@ -741,7 +741,7 @@ export default React.createClass({
               console.log(key + " : " + places[newPosition.column][key]);
               if(newPosition.place == 3 && newPosition.size == "big"){
                 fix1 = true;
-                console.log("fix 2");
+                //console.log("fix 2");
               }
             }
             if( place >= newPosition.place ){
@@ -750,7 +750,7 @@ export default React.createClass({
               console.log(key + " : " + places[newPosition.column][key]);
               if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
-                console.log("fix 2");
+                //console.log("fix 2");
               }
             }
 
@@ -759,7 +759,7 @@ export default React.createClass({
 
         if(newPosition.place == 3 && newPosition.size == "big"){
           fix1 = true;
-          console.log("fix 3");
+          //console.log("fix 3");
         }
 
         $this.setState({places: places});
@@ -769,7 +769,7 @@ export default React.createClass({
 
 
         Meteor.setTimeout(()=>{
-          console.log(ct);
+          //console.log(ct);
           $(ui.draggable).css("top","");
           $this.dragBlocks();
           $this.wides();
