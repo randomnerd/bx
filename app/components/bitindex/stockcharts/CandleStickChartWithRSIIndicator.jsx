@@ -205,7 +205,7 @@ export default React.createClass({
           </DataSeries>
         </Chart>
 
-        <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair'/>
+      <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair' fontSize={10} opacity={0.2} textBGopacity = {2}/>
         <EventCapture mouseMove={true} zoom={true} pan={true} mainChart={1} defaultFocus={false}/>
         <TooltipContainer>
           <OHLCTooltip forChart={1} origin={[

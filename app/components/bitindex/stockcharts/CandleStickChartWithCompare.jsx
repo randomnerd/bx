@@ -74,7 +74,7 @@ export default React.createClass({
         </Chart>
         <CurrentCoordinate forChart={1} forDataSeries={0} forCompareSeries={1}/>
         <CurrentCoordinate forChart={1} forDataSeries={0} forCompareSeries={2}/>
-        <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair'/>
+      <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair' fontSize={10} opacity={0.2} textBGopacity = {2}/>
         <EventCapture mouseMove={true} zoom={true} pan={true} mainChart={1} defaultFocus={false}/>
         <TooltipContainer>
           <OHLCTooltip forChart={1} origin={[

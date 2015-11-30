@@ -192,7 +192,7 @@ export default React.createClass({
           <EdgeIndicator itemType='first' orient='left' edgeAt='left' forChart={2} forDataSeries={1} displayFormat={d3.format('.4s')}/>
           <EdgeIndicator itemType='last' orient='right' edgeAt='right' forChart={2} forDataSeries={1} displayFormat={d3.format('.4s')}/>
         </EdgeContainer>
-        <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair'/>
+        <MouseCoordinates xDisplayFormat={dateFormat} type='crosshair' fontSize={10} opacity={0.2} textBGopacity = {2}/>
         <EventCapture mouseMove={true} zoom={true} pan={true} mainChart={1} defaultFocus={false}/>
         <TooltipContainer>
           <OHLCTooltip forChart={1} origin={[
