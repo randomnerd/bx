@@ -555,7 +555,7 @@ export default React.createClass({
         }
       });
       Meteor.setTimeout(()=>{
-        console.log(places);
+        //console.log(places);
         this.setState({places: places});
       },200);
     }

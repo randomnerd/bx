@@ -65,9 +65,9 @@ export default React.createClass({
 
             { this.data.user ?
               <div className="right menu">
-                <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
+                {this.props.pair ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
                   <i className="block layout icon"></i>
-                </a>
+                </a> : null}
                 <UserTopMenu />
                 <NotificationShow />
                 <a className="icon item" onClick={this.chatToggle}>
