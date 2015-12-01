@@ -539,7 +539,7 @@ export default React.createClass({
 
   },
   componentDidMount() {
-    if(this.data.user.profile.blocs){
+    if(this.data.user.profile && this.data.user.profile.blocs){
       let places = this.state.places;
       this.positions = this.data.user.profile.blocs;
       _.each(this.data.user.profile.blocs, (item, key)=>{
