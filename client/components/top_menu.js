@@ -70,7 +70,7 @@ const TopMenu = Component({
           </a>
           {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
 
-          { this.props.user ?
+          { !!this.props.user._id ?
             <div className="right menu">
               {this.props.pair ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
                 <i className="block layout icon"></i>

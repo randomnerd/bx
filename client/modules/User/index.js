@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
-import '../../../both/models';
+import {User} from '/both/models';
 function updateUser ({input, state}) {
   state.set('user', (input.user || Meteor.user()));
 }
@@ -53,7 +53,7 @@ const loginDone = [
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
-      user: Meteor.user(),
+      user: {},
       loggingIn: Accounts.loggingIn()
     });
 
@@ -70,7 +70,7 @@ export default (options = {}) => {
       module.getSignals().loggedInUpdated({loggingIn: Accounts.loggingIn()});
     });
     Tracker.autorun(() => {
-      module.getSignals().userChanged({user: Meteor.user()});
+      module.getSignals().userChanged({user: Meteor.user() || {}});
     });
   }
 }
