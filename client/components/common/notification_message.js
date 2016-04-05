@@ -1,6 +1,7 @@
 import React from 'react';
-
-export default React.createClass({
+import {Component} from 'cerebral-view-react';
+const NotificationMessage = Component({
+},{
   getInitialState() {
     return {
       hidden: true,
@@ -110,3 +111,4 @@ export default React.createClass({
         );
   }
 });
+export default NotificationMessage;

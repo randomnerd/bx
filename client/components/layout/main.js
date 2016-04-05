@@ -24,7 +24,7 @@ const MainLayout = Component({
     <div className="ui inverted newgrey body">
       <Sidebar><Chat /></Sidebar>
       <div className="pusher">
-      
+
         <div className="contwrapper pusher">
           {renderPage(props.page)}
         </div>
@@ -32,8 +32,6 @@ const MainLayout = Component({
       <TopMenu title="BitExchange"/>
       <LoginModal />
       <SignUpModal />
-      <WithdrawAddressModal/>
-      <NotificationPopups />
     </div>
   );
 });

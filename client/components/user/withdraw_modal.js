@@ -1,5 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react'
+import {Component} from 'cerebral-view-react';
 import {Wallets, Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 import UserOnly from './user_only';
@@ -17,7 +18,9 @@ Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
   return true;
 });
 
-export default React.createClass({
+const WithdrawModal = Component({
+}, {
+
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -143,3 +146,4 @@ export default React.createClass({
     );
   }
 });
+export default WithdrawModal;

@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Formsy from 'formsy-react';
+import {Component} from 'cerebral-view-react';
 
-export default React.createClass({
+const Modal = Component({
+}, {
+
   getDefaultProps() {
     return {
       size: '',
@@ -60,3 +63,4 @@ export default React.createClass({
     );
   }
 });
+export default Modal;

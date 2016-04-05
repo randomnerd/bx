@@ -1,8 +1,11 @@
 import React from 'react';
+import {Component} from 'cerebral-view-react';
 import Formsy from 'formsy-react';
 import classNames from 'classnames';
 
-export default React.createClass({
+const Input = Component({
+}, {
+
   mixins: [Formsy.Mixin],
   getDefaultProps() {
     return {
@@ -119,3 +122,4 @@ export default React.createClass({
     );
   }
 });
+export default Input;

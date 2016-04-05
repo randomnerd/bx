@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
 //import UserTopMenu from './user_top_menu';
 
@@ -30,6 +31,7 @@ const UserTopMenu = Component({
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
   },
   render() {
+    console.log(this.props.user);
     return (
       <div className="ui right floated dropdown item">
         <i className="user icon" />
