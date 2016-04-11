@@ -10,6 +10,7 @@ const Layout = Component({
 }, (props) => {
   switch (props.layout) {
     case 'admin': return <Admin />;
+    case 'home': return <Main />;
     default: return <Main />;
   }
 });

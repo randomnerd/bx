@@ -17,6 +17,7 @@ const MainLayout = Component({
 }, (props) => {
   let renderPage = (page) => {
     switch (page) {
+      case "home": return <Home/>;
       default: return <Home/>;
     }
   }
@@ -32,6 +33,8 @@ const MainLayout = Component({
       <TopMenu title="BitExchange"/>
       <LoginModal />
       <SignUpModal />
+      <WithdrawAddressModal/>
+      <NotificationPopups />
     </div>
   );
 });

@@ -10,7 +10,7 @@ const UserTopMenu = Component({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      //user: Meteor.user()
+      user: Meteor.user()
     };
   },
   logOut() { Meteor.logout() },
@@ -31,11 +31,11 @@ const UserTopMenu = Component({
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
   },
   render() {
-    console.log(this.props.user);
+    //console.log(this.props.user);
     return (
       <div className="ui right floated dropdown item">
         <i className="user icon" />
-        {this.props.user.displayName()}
+        {this.data.user?this.data.user.displayName():null}
         <i className="dropdown icon" />
 
         <div className="menu">

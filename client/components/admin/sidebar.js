@@ -10,3 +10,4 @@ const Sidebar = Component({
     </div>
   );
 });
+export default Sidebar;
