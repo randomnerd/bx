@@ -10,7 +10,9 @@ const router = Router({
      '/tradepairs/new' : 'admin.adminPairsNew'
    },
    '/u': {
-     //'/': 'u.home',
+     '/wallets': 'u.wallets',
+     '/settings': 'u.settings',
+     '/password': 'u.password'
    }
 });
 

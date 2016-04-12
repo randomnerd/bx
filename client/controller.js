@@ -6,6 +6,7 @@ import router from './router';
 import User from './modules/User';
 import Page from './modules/Page';
 import Admin from './modules/Admin';
+import U from './modules/U';
 
 const model = Model({});
 const controller = Controller(model);
@@ -14,6 +15,7 @@ controller.addModules({
   user: User(),
   page: Page(),
   admin: Admin(),
+  u: U(),
   router
 });
 

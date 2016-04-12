@@ -1,6 +1,12 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
 import Home from '../home';
+
+import WalletsPage from '../user/wallets';
+import WalletPage from '../user/wallet_one';
+import Settings from '../user/settings';
+import PasswordPage from '../user/password';
+
 import Sidebar from '../common/sidebar';
 import InfoPanel from '../common/infopanel';
 import TopMenu from '../top_menu';
@@ -18,6 +24,10 @@ const MainLayout = Component({
   let renderPage = (page) => {
     switch (page) {
       case "home": return <Home/>;
+      case "wallets": return <WalletsPage/>;
+      case "wallet": return <WalletPage/>;
+      case "settings": return <Settings/>;
+      case "password": return <PasswordPage/>;
       default: return <Home/>;
     }
   }

@@ -7,6 +7,6 @@ const UserOnly = Component({
   if (!user && !loggingIn && redirect) {
     // FlowRouter.go(this.props.redirect);
   }
-  return user ? children : null;
+  return user ? children : <div></div>;
 });
 export default UserOnly;
