@@ -21,6 +21,7 @@ import {TradePairs, Currencies} from '../../../both/collections';
 const MainLayout = Component({
   page: ['page']
 }, (props) => {
+  let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
     switch (page) {
       case "home": return <Home/>;

@@ -107,7 +107,7 @@ const Home = Component({
               <h1>Bit.Exchange - is the internet of digital currencies</h1>
 
               <div>
-                { this.props.user ? <a className="ui massive teal button">create account</a> : null }
+                { !this.props.user._id ? <a className="ui massive teal button">create account</a> : null }
 
                 <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
               </div>

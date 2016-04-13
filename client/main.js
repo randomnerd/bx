@@ -13,5 +13,9 @@ const app = (
 );
 
 Meteor.startup(() => {
+  //state.set('window_width', ($('body').width() > 680) ? 'norm' : 'mobile');
+  // module.addSignals({
+  //   window_width: ($('body').width() > 680) ? 'norm' : 'mobile'
+  // })
   ReactDOM.render(app, document.getElementById('react-root'));
 });

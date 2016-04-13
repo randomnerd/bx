@@ -24,18 +24,7 @@ export default (options = {}) => {
     });
 
     module.addSignals({
-      home,
-      // admin,
-      // adminCurrs,
-      // adminPairs,
-      // pair
+      home
     });
-
-    // Tracker.autorun(() => {
-    //   module.getSignals().loggedInUpdated({loggingIn: Accounts.loggingIn()});
-    // });
-    // Tracker.autorun(() => {
-    //   module.getSignals().userChanged({user: Meteor.user() || {}});
-    // });
   }
 }
