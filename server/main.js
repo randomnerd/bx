@@ -1,3 +1,10 @@
+import '/both/models';
+import './publish';
+import './methods';
+import './bitindex_init';
+import './first_admin';
+import './job_collection';
+
 import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
