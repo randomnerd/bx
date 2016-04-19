@@ -1,19 +1,27 @@
 /*     globals     */
 
-html, body{
+html, body, html.ios, html.ios body{
   font-size: 11px;
+  height: 100% !important;
 }
 
-#react-root{height: 100%;}
-#react-root > div {height: 100%;}
+#react-root, #react-root > div{height: 100%;}
 .hidden{display: none !important}
 
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
 .ui.body{display: block;}
 
-:not(.buttons) > .ui.button{
+:not(.buttons) > .ui.button:not(.attached){
   margin: 0 0.5em 0 0 !important;
+}
+
+.ui.attached.label{
+  z-index: 10;
+}
+
+.ui.top.attached.label:first-child+:not(.attached){
+  margin-top: 0 !important;
 }
 
 .ui.segment.centered{
@@ -34,6 +42,7 @@ html, body{
 .ui.inverted.newgrey{
   background-color: #212e3e;
   color:#fff;
+  height: 100%;
 }
 
 .ui.inverted.newgrey .ui.header{
@@ -115,6 +124,9 @@ html, body{
   border-left: 2px solid #fff;
 }
 
+.ui.inverted.newgrey i.icon{
+  background: none !important;
+}
 
 .ui.inverted.newgrey.menu .item.active{
   background-color: rgba(255, 255, 255, 0.15);
@@ -345,7 +357,7 @@ html, body{
 }
 
 .ui.inverted.newgrey .ui.button{
-  background: none;
+  background: none !important;
   border-style: solid;
   border-width: 3px;
   border-color: rgba(0, 30, 42, 0.55);
@@ -386,6 +398,7 @@ html, body{
 .ui.inverted.newgrey .ui.grey.button.normal{background: #767676 !important;}
 .ui.inverted.newgrey .ui.white.button.normal{background: #ffffff !important; color: #333 !important;}
 .ui.inverted.newgrey .ui.black.button.normal{background: #1b1c1d !important;}
+.ui.inverted.newgrey .ui.bg.button.normal{background-color: #28394d !important; border: none !important;}
 
 .ui.inverted.newgrey .ui.form .field > label {
     color: #ced2d5;
@@ -527,6 +540,18 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   padding-top: 4em;
   overflow: hidden;
 }
+.ui.inverted.newgrey .main.fluid.mobile.container{
+  height: 100%;
+  position: relative;
+  padding-top: 4em;
+  padding-bottom: 4em;
+  overflow: hidden;
+  margin: 0 3px !important;
+}
+.pusher{
+  height: 100%;
+  position: relative;
+}
 
 .ui.segments{
   border: none !important;
@@ -543,9 +568,14 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 }
 .ui.inverted.newgrey .ui.toggle.checkbox label,
 .ui.inverted.newgrey .ui.toggle.checkbox input:checked~label{
-  color: #fff;
+  color: #fff !important;
   padding-top: 0;
 }
+
+.ui.modal .actions >.button, .ui.modal .actions>.buttons {
+    margin-bottom: 1rem !important;
+}
+
 /* Semantic new grey */
 
 /* UX grid */
@@ -583,7 +613,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
 }
 
 
-.ux.grid.fullheight, .ux.grid.fullheight .ux.column{
+.ui.segments.fullheight, .ui.segment.fullheight, .ux.grid.fullheight, .ux.grid.fullheight .ux.column{
   height: 100%;
 }
 .ux.grid.semiheight, .ux.grid .ux.column.semiheight{
@@ -729,6 +759,23 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   padding-top: 450px;
   height: 100%;
   overflow: visible;
+}
+
+.ux.container.fix250{
+  padding-top: 300px;
+  height: 100%;
+  min-height: 200px;
+  overflow: visible;
+}
+
+.mobile .ux.container.fix250{
+  min-height: 300px !important;
+}
+
+.mobile .ux.container.fixchart{
+  height: 300px;
+  margin-top: -300px;
+  margin-bottom: 1px;
 }
 
 .ux.container.fixchart{
@@ -1088,6 +1135,7 @@ tr.lesspadding th {
   height: 100% !important;
   padding-bottom: 140px !important;
   margin-right: -10px;
+  position: relative;
 }
 
 .ui.chat.comments{
@@ -1173,7 +1221,7 @@ tr.lesspadding th {
 }
 
 #video_background{
-  width: 100%;
+  min-width: 100%;
 }
 
 .ui.inverted.newgrey .ld .ui.teal.button {
@@ -1452,3 +1500,128 @@ tr.lesspadding th {
 .react-stockcharts-axis .tick text{
   fill: #ccc;
 }
+
+/* MOBILE */
+
+.runrow{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.runrow_outer{
+  display: block;
+  position: relative;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.runrow_inner{
+  display: block;
+  position: absolute;
+  top:0;
+  left: 0;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.runrow_lcloner, .runrow_rcloner{
+  display: block;
+  position: absolute;
+  top:0;
+  left: 0;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.mobile.scrollable {
+    overflow-y: auto !important;
+}
+
+.mobile .max100.segment {
+    max-height: 100% !important;
+    margin: 0.1rem;
+    padding: 4em 0.1em 0.1em 0.1em !important;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.mobile .h100.segment {
+    height: 100% !important;
+    margin: 0.1rem;
+    padding: 4em 0.1em 0.1em 0.1em !important;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.mobile .h50.segment {
+    height: 50% !important;
+    margin: 0.1rem;
+    padding: 4em 0.1em 0.1em 0.1em !important;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.mobile .h100.segment.buysell {
+    overflow-y: auto;
+}
+
+.mobile .h50.segment.buysell {
+    overflow-y: auto;
+}
+
+.mobile h3.ui.header {
+    margin-top: -3rem !important;
+}
+
+.mobile .h100.segment.tabheader {
+    padding-top: 3em !important;
+    margin: 0;
+}
+
+.mobile .h100.segment.noheader {
+    padding-top: 1em !important;
+}
+
+.mobile .ui.table.heading {
+    margin-top: -2em !important;
+}
+
+.mobile .ui.chatform {
+    width: 95%;
+}
+
+.mobile .ui.chatform .two.fields>.field {
+    width: 50%!important;
+}
+.mobile .scrolling.menu{
+  position: absolute !important;
+}
+
+.mobile .right.dropdown.item{
+  color: #fff !important;
+  border-style: none none solid;
+  border-bottom: 2px solid #fff !important;
+  background: none !important;
+  margin-bottom: -1px !important;
+  padding-bottom: 9px !important;
+}
+
+.ui.vertical.menu .item:first-child::before {
+  display: block !important;
+}
+.mobile.sidebar.menu .item::before {
+    position: absolute !important;
+    content: '' !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: rgba(255,255,255,.08) !important;
+    height: 1px !important;
+}
+
+.mobile-fix h2.ui.header{
+  font-size: 1em;
+}
+
+.ui.hidden.divider {
+  display: block !important;
+    border-color: transparent!important;
+}
+
+/* \ MOBILE */

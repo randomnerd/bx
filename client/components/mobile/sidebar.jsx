@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -22,7 +23,7 @@ export default React.createClass({
       //scrollLock: true,
       transition: 'overlay',
       onHidden: ()=> {
-        Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
+        //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
         //return false;
       }
     });

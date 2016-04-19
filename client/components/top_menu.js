@@ -1,5 +1,6 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
+import TradePairsMenu from './trade/trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
 
 import {Component} from 'cerebral-view-react';
@@ -65,6 +66,7 @@ const TopMenu = Component({
         <div className="ui fluid container">
           <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
           { this.renderMenuItems() }
+          <TradePairsMenu pair={this.props.pair} />
           <a className="icon item double" onClick={this.infoToggle}>
             <p><i className="dropdown large icon"></i></p>
           </a>

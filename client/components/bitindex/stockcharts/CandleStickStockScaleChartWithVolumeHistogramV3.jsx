@@ -1,5 +1,6 @@
 import React from 'react';
 import ReStock from 'react-stockcharts';
+import d3 from 'd3'
 
 let {
   ChartCanvas,

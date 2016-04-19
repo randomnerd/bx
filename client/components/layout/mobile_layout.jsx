@@ -61,70 +61,70 @@ const MobileLayout = Component({
     if (!this.data.user && !this.data.authInProgress){
       this.setState({showLoginModal: true});
     }
-    Dispatcher.register((e) => {
-      //console.log('new dispatcher event', payload);
-      switch (e.actionType) {
-        case 'SHOW_MOBILE_MENU':
-          this.setState({showSidebar: !this.state.showSidebar});
-          break;
-
-        case 'HIDE_MOBILE_MENU':
-          this.setState({showSidebar: false});
-          break;
-
-        case 'SHOW_LOGIN_MODAL':
-          this.setState({showLoginModal: true});
-          break;
-
-        case 'HIDE_LOGIN_MODAL':
-          this.setState({showLoginModal: false});
-          break;
-
-        case 'SHOW_SIGN_UP_MODAL':
-          this.setState({showSignUpModal: true});
-          break;
-
-        case 'HIDE_SIGN_UP_MODAL':
-          this.setState({showSignUpModal: false});
-          break;
-
-        case 'SHOW_WITHDRAW_MODAL':
-          this.setState({showWithdrawModal: true});
-          break;
-
-        case 'HIDE_WITHDRAW_MODAL':
-          this.setState({showWithdrawModal: false});
-          break;
-
-        case 'SHOW_ADDRESSBOOK_MODAL':
-          this.setState({withdrawAddressModal: true});
-          break;
-
-        case 'HIDE_ADDRESSBOOK_MODAL':
-          this.setState({withdrawAddressModal: false});
-          break;
-
-        case 'MOBILE_BUYSELL':
-          this.setState({showMobile: "buysell"});
-          break;
-
-        case 'MOBILE_CHART':
-          this.setState({showMobile: "chart"});
-          break;
-
-        case 'MOBILE_ORDERS':
-          this.setState({showMobile: "orders"});
-          break;
-
-        case 'MOBILE_HISTORY':
-          this.setState({showMobile: "history"});
-          break;
-
-        case 'MOBILE_CHAT':
-          this.setState({showMobile: "chat"});
-          break;
-      }
-    });
+    // Dispatcher.register((e) => {
+    //   //console.log('new dispatcher event', payload);
+    //   switch (e.actionType) {
+    //     case 'SHOW_MOBILE_MENU':
+    //       this.setState({showSidebar: !this.state.showSidebar});
+    //       break;
+    //
+    //     case 'HIDE_MOBILE_MENU':
+    //       this.setState({showSidebar: false});
+    //       break;
+    //
+    //     case 'SHOW_LOGIN_MODAL':
+    //       this.setState({showLoginModal: true});
+    //       break;
+    //
+    //     case 'HIDE_LOGIN_MODAL':
+    //       this.setState({showLoginModal: false});
+    //       break;
+    //
+    //     case 'SHOW_SIGN_UP_MODAL':
+    //       this.setState({showSignUpModal: true});
+    //       break;
+    //
+    //     case 'HIDE_SIGN_UP_MODAL':
+    //       this.setState({showSignUpModal: false});
+    //       break;
+    //
+    //     case 'SHOW_WITHDRAW_MODAL':
+    //       this.setState({showWithdrawModal: true});
+    //       break;
+    //
+    //     case 'HIDE_WITHDRAW_MODAL':
+    //       this.setState({showWithdrawModal: false});
+    //       break;
+    //
+    //     case 'SHOW_ADDRESSBOOK_MODAL':
+    //       this.setState({withdrawAddressModal: true});
+    //       break;
+    //
+    //     case 'HIDE_ADDRESSBOOK_MODAL':
+    //       this.setState({withdrawAddressModal: false});
+    //       break;
+    //
+    //     case 'MOBILE_BUYSELL':
+    //       this.setState({showMobile: "buysell"});
+    //       break;
+    //
+    //     case 'MOBILE_CHART':
+    //       this.setState({showMobile: "chart"});
+    //       break;
+    //
+    //     case 'MOBILE_ORDERS':
+    //       this.setState({showMobile: "orders"});
+    //       break;
+    //
+    //     case 'MOBILE_HISTORY':
+    //       this.setState({showMobile: "history"});
+    //       break;
+    //
+    //     case 'MOBILE_CHAT':
+    //       this.setState({showMobile: "chat"});
+    //       break;
+    //   }
+    // });
   },
   renderSidebarContent() {
     switch (this.state.sidebarContent) {

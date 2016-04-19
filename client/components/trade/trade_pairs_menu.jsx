@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {TradePairs, Currencies} from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 const TradePairsMenu = Component({
@@ -28,6 +29,7 @@ const TradePairsMenu = Component({
   renderMenuItems() {
     let active = this.props.pair ? this.props.pair : false;
     return this.data.TradePairs.map((pair) => {
+      console.log(this.data.currencies);
       return (
         <a className={'item' + (active._id === pair._id ? ' active' : '') }
         key = {pair.permalink}

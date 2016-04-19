@@ -20,6 +20,12 @@ function goCurrsNew ({input, state}) {
   state.set('layout', "admin");
 }
 
+function goCurrsEdit ({input, state}) {
+  state.set('page', "currency");
+  state.set('curr', input.id);
+  state.set('layout', "admin");
+}
+
 
 function goPairs ({input, state}) {
   state.set('page', "tradepairs");
@@ -29,6 +35,12 @@ function goPairs ({input, state}) {
 function goPairsNew ({input, state}) {
   state.set('page', "tradepair");
   state.set('pair', null);
+  state.set('layout', "admin");
+}
+
+function goPairsEdit ({input, state}) {
+  state.set('page', "tradepair");
+  state.set('adm_pair', input.id);
   state.set('layout', "admin");
 }
 
@@ -43,6 +55,9 @@ const adminCurrs = [
 const adminCurrsNew = [
   goCurrsNew
 ];
+const adminCurrsEdit = [
+  goCurrsEdit
+];
 
 const adminPairs = [
   goPairs
@@ -50,6 +65,9 @@ const adminPairs = [
 
 const adminPairsNew = [
   goPairsNew
+];
+const adminPairsEdit = [
+  goPairsEdit
 ];
 
 export default (options = {}) => {
@@ -62,9 +80,11 @@ export default (options = {}) => {
     module.addSignals({
       home,
       adminCurrsNew,
+      adminCurrsEdit,
       adminCurrs,
       adminPairs,
       adminPairsNew,
+      adminPairsEdit,
       // pair
     });
 

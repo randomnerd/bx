@@ -9,6 +9,7 @@ import PasswordPage from '../user/password';
 
 import Sidebar from '../common/sidebar';
 import InfoPanel from '../common/infopanel';
+import TradeGrid from '../trade/trade_grid';
 import TopMenu from '../top_menu';
 import LoginModal from '../login_modal';
 import SignUpModal from '../sign_up_modal';
@@ -21,7 +22,7 @@ import {TradePairs, Currencies} from '../../../both/collections';
 const MainLayout = Component({
   page: ['page']
 }, (props) => {
-  let width=($('body').width() > 680) ? 'norm' : 'mobile';
+  //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
     switch (page) {
       case "home": return <Home/>;
@@ -29,6 +30,7 @@ const MainLayout = Component({
       case "wallet": return <WalletPage/>;
       case "settings": return <Settings/>;
       case "password": return <PasswordPage/>;
+      case "pair": return <TradeGrid/>;
       default: return <Home/>;
     }
   }

@@ -1,7 +1,7 @@
 import {
   Currencies, TradePairs
 }
-from '/both/collections';
+from '../../both/collections';
 
 Meteor.methods({
 

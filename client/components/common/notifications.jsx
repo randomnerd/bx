@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Notifications} from '../../../both/collections';
 import DropMessage from '../common/drop_message';
 import {Component} from 'cerebral-view-react';
@@ -26,38 +27,38 @@ const NotificationShow = Component({
     };
   },
   componentDidMount() {
-    $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'nothing'});
-    let $this = this;
-    Dispatcher.register((payload) => {
-      if (payload.actionType === 'CHANGE_NOTIFICATION_TIME') {
-        $this.setState({ nowDate: new Date().valueOf() });
-      }
-      if (payload.actionType === 'NEW_NOTIFICATION') {
-        let mess = _.clone($this.state.messages);
-        payload.payload.message.needShow = true;
-        mess.push(payload.payload.message);
-        $this.setState({messages: mess});
-      }
-      if (payload.actionType === 'DEL_NOTIFICATION') {
-        $this.setState({ messages: _.reject( $this.state.messages, (x)=> {
-          if (x._id === payload.payload.message) {
-            if (x.createdAt) {
-              $this.setState({ nowDate: new Date(x.createdAt).valueOf() });
-            }
-            return true;
-          }else {
-            return false;
-          }
-        } ) });
-      }
-      if (payload.actionType === 'CHANGE_NOTIFICATION') {
-        //???
-      }
-    });
+    // $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'nothing'});
+    // let $this = this;
+    // Dispatcher.register((payload) => {
+    //   if (payload.actionType === 'CHANGE_NOTIFICATION_TIME') {
+    //     $this.setState({ nowDate: new Date().valueOf() });
+    //   }
+    //   if (payload.actionType === 'NEW_NOTIFICATION') {
+    //     let mess = _.clone($this.state.messages);
+    //     payload.payload.message.needShow = true;
+    //     mess.push(payload.payload.message);
+    //     $this.setState({messages: mess});
+    //   }
+    //   if (payload.actionType === 'DEL_NOTIFICATION') {
+    //     $this.setState({ messages: _.reject( $this.state.messages, (x)=> {
+    //       if (x._id === payload.payload.message) {
+    //         if (x.createdAt) {
+    //           $this.setState({ nowDate: new Date(x.createdAt).valueOf() });
+    //         }
+    //         return true;
+    //       }else {
+    //         return false;
+    //       }
+    //     } ) });
+    //   }
+    //   if (payload.actionType === 'CHANGE_NOTIFICATION') {
+    //     //???
+    //   }
+    // });
     //this.setState({messages: mess});
   },
   delAllMessages() {
-    Dispatcher.dispatch({ actionType: 'DEL_ALL_NOTIFICATION' });
+    //Dispatcher.dispatch({ actionType: 'DEL_ALL_NOTIFICATION' });
   },
   renderDropMessages() {
     if (this.data.notifications_new.length) {

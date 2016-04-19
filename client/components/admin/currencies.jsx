@@ -40,7 +40,7 @@ const AdminCurrencies = Component({
             <td>{curr.published ? 'true' : 'false'}</td>
             <td className='right aligned collapsing'>
               <div className='ui tiny icon buttons'>
-                <a className='ui positive button' href={'/admin/currencies/edit/' + curr.shortName}>
+                <a className='ui positive button' href={'/admin/currencies/edit/' + curr._id}>
                   <i className='write icon'></i>
                 </a>
                 <div className='ui negative button' onClick={this.delCurr} data-del={curr._id}>

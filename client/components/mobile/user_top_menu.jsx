@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import AdminOnly from '../admin/admin_only';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';

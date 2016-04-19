@@ -5,7 +5,8 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
 const AdminCurrency = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  curr: ['curr']
 }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -23,25 +24,28 @@ const AdminCurrency = Component({
     {name: name, shortName: shortName, published: published ? true : false},
     function(error, result) {
       if (result) {
-        this.setState({errorMessage: err.message});
+        console.log(result);
+        //this.setState({errorMessage: err.message});
       } else {
-        FlowRouter.go('/admin/currencies');
+        console.log(error);
+        //FlowRouter.go('/admin/currencies');
       }
     });
   },
   saveCurr(event) {
     let currVals = this.refs.curr.getCurrentValues();
+    currVals.published = currVals.published ? true : false;
     Meteor.call('currrency_update', this.data.currency._id, currVals, function(error, result) {
       if (result) {
         this.setState({errorMessage: err.message});
       } else {
-        FlowRouter.go('/admin/currencies');
+        //FlowRouter.go('/admin/currencies');
       }
     });
   },
   getMeteorData() {
     return {
-      currency: Currencies.findOne({shortName: this.props.current})
+      currency: Currencies.findOne({_id: this.props.curr})
     };
   },
   currentVal(what) {
@@ -80,7 +84,7 @@ const AdminCurrency = Component({
             <div className='field'>
 
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.current ? this.saveCurr : this.newCurr}>
+                onClick={this.props.curr ? this.saveCurr : this.newCurr}>
                 <i className='checkmark icon' />
                 Save currency
               </a>

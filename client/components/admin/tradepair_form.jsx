@@ -5,7 +5,8 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
 const AdminTradePair = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  adm_pair: ['adm_pair']
 }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -54,7 +55,7 @@ const AdminTradePair = Component({
   },
   getMeteorData() {
     return {
-      tradePairs: TradePairs.findOne(this.props.current),
+      tradePairs: TradePairs.findOne(this.props.adm_pair),
       currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
     };
   },
@@ -113,7 +114,7 @@ const AdminTradePair = Component({
             <Semantic.Checkbox name='published' label='Published' isChecked={published} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.current ? this.savePair : this.newPair}>
+                onClick={this.props.adm_pair ? this.savePair : this.newPair}>
                 <i className='checkmark icon' />
                 Save pair
               </a>

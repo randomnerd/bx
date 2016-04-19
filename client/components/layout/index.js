@@ -5,11 +5,16 @@ import {Component} from 'cerebral-view-react';
 import React from 'react';
 export const Main = MainLayout;
 export const Admin = AdminLayout;
+export const Mobile = MobileLayout;
 
 const Layout = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  mobile: ['mobile']
 }, (props) => {
-  if(props.window_width == 'mobile') return <MobileLayout/>;
+  props.signals.tools.windowWidth();
+
+  console.log(props);
+  if(props.mobile) return <Mobile/>;
   switch (props.layout) {
     case 'admin': return <Admin />;
     case 'home': return <Main />;

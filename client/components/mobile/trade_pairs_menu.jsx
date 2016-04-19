@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {TradePairs, Currencies} from '../../../both/collections';
@@ -49,7 +50,7 @@ const TradePairsMenu = Component({
   showMenu() {
     this.setState({showPairs:false});
     $(this.refs.accordion).accordion("close", 0);
-    Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
+    //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
   },
   showPairs(){
     this.setState({showPairs:!this.state.showPairs});
@@ -58,15 +59,15 @@ const TradePairsMenu = Component({
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
     $(this.refs.accordion).accordion();
-    Dispatcher.register((e) => {
-      //console.log('new dispatcher event', payload);
-      switch (e.actionType) {
-        case 'HIDE_MOBILE_MENU':
-
-          $(this.refs.accordion).accordion("close", 0);
-          break;
-      }
-    });
+    // Dispatcher.register((e) => {
+    //   //console.log('new dispatcher event', payload);
+    //   switch (e.actionType) {
+    //     case 'HIDE_MOBILE_MENU':
+    //
+    //       $(this.refs.accordion).accordion("close", 0);
+    //       break;
+    //   }
+    // });
   },
   render() {
     return (

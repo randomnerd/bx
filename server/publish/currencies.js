@@ -1,4 +1,4 @@
-import {Currencies} from '/both/collections';
+import {Currencies} from '../../both/collections';
 
 Meteor.publish('currencies', function() {
   return Currencies.find({published: true});
