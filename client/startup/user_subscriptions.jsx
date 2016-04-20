@@ -27,7 +27,7 @@ Tracker.autorun(() => {
 Tracker.autorun(() => {
   //let route = FlowRouter.current();
   // if (route.path.match(/^\/pair/)) {
-  //   Meteor.subs.subscribe('orderbook', null, route.params.pair_id);
-  //   Meteor.subs.subscribe('trades', null, route.params.pair_id);
+    Meteor.subs.subscribe('orderbook', '4ox9pQtdFfd4qNu22');
+    Meteor.subs.subscribe('trades', '4ox9pQtdFfd4qNu22');
   // }
 });

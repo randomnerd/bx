@@ -5,14 +5,15 @@ import {Trades} from '../../../both/collections';
 import moment from 'moment';
 
 const LastTrades = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  pair: ['pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     return {
-      trades: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pairId }, {sort: {amount: -1}}),
-      tradesLast: Trades.find({ pairId: this.props.pairId }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+      trades: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}).fetch(),
+      tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
+      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
     };
   },
 
