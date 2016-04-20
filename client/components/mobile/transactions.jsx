@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/collections';
+import moment from 'moment';
 
 const TransactionsView = Component({
   layout: ['layout']

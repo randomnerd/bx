@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades} from '../../../both/collections';
+import moment from 'moment';
 
 const LastTrades = Component({
   layout: ['layout']

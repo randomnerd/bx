@@ -1,5 +1,5 @@
 import {TradePairs, Orders, Balances} from '/both/collections';
-import {Balance} from '/both/models/balance';
+import {TradePair, Balance, User} from '/both/models';
 import {Jobs} from '../job_collection';
 
 Meteor.methods({

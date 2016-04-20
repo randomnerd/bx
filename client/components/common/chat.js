@@ -3,6 +3,7 @@ import Formsy from 'formsy-react';
 import {Component} from 'cerebral-view-react';
 import {Chat} from '../../../both/collections';
 import Semantic from '../semantic';
+import moment from 'moment';
 
 const ChatView = Component({
 }, {

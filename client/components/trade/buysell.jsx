@@ -17,7 +17,7 @@ const BuySell = Component({
   },
   createOrder(buy) {
     let params = {
-      pairId: this.props.pair,
+      pairId: this.props.pair._id,
       amount: parseFloat(this.state.amount),
       price:  parseFloat(this.state.price),
       buy:    buy

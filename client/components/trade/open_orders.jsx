@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Orders, Currencies} from '../../../both/collections';
+import moment from 'moment';
 
 const OpenOrders = Component({
   layout: ['layout']
