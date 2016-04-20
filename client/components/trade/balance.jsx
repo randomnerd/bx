@@ -4,7 +4,9 @@ import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/collections';
 
 const Balance = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  pair_link: ['pair_link'],
+  pair: ['pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {

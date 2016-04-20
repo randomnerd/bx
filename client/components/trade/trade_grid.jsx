@@ -11,6 +11,7 @@ import Balance from './balance';
 
 const TradeGrid = Component({
   layout: ['layout'],
+  pair_link: ['pair_link'],
   pair: ['pair']
 }, {
   mixins: [ReactMeteorData],
@@ -96,7 +97,7 @@ const TradeGrid = Component({
 
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
-    let pair = TradePairs.findOne({permalink: this.props.pair});
+    let pair = TradePairs.findOne({permalink: this.props.pair_link});
 
     return {
       pair: pair,
@@ -362,17 +363,19 @@ const TradeGrid = Component({
   },
 
   renderOpenorders(){
-    return (
-      <div className='ux fixorders container drag' ref="openorders" data-block="openorders">
-        <div className='ui basic segment h100'>
-          <h3 className='ui header'>MY ORDERS</h3>
-          <OpenOrders
-            pairId={this.data.pairId}
-            valute1={this.data.pair.currId}
-            valute2={this.data.pair.marketCurrId} />
+    if(this.data.pairId){
+      return (
+        <div className='ux fixorders container drag' ref="openorders" data-block="openorders">
+          <div className='ui basic segment h100'>
+            <h3 className='ui header'>MY ORDERS</h3>
+            <OpenOrders
+              pairId={this.data.pairId}
+              valute1={this.data.pair.currId}
+              valute2={this.data.pair.marketCurrId} />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   },
 
   renderBalance(k){
@@ -410,8 +413,8 @@ const TradeGrid = Component({
             <h3 className='ui header'>ORDER BOOK</h3>
             <Orders direction='sell'
               pairId={this.data.pairId}
-              valute1={this.props.pair.toUpperCase().split("-")[0]}
-              valute2={this.props.pair.toUpperCase().split("-")[1]} />
+              valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
+              valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />
         </div>
       </div>
     );
@@ -431,8 +434,8 @@ const TradeGrid = Component({
 
             <Trades
               pairId={this.data.pairId}
-              valute1={this.props.pair.toUpperCase().split("-")[0]}
-              valute2={this.props.pair.toUpperCase().split("-")[1]} />
+              valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
+              valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />
 
         </div>
       </div>
@@ -544,6 +547,7 @@ const TradeGrid = Component({
 
   },
   componentDidMount() {
+    this.props.signals.pair.setPair({pair: this.data.pair});
     if(!this.data.user){
       FlowRouter.go("/");
       return;
@@ -573,7 +577,7 @@ const TradeGrid = Component({
     //   switch (e.actionType) {
     //     case 'DRAG':
     //       if(!this.state.drag_on){
-    // 
+    //
     //
     //
     //         this.dragBlocks();

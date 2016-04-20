@@ -4,7 +4,9 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
 const BuySell = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  pair_link: ['pair_link'],
+  pair: ['pair']
 }, {
   getInitialState: function() {
     return {
@@ -15,7 +17,7 @@ const BuySell = Component({
   },
   createOrder(buy) {
     let params = {
-      pairId: this.props.pairId,
+      pairId: this.props.pair,
       amount: parseFloat(this.state.amount),
       price:  parseFloat(this.state.price),
       buy:    buy
@@ -24,17 +26,17 @@ const BuySell = Component({
   },
 
   componentDidMount() {
-    Dispatcher.register((payload) => {
-      switch (payload.actionType) {
-      case 'BUY_SELL_AUTOCOMPLETE':
-        if (payload.data.direction !== this.props.direction) {
-          this.setState({amount: payload.data.amount});
-          this.setState({price: payload.data.price});
-        }
-        break;
-      default: break;
-      }
-    });
+    // Dispatcher.register((payload) => {
+    //   switch (payload.actionType) {
+    //   case 'BUY_SELL_AUTOCOMPLETE':
+    //     if (payload.data.direction !== this.props.direction) {
+    //       this.setState({amount: payload.data.amount});
+    //       this.setState({price: payload.data.price});
+    //     }
+    //     break;
+    //   default: break;
+    //   }
+    // });
   },
   setMarket(event) {
     $(this.refs.ordType).find('.item').removeClass('active');
