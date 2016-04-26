@@ -3,7 +3,8 @@ import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 const DropMessage = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  notif: ['notif']
 }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -45,28 +46,21 @@ const DropMessage = Component({
     };
   },
   componentDidMount() {
-    let $this = this;
-    Dispatcher.register((payload) => {
-      if (payload.actionType === 'DEL_ALL_NOTIFICATION') {
-        if (!$this.state.closed) {
-          $this.delMessage();
-        }
+    if (this.props.notif.delAll) {
+      if (!this.state.closed) {
+        this.delMessage();
       }
-    });
+    }
   },
   delMessage() {
-    let $this = this;
     $(ReactDOM.findDOMNode(this)).transition({
       animation: 'fade',
-      onComplete: function() {
-        $this.setState({closed: true});
-        Dispatcher.dispatch({
-          actionType: 'DEL_NOTIFICATION',
-          payload: { message: $this.props.item._id }
-        });
-        Meteor.call('notifications/del', $this.props.item._id, function(error, result) {
+      onComplete: () => {
+        this.setState({closed: true});
+        this.props.signals.notif.delOne({id: this.props.item._id});
+        Meteor.call('notifications/del', this.props.item._id, function(error, result) {
           if (error) {
-            $this.setState({errorMessage: error.message});
+            this.setState({errorMessage: error.message});
           }else {
             return false;
           }

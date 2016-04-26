@@ -22,13 +22,13 @@ const TopMenu = Component({
     };
   },
   showMenu() {
-    Dispatcher.dispatch({actionType: 'SHOW_MOBILE_MENU'});
+    this.props.signals.mob.menu();
   },
   showLoginModal() {
-    Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
+    //Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
   },
   showSignUpModal() {
-    Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
+    //Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   renderLoginButtons() {
     return (

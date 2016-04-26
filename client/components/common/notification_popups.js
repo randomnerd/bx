@@ -2,8 +2,10 @@ import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Notifications} from '../../../both/collections';
 import NotificationMessage from './notification_message';
+import ReactDOM from 'react-dom';
 
 const NotificationPopups = Component({
+  notif: ['notif'],
 },{
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -21,33 +23,32 @@ const NotificationPopups = Component({
       }).fetch(),
     };
   },
-  componentDidMount() {
-    let $this = this;
-    // Dispatcher.register((payload) => {
-    //   if (payload.actionType === 'CHANGE_NOTIFICATION_TIME') {
-    //     $this.setState({ nowDate: new Date().valueOf() });
-    //   }
-    //   if (payload.actionType === 'NEW_NOTIFICATION') {
-    //     let mess = _.clone($this.state.messages);
-    //     payload.payload.message.needShow = true;
-    //     mess.push(payload.payload.message);
-    //     $this.setState({messages: mess});
-    //   }
-    //   if (payload.actionType === 'DEL_NOTIFICATION') {
-    //     $this.setState({ messages: _.reject( $this.state.messages, (x)=> {
-    //       if (x._id === payload.payload.message) {
-    //         if ( x.createdAt ) { $this.setState({ nowDate: new Date(x.createdAt).valueOf() }); }
-    //         return true;
-    //       } else {
-    //         return false;
-    //       }
-    //     }
-    //     )});
-    //   }
-    //   if (payload.actionType === 'CHANGE_NOTIFICATION') {
-    //     //???
-    //   }
-    // });
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.notif.changeTime) {
+      this.setState({ nowDate: new Date().valueOf() });
+    }
+    if (nextProps.notif.newOne) {
+      let mess = _.clone(this.state.messages);
+      //payload.payload.message.needShow = true;
+      mess.push(nextProps.notif.newOne);
+      this.setState({messages: mess});
+    }
+    if (nextProps.notif.delOne) {
+      this.setState({ messages: _.reject( this.state.messages, (x)=> {
+        if (x._id === nextProps.notif.delOne) {
+          if ( x.createdAt ) { this.setState({ nowDate: new Date(x.createdAt).valueOf() }); }
+          return true;
+        } else {
+          return false;
+        }
+      }
+      )});
+    }
+  },
+
+  componentDidMount(){
+
   },
 
   renderMessages() {

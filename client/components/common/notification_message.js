@@ -1,6 +1,8 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
+import ReactDOM from 'react-dom';
 const NotificationMessage = Component({
+  notif: ['notif']
 },{
   getInitialState() {
     return {
@@ -39,44 +41,38 @@ const NotificationMessage = Component({
     }
   },
   componentDidMount() {
-    let $this = this;
-        //Dispatcher.dispatch({ actionType: 'CHANGE_NOTIFICATION_TIME' })
+    //this.props.signals.notif.changeTime();
     if (this.state.hidden && this.state.needShow) {
       $(ReactDOM.findDOMNode(this)).transition({
         animation: 'fade',
-        onComplete: function() {
-          $this.setState({
+        onComplete: () => {
+          this.setState({
             hidden: false
           });
-          $this.setState({
+          this.setState({
             needShow: false
           });
-          if ($this.props.item.timeout) {
+          if (this.props.item.timeout) {
             Meteor.setTimeout(() => {
-              $this.delMessage();
-            }, $this.props.item.timeout);
+              this.delMessage();
+            }, this.props.item.timeout);
           }
         }
       });
     }
   },
   delMessage() {
-    let $this = this;
     if (!this.state.closed) {
           //$this.setState({hidden: true});
       $(ReactDOM.findDOMNode(this)).transition({
         animation: 'fade',
-        onComplete: function() {
-          Dispatcher.dispatch({
-            actionType: 'DEL_NOTIFICATION',
-            payload: {
-              message: $this.props.item._id
-            }
-          });
-          $this.setState({
+        onComplete: () => {
+          this.props.signals.notif.clearNew();
+
+          this.setState({
             closed: true
           });
-          $this.setState({
+          this.setState({
             hidden: true
           });
         }

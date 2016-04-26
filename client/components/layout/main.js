@@ -38,7 +38,7 @@ const MainLayout = Component({
     <div className="ui inverted newgrey body">
       <Sidebar><Chat /></Sidebar>
       <div className="pusher">
-
+        <InfoPanel />
         <div className="contwrapper pusher">
           {renderPage(props.page)}
         </div>

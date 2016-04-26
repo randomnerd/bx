@@ -24,7 +24,10 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
 const MobileLayout = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  mob: ['mob'],
+  //pair: ['pair.pair'],
+  pair_link: ['pair_link']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -33,14 +36,15 @@ const MobileLayout = Component({
     };
   },
   getMeteorData() {
-    let pair = TradePairs.findOne({permalink: this.props.active});
+    let pair = TradePairs.findOne({permalink: this.props.pair_link});
 
     return {
       pair: pair,
       pairId: pair && pair._id,
       loading: !Meteor.subs.ready(),
       user: Meteor.user(),
-      authInProgress: Meteor.loggingIn()
+      authInProgress: Meteor.loggingIn(),
+      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
   },
   getInitialState() {
@@ -52,26 +56,29 @@ const MobileLayout = Component({
       showPanel: false,
       withdrawAddressModal: false,
 
-      showMobile:"buysell"
+      showMobile:"chat"
     };
   },
-
+  currName(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
+  },
+  componentWillReceiveProps(nextProps){
+    this.setState({showSidebar: nextProps.mob.menu});
+    this.setState({showMobile: nextProps.mob.page});
+  },
 
   componentDidMount() {
     if (!this.data.user && !this.data.authInProgress){
       this.setState({showLoginModal: true});
     }
     // Dispatcher.register((e) => {
-    //   //console.log('new dispatcher event', payload);
+    //
     //   switch (e.actionType) {
-    //     case 'SHOW_MOBILE_MENU':
-    //       this.setState({showSidebar: !this.state.showSidebar});
-    //       break;
-    //
-    //     case 'HIDE_MOBILE_MENU':
-    //       this.setState({showSidebar: false});
-    //       break;
-    //
     //     case 'SHOW_LOGIN_MODAL':
     //       this.setState({showLoginModal: true});
     //       break;
@@ -103,26 +110,7 @@ const MobileLayout = Component({
     //     case 'HIDE_ADDRESSBOOK_MODAL':
     //       this.setState({withdrawAddressModal: false});
     //       break;
-    //
-    //     case 'MOBILE_BUYSELL':
-    //       this.setState({showMobile: "buysell"});
-    //       break;
-    //
-    //     case 'MOBILE_CHART':
-    //       this.setState({showMobile: "chart"});
-    //       break;
-    //
-    //     case 'MOBILE_ORDERS':
-    //       this.setState({showMobile: "orders"});
-    //       break;
-    //
-    //     case 'MOBILE_HISTORY':
-    //       this.setState({showMobile: "history"});
-    //       break;
-    //
-    //     case 'MOBILE_CHAT':
-    //       this.setState({showMobile: "chat"});
-    //       break;
+
     //   }
     // });
   },
@@ -138,6 +126,7 @@ const MobileLayout = Component({
     }
   },
   renderContent(){
+    //console.log(this.props.pair);
     switch (this.state.showMobile) {
 
       case 'buysell':
@@ -145,8 +134,8 @@ const MobileLayout = Component({
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100 buysell'>
               <h3 className='ui header'>BALANCE</h3>
-              <Balance pairId={this.data.pairId} pair={this.data.pair} wide="double" />
-              <BuySell pairId={this.data.pairId} wide="double" />
+              <Balance pairId={this.data.pair._id} pair={this.data.pair} wide="double" />
+              <BuySell pairId={this.data.pair._id} wide="double" />
             </div>
           </div>
         )
@@ -167,14 +156,16 @@ const MobileLayout = Component({
             <div className='ui basic segment max100'>
               <h3 className='ui header'>ORDER BOOK</h3>
               <Orders direction='sell'
-                pairId={this.data.pairId}
-                valute1={this.props.active.toUpperCase().split("-")[0]}
-                valute2={this.props.active.toUpperCase().split("-")[1]} />
+                pair={this.data.pair}
+                pairId={this.data.pair._id}
+                valute1={this.currName(this.data.pair.currId)}
+                valute2={this.currName(this.data.pair.marketCurrId)} />
             </div>
             <div className='ui basic segment h100 max100'>
               <h3 className='ui header'>MY ORDERS</h3>
               <OpenOrders
-                pairId={this.data.pairId}
+                pair={this.data.pair}
+                pairId={this.data.pair._id}
                 valute1={this.data.pair.currId}
                 valute2={this.data.pair.marketCurrId} />
             </div>
@@ -189,9 +180,10 @@ const MobileLayout = Component({
               <h3 className='ui header'>TRADE HISTORY</h3>
 
                 <Trades
-                  pairId={this.data.pairId}
-                  valute1={this.props.active.toUpperCase().split("-")[0]}
-                  valute2={this.props.active.toUpperCase().split("-")[1]} />
+                  pair={this.data.pair}
+                  pairId={this.data.pair._id}
+                  valute1={this.currName(this.data.pair.currId)}
+                  valute2={this.currName(this.data.pair.marketCurrId)} />
 
             </div>
           </div>
@@ -230,6 +222,7 @@ const MobileLayout = Component({
   },
 
   render() {
+    this.props.signals.pair.setPair({pair: this.data.pair});
     if (this.data.loading) return this.renderLoading();
     return (
       <div className="ui inverted newgrey body">
@@ -241,7 +234,7 @@ const MobileLayout = Component({
 
         <div className="pusher">
           <div className="contwrapper pusher ">
-            {this.state.showMobile == "chat" ? this.renderContent() : this.props.active? this.renderContent() : (this.props.content ? this.props.content : null)}
+            {this.state.showMobile == "chat" ? this.renderContent() : this.props.mob.page? this.renderContent() : (this.props.content ? this.props.content : null)}
           </div>
         </div>
 

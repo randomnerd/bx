@@ -2,10 +2,13 @@ import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import TradePairsMenu from './trade/trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
+import TopInfo from './top_info';
+import Infopanel from './common/infopanel';
 
 import {Component} from 'cerebral-view-react';
 const TopMenu = Component({
   user: ['user'],
+  pair: ['pair.pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -51,10 +54,10 @@ const TopMenu = Component({
     // Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   chatToggle() {
-    // Dispatcher.dispatch({ actionType: 'SHOW_CHAT' });
+    this.props.signals.tools.chat();
   },
   infoToggle(){
-    // Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
+    this.props.signals.tools.infoPanel();
   },
   dragToggle(){
     // Dispatcher.dispatch({ actionType: 'DRAG' } );

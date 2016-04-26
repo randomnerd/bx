@@ -16,7 +16,9 @@ const router = Router({
      '/settings': 'u.settings',
      '/password': 'u.password'
    },
-   '/pair/:id': 'pair.show'
+   '/pair/:id': 'pair.show',
+   //'/mobile/:id':'mob.page'
+
 });
 
 export default router;

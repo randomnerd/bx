@@ -12,7 +12,7 @@ import Balance from './balance';
 const TradeGrid = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  pair: ['pair']
+  pair: ['pair.pair']
 }, {
   mixins: [ReactMeteorData],
   getInitialState: function() {
@@ -549,7 +549,7 @@ const TradeGrid = Component({
   componentDidMount() {
     this.props.signals.pair.setPair({pair: this.data.pair});
     if(!this.data.user){
-      FlowRouter.go("/");
+      //FlowRouter.go("/");
       return;
     }
     if(this.data.user.profile && this.data.user.profile.blocs){

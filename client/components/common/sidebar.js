@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Component} from 'cerebral-view-react';
 
 const Sidebar = Component({
+  tools: ['tools']
 }, {
   componentDidMount() {
     //$this=this;
@@ -16,14 +17,10 @@ const Sidebar = Component({
         $('.body').css('overflow-y', 'auto');
       }
     });
-    $(ReactDOM.findDOMNode(this)).sidebar(this.props.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).sidebar(this.props.tools.chat ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
-    $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
-  },
-
-  delAllMessages() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_SIDEBAR', payload: { addr: this.props.item } })
+    $(ReactDOM.findDOMNode(this)).sidebar(newProps.tools.chat ? 'show' : 'hide');
   },
 
   render() {

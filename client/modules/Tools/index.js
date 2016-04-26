@@ -5,25 +5,43 @@ import {User} from '/both/models';
 
 
 function setMobile ({input, state}) {
-  //console.log($('html').width(320));
-  console.log($('body').width());
   state.set('mobile',($('body').width() > 680) ? false : true);
+}
+
+function panel ({input, state}) {
+  //console.log(state.get('tools.panel'));
+  state.set('tools.panel', !state.get('tools.panel'));
+}
+
+function showChat ({input, state}) {
+  //console.log(state.get('tools.panel'));
+  state.set('tools.chat', !state.get('tools.chat'));
 }
 
 const windowWidth = [
   setMobile
 ];
 
+const infoPanel = [
+  panel
+];
+
+const chat = [
+  showChat
+];
 
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
       mobile: false,
-      //page: "home"
+      panel: false,
+      chat: false
     });
 
     module.addSignals({
       windowWidth,
+      infoPanel,
+      chat
     });
 
     // Tracker.autorun(() => {

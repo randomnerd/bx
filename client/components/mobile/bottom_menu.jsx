@@ -7,7 +7,8 @@ import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 const BottomMenu = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  mob: ['mob']
 }, {  mixins: [ReactMeteorData],
   getMeteorData() {
     return {
@@ -20,39 +21,21 @@ const BottomMenu = Component({
       active: "chart"
     };
   },
-  showBuysell() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_BUYSELL' });
-    this.setState({active:"buysell"});
-  },
-  showChart() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_CHART' });
-    this.setState({active:"chart"});
+  showPage(item, event) {
+    this.props.signals.mob.page({id:item});
+    this.setState({active:item});
   },
 
-  showOrders() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_ORDERS' });
-    this.setState({active:"orders"});
-  },
-
-  showHistory() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_HISTORY' });
-    this.setState({active:"history"});
-  },
-
-  showChat() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_CHAT' });
-    this.setState({active:"chat"});
-  },
 
 
   render() {
     return (
       <div className="ui bottom fixed inverted large fluid five item menu">
-        <div className={"icon item" + (this.state.active == "buysell" ? " active" : "")} onClick={this.showBuysell}><i className="money large icon"></i></div>
-        <div className={"icon item" + (this.state.active == "chart" ? " active" : "")} onClick={this.showChart}><i className="area chart large icon"></i></div>
-        <div className={"icon item" + (this.state.active == "orders" ? " active" : "")} onClick={this.showOrders}><i className="tasks large icon"></i></div>
-        <div className={"icon item" + (this.state.active == "history" ? " active" : "")} onClick={this.showHistory}><i className="history large icon"></i></div>
-        <div className={"icon item" + (this.state.active == "chat" ? " active" : "")} onClick={this.showChat}><i className="comments large icon"></i></div>
+        <div className={"icon item" + (this.state.active == "buysell" ? " active" : "")} onClick={this.showPage.bind(this, 'buysell')}><i className="money large icon"></i></div>
+        <div className={"icon item" + (this.state.active == "chart" ? " active" : "")} onClick={this.showPage.bind(this, 'chart')}><i className="area chart large icon"></i></div>
+        <div className={"icon item" + (this.state.active == "orders" ? " active" : "")} onClick={this.showPage.bind(this, 'orders')}><i className="tasks large icon"></i></div>
+        <div className={"icon item" + (this.state.active == "history" ? " active" : "")} onClick={this.showPage.bind(this, 'history')}><i className="history large icon"></i></div>
+        <div className={"icon item" + (this.state.active == "chat" ? " active" : "")} onClick={this.showPage.bind(this, 'chat')}><i className="comments large icon"></i></div>
       </div>
     );
   }

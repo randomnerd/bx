@@ -6,10 +6,10 @@ import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/col
 const Balance = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  pair: ['pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
+    //console.log(this.props.pair);
     return {
       balance1: Balances.findOne({currId: this.props.pair.currId}),
       balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),

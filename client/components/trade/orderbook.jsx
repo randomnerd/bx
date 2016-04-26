@@ -5,12 +5,11 @@ import {OrderBookItems,Trades} from '../../../both/collections';
 
 const Orderbook = Component({
   layout: ['layout'],
-  pair: ['pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     return {
-      ordersSell: OrderBookItems.find( {}, { sort: { price: -1 } } ).fetch(),
+      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
       ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
       ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
       tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
@@ -182,7 +181,7 @@ const Orderbook = Component({
       );
   },
   render() {
-    console.log(this.data.ordersSell);
+    //console.log(this.data.ordersSell);
     return (
       <div className='ui basic teal segment h100 tabheader'>
         <table className='ui selectable very compact very basic striped table unstackable nopadding nomargin heading'>

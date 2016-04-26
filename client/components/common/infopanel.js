@@ -7,7 +7,8 @@ import { BitIndexIndicator_BTPR } from '../../../both/collections';
 
 
 const Infopanel = Component({
-    user: ['user']
+    user: ['user'],
+    tools: ['tools']
   }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -33,7 +34,7 @@ const Infopanel = Component({
       //scrollLock: true,
       transition: 'overlay',
       onHidden: ()=>{
-        //Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
+        //this.props.signals.tools.infoPanel();
         return false;
       }
     });
@@ -41,12 +42,10 @@ const Infopanel = Component({
     this.setState({pair: 'btc'});
   },
   componentWillReceiveProps(newProps) {
-    $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
+    console.log(newProps.tools.panel);
+    $(ReactDOM.findDOMNode(this)).sidebar(newProps.tools.panel ? 'show' : 'hide');
   },
 
-  delAllMessages() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_SIDEBAR', payload: { addr: this.props.item } })
-  },
 
   mostActive(){
     $(this.refs.most).find('.item').removeClass('active');

@@ -2,42 +2,36 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
-import {set, copy} from 'cerebral-addons';
 
 
-function showPair ({input, state}) {
-  state.set('page', "pair");
-  state.set('layout', "main");
-  state.set('pair_link', input.id);
+function showMenu ({input, state}) {
+  state.set('mob.menu', !state.get('mob.menu'));
 }
 
-function setPairObj ({input, state}) {
-  state.set('pair.pair', input.pair);
+function showPage ({input, state}) {
+  state.set('mob.page', input.id);
+  state.set('mob.menu', false);
 }
 
-const show = [
-  showPair
-  // set("pair", 'state:/page'),
-  // set("main", 'state:/layout'),
-  // copy('input:/id', 'state:/pair_link')
+const menu = [
+  showMenu
 ];
 
-const setPair = [
-  setPairObj
-  //copy('input:/pair', 'state:/pair')
+const page = [
+  showPage
 ];
 
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
-      layout: "main",
-      pair_link: null,
-      pair: null
+      menu: false,
+      page: 'chat' //'buysell', 'history', 'orders', 'chat'
+
     });
 
     module.addSignals({
-      show,
-      setPair
+      menu,
+      page
     });
 
     // Tracker.autorun(() => {

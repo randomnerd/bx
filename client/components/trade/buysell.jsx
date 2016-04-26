@@ -6,7 +6,6 @@ import Semantic from '../semantic';
 const BuySell = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  pair: ['pair']
 }, {
   getInitialState: function() {
     return {
