@@ -56,7 +56,7 @@ const MobileLayout = Component({
       showPanel: false,
       withdrawAddressModal: false,
 
-      showMobile:"chat"
+      showMobile:"buysell"
     };
   },
   currName(id) {

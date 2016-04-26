@@ -25,7 +25,7 @@ export default (options = {}) => {
   return (module, controller) => {
     module.addState({
       menu: false,
-      page: 'chat' //'buysell', 'history', 'orders', 'chat'
+      page: 'buysell' //'buysell', 'history', 'orders', 'chat'
 
     });
 
