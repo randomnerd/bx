@@ -33,12 +33,12 @@ const UserTopMenu = Component({
     });
   },
   showChat() {
-    Dispatcher.dispatch({ actionType: 'MOBILE_CHAT' });
-    Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
+    //Dispatcher.dispatch({ actionType: 'MOBILE_CHAT' });
+    //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
   },
   hideMenu() {
-    Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
-    Dispatcher.dispatch({ actionType: 'MOBILE_CHART' });
+    //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
+    //Dispatcher.dispatch({ actionType: 'MOBILE_CHART' });
   },
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});

@@ -12,17 +12,20 @@ function goHome ({input, state}) {
 function goWallets ({input, state}) {
   state.set('page', "wallets");
   state.set('layout', "main");
+  if(state.get('mobile')){state.set('mob.page', false);}
 }
 
 function goSettings ({input, state}) {
   state.set('page', "settings");
   state.set('layout', "main");
+  if(state.get('mobile')){state.set('mob.page', false);}
 }
 
 
 function goPassword ({input, state}) {
   state.set('page', "password");
   state.set('layout', "main");
+  if(state.get('mobile')){state.set('mob.page', false);}
 }
 
 function goPairsNew ({input, state}) {

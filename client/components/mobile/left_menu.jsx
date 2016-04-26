@@ -33,17 +33,17 @@ const LeftMenu = Component({
     });
   },
   showLoginModal() {
-    Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
+    //Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
   },
   showSignUpModal() {
-    Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
+    //Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   infoToggle(){
-      Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
+      //Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
   },
   dragToggle(){
-      Dispatcher.dispatch({ actionType: 'DRAG' } );
-      this.setState({drag: !this.state.drag});
+    //  Dispatcher.dispatch({ actionType: 'DRAG' } );
+      //this.setState({drag: !this.state.drag});
   },
   renderLoginButtons() {
     return (

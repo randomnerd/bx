@@ -12,6 +12,11 @@ import Charts from '../mobile/charts';
 import Sidebar from '../mobile/sidebar';
 import LeftMenu from '../mobile/left_menu';
 
+import WalletsPage from '../mobile/wallets';
+import WalletPage from '../mobile/wallet_one';
+import Settings from '../user/settings';
+import PasswordPage from '../user/password';
+
 import Trades from '../trade/lastTrades';
 import Orders from '../trade/orderbook';
 import OpenOrders from '../trade/open_orders';
@@ -26,8 +31,9 @@ import Semantic from '../semantic';
 const MobileLayout = Component({
   layout: ['layout'],
   mob: ['mob'],
-  //pair: ['pair.pair'],
-  pair_link: ['pair_link']
+  page: ['page'],
+  pair_link: ['pair_link'],
+  user: ['user']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -79,22 +85,6 @@ const MobileLayout = Component({
     // Dispatcher.register((e) => {
     //
     //   switch (e.actionType) {
-    //     case 'SHOW_LOGIN_MODAL':
-    //       this.setState({showLoginModal: true});
-    //       break;
-    //
-    //     case 'HIDE_LOGIN_MODAL':
-    //       this.setState({showLoginModal: false});
-    //       break;
-    //
-    //     case 'SHOW_SIGN_UP_MODAL':
-    //       this.setState({showSignUpModal: true});
-    //       break;
-    //
-    //     case 'HIDE_SIGN_UP_MODAL':
-    //       this.setState({showSignUpModal: false});
-    //       break;
-    //
     //     case 'SHOW_WITHDRAW_MODAL':
     //       this.setState({showWithdrawModal: true});
     //       break;
@@ -125,8 +115,21 @@ const MobileLayout = Component({
     break;
     }
   },
+
+  renderPage() {
+    console.log(this.props.page);
+    switch (this.props.page) {
+      case "wallets": return <WalletsPage/>;
+      case "wallet": return <WalletPage/>;
+      case "settings": return <Settings/>;
+      case "password": return <PasswordPage/>;
+      default: return <WalletsPage/>;
+    }
+  },
+
   renderContent(){
     //console.log(this.props.pair);
+    if(!this.data.pair) return;
     switch (this.state.showMobile) {
 
       case 'buysell':
@@ -234,7 +237,7 @@ const MobileLayout = Component({
 
         <div className="pusher">
           <div className="contwrapper pusher ">
-            {this.state.showMobile == "chat" ? this.renderContent() : this.props.mob.page? this.renderContent() : (this.props.content ? this.props.content : null)}
+            {this.state.showMobile == "chat" ? this.renderContent() : this.props.mob.page? this.renderContent() : (this.props.page ? this.renderPage() : null)}
           </div>
         </div>
 

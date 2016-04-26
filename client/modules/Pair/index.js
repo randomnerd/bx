@@ -9,6 +9,7 @@ function showPair ({input, state}) {
   state.set('page', "pair");
   state.set('layout', "main");
   state.set('pair_link', input.id);
+  if(state.get('mobile')){state.set('mob.page', 'buysell');}
 }
 
 function setPairObj ({input, state}) {

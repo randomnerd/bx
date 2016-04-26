@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Wallets} from '../../../both/collections';
+import UserOnly from '../user/user_only';
 
 const WalletsView = Component({
   layout: ['layout']
