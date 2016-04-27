@@ -46,6 +46,7 @@ const MainLayout = Component({
       <TopMenu title="BitExchange"/>
       <LoginModal />
       <SignUpModal />
+      <WithdrawModal />
       <WithdrawAddressModal/>
       <NotificationPopups />
     </div>

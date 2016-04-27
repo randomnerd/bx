@@ -18,6 +18,26 @@ function showChat ({input, state}) {
   state.set('tools.chat', !state.get('tools.chat'));
 }
 
+function withdrawOpen ({input, state}) {
+  if(input.action && input.action == 'close'){
+    state.set('tools.withdraw', false);
+  }else if(input.action && input.action == 'open'){
+    state.set('tools.withdraw', true);
+  }else{
+    state.set('tools.withdraw', !state.get('tools.withdraw'));
+  }
+}
+
+function addressBookOpen ({input, state}) {
+  if(input.action && input.action == 'close'){
+    state.set('tools.addressbook', false);
+  }else if(input.action && input.action == 'open'){
+    state.set('tools.addressbook', true);
+  }else{
+    state.set('tools.addressbook', !state.get('tools.addressbook'));
+  }
+}
+
 const windowWidth = [
   setMobile
 ];
@@ -30,18 +50,30 @@ const chat = [
   showChat
 ];
 
+const withdraw = [
+  withdrawOpen
+];
+
+const addressbook = [
+  addressBookOpen
+];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
       mobile: false,
       panel: false,
-      chat: false
+      chat: false,
+      withdraw: false,
+      addressbook: false
     });
 
     module.addSignals({
       windowWidth,
       infoPanel,
-      chat
+      chat,
+      withdraw,
+      addressbook
     });
 
     // Tracker.autorun(() => {

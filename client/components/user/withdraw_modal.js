@@ -19,6 +19,8 @@ Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
 });
 
 const WithdrawModal = Component({
+  tools: ['tools'],
+  wallet: ['wallet']
 }, {
 
   mixins: [ReactMeteorData],
@@ -32,9 +34,9 @@ const WithdrawModal = Component({
 
   getMeteorData() {
     return {
-      wallet: Wallets.findOne({_id: this.state.currId}),
-      balance: Balances.findOne({currId: this.state.currId}),
-      currency: Currencies.findOne({_id: this.state.currId})
+      wallet: Wallets.findOne({_id: this.props.wallet}),
+      balance: Balances.findOne({currId: this.props.wallet}),
+      currency: Currencies.findOne({_id: this.props.wallet})
     };
   },
 
@@ -91,6 +93,7 @@ const WithdrawModal = Component({
 
   hide(e) {
     this.setState({errorMessage: null});
+      this.props.signals.tools.withdraw({action: 'close'});
     // Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
   },
 
@@ -104,19 +107,8 @@ const WithdrawModal = Component({
       address: this.refs.address.getValue()
     });
 
-    // Dispatcher.dispatch({
-    //   actionType: 'NEW_NOTIFICATION',
-    //   payload: {
-    //     message: {
-    //       _id: 'withdrawal_requested',
-    //       type: 'accept',
-    //       icon: 'accept',
-    //       title: 'Withdrawal request sent',
-    //       timeout: 3000,
-    //       needShow: true
-    //     }
-    //   }
-    // });
+    this.props.signals.notif.newOne({_id: 'withdrawal_requested' + Math.random(), type: 'accept', icon: 'accept', title: 'Withdrawal request sent!',
+    timeout: 3000, needShow: true });
     this.hide();
   },
 
@@ -129,7 +121,7 @@ const WithdrawModal = Component({
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
-          onDeny={this.hide} onPositive={this.withdraw} show={this.props.show}
+          onDeny={this.hide} onPositive={this.withdraw} show={this.props.tools.withdraw}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
           <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
