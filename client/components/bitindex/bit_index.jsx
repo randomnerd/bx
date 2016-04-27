@@ -69,7 +69,7 @@ export default React.createClass({
     return (
 
       <div>
-        <Charts.CandleStickChartWithFibonacciInteractiveIndicator data = {this.data.BTPR.slice(200)} type = 'hybrid' />
+        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'hybrid' />
 
       </div>
     );

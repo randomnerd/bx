@@ -39,9 +39,8 @@ class CandleStickStockScaleChartWithVolumeBarV3 extends React.Component {
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
-                      ? '#21ba45'
-                      : '#db2828'}
-                        />
+                        ? '#21ba45'
+                        : '#db2828'}/>
                 </Chart>
             </ChartCanvas>
         );
