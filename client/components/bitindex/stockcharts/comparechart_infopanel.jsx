@@ -18,25 +18,23 @@ class comparechart_infopanel extends React.Component {
         var {data, type, width} = this.props;
         return (
             <ChartCanvas width={width} height={25} margin={{
-                       left: 0,
-                       right: 50,
-                       top: 10,
-                     bottom: 0
+                left: 0,
+                right: 50,
+                top: 10,
+                bottom: 0
             }} seriesName='MSFT' data={data} type={type} xAccessor={d => d.date} xScale={d3.time.scale()}>
-            <Chart id={0} xAccessor={(d) => d.date}>
-                <YAxis axisAt='right' orient='right' percentScale={true}
-                      tickFormat={d3.format('.0%')} stroke='#767676' tickStroke='#767676' fontSize={8}/>
-                <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue'>
-                  <LineSeries/>
-                </DataSeries>
-              </Chart>
+                <Chart id={0} >
+                    <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')} stroke='#767676' tickStroke='#767676' fontSize={8}/>
+                    <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue'>
+                        <LineSeries/>
+                    </DataSeries>
+                </Chart>
 
-              <Chart id={1} xAccessor={(d) => d.date}>
-                <DataSeries id={0} yAccessor={(d) => d.volume} stroke='green'>
-                  <LineSeries stroke='orange'/>
-                </DataSeries>
-              </Chart>
-
+                <Chart id={1} >
+                    <DataSeries id={0} yAccessor={(d) => d.volume} stroke='green'>
+                        <LineSeries stroke='orange'/>
+                    </DataSeries>
+                </Chart>
 
             </ChartCanvas>
         );
