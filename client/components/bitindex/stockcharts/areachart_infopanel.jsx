@@ -25,9 +25,10 @@ class areachart_infopanel extends React.Component {
             }} seriesName='MSFT' data={data} type={type} xAccessor={d => d.date} xScale={d3.time.scale()}>
                 <Chart id={0}>
 
-                    <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')} stroke='steelblue' fill='steelblue'/>
-
-                    <AreaSeries yAccessor={(d) => d.close}/>
+                    <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')} />
+                    <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue' fill='steelblue'>
+                        <AreaSeries yAccessor={(d) => d.close}/>
+                    </DataSeries>
                 </Chart>
             </ChartCanvas>
         );
