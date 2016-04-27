@@ -32,19 +32,7 @@ const LeftMenu = Component({
       return <a className={"item " + item.extraCls} key={item.label} href={item.href}>{item.label}</a>;
     });
   },
-  showLoginModal() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
-  },
-  showSignUpModal() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
-  },
-  infoToggle(){
-      //Dispatcher.dispatch({ actionType: 'SHOW_PANEL' } );
-  },
-  dragToggle(){
-    //  Dispatcher.dispatch({ actionType: 'DRAG' } );
-      //this.setState({drag: !this.state.drag});
-  },
+
   renderLoginButtons() {
     return (
       <div className="right menu">

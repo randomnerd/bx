@@ -13,6 +13,7 @@ const router = Router({
    },
    '/u': {
      '/wallets': 'u.wallets',
+     '/wallet/:id': 'u.wallet',
      '/settings': 'u.settings',
      '/password': 'u.password'
    },

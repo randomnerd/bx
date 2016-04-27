@@ -3,7 +3,7 @@ import {Component} from 'cerebral-view-react';
 import Home from '../home';
 
 import WalletsPage from '../user/wallets';
-import WalletPage from '../user/wallet_one';
+import WalletPage from '../user/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
 

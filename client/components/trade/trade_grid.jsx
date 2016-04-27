@@ -394,7 +394,7 @@ const TradeGrid = Component({
         <div className='ui basic segment h100'>
           <h3 className='ui header'>BALANCE</h3>
           <Balance pairId={this.data.pairId} pair={this.data.pair} wide={this.positions.balance.size == "small" ? "double" : false} />
-          <BuySell pairId={this.data.pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <BuySell pair={this.data.pair} pairId={this.data.pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
         </div>
       </div>
     );
@@ -412,6 +412,7 @@ const TradeGrid = Component({
         <div className='ui basic segment h100'>
             <h3 className='ui header'>ORDER BOOK</h3>
             <Orders direction='sell'
+              pair={this.data.pair}
               pairId={this.data.pairId}
               valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
               valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />
@@ -433,6 +434,7 @@ const TradeGrid = Component({
           <h3 className='ui header'>TRADE HISTORY</h3>
 
             <Trades
+              pair={this.data.pair}
               pairId={this.data.pairId}
               valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
               valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />

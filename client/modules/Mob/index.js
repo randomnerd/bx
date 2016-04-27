@@ -5,7 +5,13 @@ import {User} from '/both/models';
 
 
 function showMenu ({input, state}) {
-  state.set('mob.menu', !state.get('mob.menu'));
+  if(input.action && input.action == 'close'){
+    state.set('mob.menu', false);
+  }else if(input.action && input.action == 'open'){
+    state.set('mob.menu', true);
+  }else{
+    state.set('mob.menu', !state.get('mob.menu'));
+  }
 }
 
 function showPage ({input, state}) {

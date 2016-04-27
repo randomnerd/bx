@@ -24,12 +24,6 @@ const TopMenu = Component({
   showMenu() {
     this.props.signals.mob.menu();
   },
-  showLoginModal() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
-  },
-  showSignUpModal() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
-  },
   renderLoginButtons() {
     return (
       <div className="right menu">

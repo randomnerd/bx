@@ -15,6 +15,13 @@ function goWallets ({input, state}) {
   if(state.get('mobile')){state.set('mob.page', false);}
 }
 
+function goWallet ({input, state}) {
+  state.set('page', "wallet");
+  state.set('wallet', input.id);
+  state.set('layout', "main");
+  if(state.get('mobile')){state.set('mob.page', false);}
+}
+
 function goSettings ({input, state}) {
   state.set('page', "settings");
   state.set('layout', "main");
@@ -42,6 +49,10 @@ const wallets = [
   goWallets
 ];
 
+const wallet = [
+  goWallet
+];
+
 const settings = [
   goSettings
 ];
@@ -64,6 +75,7 @@ export default (options = {}) => {
     module.addSignals({
       //home,
       wallets,
+      wallet,
       settings,
       password,
       // pair

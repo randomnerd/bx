@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Component} from 'cerebral-view-react';
+import {Meteor} from 'meteor/meteor';
+import Semantic from '../semantic';
 
-export default React.createClass({
-  mixins: [ReactMeteorData],
+
+const Sidebar = Component({
+  mob: ['mob'],
+  page: ['page'],
+  pair_link: ['pair_link'],
+  user: ['user']
+}, {
   getInitialState() {
     return {
 
     };
   },
 
-  getMeteorData() {
-    return {
-
-    };
-  },
   componentDidMount() {
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({
@@ -23,18 +26,13 @@ export default React.createClass({
       //scrollLock: true,
       transition: 'overlay',
       onHidden: ()=> {
-        //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
-        //return false;
+        this.props.signals.mob.menu({action:'close'});
       }
     });
     $(ReactDOM.findDOMNode(this)).sidebar(this.props.show ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
-  },
-
-  delAllMessages() {
-    //Dispatcher.dispatch({ actionType: 'SHOW_SIDEBAR', payload: { addr: this.props.item } })
   },
 
   render() {
@@ -47,3 +45,4 @@ export default React.createClass({
     );
   }
 });
+export default Sidebar;

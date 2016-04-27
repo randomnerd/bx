@@ -13,7 +13,7 @@ import Sidebar from '../mobile/sidebar';
 import LeftMenu from '../mobile/left_menu';
 
 import WalletsPage from '../mobile/wallets';
-import WalletPage from '../mobile/wallet_one';
+import WalletPage from '../mobile/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
 
@@ -129,7 +129,7 @@ const MobileLayout = Component({
 
   renderContent(){
     //console.log(this.props.pair);
-    if(!this.data.pair) return;
+    if(!this.data.pair && this.state.showMobile != 'chat') return;
     switch (this.state.showMobile) {
 
       case 'buysell':
@@ -233,7 +233,7 @@ const MobileLayout = Component({
           {this.renderSidebarContent()}
         </Sidebar>
         <TopMenu title="BitExchange" pair={this.data.pair} />
-        {this.data.pair ? <BottomMenu title="BitExchange" pair={this.data.pair} /> : null}
+        <BottomMenu title="BitExchange" pair={this.data.pair} />
 
         <div className="pusher">
           <div className="contwrapper pusher ">

@@ -20,7 +20,7 @@ const UserTopMenu = Component({
   },
   getMenuItems() {
     return [
-      { href: '', label: 'Chat', extraCls: '', onclick: this.showChat},
+      { href: null, label: 'Chat', extraCls: '', onclick: this.showChat},
       { href: '/u/wallets', label: 'My wallets', extraCls: '', onclick: this.hideMenu},
       { href: '/u/settings', label: 'Settings', extraCls: '', onclick: this.hideMenu},
       { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu},
@@ -33,12 +33,13 @@ const UserTopMenu = Component({
     });
   },
   showChat() {
-    //Dispatcher.dispatch({ actionType: 'MOBILE_CHAT' });
-    //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
+    this.props.signals.mob.page({id:'chat'});
+    this.setState({active:'chat'});
+    this.hideMenu();
+    //return false;
   },
   hideMenu() {
-    //Dispatcher.dispatch({actionType: 'HIDE_MOBILE_MENU'});
-    //Dispatcher.dispatch({ actionType: 'MOBILE_CHART' });
+    this.props.signals.mob.menu();
   },
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});

@@ -41,8 +41,8 @@ const TransactionsView = Component({
   },
 
   showWithdraw(){
-    //Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
-  //  Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
+    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
+    Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
   },
 
   render() {
@@ -52,49 +52,47 @@ const TransactionsView = Component({
     return (
       <div className="ui main container">
         <div className="ui segments">
-
           <div className="ui secondary segment">
-            <div className="ui top right attached large label">
-              <i className="icon left arrow"></i>
-              <a href="/u/wallets">back</a>
+            <div className="ui header clearfix">
+              <button className="ui right floated blue button" onClick={this.showWithdraw}>
+                Withdraw {this.data.currency.shortName}
+              </button>
+              <h1>{this.data.currency.name} balance</h1>
             </div>
-            <h2 className="ui header">
-              {this.data.currency.name} balance
-            </h2>
           </div>
           <div className="ui secondary segment">
-            <button className="ui fluid blue button" onClick={this.showWithdraw}>
-              Withdraw {this.data.currency.shortName}
-            </button>
-          </div>
+            <div className="ui grid">
+              <div className="three column row">
+                <div className="column">
 
-          <div className="ui secondary segment">
-
-
-            <h4 className="ui header center aligned">Available</h4>
+                      <h4 className="ui header center aligned">Available</h4>
 
 
-            <h2 className="ui header center aligned">
-              {avail} {this.data.currency.shortName}
-            </h2>
+                      <h2 className="ui header center aligned">
+                        {avail} {this.data.currency.shortName}
+                      </h2>
 
-            <div className="ui clearing divider"></div>
+                </div>
+                <div className="column">
 
-            <h4 className="ui header center aligned">Held for orders</h4>
+                      <h4 className="ui header center aligned">Held for orders</h4>
 
-            <h2 className="ui header center aligned">
-              {held} {this.data.currency.shortName}
-            </h2>
+                      <h2 className="ui header center aligned">
+                        {held} {this.data.currency.shortName}
+                      </h2>
 
-            <div className="ui clearing divider"></div>
-            <h4 className="ui header center aligned">Total</h4>
+                </div>
+                <div className="column">
 
-            <h2 className="ui header center aligned">
-              {total} {this.data.currency.shortName}
-            </h2>
+                    <h4 className="ui header center aligned">Total</h4>
 
+                    <h2 className="ui header center aligned">
+                      {total} {this.data.currency.shortName}
+                    </h2>
 
-
+                </div>
+              </div>
+            </div>
           </div>
             <div className="ui secondary segment">
               <h2 className="white text">Transactions</h2>
@@ -124,4 +122,5 @@ const TransactionsView = Component({
     );
   }
 });
+
 export default TransactionsView;
