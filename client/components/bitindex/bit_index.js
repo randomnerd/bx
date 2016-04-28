@@ -2,6 +2,10 @@ import React from 'react';
 import { BitIndexIndicator_BTPR } from '../../../both/collections';
 import Charts from './';
 
+import ReStock from 'react-stockcharts';
+
+
+
 export default React.createClass({
 
   mixins: [ReactMeteorData],
@@ -69,14 +73,11 @@ export default React.createClass({
     return (
 
       <div>
-        <Charts.CandleStickStockScaleChartWithVolumeBarV3 data = {this.data.BTPR.slice(200)} type = 'hybrid' />
-        <Charts.areachart_infopanel data = {this.data.BTTC} type = 'svg' />
+        <Charts.areachart_infopanel data = {this.data.BTPR} type = 'hybrid' />
       </div>
     );
 
   },
-
-
 
   render() {
 

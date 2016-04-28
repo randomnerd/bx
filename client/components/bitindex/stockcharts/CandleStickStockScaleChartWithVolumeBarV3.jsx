@@ -15,10 +15,10 @@ let {fitWidth} = ReStock.helper;
 
 class CandleStickStockScaleChartWithVolumeBarV3 extends React.Component {
     render() {
-        let {data, type, width, height} = this.props;
+        let {data, type, width} = this.props;
 
         return (
-            <ChartCanvas width={width} height={height} margin={{
+            <ChartCanvas width={width} height={200} margin={{
                 left: 30,
                 right: 30,
                 top: 0,

@@ -5,17 +5,17 @@ import d3 from 'd3';
 
 import ReStock from 'react-stockcharts';
 
-var {ChartCanvas, Chart} = ReStock;
+let {ChartCanvas, Chart} = ReStock;
 
-var {AreaSeries} = ReStock.series;
-var {XAxis, YAxis} = ReStock.axes;
-var {fitWidth} = ReStock.helper;
+let {AreaSeries} = ReStock.series;
+let {XAxis, YAxis} = ReStock.axes;
+let {fitWidth} = ReStock.helper;
 
 class comparechart_infopanel extends React.Component {
     render() {
         if (this.state === null || !this.state.width)
             return <div/>;
-        var {data, type, width} = this.props;
+        let {data, type, width} = this.props;
         return (
             <ChartCanvas width={width} height={25} margin={{
                 left: 0,

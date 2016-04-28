@@ -5,32 +5,43 @@ import d3 from 'd3';
 
 import ReStock from 'react-stockcharts';
 
-var {ChartCanvas, Chart} = ReStock;
+let {ChartCanvas, Chart, EventCapture} = ReStock;
 
-var {AreaSeries} = ReStock.series;
-var {XAxis, YAxis} = ReStock.axes;
-var {fitWidth} = ReStock.helper;
+let {BarSeries, AreaSeries, ScatterSeries, CircleMarker} = ReStock.series;
+let {financeEODDiscontiniousScale} = ReStock.scale;
+
+let {MouseCoordinates} = ReStock.coordinates;
+
+let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
+let {XAxis, YAxis} = ReStock.axes;
+let {fitWidth} = ReStock.helper;
+
+let xScale = financeEODDiscontiniousScale();
 
 class areachart_infopanel extends React.Component {
     render() {
-        if (this.state === null || !this.state.width)
-            return <div/>;
-        var {data, type, width} = this.props;
+        let {data, type, width} = this.props;
         return (
-            <ChartCanvas width={width} height={25} margin={{
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0
-            }} seriesName='MSFT' data={data} type={type} xAccessor={d => d.date} xScale={d3.time.scale()}>
-                <Chart id={0}>
-
-                    <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')} />
-                    <DataSeries id={0} stroke='steelblue' fill='steelblue'>
-                        <AreaSeries yAccessor={(d) => d.close}/>
-                    </DataSeries>
+            <ChartCanvas width={width} height={400} margin={{
+                left: 70,
+                right: 70,
+                top: 20,
+                bottom: 30
+            }} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={xScale} xExtents={[
+                new Date(2012, 0, 1),
+                new Date(2012, 2, 2)
+            ]}>
+                <Chart id={1} yExtents={d => d.close}>
+                    <XAxis axisAt='bottom' orient='bottom'/>
+                    <YAxis axisAt='right' orient='right' ticks={5}/>
+                    <AreaSeries yAccessor={d => d.close}/>
+                    <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{
+                        r: 1
+                    }}/>
                 </Chart>
+
             </ChartCanvas>
+
         );
     }
 }
@@ -47,42 +58,3 @@ areachart_infopanel.defaultProps = {
 areachart_infopanel = fitWidth(areachart_infopanel);
 
 export default areachart_infopanel;
-
-//
-// import React from 'react';
-// import ReStock from 'react-stockcharts';
-// import d3 from 'd3';
-//
-// let {ChartCanvas, Chart, DataSeries} = ReStock;
-//
-// let {AreaSeries} = ReStock.series;
-// let {XAxis, YAxis} = ReStock.axes;
-// let {ChartWidthMixin} = ReStock.helper;
-//
-// export default React.createClass({
-//     mixins: [ChartWidthMixin],
-//     propTypes: {
-//         data: React.PropTypes.array.isRequired,
-//         type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
-//     },
-//     render() {
-//         if (this.state === null || !this.state.width)
-//             return <div/>;
-//         let {data, type} = this.props;
-//         return (
-//             <ChartCanvas width={this.state.width} height={25} margin={{
-//                 left: 0,
-//                 right: 0,
-//                 top: 0,
-//                 bottom: 0
-//             }} data={data} type={type}>
-//                 <Chart id={0} xAccessor={(d) => d.date}>
-//                     <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')}/>
-//                     <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue' fill='steelblue'>
-//                         <AreaSeries/>
-//                     </DataSeries>
-//                 </Chart>
-//             </ChartCanvas>
-//         );
-//     }
-// });
