@@ -69,8 +69,8 @@ export default React.createClass({
     return (
 
       <div>
-        <Charts.areachart_infopanel data = {this.data.BTPR.slice(200)} type = 'hybrid' />
-
+        <Charts.CandleStickStockScaleChartWithVolumeBarV3 data = {this.data.BTPR.slice(200)} type = 'hybrid' />
+        <Charts.areachart_infopanel data = {this.data.BTTC} type = 'svg' />
       </div>
     );
 
