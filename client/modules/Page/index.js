@@ -9,10 +9,17 @@ function goHome ({input, state}) {
   state.set('layout', "home");
 }
 
-
+function goBitx ({input, state}) {
+  state.set('page', "bitindex");
+  state.set('layout', "home");
+}
 
 const home = [
   goHome
+];
+
+const bitx = [
+  goBitx
 ];
 
 
@@ -24,7 +31,8 @@ export default (options = {}) => {
     });
 
     module.addSignals({
-      home
+      home,
+      bitx
     });
   }
 }

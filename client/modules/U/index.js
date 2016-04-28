@@ -22,6 +22,11 @@ function goWallet ({input, state}) {
   if(state.get('mobile')){state.set('mob.page', false);}
 }
 
+function setWallet ({input, state}) {
+  state.set('wallet', input.id);
+}
+
+
 function goSettings ({input, state}) {
   state.set('page', "settings");
   state.set('layout', "main");
@@ -53,6 +58,10 @@ const wallet = [
   goWallet
 ];
 
+const walletSet = [
+  setWallet
+];
+
 const settings = [
   goSettings
 ];
@@ -78,6 +87,7 @@ export default (options = {}) => {
       wallet,
       settings,
       password,
+      walletSet
       // pair
     });
 

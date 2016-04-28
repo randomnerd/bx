@@ -1,6 +1,7 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
 import Home from '../home';
+import BitIndex from '../bitindex/bit_index';
 
 import WalletsPage from '../user/wallets';
 import WalletPage from '../user/transactions';
@@ -31,6 +32,7 @@ const MainLayout = Component({
       case "settings": return <Settings/>;
       case "password": return <PasswordPage/>;
       case "pair": return <TradeGrid/>;
+      case "bitindex": return <BitIndex/>;
       default: return <Home/>;
     }
   }

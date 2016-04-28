@@ -32,7 +32,8 @@ const WalletPage = Component({
     let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
     return amount.toFixed(8);
   },
-  showWithdraw(id) {
+  showWithdraw(item, event) {
+    this.props.signals.tools.withdraw({action: 'open'});
     //Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
     //Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
   },
@@ -52,7 +53,7 @@ const WalletPage = Component({
           </td>
           <td className='three wide right aligned'>
             <div className='ui mini buttons'>
-              <a className={'ui blue button' + (balance>0?'':' disabled')} onClick={this.showWithdraw} >
+              <a className={'ui blue button' + (balance>0?'':' disabled')} onClick={this.showWithdraw.bind(this, item)} >
                 Withdraw
               </a>
               <a className='ui button' href={'/u/wallet/' + item._id}>

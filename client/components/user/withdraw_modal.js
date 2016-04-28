@@ -26,6 +26,7 @@ const WithdrawModal = Component({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
+      withdraw: false,
       currId: null,
       allowSubmit: false,
       errorMessage: null
@@ -39,7 +40,9 @@ const WithdrawModal = Component({
       currency: Currencies.findOne({_id: this.props.wallet})
     };
   },
-
+  // componentWillReceiveProps(newProps){
+  //   this.setState({withdraw: newProps.tools.withdraw});
+  // },
   getAmount() {
     let curr    = this.data.currency;
     let balance = this.data.balance.displayAmount();
@@ -117,7 +120,7 @@ const WithdrawModal = Component({
     if (!curr) return null;
     let fee = curr.withdrawalFee;
     let balance = this.data.balance.displayAmount();
-
+    console.log(this.props.tools.withdraw);
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
