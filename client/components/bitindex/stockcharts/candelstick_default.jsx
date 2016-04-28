@@ -13,23 +13,20 @@ let {XAxis, YAxis} = ReStock.axes;
 
 let {fitWidth} = ReStock.helper;
 
-class CandleStickStockScaleChartWithVolumeBarV3 extends React.Component {
+class candelstick_default extends React.Component {
     render() {
         let {data, type, width} = this.props;
 
         return (
-            <ChartCanvas width={width} height={200} margin={{
+            <ChartCanvas width={width} height={350} margin={{
                 left: 30,
                 right: 30,
                 top: 0,
                 bottom: 20
-            }} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} xExtents={[
-                new Date(2012, 0, 1),
-                new Date(2012, 6, 2)
-            ]}>
-                <Chart id={1} height={400} yExtents={d => [d.high, d.low]}>
-                    <YAxis axisAt='right' orient='right' ticks={5}/>
-                    <XAxis axisAt='bottom' orient='bottom' showTicks={false}/>
+            }} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} >
+                <Chart id={1} height={350} yExtents={d => [d.high, d.low]}>
+                    <YAxis axisAt='left' orient='left' ticks={5}  fontSize={10} stroke='#767676' tickStroke='#767676' t/>
+
                     <CandlestickSeries/>
                 </Chart>
                 <Chart id={2} origin={(w, h) => [
@@ -46,18 +43,18 @@ class CandleStickStockScaleChartWithVolumeBarV3 extends React.Component {
         );
     }
 }
-CandleStickStockScaleChartWithVolumeBarV3.propTypes = {
+candelstick_default.propTypes = {
     data: React.PropTypes.array.isRequired,
     width: React.PropTypes.number.isRequired,
     type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
 };
 
-CandleStickStockScaleChartWithVolumeBarV3.defaultProps = {
+candelstick_default.defaultProps = {
     type: 'svg'
 };
-CandleStickStockScaleChartWithVolumeBarV3 = fitWidth(CandleStickStockScaleChartWithVolumeBarV3);
+candelstick_default = fitWidth(candelstick_default);
 
-export default CandleStickStockScaleChartWithVolumeBarV3;
+export default candelstick_default;
 
 //
 //

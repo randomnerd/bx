@@ -163,34 +163,34 @@ const TradeGrid = Component({
 
     case 'candle':
       return (
-          <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
-          data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
+          <div><Charts.candelstick_default
+          data = {this.data.BTPR} type = 'hybrid' height={350} /></div>
         );
       break;
 
     case 'line':
       return (
-          <div><Charts.linechart data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
+          <div><Charts.candelstick_default data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
         );
       break;
 
 
     case 'macd':
       return (
-          <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+          <div><Charts.candelstick_default
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
       break;
     case 'rsi':
       return (
-          <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+          <div><Charts.candelstick_default
           data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
         );
       break;
 
     case 'sto':
       return (
-          <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+          <div><Charts.candelstick_default
           data = {this.data.BTPR} type = 'svg' height={350} /></div>
         );
       break;
@@ -198,7 +198,7 @@ const TradeGrid = Component({
     case 'bollinger':
       return (
           <div>
-            <Charts.CandleStickStockScaleChartWithVolumeBarV3
+            <Charts.candelstick_default
             data = {this.data.BTPR} type = 'svg' height={350} />
           </div>
         );
@@ -206,21 +206,21 @@ const TradeGrid = Component({
 
     case 'kagi':
       return (
-            <div><Charts.CandleStickStockScaleChartWithVolumeBarV3 data = {this.data.BTPR}
+            <div><Charts.candelstick_default data = {this.data.BTPR}
              type = 'svg' height={350}/></div>
         );
       break;
 
     case 'pointandfigure':
       return (
-            <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+            <div><Charts.candelstick_default
             data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
 
     case 'haikinashi':
       return (
-        <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+        <div><Charts.candelstick_default
         data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;
@@ -228,7 +228,7 @@ const TradeGrid = Component({
     case 'renko':
 
       return (
-        <div><Charts.CandleStickStockScaleChartWithVolumeBarV3
+        <div><Charts.candelstick_default
         data = {this.data.BTPR} type = 'svg' height={350}/></div>
       );
       break;

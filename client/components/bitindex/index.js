@@ -1,4 +1,4 @@
-import CandleStickStockScaleChartWithVolumeBarV3 from './stockcharts/CandleStickStockScaleChartWithVolumeBarV3';
+import candelstick_default from './stockcharts/candelstick_default';
 // import CandleStickChartWithMACDIndicator from './stockcharts/CandleStickChartWithMACDIndicator';
 // import CandleStickChartWithRSIIndicator from './stockcharts/CandleStickChartWithRSIIndicator';
 // import CandleStickChartWithFullStochasticsIndicator from './stockcharts/CandleStickChartWithFullStochasticsIndicator';
@@ -15,7 +15,7 @@ import comparechart_infopanel from './stockcharts/comparechart_infopanel';
 // import CandleStickChartWithFibonacciInteractiveIndicator from './stockcharts/CandleStickChartWithFibonacciInteractiveIndicator';
 
 export default {
-  CandleStickStockScaleChartWithVolumeBarV3,
+  candelstick_default,
   // CandleStickChartWithMACDIndicator,
   // CandleStickChartWithRSIIndicator,
   // CandleStickChartWithFullStochasticsIndicator,
