@@ -73,7 +73,7 @@ export default React.createClass({
     return (
 
       <div>
-        <Charts.areachart_infopanel data = {this.data.BTPR} type = 'hybrid' />
+        <Charts.comparechart_infopanel data = {this.data.BTPR} type = 'hybrid' />
       </div>
     );
 

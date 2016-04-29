@@ -5,37 +5,45 @@ import d3 from 'd3';
 
 import ReStock from 'react-stockcharts';
 
-let {ChartCanvas, Chart} = ReStock;
+let { ChartCanvas, Chart, EventCapture } = ReStock;
 
-let {AreaSeries} = ReStock.series;
-let {XAxis, YAxis} = ReStock.axes;
-let {fitWidth} = ReStock.helper;
+let { BarSeries, LineSeries, AreaSeries, ScatterSeries, CircleMarker } = ReStock.series;
+let { financeEODDiscontiniousScale } = ReStock.scale;
+
+let { MouseCoordinates } = ReStock.coordinates;
+
+let { TooltipContainer, OHLCTooltip } = ReStock.tooltip;
+let { XAxis, YAxis } = ReStock.axes;
+let { fitWidth } = ReStock.helper;
+
+let xScale = financeEODDiscontiniousScale();
 
 class comparechart_infopanel extends React.Component {
     render() {
-        if (this.state === null || !this.state.width)
-            return <div/>;
         let {data, type, width} = this.props;
         return (
-            <ChartCanvas width={width} height={25} margin={{
-                left: 0,
-                right: 50,
-                top: 10,
-                bottom: 0
-            }} seriesName='MSFT' data={data} type={type} xAccessor={d => d.date} xScale={d3.time.scale()}>
-                <Chart id={0} >
-                    <YAxis axisAt='right' orient='right' percentScale={true} tickFormat={d3.format('.0%')} stroke='#767676' tickStroke='#767676' fontSize={8}/>
-                    <DataSeries id={0} yAccessor={(d) => d.close} stroke='steelblue'>
-                        <LineSeries/>
-                    </DataSeries>
+            <ChartCanvas width={width} height={400} margin={{
+                left: 70,
+                right: 70,
+                top: 20,
+                bottom: 30
+            }} type={type} seriesName="MSFT" data={data} xAccessor={d => d.date} discontinous xScale={xScale} xExtents={[
+                new Date(2012, 0, 1),
+                new Date(2012, 2, 2)
+            ]}>
+                <Chart id={1} yExtents={d => [d.high, d.low]} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={d3.format(".2f")}>
+                    <XAxis axisAt="bottom" orient="bottom"/>
+                    <YAxis axisAt="right" orient="right" ticks={5}/>
+                    <LineSeries yAccessor={d => d.close}/>
+                    <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{
+                        r: 3
+                    }}/>
                 </Chart>
-
-                <Chart id={1} >
-                    <DataSeries id={0} yAccessor={(d) => d.volume} stroke='green'>
-                        <LineSeries stroke='orange'/>
-                    </DataSeries>
-                </Chart>
-
+                <MouseCoordinates xDisplayFormat={d3.time.format("%Y-%m-%d")}/>
+                <EventCapture mouseMove={true} zoom={true} pan={true}/>
+                <TooltipContainer>
+                    <OHLCTooltip forChart={1} origin={[-40, 0]}/>
+                </TooltipContainer>
             </ChartCanvas>
         );
     }
