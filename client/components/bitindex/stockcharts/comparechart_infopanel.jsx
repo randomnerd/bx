@@ -22,11 +22,11 @@ class comparechart_infopanel extends React.Component {
     render() {
         let {data, type, width} = this.props;
         return (
-            <ChartCanvas width={width} height={400} margin={{
-                left: 70,
-                right: 70,
-                top: 20,
-                bottom: 30
+            <ChartCanvas width={width} height={250} margin={{
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: 0
             }} type={type} seriesName="MSFT" data={data} xAccessor={d => d.date} discontinous xScale={xScale} xExtents={[
                 new Date(2012, 0, 1),
                 new Date(2012, 2, 2)
@@ -36,10 +36,10 @@ class comparechart_infopanel extends React.Component {
                     <YAxis axisAt="right" orient="right" ticks={5}/>
                     <LineSeries yAccessor={d => d.close}/>
                     <ScatterSeries yAccessor={d => d.close} marker={CircleMarker} markerProps={{
-                        r: 3
+                        r: 1
                     }}/>
                 </Chart>
-                <MouseCoordinates xDisplayFormat={d3.time.format("%Y-%m-%d")}/>
+
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
                 <TooltipContainer>
                     <OHLCTooltip forChart={1} origin={[-40, 0]}/>
