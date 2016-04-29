@@ -90,7 +90,7 @@ const WithdrawModal = Component({
 
   hide(e) {
     this.setState({errorMessage: null});
-    //Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
+    this.props.signals.tools.withdraw({action: 'close'});
   },
 
   allowSubmit()    { this.setState({allowSubmit: true}); },

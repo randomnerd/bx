@@ -96,7 +96,7 @@ const WithdrawModal = Component({
 
   hide(e) {
     this.setState({errorMessage: null});
-      this.props.signals.tools.withdraw({action: 'close'});
+    this.props.signals.tools.withdraw({action: 'close'});
     // Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
   },
 
@@ -120,7 +120,6 @@ const WithdrawModal = Component({
     if (!curr) return null;
     let fee = curr.withdrawalFee;
     let balance = this.data.balance.displayAmount();
-    console.log(this.props.tools.withdraw);
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}

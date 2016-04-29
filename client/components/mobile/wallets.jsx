@@ -40,8 +40,8 @@ const WalletsView = Component({
   },
 
   showWithdraw(item, event) {
-  // Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: item._id});
-  // Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
+    this.props.signals.tools.withdraw({action: 'open'});
+    this.props.signals.u.walletSet({id: item._id});
   },
 
   renderWalletItems() {

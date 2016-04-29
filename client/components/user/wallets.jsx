@@ -42,7 +42,7 @@ const WalletsPage = Component({
   showWithdraw(item, event) {
     //console.log('here');
     this.props.signals.tools.withdraw({action: 'open'});
-    this.props.signals.tools.walletSet({id: item._id});
+    this.props.signals.u.walletSet({id: item._id});
   },
 
   renderWalletItems() {

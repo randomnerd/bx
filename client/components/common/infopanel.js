@@ -42,7 +42,6 @@ const Infopanel = Component({
     this.setState({pair: 'btc'});
   },
   componentWillReceiveProps(newProps) {
-    console.log(newProps.tools.panel);
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.tools.panel ? 'show' : 'hide');
   },
 
