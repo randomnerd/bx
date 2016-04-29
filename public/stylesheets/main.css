@@ -1557,7 +1557,7 @@ tr.lesspadding th {
     overflow-x: hidden;
 }
 
-.mobile .h100.segment.buysell {
+.mobile .h100.segment.buysell, .mobile .h100.segment.charts {
     overflow-y: auto;
 }
 

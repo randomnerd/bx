@@ -88,81 +88,81 @@ const ChartsShow = Component({
     switch (this.state.chartType) {
 
 
-    case 'candle':
-      return (
-          <div><Charts.CandleStickStockScaleChartWithVolumeHistogramV3
-          data = {this.data.BTPR.slice(200)} type = 'hybrid' height={this.state.chartH} /></div>
+      case 'candle':
+        return (
+            <div><Charts.candelstick_default
+            data = {this.data.BTPR} type = 'hybrid' height={350} /></div>
+          );
+        break;
+
+      case 'line':
+        return (
+            <div><Charts.candelstick_default data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} /></div>
+          );
+        break;
+
+
+      case 'macd':
+        return (
+            <div><Charts.candelstick_default
+            data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+          );
+        break;
+      case 'rsi':
+        return (
+            <div><Charts.candelstick_default
+            data = {this.data.BTPR.slice(200)} type = 'svg' height={350} /></div>
+          );
+        break;
+
+      case 'sto':
+        return (
+            <div><Charts.candelstick_default
+            data = {this.data.BTPR} type = 'svg' height={350} /></div>
+          );
+        break;
+
+      case 'bollinger':
+        return (
+            <div>
+              <Charts.candelstick_default
+              data = {this.data.BTPR} type = 'svg' height={350} />
+            </div>
+          );
+        break;
+
+      case 'kagi':
+        return (
+              <div><Charts.candelstick_default data = {this.data.BTPR}
+               type = 'svg' height={350}/></div>
+          );
+        break;
+
+      case 'pointandfigure':
+        return (
+              <div><Charts.candelstick_default
+              data = {this.data.BTPR} type = 'svg' height={350}/></div>
         );
-      break;
+        break;
 
-    case 'line':
-      return (
-          <div><Charts.linechart data = {this.data.BTPR.slice(200)} type = 'hybrid' height={this.state.chartH} /></div>
+      case 'haikinashi':
+        return (
+          <div><Charts.candelstick_default
+          data = {this.data.BTPR} type = 'svg' height={350}/></div>
         );
-      break;
+        break;
 
+      case 'renko':
 
-    case 'macd':
-      return (
-          <div><Charts.CandleStickChartWithMACDIndicator
-          data = {this.data.BTPR.slice(200)} type = 'svg' height={this.state.chartH} /></div>
+        return (
+          <div><Charts.candelstick_default
+          data = {this.data.BTPR} type = 'svg' height={350}/></div>
         );
-      break;
-    case 'rsi':
-      return (
-          <div><Charts.CandleStickChartWithRSIIndicator
-          data = {this.data.BTPR.slice(200)} type = 'svg' height={this.state.chartH} /></div>
-        );
-      break;
+        break;
 
-    case 'sto':
-      return (
-          <div><Charts.CandleStickChartWithFullStochasticsIndicator
-          data = {this.data.BTPR} type = 'svg' height={this.state.chartH} /></div>
-        );
-      break;
-
-    case 'bollinger':
-      return (
-          <div>
-            <Charts.CandleStickChartWithBollingerBandOverlay
-            data = {this.data.BTPR} type = 'svg' height={this.state.chartH} />
-          </div>
-        );
-      break;
-
-    case 'kagi':
-      return (
-            <div><Charts.Kagi data = {this.data.BTPR}
-             type = 'svg' height={this.state.chartH}/></div>
-        );
-      break;
-
-    case 'pointandfigure':
-      return (
-            <div><Charts.PointAndFigureWithUpdatingData
-            data = {this.data.BTPR} type = 'svg' height={this.state.chartH}/></div>
-      );
-      break;
-
-    case 'haikinashi':
-      return (
-        <div><Charts.HaikinAshi
-        data = {this.data.BTPR} type = 'svg' height={this.state.chartH}/></div>
-      );
-      break;
-
-    case 'renko':
-
-      return (
-        <div><Charts.RenkoWithUpdatingData
-        data = {this.data.BTPR} type = 'svg' height={this.state.chartH}/></div>
-      );
-      break;
-
-    default:
-      break;
-    }
+      default:
+        break;
+      }
   },
 
   componentDidMount() {
@@ -174,7 +174,7 @@ const ChartsShow = Component({
   render() {
 
     return (
-      <div className='ui basic segment h100' ref="chart">
+      <div className='ui basic segment h100 charts' ref="chart">
         <h3 className='ui header'>PRICE CHART</h3>
           <div className='ui basic teal segment nopadding'>
             <div className='ui top attached tabular basic menu'>
