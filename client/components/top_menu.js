@@ -69,11 +69,11 @@ const TopMenu = Component({
         <div className="ui fluid container">
           <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
           { this.renderMenuItems() }
-          <TradePairsMenu pair={this.props.pair.pair} />
+          {this.props.pair_link ? <TradePairsMenu pair={this.props.pair.pair} /> : null }
           <a className="icon item double" onClick={this.infoToggle}>
             <p><i className="dropdown large icon"></i></p>
           </a>
-          {this.props.pair.pair ? <TopInfo pair={this.props.pair.pair} /> : null}
+          {this.props.pair_link ? <TopInfo pair={this.props.pair.pair} /> : null}
 
           { !!this.props.user._id ?
             <div className="right menu">
