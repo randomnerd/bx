@@ -21,7 +21,8 @@ import Chat from '../common/chat';
 import {TradePairs, Currencies} from '../../../both/collections';
 
 const MainLayout = Component({
-  page: ['page']
+  page: ['page'],
+  
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {

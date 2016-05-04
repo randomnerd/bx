@@ -4,7 +4,7 @@ import {TradePairs, Currencies} from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 const TradePairsMenu = Component({
   user: ['user'],
-  pair: ['pair.pair']
+  //pair: ['pair.pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
