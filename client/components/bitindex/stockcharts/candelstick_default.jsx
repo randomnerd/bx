@@ -10,42 +10,66 @@ let {CandlestickSeries, BarSeries} = ReStock.series;
 let {financeEODDiscontiniousScale} = ReStock.scale;
 
 let {XAxis, YAxis} = ReStock.axes;
-let { TooltipContainer, OHLCTooltip } = ReStock.tooltip;
+let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
 
 let {fitWidth} = ReStock.helper;
 
 class candelstick_default extends React.Component {
     render() {
+        let height = 350;
+
         let {data, type, width} = this.props;
 
+        let margin = {
+            left: 30,
+            right: 30,
+            top: 0,
+            bottom: 20
+        };
+
+        let gridHeight = height - margin.top - margin.botton;
+        let gridWidth = width - margin.left - margin.right;
+
+        let showGrid = true;
+
+        let yGrid = showGrid
+            ? {
+                innerTickSize: -1 * gridWidth,
+                tickStrokeOpacity: 0.2
+            }
+            : {};
+
+        let xGrid = showGrid
+            ? {
+                innerTickSize: -1 * gridHeight,
+                tickStrokeOpacity: 0.2
+            }
+            : {};
+
         return (
-            <ChartCanvas width={width} height={350} margin={{
-                left: 30,
-                right: 30,
-                top: 0,
-                bottom: 20
-            }} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} >
+            <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()}>
                 <Chart id={1} height={350} yExtents={d => [d.high, d.low]}>
-                    <YAxis axisAt='left' orient='left' ticks={5}  fontSize={10} stroke='#767676' tickStroke='#767676' t/>
+                    <YAxis axisAt='left' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid} />
 
                     <CandlestickSeries/>
                 </Chart>
                 <Chart id={2} origin={(w, h) => [
                     0, h - 150
                 ]} height={150} yExtents={d => d.volume}>
-                    <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
+                    <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676' />
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
                         ? '#21ba45'
                         : '#db2828'}/>
+
                 </Chart>
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
                 <TooltipContainer>
                     <OHLCTooltip forChart={1} origin={[10, 5]}/>
                 </TooltipContainer>
 
-          </ChartCanvas>
+            </ChartCanvas>
         );
     }
 }
