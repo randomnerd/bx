@@ -1,13 +1,20 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {
+    Component
+} from 'cerebral-view-react';
 const AdminOnly = Component({
-  loggingIn: ['loggingIn'],
-  admin: ['admin']
+    loggingIn: ['loggingIn'],
+    admin: ['admin']
 }, (props) => {
-    let {loggingIn, admin, redirect, children} = props;
+    let {
+        loggingIn,
+        admin,
+        redirect,
+        children
+    } = props;
     if (!admin && !loggingIn && redirect) {
-      // FlowRouter.go(redirect);
+        // FlowRouter.go(redirect);
     }
-    return admin ? children : <div></div>;
+    return admin ? children : < div > < /div>;
 });
 export default AdminOnly;
