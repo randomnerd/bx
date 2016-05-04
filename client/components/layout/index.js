@@ -14,10 +14,12 @@ const Layout = Component({
       loading: !Meteor.subs.ready(),
     };
   },
-  render(){
-    this.props.signals.tools.windowWidth();
 
-    console.log(this.props);
+  componentDidMount() {
+    this.props.signals.tools.windowWidth();
+  },
+
+  render() {
     if (this.data.loading) return <div>Loading</div>;
     if (this.props.mobile) return <MobileLayout/>;
     switch (this.props.layout) {
