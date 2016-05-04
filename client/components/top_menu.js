@@ -64,16 +64,17 @@ const TopMenu = Component({
     this.setState({drag: !this.state.drag});
   },
   render() {
+    let pair = this.props.pair? this.props.pair.pair : false;
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container">
           <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
           { this.renderMenuItems() }
-          <TradePairsMenu pair={this.props.pair.pair} />
+          <TradePairsMenu pair={pair} />
           <a className="icon item double" onClick={this.infoToggle}>
             <p><i className="dropdown large icon"></i></p>
           </a>
-          {this.props.pair.pair ? <TopInfo pair={this.props.pair.pair} /> : null}
+          {pair ? <TopInfo pair={pair} /> : null}
 
           { !!this.props.user._id ?
             <div className="right menu">
