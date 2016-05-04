@@ -8,7 +8,9 @@ import Infopanel from './common/infopanel';
 import {Component} from 'cerebral-view-react';
 const TopMenu = Component({
   user: ['user'],
-  pair: ['pair.pair']
+  pair: ['pair'],
+  pair_link: ['pair_link'],
+  page: ['page']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -47,11 +49,9 @@ const TopMenu = Component({
   },
   showLoginModal() {
     this.props.signals.user.loginClicked();
-    // Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
   },
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
-    // Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   chatToggle() {
     this.props.signals.tools.chat();
@@ -60,7 +60,7 @@ const TopMenu = Component({
     this.props.signals.tools.infoPanel();
   },
   dragToggle(){
-    // Dispatcher.dispatch({ actionType: 'DRAG' } );
+    this.props.signals.tools.dragToggle();
     this.setState({drag: !this.state.drag});
   },
   render() {
@@ -69,15 +69,15 @@ const TopMenu = Component({
         <div className="ui fluid container">
           <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
           { this.renderMenuItems() }
-          <TradePairsMenu pair={this.props.pair} />
+          <TradePairsMenu pair={this.props.pair.pair} />
           <a className="icon item double" onClick={this.infoToggle}>
             <p><i className="dropdown large icon"></i></p>
           </a>
-          {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
+          {this.props.pair.pair ? <TopInfo pair={this.props.pair.pair} /> : null}
 
           { !!this.props.user._id ?
             <div className="right menu">
-              {this.props.pair ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
+              {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
                 <i className="block layout icon"></i>
               </a> : null}
               <UserTopMenu />

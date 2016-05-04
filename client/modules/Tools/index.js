@@ -38,6 +38,16 @@ function addressBookOpen ({input, state}) {
   }
 }
 
+function drag ({input, state}) {
+  if(input.action && input.action == 'off'){
+    state.set('tools.drag', false);
+  }else if(input.action && input.action == 'on'){
+    state.set('tools.drag', true);
+  }else{
+    state.set('tools.drag', !state.get('tools.drag'));
+  }
+}
+
 const windowWidth = [
   setMobile
 ];
@@ -58,6 +68,10 @@ const addressbook = [
   addressBookOpen
 ];
 
+const dragToggle = [
+  drag
+];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -73,7 +87,8 @@ export default (options = {}) => {
       infoPanel,
       chat,
       withdraw,
-      addressbook
+      addressbook,
+      dragToggle
     });
 
     // Tracker.autorun(() => {

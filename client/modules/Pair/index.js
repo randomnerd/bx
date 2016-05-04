@@ -31,8 +31,6 @@ const setPair = [
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
-      layout: "main",
-      pair_link: null,
       pair: null
     });
 
