@@ -8,45 +8,45 @@ import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 const TopMenu = Component({
-    layout: ['layout']
+  layout: ['layout']
 }, {
-    mixins: [ReactMeteorData],
-    getMeteorData() {
-        return {user: Meteor.user()}
-    },
-    getInitialState() {
-        return {drag: false};
-    },
-    showMenu() {
-        this.props.signals.mob.menu();
-    },
-    renderLoginButtons() {
-        return (
-            <div className="right menu">
-                <a className="item" onClick={this.showLoginModal}>Log in</a>
-                <a className="item" onClick={this.showSignUpModal}>Sign up</a>
-            </div>
-        );
-    },
-    render() {
-        return (
-            <div className="ui top fixed large menu">
-                <a className="icon item" onClick={this.showMenu}>
-                    <i className="sidebar large black icon"></i>
-                </a>
-
-                {this.props.pair
-                    ? <TopInfo pair={this.props.pair}/>
-                    : null}
-
-                {this.data.user
-                    ? <div className="right menu">
-                            <NotificationShow/>
-                        </div>
-                    : this.renderLoginButtons()
-}
-            </div>
-        );
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    return {
+      user: Meteor.user()
     }
+  },
+  getInitialState() {
+    return {
+      drag:false
+    };
+  },
+  showMenu() {
+    this.props.signals.mob.menu();
+  },
+  renderLoginButtons() {
+    return (
+      <div className="right menu">
+        <a className="item" onClick={this.showLoginModal}>Log in</a>
+        <a className="item" onClick={this.showSignUpModal}>Sign up</a>
+      </div>
+    );
+  },
+  render() {
+    return (
+      <div className="ui top fixed large menu">
+        <a className="icon item" onClick={this.showMenu}><i className="sidebar large black icon"></i></a>
+
+        {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
+
+        { this.data.user ?
+          <div className="right menu">
+            <NotificationShow />
+          </div>
+          : this.renderLoginButtons()
+        }
+      </div>
+    );
+  }
 });
 export default TopMenu;
