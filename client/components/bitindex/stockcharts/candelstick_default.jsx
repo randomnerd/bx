@@ -9,6 +9,7 @@ const CandleStickChart = React.createClass({
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
         height: React.PropTypes.number.isRequired,
+        height_bar: React.PropTypes.number.isRequired,
         type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
     },
 
@@ -31,7 +32,7 @@ const CandleStickChart = React.createClass({
 
         let {fitWidth} = ReStock.helper;
 
-        let {data, type, width, height} = this.props;
+        let {data, type, width, height,height_bar} = this.props;
 
         let margin = {
             left: 30,
@@ -61,13 +62,13 @@ const CandleStickChart = React.createClass({
 
         return (
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()}>
-                <Chart id={1} height={350} yExtents={d => [d.high, d.low]}>
+                <Chart id={1} height={height} yExtents={d => [d.high, d.low]}>
                     <YAxis axisAt='left' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid}/>
                     <CandlestickSeries/>
                 </Chart>
                 <Chart id={2} origin={(w, h) => [
                     0, h - 150
-                ]} height={150} yExtents={d => d.volume}>
+                ]} height={height_bar} yExtents={d => d.volume}>
                     <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
