@@ -42,6 +42,7 @@ const Home = Component({
 
                 $(this.refs.ld).scroll(() => {
 
+<<<<<<< 40f0219182dc45609cec8409e4461a454c2d5ff7
                     if (!this.state.holder) {
                         this.setState({
                             holder: true
@@ -69,6 +70,33 @@ const Home = Component({
                             });
                         }
                     }
+=======
+      if(!this.state.holder){
+        this.setState({ holder : true });
+        let realScroll = ld.scrollTop();
+        if(this.state.scroll == 1 && realScroll > this.state.scroller){
+          this.scrollingTo(hPanel, 2);
+          this.props.signals.tools.infoPanel({action:'show'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else if(this.state.scroll == 2 && realScroll < this.state.scroller){
+          this.scrollingTo(0, 1);
+          this.props.signals.tools.infoPanel({action:'hide'});
+          //$this.setState({ icons : !$this.state.icons });
+        }
+        else if(this.state.scroll == 2 && realScroll > this.state.scroller){
+          this.scrollingTo(h, 3);
+          this.props.signals.tools.infoPanel({action:'hide'});
+          //$this.setState({ icons : !$this.state.icons });
+        }else if(this.state.scroll == 3 && realScroll < this.state.scroller){
+          this.scrollingTo(hPanel,2);
+          this.props.signals.tools.infoPanel({action:'show'});
+          //$this.setState({ icons : !$this.state.icons });
+        }
+        else{
+          this.setState({ holder : false });
+        }
+      }
+>>>>>>> home fix
 
 
                 });
