@@ -20,7 +20,7 @@ class areachart_infopanel extends React.Component {
                 right: 0,
                 top: 0,
                 bottom: 0
-            }} type={type} data={data} xAccessor={d => d.date} xScale={d3.time.scale()}>
+            }} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} xScale={d3.time.scale()}>
                 <Chart id={1} yExtents={d => d.close}>
                     <AreaSeries yAccessor={d => d.close}/>
                 </Chart>

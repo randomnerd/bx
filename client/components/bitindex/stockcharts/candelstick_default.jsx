@@ -50,7 +50,6 @@ class candelstick_default extends React.Component {
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()}>
                 <Chart id={1} height={350} yExtents={d => [d.high, d.low]}>
                     <YAxis axisAt='left' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid} />
-
                     <CandlestickSeries/>
                 </Chart>
                 <Chart id={2} origin={(w, h) => [
