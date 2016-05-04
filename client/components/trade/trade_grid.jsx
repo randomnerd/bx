@@ -511,6 +511,7 @@ const TradeGrid = Component({
 
 
   dragBlocks(){
+    let $this = this;
 
     _.map(this.previousPlace,(place)=>{
       if(place && $(place).draggable( "instance" )){
@@ -522,7 +523,7 @@ const TradeGrid = Component({
     Meteor.setTimeout(()=>{
       $(".dragcontainer .drag").each((indx, element)=>{
         let el = $(element).attr('data-block');
-        this.previousPlace[el]=element;
+        $this.previousPlace[el]=element;
       });
       $(".dragcontainer .drag").draggable({
         opacity: 0.7,
@@ -532,19 +533,19 @@ const TradeGrid = Component({
         handle: "h3",
         start: function() {
           let el = $(this).attr('data-block');
-          this.previousPlace[el]=this;
-          this.setState({dragging : this.positions[el].column});
-          this.setState({drag_el : el});
+          $this.previousPlace[el]=this;
+          $this.setState({dragging : $this.positions[el].column});
+          $this.setState({drag_el : el});
         },
         stop: function() {
-          this.setState({dragging : false});
-          this.setState({drag_el : false});
+          $this.setState({dragging : false});
+          $this.setState({drag_el : false});
         },
         drag:function(event, ui){
 
         }
       });
-      if (this.isMounted()) this.setState({dragorders : true});
+      $this.setState({dragorders : true});
     },100);
 
   },
