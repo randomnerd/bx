@@ -3,7 +3,7 @@
 import React from 'react';
 import d3 from 'd3';
 
-import ReStock from 'react-stockcharts';
+import ReStock from '/client/lib/react-stockcharts';
 
 let { ChartCanvas, Chart, EventCapture } = ReStock;
 

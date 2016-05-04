@@ -3,7 +3,7 @@
 import React from 'react';
 
 import d3 from 'd3';
-import ReStock from 'react-stockcharts';
+import ReStock from '/client/lib/react-stockcharts';
 
 let {ChartCanvas, Chart} = ReStock;
 
@@ -15,13 +15,13 @@ class areachart_infopanel extends React.Component {
     render() {
         let {data, type, width} = this.props;
         return (
-            <ChartCanvas width={width} height={25} margin={{
+            <ChartCanvas seriesName="seriesName1" width={width} height={25} margin={{
                 left: 0,
                 right: 0,
                 top: 0,
                 bottom: 0
             }} type={type} data={data} xAccessor={d => d.date} xScale={d3.time.scale()}>
-                <Chart id={1} yExtents={d => d.close}>
+                <Chart id={this.props.id} yExtents={d => d.close}>
                     <AreaSeries yAccessor={d => d.close}/>
                 </Chart>
             </ChartCanvas>

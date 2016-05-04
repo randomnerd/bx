@@ -2,7 +2,7 @@ import React from 'react';
 import { BitIndexIndicator_BTPR } from '../../../both/collections';
 import Charts from './';
 
-import ReStock from 'react-stockcharts';
+import ReStock from '/client/lib/react-stockcharts';
 
 
 

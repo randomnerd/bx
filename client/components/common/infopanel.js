@@ -109,7 +109,7 @@ const Infopanel = Component({
               <div className="ui basic segment nobg">
                 {
                   this.data.BTPR_Loading ? <div className='cube'></div> :
-                  <Charts.comparechart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                  <Charts.comparechart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={1} />
                 }
               </div>
             </div>
@@ -138,7 +138,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={2} />
                       }
                     </td>
                   </tr>
@@ -148,7 +148,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={3} />
                       }
                     </td>
                   </tr>
@@ -158,7 +158,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={4} />
                       }
                     </td>
                   </tr>
@@ -168,7 +168,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={5} />
                       }
                     </td>
                   </tr>
@@ -178,7 +178,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={6} />
                       }
                     </td>
                   </tr>
@@ -206,7 +206,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={7} />
                       }
                     </td>
                   </tr>
@@ -216,7 +216,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={8} />
                       }
                     </td>
                   </tr>
@@ -226,7 +226,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={9} />
                       }
                     </td>
                   </tr>
@@ -236,7 +236,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={10} />
                       }
                     </td>
                   </tr>
@@ -246,7 +246,7 @@ const Infopanel = Component({
                     <td className='nine wide right aligned'>
                       {
                         this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid"/>
+                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={11} />
                       }
                     </td>
                   </tr>
