@@ -3,9 +3,6 @@ import AdminLayout from './admin';
 import MobileLayout from './mobile_layout';
 import {Component} from 'cerebral-view-react';
 import React from 'react';
-export const Main = MainLayout;
-export const Admin = AdminLayout;
-export const Mobile = MobileLayout;
 
 const Layout = Component({
   layout: ['layout'],
@@ -24,9 +21,8 @@ const Layout = Component({
     if (this.data.loading) return <div>Loading</div>;
     if (this.props.mobile) return <Mobile/>;
     switch (this.props.layout) {
-      case 'admin': return <Admin />;
-      case 'home': return <Main />;
-      default: return <Main />;
+      case 'admin': return <AdminLayout />;
+      default: return <MainLayout />;
     }
   }
 });

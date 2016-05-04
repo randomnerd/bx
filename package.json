@@ -5,25 +5,25 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "cerebral": "^0.33.31",
+    "cerebral": "^0.33.34",
     "cerebral-addons": "^0.5.4",
-    "cerebral-model-baobab": "^0.4.7",
-    "cerebral-module-devtools": "^0.5.4",
-    "cerebral-module-router": "^0.13.1",
-    "cerebral-view-react": "^0.11.8",
-    "classnames": "^2.2.3",
+    "cerebral-model-baobab": "^0.4.8",
+    "cerebral-module-devtools": "^0.6.4",
+    "cerebral-module-router": "^0.14.3",
+    "cerebral-view-react": "^0.11.17",
+    "classnames": "^2.2.5",
     "d3": "^3.5.16",
-    "formsy-react": "^0.17.0",
-    "meteor-node-stubs": "^0.2.1",
+    "formsy-react": "^0.18.0",
+    "lodash.flattendeep": "^4.2.0",
+    "meteor-node-stubs": "^0.2.3",
     "moment": "^2.13.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^15.0.2",
+    "react-addons-pure-render-mixin": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "save-svg-as-png": "^1.0.2"
   },
   "devDependencies": {
-    "babel-plugin-react-transform": "^2.0.2",
-    "babel-preset-meteor": "^6.6.7",
-    "react-transform-catch-errors": "^1.0.2",
-    "react-transform-hmr": "^1.0.4",
-    "redbox-react": "^1.2.2"
+    "babel-preset-meteor": "^6.6.8",
+    "react-hot-loader": "^3.0.0-beta.1"
   }
 }

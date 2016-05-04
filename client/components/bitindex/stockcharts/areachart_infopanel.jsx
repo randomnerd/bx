@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-
 import d3 from 'd3';
 import ReStock from '/client/lib/react-stockcharts';
 
@@ -14,6 +13,7 @@ let {fitWidth} = ReStock.helper;
 class areachart_infopanel extends React.Component {
     render() {
         let {data, type, width} = this.props;
+        if (data.length > 100) data = _.last(data, 100);
         return (
             <ChartCanvas seriesName="seriesName1" width={width} height={25} margin={{
                 left: 0,
