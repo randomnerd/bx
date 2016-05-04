@@ -5,11 +5,12 @@ import d3 from 'd3';
 
 import ReStock from 'react-stockcharts';
 
-let {ChartCanvas, Chart} = ReStock;
+let {ChartCanvas, Chart, EventCapture} = ReStock;
 let {CandlestickSeries, BarSeries} = ReStock.series;
 let {financeEODDiscontiniousScale} = ReStock.scale;
 
 let {XAxis, YAxis} = ReStock.axes;
+let { TooltipContainer, OHLCTooltip } = ReStock.tooltip;
 
 let {fitWidth} = ReStock.helper;
 
@@ -39,7 +40,12 @@ class candelstick_default extends React.Component {
                         ? '#21ba45'
                         : '#db2828'}/>
                 </Chart>
-            </ChartCanvas>
+                <EventCapture mouseMove={true} zoom={true} pan={true}/>
+                <TooltipContainer>
+                    <OHLCTooltip forChart={1} origin={[10, 5]}/>
+                </TooltipContainer>
+
+          </ChartCanvas>
         );
     }
 }
