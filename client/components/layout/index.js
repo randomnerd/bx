@@ -19,7 +19,7 @@ const Layout = Component({
 
     console.log(this.props);
     if (this.data.loading) return <div>Loading</div>;
-    if (this.props.mobile) return <Mobile/>;
+    if (this.props.mobile) return <MobileLayout/>;
     switch (this.props.layout) {
       case 'admin': return <AdminLayout />;
       default: return <MainLayout />;
