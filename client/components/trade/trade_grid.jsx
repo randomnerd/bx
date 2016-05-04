@@ -163,7 +163,7 @@ const TradeGrid = Component({
 
             case 'candle':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR,
+                    <div><Charts.candelstick_default data={this.data.BTPR.
                     slice(200)} type='hybrid' height={350} height_bar={150}/></div>
                 );
                 break;

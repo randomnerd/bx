@@ -91,13 +91,13 @@ const ChartsShow = Component({
       case 'candle':
         return (
             <div><Charts.candelstick_default
-            data = {this.data.BTPR.slice(200)} type = 'hybrid' height={250} height_bar={100}/></div>
+            data = {this.data.BTPR.slice(200)} type = 'svg' height={250} height_bar={100}/></div>
           );
         break;
 
       case 'line':
         return (
-            <div><Charts.candelstick_default data = {this.data.BTPR.slice(200)} type = 'hybrid' height={350} height_bar = {150} /></div>
+            <div><Charts.candelstick_default data = {this.data.BTPR.slice(200)} type = 'svg' height={350} height_bar = {150} /></div>
           );
         break;
 
