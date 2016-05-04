@@ -8,6 +8,7 @@ const CandleStickChart = React.createClass({
     propTypes: {
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
+        height: React.PropTypes.number.isRequired,
         type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
     },
 
@@ -30,8 +31,8 @@ const CandleStickChart = React.createClass({
 
         let {fitWidth} = ReStock.helper;
 
-        let {data, type, width} = this.props;
-        let height = 350;
+        let {data, type, width, height} = this.props;
+
         let margin = {
             left: 30,
             right: 30,
@@ -69,7 +70,6 @@ const CandleStickChart = React.createClass({
                 ]} height={150} yExtents={d => d.volume}>
                     <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
-
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
                         ? '#21ba45'
                         : '#db2828'}/>
@@ -78,7 +78,6 @@ const CandleStickChart = React.createClass({
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
                 <TooltipContainer>
                     <OHLCTooltip forChart={1} origin={[10, 5]}/>
-
                 </TooltipContainer>
             </ChartCanvas>
         );

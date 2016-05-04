@@ -91,7 +91,7 @@ const ChartsShow = Component({
       case 'candle':
         return (
             <div><Charts.candelstick_default
-            data = {this.data.BTPR} type = 'hybrid' height={350} /></div>
+            data = {this.data.BTPR} type = 'hybrid' height={150} /></div>
           );
         break;
 
