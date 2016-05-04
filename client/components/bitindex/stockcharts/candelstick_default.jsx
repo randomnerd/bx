@@ -47,9 +47,9 @@ class candelstick_default extends React.Component {
             : {};
 
         return (
-            <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} allowedIntervals={["D", "W", "M"]}>
+            <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} allowedIntervals={['D', 'W', 'M']}>
 
-                <Chart id={1} height={200} yExtents={d => [d.high, d.low]} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={d3.format(".2f")} >
+                <Chart id={1} height={200} initialDisplay={30} yExtents={d => [d.high, d.low]} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={d3.format('.2f')}>
                     <YAxis axisAt='left' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid}/>
                     <CandlestickSeries/>
                 </Chart>
