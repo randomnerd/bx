@@ -4,73 +4,44 @@ import {
 } from 'cerebral-view-react';
 
 const Home = Component({
-            user: ['user'],
-            title: ['home', 'title']
-        }, {
-            getInitialState() {
-                return {
-                    panel: false,
-                    icons: true,
-                    holder: false,
-                    scroller: 0,
-                    scroll: 1
-                };
-            },
-            componentDidMount() {
+      user: ['user'],
+      title: ['home', 'title']
+  }, {
+      getInitialState() {
+          return {
+              panel: false,
+              icons: true,
+              holder: false,
+              scroller: 0,
+              scroll: 1
+          };
+      },
+      componentDidMount() {
 
-                let ld = $(this.refs.ld);
+          let ld = $(this.refs.ld);
 
-                let h = ld.height();
-                let hIco = $(this.refs.icons).height();
-                let hBignum = $(this.refs.bignum).height();
-                let hCurrs = $(this.refs.currs).height();
+          let h = ld.height();
+          let hIco = $(this.refs.icons).height();
+          let hBignum = $(this.refs.bignum).height();
+          let hCurrs = $(this.refs.currs).height();
 
-                let hPanel = h - 270;
+          let hPanel = h - 270;
 
-                let $this = this;
+          let $this = this;
 
-                $(window).resize(() => {
-                    ld = $(this.refs.ld);
+          $(window).resize(() => {
+              ld = $(this.refs.ld);
 
-                    h = ld.height();
-                    hIco = $(this.refs.icons).height();
-                    hBignum = $(this.refs.bignum).height();
-                    hCurrs = $(this.refs.currs).height();
+              h = ld.height();
+              hIco = $(this.refs.icons).height();
+              hBignum = $(this.refs.bignum).height();
+              hCurrs = $(this.refs.currs).height();
 
-                    hPanel = h - 270;
-                });
+              hPanel = h - 270;
+          });
 
-                $(this.refs.ld).scroll(() => {
+          $(this.refs.ld).scroll(() => {
 
-<<<<<<< 40f0219182dc45609cec8409e4461a454c2d5ff7
-                    if (!this.state.holder) {
-                        this.setState({
-                            holder: true
-                        });
-                        let realScroll = ld.scrollTop();
-                        if (this.state.scroll == 1 && realScroll > this.state.scroller) {
-                            this.scrollingTo(hPanel, 2);
-                            //Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
-                            //$this.setState({ icons : !$this.state.icons });
-                        } else if (this.state.scroll == 2 && realScroll < this.state.scroller) {
-                            this.scrollingTo(0, 1);
-                            //Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
-                            //$this.setState({ icons : !$this.state.icons });
-                        } else if (this.state.scroll == 2 && realScroll > this.state.scroller) {
-                            this.scrollingTo(h, 3);
-                            //Dispatcher.dispatch({actionType: 'HIDE_PANEL'});
-                            //$this.setState({ icons : !$this.state.icons });
-                        } else if (this.state.scroll == 3 && realScroll < this.state.scroller) {
-                            this.scrollingTo(hPanel, 2);
-                            //Dispatcher.dispatch({actionType: 'SHOW_PANEL'});
-                            //$this.setState({ icons : !$this.state.icons });
-                        } else {
-                            this.setState({
-                                holder: false
-                            });
-                        }
-                    }
-=======
       if(!this.state.holder){
         this.setState({ holder : true });
         let realScroll = ld.scrollTop();
@@ -96,7 +67,6 @@ const Home = Component({
           this.setState({ holder : false });
         }
       }
->>>>>>> home fix
 
 
                 });
