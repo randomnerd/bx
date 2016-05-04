@@ -1,13 +1,12 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
 import Formsy from 'formsy-react';
 import classNames from 'classnames';
 
-const Input = Component({
-}, {
+const Input = React.createClass({
   mixins: [Formsy.Mixin],
   getDefaultProps() {
     return {
+      type: 'text',
       adds: {
         left:  { buttons: [] },
         right: { buttons: [] }
@@ -100,7 +99,7 @@ const Input = Component({
     let cls = classNames(clsParams);
 
     let errorMessage = this.getErrorMessage();
-    let input = <input {...this.props} onChange={this.changeValue} value={this.getValue()} />;
+    let input = <input {...this.props} onChange={this.changeValue} value={this.getValue() || ''} />;
     let label = this.props.label ? <label>{this.props.label}</label> : null;
     let icon  = this.props.icon ? <i className={"icon " + this.props.icon} /> : null;
 
