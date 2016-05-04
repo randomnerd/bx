@@ -22,7 +22,10 @@ const WithdrawModal = Component({
   tools: ['tools'],
   wallet: ['wallet']
 }, {
-  mixins: [ReactMeteorData],
+  mixins: [
+    ReactMeteorData,
+    //Formsy.Mixin
+  ],
   getInitialState() {
     return {
       currId: null,
@@ -54,7 +57,7 @@ const WithdrawModal = Component({
   },
 
   setBalance(){
-    console.log(this.refs.amount);
+    //console.log(this.refs.amount);
     this.refs.amount.setValue(this.data.balance.displayAmount());
   },
 
@@ -131,7 +134,7 @@ const WithdrawModal = Component({
 
             <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
             <Semantic.Input name='tfa' label='TFA code' placeholder='Type your TFA code here' ref='tfa' />
-            <input type='submit' className='hidden' />
+            <input type='submit' className='hidden' name="afsgseg1" />
           </Formsy.Form>
         </Semantic.Modal>
       </UserOnly>

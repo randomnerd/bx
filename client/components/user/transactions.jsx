@@ -42,8 +42,7 @@ const TransactionsView = Component({
 
   showWithdraw(){
     this.props.signals.tools.withdraw({action: 'open'});
-    // Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_CURRENCY', payload: this.props.current});
-    // Dispatcher.dispatch({actionType: 'SHOW_WITHDRAW_MODAL'});
+    this.props.signals.u.walletSet({id: this.props.wallet});
   },
 
   render() {

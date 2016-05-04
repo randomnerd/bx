@@ -5,6 +5,7 @@ import {Meteor} from 'meteor/meteor';
 
 import controller from './controller';
 import Layout from './components/layout';
+import './lib/liscroll';
 
 const app = (
   <Container controller={controller}>

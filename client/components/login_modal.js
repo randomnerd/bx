@@ -16,7 +16,6 @@ const LoginModal = Component({
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
     this.props.signals.user.loginDone();
-    // Dispatcher.dispatch({actionType: 'HIDE_LOGIN_MODAL'});
   },
   login() {
     var {email, password} = this.refs.form.getCurrentValues();

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 const Input = Component({
 }, {
-
   mixins: [Formsy.Mixin],
   getDefaultProps() {
     return {
