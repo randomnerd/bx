@@ -1,4 +1,4 @@
-import 'react-hot-loader/patch';
+if (process.env.NODE_ENV !== 'production') require('react-hot-loader/patch');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Container} from 'cerebral-view-react';
