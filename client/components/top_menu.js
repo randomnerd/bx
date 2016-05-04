@@ -8,7 +8,8 @@ import Infopanel from './common/infopanel';
 import {Component} from 'cerebral-view-react';
 const TopMenu = Component({
   user: ['user'],
-  pair: ['pair.pair']
+  pair: ['pair.pair'],
+
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -47,11 +48,9 @@ const TopMenu = Component({
   },
   showLoginModal() {
     this.props.signals.user.loginClicked();
-    // Dispatcher.dispatch({ actionType: 'SHOW_LOGIN_MODAL' });
   },
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
-    // Dispatcher.dispatch({ actionType: 'SHOW_SIGN_UP_MODAL' });
   },
   chatToggle() {
     this.props.signals.tools.chat();
@@ -60,10 +59,11 @@ const TopMenu = Component({
     this.props.signals.tools.infoPanel();
   },
   dragToggle(){
-    // Dispatcher.dispatch({ actionType: 'DRAG' } );
+    this.props.signals.tools.dragToggle();
     this.setState({drag: !this.state.drag});
   },
   render() {
+    console.log(this.props.pair);
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container">

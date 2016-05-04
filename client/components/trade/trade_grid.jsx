@@ -12,7 +12,8 @@ import Balance from './balance';
 const TradeGrid = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  pair: ['pair.pair']
+  pair: ['pair.pair'],
+  tools: ['tools']
 }, {
   mixins: [ReactMeteorData],
   getInitialState: function() {
@@ -548,8 +549,28 @@ const TradeGrid = Component({
     },100);
 
   },
+
+  componentWillReceiveProps(newProps){
+    this.setState({drag_on: newProps.tools.drag});
+
+    if(!this.state.drag_on){
+      this.dragBlocks();
+      this.setState({drag_on: !this.state.drag_on});
+    }else{
+      _.map(this.previousPlace,(place)=>{
+        if(place && $(place).draggable( "instance" )){
+          $(place).draggable( "destroy" );
+        }
+      })
+      Meteor.call('userblocs/update', this.positions , (err, result) => {
+         if(err) console.log(err.message);
+      });
+      this.setState({drag_on: !this.state.drag_on});
+    }
+
+  },
+
   componentDidMount() {
-    this.props.signals.pair.setPair({pair: this.data.pair});
     if(!this.data.user){
       //FlowRouter.go("/");
       return;
@@ -574,30 +595,6 @@ const TradeGrid = Component({
         this.setState({places: places});
       },200);
     }
-    // Dispatcher.register((e) => {
-    //   //console.log('new dispatcher event', payload);
-    //   switch (e.actionType) {
-    //     case 'DRAG':
-    //       if(!this.state.drag_on){
-    //
-    //
-    //
-    //         this.dragBlocks();
-    //         this.setState({drag_on: !this.state.drag_on});
-    //       }else{
-    //         _.map(this.previousPlace,(place)=>{
-    //           if(place && $(place).draggable( "instance" )){
-    //             $(place).draggable( "destroy" );
-    //           }
-    //         })
-    //         Meteor.call('userblocs/update', this.positions , (err, result) => {
-    //            if(err) console.log(err.message);
-    //         });
-    //         this.setState({drag_on: !this.state.drag_on});
-    //       }
-    //       break;
-    //   }
-    // });
 
     let $this = this;
 
@@ -824,6 +821,7 @@ const TradeGrid = Component({
   },
 
   render() {
+    this.props.signals.pair.setPair({pair: this.data.pair});
     let lcol = this.state.lcol;
     let rcol = this.state.rcol;
     let invisible = "";
