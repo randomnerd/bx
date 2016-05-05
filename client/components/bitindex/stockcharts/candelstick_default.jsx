@@ -5,34 +5,46 @@ import d3 from 'd3';
 
 import ReStock from '/client/lib/react-stockcharts';
 
-let {ChartCanvas, Chart, EventCapture} = ReStock;
+const candelstick_default = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired,
+        width: React.PropTypes.number.isRequired,
+        height: React.PropTypes.number.isRequired,
+        height_bar: React.PropTypes.number.isRequired,
+        type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
+    },
 
-let {CandlestickSeries, BarSeries, AreaSeries} = ReStock.series;
-
-let {financeEODDiscontiniousScale} = ReStock.scale;
-
-let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
-
-let {MouseCoordinates, CurrentCoordinate, EdgeIndicator} = ReStock.coordinates;
-
-let {XAxis, YAxis} = ReStock.axes;
-let {sma} = ReStock.indicator;
-
-let {fitWidth} = ReStock.helper;
-
-let margin = {
-    left: 30,
-    right: 40,
-    top: 0,
-    bottom: 20
-};
-
-class candelstick_default extends React.Component {
+    defaultProps: {
+        type: 'svg'
+    },
 
     render() {
+        let {ChartCanvas, Chart, EventCapture} = ReStock;
+
+        let {CandlestickSeries, BarSeries, AreaSeries} = ReStock.series;
+
+        let {financeEODDiscontiniousScale} = ReStock.scale;
+
+        let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
+
+        let {MouseCoordinates, CurrentCoordinate, EdgeIndicator} = ReStock.coordinates;
+
+        let {XAxis, YAxis} = ReStock.axes;
+        let {sma} = ReStock.indicator;
+
+        let {fitWidth} = ReStock.helper;
+
+        let margin = {
+            left: 30,
+            right: 40,
+            top: 0,
+            bottom: 20
+        };
+
         let {data, type, width, height, height_bar} = this.props;
 
-        if (data.length > 300) data = _.last(data, 300);
+        if (data.length > 300) 
+            data = _.last(data, 300);
 
         let gridHeight = height - margin.top - margin.bottom;
         let gridWidth = width - margin.left - margin.right;
@@ -82,18 +94,6 @@ class candelstick_default extends React.Component {
             </ChartCanvas>
         );
     }
-};
-candelstick_default.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    height_bar: React.PropTypes.number.isRequired,
-    type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
-};
+});
 
-candelstick_default.defaultProps = {
-    type: 'svg'
-};
-candelstick_default = fitWidth(candelstick_default);
-
-export default candelstick_default;
+export default ReStock.helper.fitWidth(candelstick_default);
