@@ -4,7 +4,7 @@ import React from 'react';
 import d3 from 'd3';
 import ReStock from '/client/lib/react-stockcharts';
 
-const candelstick_default = React.createClass({
+const candelstick_mobile = React.createClass({
     propTypes: {
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
@@ -20,24 +20,23 @@ const candelstick_default = React.createClass({
     render() {
         let {ChartCanvas, Chart, EventCapture} = ReStock;
 
-        let {CandlestickSeries, BarSeries, AreaSeries} = ReStock.series;
+        let {CandlestickSeries, BarSeries} = ReStock.series;
 
         let {financeEODDiscontiniousScale} = ReStock.scale;
 
         let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
 
-        let {MouseCoordinates, CurrentCoordinate, EdgeIndicator} = ReStock.coordinates;
+        let { MouseCoordinates, CurrentCoordinate } = ReStock.coordinates;
 
         let {XAxis, YAxis} = ReStock.axes;
-        let {sma } = ReStock.indicator;
 
         let {fitWidth} = ReStock.helper;
 
-        let {data, type, width, height, height_bar} = this.props;
+        let {data, type, width, height,height_bar} = this.props;
 
         let margin = {
-            left: 40,
-            right: 40,
+            left: 30,
+            right: 30,
             top: 0,
             bottom: 20
         };
@@ -61,30 +60,20 @@ const candelstick_default = React.createClass({
         if (data.length > 300)
             data = _.last(data, 300);
 
-        let smaVolume50 = sma().id(0).windowSize(50).source(d => d.volume).merge((d, c) => {
-            d.smaVolume50 = c
-        }).accessor(d => d.smaVolume50);
-
         return (
-            <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} allowedIntervals={["D", "W", "M"]} calculator={[smaVolume50]}>
+            <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()}>
                 <Chart id={1} height={height} yExtents={d => [d.high, d.low]}>
                     <YAxis axisAt='left' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid}/>
                     <CandlestickSeries/>
                 </Chart>
-
                 <Chart id={2} origin={(w, h) => [
                     0, h - 150
-                ]} height={height_bar} yExtents={[
-                    d => d.volume,
-                    smaVolume50.accessor()
-                ]}>
+                ]} height={height_bar} yExtents={d => d.volume}>
                     <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
                         ? '#21ba45'
                         : '#db2828'}/>
-                    <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke}/>
-
                 </Chart>
                 <MouseCoordinates xDisplayFormat={d3.time.format("%Y-%m-%d")}/>
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
@@ -96,4 +85,4 @@ const candelstick_default = React.createClass({
     }
 });
 
-export default ReStock.helper.fitWidth(candelstick_default);
+export default ReStock.helper.fitWidth(candelstick_mobile);
