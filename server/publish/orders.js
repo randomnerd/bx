@@ -27,5 +27,5 @@ Meteor.publish('trades', function(pairId, permalink) {
     let pair = TradePairs.findOne({ permalink: permalink });
     pairId = pair._id;
   };
-  return Trades.find({pairId: pairId}, {sort: {createdAt: -1}, limit: 20});
+  return Trades.find({pairId: pairId}, {sort: {createdAt: -1}, limit: 40});
 });
