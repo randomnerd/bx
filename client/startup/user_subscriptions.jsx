@@ -31,3 +31,4 @@ Tracker.autorun(() => {
     Meteor.subs.subscribe('trades', 'N9ovPkaQhBWPKFif3');
   // }
 });
+ 
