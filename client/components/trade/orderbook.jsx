@@ -24,11 +24,11 @@ const Orderbook = Component({
   },
 
   goBuySell(item, e) {
-    Dispatcher.dispatch({actionType: 'BUY_SELL_AUTOCOMPLETE', data: {
-      amount: parseFloat(item.displayAmount()),
-      price: parseFloat(item.displayPrice()),
-      direction: this.props.direction,
-    }});
+    this.props.signals.pair.setBuysell({
+      amount: item.displayAmount(),
+      price: item.displayPrice(),
+      //direction: this.props.direction,
+    });
   },
   renderSellItems() {
     let nulls = '00000000';

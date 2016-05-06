@@ -6,6 +6,7 @@ import Semantic from '../semantic';
 const BuySell = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
+  buysell: ['pair', 'buysell']
 }, {
   getInitialState: function() {
     return {
@@ -23,19 +24,15 @@ const BuySell = Component({
     };
     Meteor.call('createOrder', params);
   },
-
+  componentWillReceiveProps(newProps){
+    // console.log(newProps.buysell);
+    // if (!this.isMounted() || !newProps.buysell) return;
+    //
+    // this.refs.amount.setValue(newProps.buysell.amount);
+    // if(this.refs.price){ this.refs.price.setValue(newProps.buysell.price); }
+  },
   componentDidMount() {
-    // Dispatcher.register((payload) => {
-    //   switch (payload.actionType) {
-    //   case 'BUY_SELL_AUTOCOMPLETE':
-    //     if (payload.data.direction !== this.props.direction) {
-    //       this.setState({amount: payload.data.amount});
-    //       this.setState({price: payload.data.price});
-    //     }
-    //     break;
-    //   default: break;
-    //   }
-    // });
+    
   },
   setMarket(event) {
     $(this.refs.ordType).find('.item').removeClass('active');
@@ -53,24 +50,26 @@ const BuySell = Component({
     this.setState({ordType: 'stop'});
   },
   showWithPrice() {
+    let buysell = this.props.buysell || {amount: '', price: ''};
     return (
       <div className={this.props.wide ? "two fields" : ""}>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={this.state.amount} onChg={this.changeAmount}
+        value={buysell.amount} onChg={this.changeAmount}
         placeholder='0.0000' ref='amount' validations='isNumeric'
         labeled labelName={this.props.currency}/>
         <Semantic.Input name='price' label='Price' icon='shop'
-        value={this.state.price}
+        value={buysell.price}
         placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
         onChg={this.changePrice} />
       </div>
     );
   },
   showWithoutPrice() {
+    let buysell = this.props.buysell || {amount: '', price: ''};
     return (
       <div>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={this.state.amount} onChg={this.changeAmount}
+        value={buysell.amount} onChg={this.changeAmount}
         placeholder='0.0000' ref='amount' validations='isNumeric'
         labeled labelName={this.props.currency}/>
 
