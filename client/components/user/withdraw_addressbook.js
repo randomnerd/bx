@@ -7,6 +7,7 @@ import WithdrawAddress from './withdraw_address';
 import UserOnly from './user_only';
 
 const WithdrawAddressBook = Component({
+  tools: ['tools']
 }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -28,7 +29,8 @@ const WithdrawAddressBook = Component({
 
   hide(e) {
     this.setState({errorMessage: null});
-    Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
+    this.props.signals.tools.addressbook({action: 'close'});
+    this.props.signals.tools.withdraw({action: 'open'});
   },
   saveAddress() {
     let addrVals = this.refs.form.getCurrentValues();
@@ -47,7 +49,7 @@ const WithdrawAddressBook = Component({
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Save' header='Addressbook'
-          onDeny={this.hide} onPositive={this.saveAddress} show={this.props.show}
+          onDeny={this.hide} onPositive={this.saveAddress} show={this.props.tools.addressbook}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
           <div className='ui small blue segment'>
             <table className='ui selectable very compact very basic striped table nomargin'>

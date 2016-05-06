@@ -38,6 +38,15 @@ function addressBookOpen ({input, state}) {
   }
 }
 
+function setAddress ({input, state}) {
+  state.set('tools.address', input.address);
+}
+
+function unsetAddress ({input, state}) {
+  state.set('tools.address', null);
+}
+
+
 function drag ({input, state}) {
   if(input.action && input.action == 'off'){
     state.set('tools.drag', false);
@@ -68,6 +77,14 @@ const addressbook = [
   addressBookOpen
 ];
 
+const setaddress = [
+  setAddress
+];
+
+const unsetaddress = [
+  unsetAddress
+];
+
 const dragToggle = [
   drag
 ];
@@ -79,7 +96,8 @@ export default (options = {}) => {
       panel: false,
       chat: false,
       withdraw: false,
-      addressbook: false
+      addressbook: false,
+      address: null
     });
 
     module.addSignals({
@@ -88,6 +106,8 @@ export default (options = {}) => {
       chat,
       withdraw,
       addressbook,
+      setaddress,
+      unsetaddress,
       dragToggle
     });
 

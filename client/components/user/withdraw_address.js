@@ -3,6 +3,7 @@ import {Component} from 'cerebral-view-react';
 import {wAddressBook} from '../../../both/collections';
 
 const WithdrawAddress = Component({
+  tools: ['tools']
 }, {
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -30,8 +31,9 @@ const WithdrawAddress = Component({
     Meteor.call('address/remove', this.props.item._id);
   },
   pick() {
-    Dispatcher.dispatch({actionType: 'SET_WITHDRAWAL_ADDRESS', payload: this.props.item.address });
-    Dispatcher.dispatch({actionType: 'HIDE_ADDRESSBOOK_MODAL'});
+    this.props.signals.tools.setaddress({address: this.props.item.address});
+    this.props.signals.tools.addressbook({action: 'close'});
+    this.props.signals.tools.withdraw({action: 'open'});
   },
 
 

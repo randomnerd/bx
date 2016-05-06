@@ -82,35 +82,13 @@ const MobileLayout = Component({
     if (!this.data.user && !this.data.authInProgress){
       this.setState({showLoginModal: true});
     }
-    // Dispatcher.register((e) => {
-    //
-    //   switch (e.actionType) {
-    //     case 'SHOW_WITHDRAW_MODAL':
-    //       this.setState({showWithdrawModal: true});
-    //       break;
-    //
-    //     case 'HIDE_WITHDRAW_MODAL':
-    //       this.setState({showWithdrawModal: false});
-    //       break;
-    //
-    //     case 'SHOW_ADDRESSBOOK_MODAL':
-    //       this.setState({withdrawAddressModal: true});
-    //       break;
-    //
-    //     case 'HIDE_ADDRESSBOOK_MODAL':
-    //       this.setState({withdrawAddressModal: false});
-    //       break;
 
-    //   }
-    // });
   },
   renderSidebarContent() {
     switch (this.state.sidebarContent) {
     case 'chat':
       return (
-
-            <Chats />
-
+        <Chats />
       );
     break;
     }
@@ -206,15 +184,9 @@ const MobileLayout = Component({
     }
   },
   renderSidebarContent() {
-    // switch (this.state.sidebarContent) {
-    //   case 'chat':
-        return (
-
-              <LeftMenu />
-
-        );
-    //  break;
-    //}
+    return (
+      <LeftMenu />
+    );
   },
   renderLoading() {
     return (
@@ -243,7 +215,7 @@ const MobileLayout = Component({
 
         <LoginModal show={this.state.showLoginModal} />
         <SignUpModal show={this.state.showSignUpModal} />
-        <WithdrawModal show={this.state.showWithdrawModal} current={this.state.withdrawCurr}
+        <WithdrawModal current={this.state.withdrawCurr}
         address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
         <WithdrawAddressModal show={this.state.withdrawAddressModal} />
       </div>
