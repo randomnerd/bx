@@ -82,10 +82,7 @@ const WithdrawModal = Component({
 
   componentWillReceiveProps(newProps){
     if (!this.isMounted() || !newProps.tools.address) return;
-      //console.log(this);
       this.refs.address.setValue(newProps.tools.address);
-
-
   },
   componentDidMount() {
     this.setState({currId: this.props.tools.wallet});

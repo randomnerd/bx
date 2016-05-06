@@ -65,7 +65,8 @@ const WithdrawModal = Component({
   },
 
   getAddressbook() {
-    // Dispatcher.dispatch({actionType: 'SHOW_ADDRESSBOOK_MODAL'});
+    this.props.signals.tools.addressbook({action: 'open'});
+    this.props.signals.tools.withdraw({action: 'close'});
   },
 
   getAddress() {
@@ -81,23 +82,19 @@ const WithdrawModal = Component({
     };
   },
 
+  componentWillReceiveProps(newProps){
+    if (!this.isMounted() || !newProps.tools.address) return;
+      this.refs.address.setValue(newProps.tools.address);
+  },
+
   componentDidMount() {
-    // Dispatcher.register((e) => {
-    //   switch (e.actionType) {
-    //   case 'SET_WITHDRAWAL_ADDRESS':
-    //     this.refs.address.setValue(e.payload);
-    //     break;
-    //   case 'SET_WITHDRAWAL_CURRENCY':
-    //     this.setState({currId: e.payload});
-    //     break;
-    //   }
-    // });
+    this.setState({currId: this.props.tools.wallet});
   },
 
   hide(e) {
     this.setState({errorMessage: null});
     this.props.signals.tools.withdraw({action: 'close'});
-    // Dispatcher.dispatch({actionType: 'HIDE_WITHDRAW_MODAL'});
+    this.props.signals.tools.unsetaddress();
   },
 
   allowSubmit()    { this.setState({allowSubmit: true}); },

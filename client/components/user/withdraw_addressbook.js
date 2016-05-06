@@ -52,7 +52,7 @@ const WithdrawAddressBook = Component({
           onDeny={this.hide} onPositive={this.saveAddress} show={this.props.tools.addressbook}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
           <div className='ui small blue segment'>
-            <table className='ui selectable very compact very basic striped table nomargin'>
+            <table className='ui selectable very compact very basic striped table nomargin unstackable'>
               <thead>
                 <tr className='lesspadding'>
                   <th className='four wide' >Name</th>
@@ -62,7 +62,7 @@ const WithdrawAddressBook = Component({
               </thead>
             </table>
             <div className='scrollable10rows'>
-              <table className='ui selectable very compact very basic sortable table'>
+              <table className='ui selectable very compact very basic sortable table unstackable'>
                 <tbody>
                   { this.renderAddressItems() }
                 </tbody>

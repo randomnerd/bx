@@ -1,5 +1,6 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
+import Semantic from '../semantic';
 import {wAddressBook} from '../../../both/collections';
 
 const WithdrawAddress = Component({
@@ -43,13 +44,13 @@ const WithdrawAddress = Component({
         <Formsy.Form className='ui large form' onValidSubmit={this.saveAddress} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
           <td className='four wide'>
           {this.state.editable ?
-            <Semantic.Input name='name' placeholder='Type your contact name here' ref='name' value={this.props.item.name} required/> :
+            <Semantic.Input name='name' className="mini" placeholder='Type your contact name here' ref='name' value={this.props.item.name} required/> :
             this.props.item.name
           }
           </td>
           <td className='eight wide'>
           {this.state.editable ?
-            <Semantic.Input name='address' placeholder='Type address here' ref='address' value={this.props.item.address} required/> :
+            <Semantic.Input name='address' className="mini" placeholder='Type address here' ref='address' value={this.props.item.address} required/> :
             this.props.item.address
           }
           </td>
