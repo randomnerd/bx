@@ -187,7 +187,7 @@ class EventHandler extends Component {
 
 		if (isDefined(newState)) {
 			if (!this.state.panInProgress) {
-				this.clearBothCanvas(nextProps);
+				this.clearThreeCanvas(nextProps);
 				this.clearInteractiveCanvas(nextProps);
 				this.clearCanvasDrawCallbackList();
 			}
@@ -213,6 +213,14 @@ class EventHandler extends Component {
 		if (canvases && canvases.axes) {
 			// console.log("CLEAR");
 			clearCanvas([canvases.axes, canvases.mouseCoord]);
+		}
+	}
+	clearThreeCanvas(props) {
+		props = props || this.props;
+		var canvases = props.canvasContexts();
+		if (canvases && canvases.axes) {
+			// console.log("CLEAR");
+			clearCanvas([canvases.axes, canvases.mouseCoord, canvases.bg]);
 		}
 	}
 	clearInteractiveCanvas(props) {
@@ -415,7 +423,7 @@ class EventHandler extends Component {
 		var chartConfig = getChartConfigWithUpdatedYScales(initialChartConfig, plotData);
 
 		requestAnimationFrame(() => {
-			this.clearBothCanvas();
+			this.clearThreeCanvas();
 			this.clearInteractiveCanvas();
 
 			this.clearCanvasDrawCallbackList();
@@ -456,7 +464,7 @@ class EventHandler extends Component {
 		var currentItem = getCurrentItem(updatedScale, xAccessor, mouseXY, plotData);
 		var chartConfig = getChartConfigWithUpdatedYScales(initialChartConfig, plotData);
 		var currentCharts = getCurrentCharts(chartConfig, mouseXY);
-		this.clearBothCanvas();
+		this.clearThreeCanvas();
 		this.clearInteractiveCanvas();
 
 		// console.log(showingInterval, updatedInterval);
@@ -569,6 +577,10 @@ class EventHandler extends Component {
 					.forEach(each => each.draw(mouseContext, show,
 						xScale, mouseXY, currentCharts, chartConfig, currentItem));
 
+				canvasDrawCallbackList
+					.filter(each => each.type === "annotation")
+					.forEach(each => each.draw({ xScale, chartConfig, plotData}));
+
 			});
 		} else {
 			this.setState(state);
@@ -603,7 +615,7 @@ class EventHandler extends Component {
 			? this.triggerCallback("panend", state, this.state.interactiveState, e)
 			: this.triggerCallback("click", state, this.state.interactiveState, e);
 
-		this.clearBothCanvas();
+		this.clearThreeCanvas();
 		if (interactiveState !== this.state.interactive) this.clearInteractiveCanvas();
 
 		// console.log(interactiveState[0].interactive);

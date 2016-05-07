@@ -102,23 +102,28 @@ function calculateState(props) {
 }
 
 function getCursorStyle(children) {
-	var style = `<![CDATA[
-			.react-stockcharts-grabbing-cursor {
-				cursor: grabbing;
-				cursor: -moz-grabbing;
-				cursor: -webkit-grabbing;
-			}
-			.react-stockcharts-crosshair-cursor {
-				cursor: crosshair;
-			}
-			.react-stockcharts-toottip-hover {
-				pointer-events: all;
-				cursor: pointer;
-			}
-		]]>`;
-	return shouldShowCrossHairStyle(children)
-		? (<style type="text/css" dangerouslySetInnerHTML={{ __html: style }}></style>)
-		: null;
+	var style = `
+	.react-stockcharts-grabbing-cursor {
+		cursor: grabbing;
+		cursor: -moz-grabbing;
+		cursor: -webkit-grabbing;
+	}
+	.react-stockcharts-crosshair-cursor {
+		cursor: crosshair;
+	}
+	.react-stockcharts-toottip-hover {
+		pointer-events: all;
+		cursor: pointer;
+	}`;
+	var tooltipStyle = `
+	.react-stockcharts-annotate {
+		cursor: default;
+	}`;
+	return (<style
+		type="text/css"
+		dangerouslySetInnerHTML={{
+			__html: shouldShowCrossHairStyle(children) ? style + tooltipStyle : tooltipStyle
+		}}></style>)
 }
 
 class ChartCanvas extends Component {

@@ -73,7 +73,9 @@ export default React.createClass({
     return (
 
       <div>
-        <Charts.comparechart_infopanel data = {this.data.BTPR} type = 'hybrid' />
+        <br/> <br/> <br/> <br/>
+        <Charts.candelstick_default data={this.data.BTPR.
+        slice(200)} type='hybrid' height={450} height_bar={160}/>
       </div>
     );
 

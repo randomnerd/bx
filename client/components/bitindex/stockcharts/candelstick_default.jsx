@@ -27,6 +27,8 @@ const candelstick_default = React.createClass({
 
         let {TooltipContainer, OHLCTooltip} = ReStock.tooltip;
 
+        let {Annotate, LabelAnnotation, Label} = ReStock.annotation;
+
         let {MouseCoordinates, CurrentCoordinate, EdgeIndicator} = ReStock.coordinates;
 
         let {XAxis, YAxis} = ReStock.axes;
@@ -37,13 +39,13 @@ const candelstick_default = React.createClass({
         let margin = {
             left: 30,
             right: 40,
-            top: 0,
-            bottom: 20
+            top: 40,
+            bottom: 40
         };
 
         let {data, type, width, height, height_bar} = this.props;
 
-        if (data.length > 300) 
+        if (data.length > 300)
             data = _.last(data, 300);
 
         let gridHeight = height - margin.top - margin.bottom;
@@ -66,10 +68,30 @@ const candelstick_default = React.createClass({
         let smaVolume50 = sma().id(0).windowSize(50).source(d => d.volume).merge((d, c) => {
             d.smaVolume50 = c
         }).accessor(d => d.smaVolume50);
+
+        let annotationProps = {
+            fontFamily: "Glyphicons Halflings",
+            fontSize: 20,
+            fill: "#060F8F",
+            opacity: 0.8,
+            text: "\ue182",
+            y: ({yScale}) => yScale.range()[0],
+            onClick: console.log.bind(console),
+            tooltip: d => d3.time.format("%B")(d.date),
+            // onMouseOver: console.log.bind(console),
+        };
+        let [yAxisLabelX,
+            yAxisLabelY] =
+            [width - margin.left - 40,
+            margin.top + (height - margin.top - margin.bottom) / 2]
+
         return (
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} xAccessor={d => d.date} discontinous xScale={financeEODDiscontiniousScale()} allowedIntervals={['D', 'W', 'M']} calculator={[smaVolume50]}>
                 <Chart id={1} height={height} yExtents={d => [d.high, d.low]}>
                     <YAxis axisAt='left' orient='left' ticks={10} fontSize={10} stroke='#767676' tickStroke='#767676' {...yGrid}/>
+                    <Label x={(width - margin.left - margin.right) / 2} y={height - 45} fontSize="12" text="XAxis Label here"/>
+                    <YAxis axisAt="right" orient="right" ticks={5}/>
+                    <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize="12" text="YAxis Label here"/>
                     <CandlestickSeries/>
                 </Chart>
 
@@ -80,17 +102,19 @@ const candelstick_default = React.createClass({
                     smaVolume50.accessor()
                 ]}>
                     <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
+                    <XAxis axisAt="bottom" orient="bottom"/>
                     <BarSeries yAccessor={d => d.volume} fill={(d) => d.close > d.open
                         ? '#21ba45'
                         : '#db2828'}/>
                     <AreaSeries yAccessor={smaVolume50.accessor()}/>
 
                 </Chart>
-                <MouseCoordinates xDisplayFormat={d3.time.format('%Y-%m-%d')}/>
+                <MouseCoordinates fontSize={10} xDisplayFormat={d3.time.format('%Y-%m-%d')}/>
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
                 <TooltipContainer>
                     <OHLCTooltip forChart={1} origin={[10, 5]}/>
                 </TooltipContainer>
+                <Annotate id={0} chartId={1} with={LabelAnnotation} when={d => d.startOfMonth} usingProps={annotationProps}/>
             </ChartCanvas>
         );
     }
