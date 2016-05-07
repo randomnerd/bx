@@ -37,7 +37,7 @@ class candelstick_intraday extends React.Component {
         }).accessor(d => d.smaVolume50);
 
         return (
-            <ChartCanvas width={width} height={400} margin={{
+            <ChartCanvas width={width} height={350} margin={{
                 left: 80,
                 right: 80,
                 top: 10,
@@ -77,8 +77,8 @@ class candelstick_intraday extends React.Component {
                 <Chart id={2} yExtents={[
                     d => d.volume,
                     smaVolume50.accessor()
-                ]} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={150} origin={(w, h) => [
-                    0, h - 150
+                ]} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
+                    0, h - 100
                 ]}>
                     <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
 
