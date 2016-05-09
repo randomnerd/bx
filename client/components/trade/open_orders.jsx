@@ -52,7 +52,7 @@ const OpenOrders = Component({
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
             <a className='item active' onClick={this.cancelOrders}>
-              Clear all
+              Cancel all
             </a>
           </div>
         </div>
