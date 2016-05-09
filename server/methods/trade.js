@@ -46,5 +46,15 @@ Meteor.methods({
 
     var job = new Job(Jobs, 'cancelOrder', {id: id});
     job.save();
+  },
+
+  cancelOrders: function(id) {
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    let order = Orders.find({_id: id});
+    if (!order) throw new Meteor.Error('Order not found');
+    if (order.userId !== Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    var job = new Job(Jobs, 'cancelOrder', {id: id});
+    job.save();
   }
 })

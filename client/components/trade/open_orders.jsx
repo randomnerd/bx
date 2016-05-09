@@ -22,6 +22,15 @@ const OpenOrders = Component({
     order.cancel();
   },
 
+  cancelOrders() {
+    if(confirm('Clear all?')){
+      this.data.orders.map((item) => {
+        item.cancel();
+      });
+    }
+    //order.cancel();
+  },
+
   renderOrderItems() {
     return this.data.orders.map((item) => {
       return  (
@@ -42,7 +51,7 @@ const OpenOrders = Component({
       <div className='ui basic teal segment h100 noheader'>
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
-            <a className='item active'>
+            <a className='item active' onClick={this.cancelOrders}>
               Clear all
             </a>
           </div>
