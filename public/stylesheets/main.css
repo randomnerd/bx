@@ -13,7 +13,7 @@ html, body, html.ios, html.ios body{
 .ui.body{display: block;}
 
 :not(.buttons) > .ui.button:not(.attached){
-  margin: 0 0.5em 0 0 !important;
+  margin: 0 0.5em 0 0;
 }
 
 .ui.attached.label{
@@ -1617,6 +1617,13 @@ tr.lesspadding th {
 
 .mobile-fix h2.ui.header{
   font-size: 1em;
+}
+
+.ui.inverted.newgrey .segment.wallet {
+  background-color: #28394d;
+  margin: 0 1em 0 0;
+  overflow: hidden;
+  padding: 0.5em 0;
 }
 
 .ui.hidden.divider {

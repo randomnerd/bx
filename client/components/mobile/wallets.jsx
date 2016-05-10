@@ -64,7 +64,7 @@ const WalletsView = Component({
           <div className="ui hidden fitted divider"></div>
           <div className="ui padded grid">
             <div className="nine wide column">
-              {address ? address : generateBtn}
+              {address ? <div className="ui wallet basic segment">{address}</div> : generateBtn}
             </div>
             <div className='seven wide column'>
               <div className='ui fluid mini buttons'>

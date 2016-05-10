@@ -80,7 +80,7 @@ const MobileLayout = Component({
 
   componentDidMount() {
     if (!this.data.user && !this.data.authInProgress){
-      this.setState({showLoginModal: true});
+      this.props.signals.user.loginClicked();
     }
 
   },
@@ -116,7 +116,7 @@ const MobileLayout = Component({
             <div className='ui basic segment h100 buysell'>
               <h3 className='ui header'>BALANCE</h3>
               <Balance pairId={this.data.pair._id} pair={this.data.pair} wide="double" />
-              <BuySell pairId={this.data.pair._id} wide="double" />
+              <BuySell pairId={this.data.pair._id} pair={this.data.pair} wide="double" />
             </div>
           </div>
         )
@@ -213,8 +213,8 @@ const MobileLayout = Component({
           </div>
         </div>
 
-        <LoginModal show={this.state.showLoginModal} />
-        <SignUpModal show={this.state.showSignUpModal} />
+        <LoginModal />
+        <SignUpModal />
         <WithdrawModal current={this.state.withdrawCurr}
         address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
         <WithdrawAddressModal show={this.state.withdrawAddressModal} />

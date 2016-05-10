@@ -26,17 +26,19 @@ const TransactionsView = Component({
       return 0;
     });
     return items.map((item) => {
-      let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
-      return  (
-        <tr key={item._id} className={cls}>
-          <td className="three wide">{moment(item.createdAt).fromNow()}</td>
-          <td className="five wide">{item.address}</td>
-          <td className="three wide">{item.displayAmount()}</td>
-          <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
-          <td className="three wide">{item.displayChanged()}</td>
-        </tr>
+      if(item){
+        let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
+        return  (
+          <tr key={item._id} className={cls}>
+            <td className="three wide">{moment(item.createdAt).fromNow()}</td>
+            <td className="five wide">{item.address}</td>
+            <td className="three wide">{item.displayAmount()}</td>
+            <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
+            <td className="three wide">{item.displayChanged()}</td>
+          </tr>
 
-      );
+        );
+      }
     });
   },
 

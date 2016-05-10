@@ -44,7 +44,7 @@ const WithdrawModal = Component({
 
   getAmount() {
     let curr    = this.data.currency;
-    let balance = this.data.balance.displayAmount();
+    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
     return {
       right: {
         labels: [{
@@ -58,7 +58,7 @@ const WithdrawModal = Component({
 
   setBalance(){
     //console.log(this.refs.amount);
-    this.refs.amount.setValue(this.data.balance.displayAmount());
+    this.refs.amount.setValue(this.data.balance ? this.data.balance.displayAmount() : 0);
   },
 
   getAddressbook() {
@@ -114,7 +114,7 @@ const WithdrawModal = Component({
     let curr = this.data.currency;
     if (!curr) return null;
     let fee = curr.withdrawalFee;
-    let balance = this.data.balance.displayAmount();
+    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
 
     return (
       <UserOnly redirect='/'>
@@ -128,7 +128,7 @@ const WithdrawModal = Component({
             adds={this.getAmount()} required />
             <div className="ui labeled icon blue button" onClick={this.setBalance}>
               <i className="icon up arrow"></i>
-              Available: {this.data.balance.displayAmount()}
+              Available: {this.data.balance ? this.data.balance.displayAmount() : 0}
             </div>
 
             <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />

@@ -102,11 +102,11 @@ const Home = Component({
             <div className="promo">
               <h1>Bit.Exchange - is the internet of digital currencies</h1>
 
-              <div>
-                { !this.props.user._id ? <a className="ui massive teal button">create account</a> : null }
+              { !this.props.user._id ? <div>
+                <a className="ui massive teal button">create account</a>
 
                 <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
-              </div>
+              </div> : null }
               <a className="ui massive icon button scrolldown" onClick={this.scrollAll}>
                 <i className="down arrow icon" />
               </a>

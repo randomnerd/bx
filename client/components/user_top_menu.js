@@ -39,7 +39,7 @@ const UserTopMenu = Component({
         <i className="dropdown icon" />
 
         <div className="menu">
-            <a className="item" href="/admin/">Admin</a>
+          {this.data.user.isAdmin() ? <a className="item" href="/admin/">Admin</a> : null }
           {this.renderMenuItems()}
         </div>
       </div>

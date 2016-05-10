@@ -32,7 +32,7 @@ const BuySell = Component({
     // if(this.refs.price){ this.refs.price.setValue(newProps.buysell.price); }
   },
   componentDidMount() {
-    
+
   },
   setMarket(event) {
     $(this.refs.ordType).find('.item').removeClass('active');
