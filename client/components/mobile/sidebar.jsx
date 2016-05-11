@@ -32,10 +32,10 @@ const Sidebar = Component({
     $(ReactDOM.findDOMNode(this)).sidebar(this.props.mob.menu ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
-    if(this.state.sidebar!=newProps.mob.menu){
+    //if(this.state.sidebar!=newProps.mob.menu){
       this.setState({sidebar: newProps.mob.menu})
       $(ReactDOM.findDOMNode(this)).sidebar(newProps.mob.menu ? 'show' : 'hide');
-    }
+    //}
   },
 
   render() {

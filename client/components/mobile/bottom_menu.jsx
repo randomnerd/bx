@@ -18,7 +18,7 @@ const BottomMenu = Component({
   getInitialState() {
     return {
       drag: false,
-      active: "chart"
+      active: "buysell"
     };
   },
   showPage(item, event) {

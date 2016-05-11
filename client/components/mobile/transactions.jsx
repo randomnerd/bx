@@ -56,10 +56,10 @@ const TransactionsView = Component({
         <div className="ui segments">
 
           <div className="ui secondary segment">
-            <div className="ui top right attached large label">
+            <a href="/u/wallets" className="ui top right attached large label">
               <i className="icon left arrow"></i>
-              <a href="/u/wallets">back</a>
-            </div>
+              <span>back</span>
+            </a>
             <h2 className="ui header">
               {this.data.currency.name} balance
             </h2>

@@ -22,6 +22,7 @@ const LeftMenu = Component({
     };
   },
   showChat() {
+    console.log('123');
     this.props.signals.mob.page({id:'chat'});
     this.setState({active:'chat'});
     this.hideMenu();
@@ -46,7 +47,7 @@ const LeftMenu = Component({
   },
   renderMenuItems() {
     return this.getMenuItems().map((item) => {
-      return <a className={"item " + item.extraCls} key={item.label} href={item.href}>{item.label}</a>;
+      return <a className={"item " + item.extraCls} key={item.label} href={item.href} onClick={item.onclick}>{item.label}</a>;
     });
   },
 
