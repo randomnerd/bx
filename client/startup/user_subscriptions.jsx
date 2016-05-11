@@ -23,12 +23,3 @@ Tracker.autorun(() => {
     }
   }
 });
-
-Tracker.autorun(() => {
-  //let route = FlowRouter.current();
-  // if (route.path.match(/^\/pair/)) {
-    Meteor.subs.subscribe('orderbook', 'N9ovPkaQhBWPKFif3');
-    Meteor.subs.subscribe('trades', 'N9ovPkaQhBWPKFif3');
-  // }
-});
- 

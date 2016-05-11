@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
+import {TradePairs} from '/both/collections';
 import {set, copy} from 'cerebral-addons';
 
 
@@ -9,6 +10,8 @@ function showPair ({input, state}) {
   state.set('page', "pair");
   state.set('layout', "main");
   state.set('pair_link', input.id);
+  let pair = TradePairs.findOne({permalink: input.id});
+  state.set('pair.pair', pair);
   if(state.get('mobile')){state.set('mob.page', 'buysell');}
 }
 

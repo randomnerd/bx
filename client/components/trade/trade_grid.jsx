@@ -12,7 +12,7 @@ import Balance from './balance';
 const TradeGrid = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  pair: ['pair.pair'],
+  pair: ['pair', 'pair'],
   tools: ['tools']
 }, {
   mixins: [ReactMeteorData],
@@ -558,6 +558,12 @@ const TradeGrid = Component({
       this.setState({drag_on: !this.state.drag_on});
     }
 
+    if (newProps.pair) {
+      if (this.props.pair && this.props.pair._id === newProps.pair._id) return;
+      Meteor.subs.subscribe('trades', newProps.pair._id);
+      Meteor.subs.subscribe('orderbook', newProps.pair._id);
+    }
+
   },
 
   componentDidMount() {
@@ -811,7 +817,6 @@ const TradeGrid = Component({
   },
 
   render() {
-    this.props.signals.pair.setPair({pair: this.data.pair});
     let lcol = this.state.lcol;
     let rcol = this.state.rcol;
     let invisible = "";
