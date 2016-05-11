@@ -360,7 +360,7 @@ const TradeGrid = Component({
           <div className='ui basic segment h100'>
             <h3 className='ui header'>MY ORDERS</h3>
             <OpenOrders
-              pairId={this.data.pairId}
+              pairId={this.props.pair._id}
               valute1={this.data.pair.currId}
               valute2={this.data.pair.marketCurrId} />
           </div>
@@ -384,8 +384,8 @@ const TradeGrid = Component({
       <div key={k} className={"ux column balance " + (this.positions.balance.size == "big" ? "fullheight" : "semiheight" ) + fixclass + " padding drag"} ref="balance" data-block="balance">
         <div className='ui basic segment h100'>
           <h3 className='ui header'>BALANCE</h3>
-          <Balance pairId={this.data.pairId} pair={this.data.pair} wide={this.positions.balance.size == "small" ? "double" : false} />
-          <BuySell pair={this.data.pair} pairId={this.data.pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <Balance pair={this.props.pair} pairId={this.props.pair._id} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <BuySell pair={this.props.pair} pairId={this.props.pair._id} wide={this.positions.balance.size == "small" ? "double" : false} />
         </div>
       </div>
     );
@@ -403,8 +403,8 @@ const TradeGrid = Component({
         <div className='ui basic segment h100'>
             <h3 className='ui header'>ORDER BOOK</h3>
             <Orders direction='sell'
-              pair={this.data.pair}
-              pairId={this.data.pairId}
+              pair={this.props.pair}
+              pairId={this.props.pair._id}
               valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
               valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />
         </div>
@@ -425,8 +425,8 @@ const TradeGrid = Component({
           <h3 className='ui header'>TRADE HISTORY</h3>
 
             <Trades
-              pair={this.data.pair}
-              pairId={this.data.pairId}
+              pair={this.props.pair}
+              pairId={this.props.pair._id}
               valute1={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[0]}
               valute2={this.props.pair_link&&this.props.pair_link.toUpperCase().split("-")[1]} />
 
