@@ -18,8 +18,8 @@ const BuySell = Component({
   createOrder(buy) {
     let params = {
       pairId: this.props.pair._id,
-      amount: parseFloat(this.state.amount),
-      price:  parseFloat(this.state.price),
+      amount: parseFloat(this.props.buysell.amount),
+      price:  parseFloat(this.props.buysell.price),
       buy:    buy
     };
     Meteor.call('createOrder', params);
@@ -77,10 +77,19 @@ const BuySell = Component({
     );
   },
   changeAmount(event) {
-    this.setState({amount: event.currentTarget.value});
+    this.props.signals.pair.setBuysell({
+      amount: event.currentTarget.value,
+      price: this.props.buysell.price,
+      //direction: this.props.direction,
+    });
+    //this.setState({amount: event.currentTarget.value});
   },
   changePrice(event) {
-    this.setState({price: event.currentTarget.value});
+    this.props.signals.pair.setBuysell({
+      amount: this.props.buysell.amount,
+      price: event.currentTarget.value,
+      //direction: this.props.direction,
+    });
   },
   allowSubmit() {
     this.setState({allowSubmit: true});
