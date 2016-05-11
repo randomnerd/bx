@@ -57,6 +57,16 @@ function drag ({input, state}) {
   }
 }
 
+function resetDrag ({input, state}) {
+  if(input.action && input.action == 'off'){
+    state.set('tools.dragReset', false);
+  }else if(input.action && input.action == 'on'){
+    state.set('tools.dragReset', true);
+  }else{
+    state.set('tools.dragReset', !state.get('tools.dragReset'));
+  }
+}
+
 const windowWidth = [
   setMobile
 ];
@@ -88,6 +98,9 @@ const unsetaddress = [
 const dragToggle = [
   drag
 ];
+const dragReset = [
+  resetDrag
+];
 
 export default (options = {}) => {
   return (module, controller) => {
@@ -108,7 +121,8 @@ export default (options = {}) => {
       addressbook,
       setaddress,
       unsetaddress,
-      dragToggle
+      dragToggle,
+      dragReset
     });
 
     // Tracker.autorun(() => {

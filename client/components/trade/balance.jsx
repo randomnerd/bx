@@ -44,7 +44,7 @@ const Balance = Component({
             <span className="value">{balance2}</span>
           </div>
         </div>
-        <h4 className='ui header'>HELD</h4>
+        <h4 className='ui header'>HOLD</h4>
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">{this.data.currency1.shortName}: </strong>

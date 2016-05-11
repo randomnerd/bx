@@ -542,7 +542,7 @@ const TradeGrid = Component({
 
   componentWillReceiveProps(newProps){
     this.setState({drag_on: newProps.tools.drag});
-
+    let dragReset = newProps.tools.dragReset;
     if(!this.state.drag_on){
       this.dragBlocks();
       this.setState({drag_on: !this.state.drag_on});
@@ -552,9 +552,12 @@ const TradeGrid = Component({
           $(place).draggable( "destroy" );
         }
       })
-      Meteor.call('userblocs/update', this.positions , (err, result) => {
-         if(err) console.log(err.message);
-      });
+      if(!dragReset){
+        Meteor.call('userblocs/update', this.positions , (err, result) => {
+           if(err) console.log(err.message);
+        });
+        this.props.signals.tools.dragReset();
+      }
       this.setState({drag_on: !this.state.drag_on});
     }
 

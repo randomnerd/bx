@@ -63,6 +63,46 @@ const TopMenu = Component({
     this.props.signals.tools.dragToggle();
     this.setState({drag: !this.state.drag});
   },
+  resetBlocks(){
+    let defaultPos = {
+      orders: {
+        column: 'right',
+        place: 1,
+        size: "big",
+        top: false
+      },
+      trades: {
+        column: 'right',
+        place: 2,
+        size: "big",
+        top: false
+      },
+      balance: {
+        column: 'left',
+        place: 1,
+        size: "big",
+        top: false
+      },
+      openorders: {
+        column: 'center',
+        place: 2,
+        size: "small"
+      },
+      charts: {
+        column: 'center',
+        place: 1,
+        size: "small"
+      }
+    };
+    Meteor.call('userblocs/update', defaultPos , (err, result) => {
+      if(!err){
+        this.setState({drag: !this.state.drag});
+        this.props.signals.tools.dragReset();
+        //this.props.signals.tools.dragToggle();
+      }
+    });
+    //this.dragToggle();
+  },
   render() {
     let pair = this.props.pair? this.props.pair.pair : false;
     return (
@@ -78,6 +118,9 @@ const TopMenu = Component({
 
           { !!this.props.user._id ?
             <div className="right menu">
+              {this.state.drag ? <a className="icon item" onClick={this.resetBlocks} title="View reset">
+                <i className="refresh icon"></i>
+              </a> : null}
               {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
                 <i className="block layout icon"></i>
               </a> : null}
