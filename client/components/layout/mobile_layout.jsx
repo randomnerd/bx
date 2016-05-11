@@ -74,7 +74,8 @@ const MobileLayout = Component({
       : '';
   },
   componentWillReceiveProps(nextProps){
-    this.setState({showSidebar: nextProps.mob.menu});
+    this.props.signals.mob.menu({action: 'close'});
+    //this.setState({showSidebar: nextProps.mob.menu});
     this.setState({showMobile: nextProps.mob.page});
   },
 
@@ -95,7 +96,7 @@ const MobileLayout = Component({
   },
 
   renderPage() {
-    console.log(this.props.page);
+    //console.log(this.props.page);
     switch (this.props.page) {
       case "wallets": return <WalletsPage/>;
       case "wallet": return <WalletPage/>;
@@ -197,11 +198,12 @@ const MobileLayout = Component({
   },
 
   render() {
+    this.props.signals.mob.menu({action: 'close'});
     this.props.signals.pair.setPair({pair: this.data.pair});
     if (this.data.loading) return this.renderLoading();
     return (
       <div className="ui inverted newgrey body">
-        <Sidebar show={this.state.showSidebar}>
+        <Sidebar>
           {this.renderSidebarContent()}
         </Sidebar>
         <TopMenu title="BitExchange" pair={this.data.pair} />

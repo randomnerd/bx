@@ -39,7 +39,11 @@ const UserTopMenu = Component({
     //return false;
   },
   hideMenu() {
+    console.log('ergweg');
     this.props.signals.mob.menu();
+  },
+  tester(){
+    console.log('berbr');
   },
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
@@ -47,12 +51,12 @@ const UserTopMenu = Component({
   render() {
     return (
 
-      <div>
+      <span>
         <AdminOnly>
           <a className="item" href="/admin/">Admin</a>
         </AdminOnly>
         {this.renderMenuItems()}
-      </div>
+      </span>
 
     );
   }

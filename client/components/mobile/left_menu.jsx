@@ -21,10 +21,27 @@ const LeftMenu = Component({
       drag:false
     };
   },
+  showChat() {
+    this.props.signals.mob.page({id:'chat'});
+    this.setState({active:'chat'});
+    this.hideMenu();
+    //return false;
+  },
+  hideMenu() {
+    //console.log('ergweg');
+    this.props.signals.mob.menu({action: 'close'});
+  },
+  logOut() {
+    Meteor.logout();
+    this.hideMenu();
+  },
   getMenuItems() {
     return [
-      //{ href: '/', label: 'Bit.Exchange', extraCls: '' },
-      //{ href: '/pair', label: 'Pairs', extraCls: '' }
+      { href: null, label: 'Chat', extraCls: '', onclick: this.showChat},
+      { href: '/u/wallets', label: 'My wallets', extraCls: '', onclick: this.hideMenu},
+      { href: '/u/settings', label: 'Settings', extraCls: '', onclick: this.hideMenu},
+      { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu},
+      { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }
     ];
   },
   renderMenuItems() {
@@ -46,11 +63,11 @@ const LeftMenu = Component({
       <div>
 
           <a className="item" href="/">Bit.Exchange</a>
-          { this.renderMenuItems() }
+
           <TradePairsMenu pair={this.props.pair} />
             { this.data.user ?
 
-                <UserTopMenu />
+                this.renderMenuItems()
 
               : this.renderLoginButtons()
             }

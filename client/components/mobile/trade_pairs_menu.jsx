@@ -58,9 +58,9 @@ const TradePairsMenu = Component({
   },
 
   componentDidMount() {
-    $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
+    //$(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
     $(this.refs.accordion).accordion();
-    
+
   },
   render() {
     return (

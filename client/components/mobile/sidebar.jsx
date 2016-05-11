@@ -13,7 +13,7 @@ const Sidebar = Component({
 }, {
   getInitialState() {
     return {
-
+      sidebar: false
     };
   },
 
@@ -23,16 +23,19 @@ const Sidebar = Component({
       context: $('.body'),
       dimPage: true,
       closable: true,
-      //scrollLock: true,
+      scrollLock: true,
       transition: 'overlay',
       onHidden: ()=> {
         this.props.signals.mob.menu({action:'close'});
       }
     });
-    $(ReactDOM.findDOMNode(this)).sidebar(this.props.show ? 'show' : 'hide');
+    $(ReactDOM.findDOMNode(this)).sidebar(this.props.mob.menu ? 'show' : 'hide');
   },
   componentWillReceiveProps(newProps) {
-    $(ReactDOM.findDOMNode(this)).sidebar(newProps.show ? 'show' : 'hide');
+    if(this.state.sidebar!=newProps.mob.menu){
+      this.setState({sidebar: newProps.mob.menu})
+      $(ReactDOM.findDOMNode(this)).sidebar(newProps.mob.menu ? 'show' : 'hide');
+    }
   },
 
   render() {
