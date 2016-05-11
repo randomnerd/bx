@@ -29,6 +29,8 @@ const Balance = Component({
   render() {
     let balance1 = this.data.balance1 ? this.data.balance1.displayAmount() : (0).toFixed(8);
     let balance2 = this.data.balance2 ? this.data.balance2.displayAmount() : (0).toFixed(8);
+    let held1 = this.data.balance1 ? this.data.balance1.displayHeld() : (0).toFixed(8);
+    let held2 = this.data.balance2 ? this.data.balance2.displayHeld() : (0).toFixed(8);
     return (
       <div className='ui small basic segment teal' >
         <h4 className='ui header'>AVAILABLE</h4>
@@ -40,6 +42,17 @@ const Balance = Component({
           <div className='ui small basic segment'>
             <strong className="name">{this.data.currency2.shortName}: </strong>
             <span className="value">{balance2}</span>
+          </div>
+        </div>
+        <h4 className='ui header'>HELD</h4>
+        <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
+          <div className='ui small basic segment'>
+            <strong className="name">{this.data.currency1.shortName}: </strong>
+            <span className="value">{held1}</span>
+          </div>
+          <div className='ui small basic segment'>
+            <strong className="name">{this.data.currency2.shortName}: </strong>
+            <span className="value">{held2}</span>
           </div>
         </div>
       </div>
