@@ -72,6 +72,11 @@ html, body, html.ios, html.ios body{
   padding-bottom: 9px;
 }
 
+.ui.inverted.newgrey .basic.tabular.menu .item.disabled{
+  opacity: .3;
+}
+
+
 .ui.inverted.newgrey .basic.tabular.nounderline.menu, .ui.inverted.newgrey .basic.tabular.nounderline.menu .item.active{
   border-bottom: none;
 }

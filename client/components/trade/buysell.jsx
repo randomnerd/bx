@@ -12,7 +12,7 @@ const BuySell = Component({
     return {
       amount: 0,
       price: 0,
-      ordType: 'market'
+      ordType: 'limit'
     };
   },
   createOrder(buy) {
@@ -35,9 +35,9 @@ const BuySell = Component({
 
   },
   setMarket(event) {
-    $(this.refs.ordType).find('.item').removeClass('active');
-    $(event.currentTarget).addClass('active');
-    this.setState({ordType: 'market'});
+    // $(this.refs.ordType).find('.item').removeClass('active');
+    // $(event.currentTarget).addClass('active');
+    // this.setState({ordType: 'market'});
   },
   setLimit(event) {
     $(this.refs.ordType).find('.item').removeClass('active');
@@ -45,9 +45,9 @@ const BuySell = Component({
     this.setState({ordType: 'limit'});
   },
   setStop(event) {
-    $(this.refs.ordType).find('.item').removeClass('active');
-    $(event.currentTarget).addClass('active');
-    this.setState({ordType: 'stop'});
+    // $(this.refs.ordType).find('.item').removeClass('active');
+    // $(event.currentTarget).addClass('active');
+    // this.setState({ordType: 'stop'});
   },
   showWithPrice() {
     let buysell = this.props.buysell || {amount: '', price: ''};
@@ -102,9 +102,9 @@ const BuySell = Component({
       <div>
         <div className='ui small basic segment teal' >
             <div className='ui top attached tabular basic menu' ref='ordType'>
-              <a className='item active' onClick={this.setMarket}>Market</a>
-              <a className='item' onClick={this.setLimit}>Limit</a>
-              <a className='item' onClick={this.setStop}>Stop</a>
+              <a className='item disabled' onClick={this.setMarket}>Market</a>
+              <a className='item active' onClick={this.setLimit}>Limit</a>
+              <a className='item disabled' onClick={this.setStop}>Stop</a>
             </div>
 
             <Formsy.Form className='ui form' onValid={this.allowSubmit}
