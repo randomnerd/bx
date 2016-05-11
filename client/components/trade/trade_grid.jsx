@@ -560,13 +560,6 @@ const TradeGrid = Component({
       }
       this.setState({drag_on: !this.state.drag_on});
     }
-
-    if (newProps.pair) {
-      if (this.props.pair && this.props.pair._id === newProps.pair._id) return;
-      Meteor.subs.subscribe('trades', newProps.pair._id);
-      Meteor.subs.subscribe('orderbook', newProps.pair._id);
-    }
-
   },
 
   componentDidMount() {

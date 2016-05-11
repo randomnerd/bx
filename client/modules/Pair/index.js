@@ -10,9 +10,12 @@ function showPair ({input, state}) {
   state.set('page', "pair");
   state.set('layout', "main");
   state.set('pair_link', input.id);
+  if (state.get('mobile')) state.set('mob.page', 'buysell');
   let pair = TradePairs.findOne({permalink: input.id});
+  if (!pair) return;
+  Meteor.subs.subscribe('trades', pair._id);
+  Meteor.subs.subscribe('orderbook', pair._id);
   state.set('pair.pair', pair);
-  if(state.get('mobile')){state.set('mob.page', 'buysell');}
 }
 
 function setPairObj ({input, state}) {
