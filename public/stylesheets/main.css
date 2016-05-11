@@ -374,6 +374,10 @@ html, body, html.ios, html.ios body{
   float: right;
 }
 
+.ui.dropdown .menu.pairs{
+  min-width: 200px !important;
+}
+
 .ui.inverted.newgrey .ui.blue.button{color: #2185d0; border-color: #2185d0;}
 .ui.inverted.newgrey .ui.red.button, .ui.inverted.newgrey .ui.negative.button{color: #db2828; border-color: #db2828;}
 .ui.inverted.newgrey .ui.orange.button{color: #f2711c; border-color: #f2711c;}

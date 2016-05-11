@@ -6,7 +6,7 @@ import {Meteor} from 'meteor/meteor';
 
 const TopInfo = Component({
   layout: ['layout'],
-  pair: ['pair.pair']
+  pair: ['pair','pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {

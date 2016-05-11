@@ -4,6 +4,7 @@ import TradePairsMenu from './trade/trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
 import TopInfo from './top_info';
 import Infopanel from './common/infopanel';
+import NotificationShow from './common/notifications';
 
 import {Component} from 'cerebral-view-react';
 const TopMenu = Component({
@@ -125,6 +126,7 @@ const TopMenu = Component({
                 <i className="block layout icon"></i>
               </a> : null}
               <UserTopMenu />
+              <NotificationShow />
               <a className="icon item" onClick={this.chatToggle}>
                 <i className="comment icon"></i>
               </a>

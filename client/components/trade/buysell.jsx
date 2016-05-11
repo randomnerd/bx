@@ -57,7 +57,7 @@ const BuySell = Component({
         value={buysell.amount} onChg={this.changeAmount}
         placeholder='0.0000' ref='amount' validations='isNumeric'
         labeled labelName={this.props.currency}/>
-        <Semantic.Input name='price' label='Price' icon='shop'
+        <Semantic.Input className='nomargin' name='price' label='Price' icon='shop'
         value={buysell.price}
         placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
         onChg={this.changePrice} />
