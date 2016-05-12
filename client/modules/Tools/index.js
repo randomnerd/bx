@@ -110,7 +110,9 @@ export default (options = {}) => {
       chat: false,
       withdraw: false,
       addressbook: false,
-      address: null
+      address: null,
+      drag: false,
+      dragReset: false,
     });
 
     module.addSignals({

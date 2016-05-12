@@ -98,8 +98,8 @@ const TopMenu = Component({
     Meteor.call('userblocs/update', defaultPos , (err, result) => {
       if(!err){
         this.setState({drag: !this.state.drag});
-        this.props.signals.tools.dragReset();
-        //this.props.signals.tools.dragToggle();
+        this.props.signals.tools.dragReset({action:"on"});
+        this.props.signals.tools.dragToggle();
       }
     });
     //this.dragToggle();
