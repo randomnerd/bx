@@ -1,3 +1,4 @@
+import {Meteor} from 'meteor/meteor';
 import Controller from 'cerebral';
 import Model from 'cerebral-model-baobab';
 import Devtools from 'cerebral-module-devtools';
@@ -11,6 +12,30 @@ import Tools from './modules/Tools';
 import Pair from './modules/Pair';
 import Notifications from './modules/Notifications';
 import U from './modules/U';
+
+const subsManager = new SubsManager({cacheLimit: 20});
+Meteor.subs = subsManager;
+
+subsManager.subscribe('currencies');
+subsManager.subscribe('tradepairs');
+subsManager.subscribe('chat');
+
+Tracker.autorun(() => {
+  let user = Meteor.user();
+  if (user) {
+    subsManager.subscribe('balances');
+    subsManager.subscribe('wallets');
+    subsManager.subscribe('notifications');
+    subsManager.subscribe('transactions');
+    subsManager.subscribe('withdrawals');
+    subsManager.subscribe('waddressbook');
+    subsManager.subscribe('myOrders');
+    if (user.isAdmin()) {
+      subsManager.subscribe('currenciesAdmin');
+      subsManager.subscribe('tradepairsAdmin');
+    }
+  }
+});
 
 const model = Model({});
 const controller = Controller(model);
@@ -26,5 +51,8 @@ controller.addModules({
   u: U(),
   router
 });
+controller.addServices({
+  subsManager
+})
 
 export default controller;

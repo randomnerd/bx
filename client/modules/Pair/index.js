@@ -6,15 +6,15 @@ import {TradePairs} from '/both/collections';
 import {set, copy} from 'cerebral-addons';
 
 
-function showPair ({input, state}) {
+function showPair ({input, state, output, services}) {
   state.set('page', "pair");
   state.set('layout', "main");
   state.set('pair_link', input.id);
   if (state.get('mobile')) state.set('mob.page', 'buysell');
   let pair = TradePairs.findOne({permalink: input.id});
   if (!pair) return;
-  Meteor.subs.subscribe('trades', pair._id);
-  Meteor.subs.subscribe('orderbook', pair._id);
+  services.subsManager.subscribe('trades', pair._id);
+  services.subsManager.subscribe('orderbook', pair._id);
   state.set('pair.pair', pair);
 }
 
