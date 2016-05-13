@@ -8,7 +8,7 @@ import ReStock from '/client/lib/react-stockcharts';
 let {ChartCanvas, Chart, EventCapture} = ReStock;
 
 let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
-let {financeEODDiscontiniousScale} = ReStock.scale;
+let {discontinuousTimeScaleProvider} = ReStock.scale;
 
 let {EdgeIndicator} = ReStock.coordinates;
 let {MouseCoordinates, CurrentCoordinate} = ReStock.coordinates;
@@ -17,8 +17,6 @@ let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
 let {XAxis, YAxis} = ReStock.axes;
 let {ema, sma} = ReStock.indicator;
 let {fitWidth} = ReStock.helper;
-
-// let xScale = financeEODDiscontiniousScale();
 
 class candelstick_intraday extends React.Component {
     render() {
@@ -42,7 +40,7 @@ class candelstick_intraday extends React.Component {
                 right: 80,
                 top: 10,
                 bottom: 30
-            }} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, smaVolume50]} xAccessor={d => d.date} xScale={d3.time.scale()}>
+            }} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, smaVolume50]} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
                 <Chart id={1} yExtents={[
                     d => [
                         d.high, d.low
@@ -52,7 +50,9 @@ class candelstick_intraday extends React.Component {
                 ]} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={d3.format('.2f')} padding={{
                     top: 40,
                     bottom: 20
-                }}>
+                }}
+                xExtents={[new Date(2015, 0, 1), new Date(2015, 5, 8)]}>
+                 >
                     <XAxis axisAt='bottom' orient='bottom'/>
                     <YAxis axisAt='right' orient='right' ticks={5}/>
 

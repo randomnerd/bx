@@ -8,7 +8,6 @@ import ReStock from '/client/lib/react-stockcharts';
 let { ChartCanvas, Chart, EventCapture } = ReStock;
 
 let { BarSeries, LineSeries, AreaSeries, ScatterSeries, CircleMarker } = ReStock.series;
-let { financeEODDiscontiniousScale } = ReStock.scale;
 
 let { MouseCoordinates } = ReStock.coordinates;
 
@@ -16,7 +15,8 @@ let { TooltipContainer, OHLCTooltip } = ReStock.tooltip;
 let { XAxis, YAxis } = ReStock.axes;
 let { fitWidth } = ReStock.helper;
 
-let xScale = financeEODDiscontiniousScale();
+let {discontinuousTimeScaleProvider} = ReStock.scale;
+
 
 class comparechart_infopanel extends React.Component {
     render() {
@@ -27,7 +27,7 @@ class comparechart_infopanel extends React.Component {
                 right: 10,
                 top: 10,
                 bottom: 0
-            }} type={type} seriesName="MSFT" data={data} xAccessor={d => d.date} discontinous xScale={xScale} xExtents={[
+            }} type={type} seriesName="MSFT" data={data} xAccessor={d => d.date} discontinous xScaleProvider={discontinuousTimeScaleProvider} xExtents={[
                 new Date(2012, 0, 1),
                 new Date(2012, 2, 2)
             ]}>
