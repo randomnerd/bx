@@ -39,6 +39,21 @@ html, body, html.ios, html.ios body{
 }
 
 /* Semantic new grey */
+
+.loader{
+  background-color: #212e3e;
+  height: 100%;
+  text-align: center;
+
+}
+
+.loader > img{
+  position: relative;
+  margin: -100px auto 0;
+  top: 50%;
+
+}
+
 .ui.inverted.newgrey{
   background-color: #212e3e;
   color:#fff;

@@ -2,7 +2,7 @@ import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import TradePairsMenu from './trade/trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
-import TopInfo from './top_info';
+import TopInfo from './mobile/top_info';
 import Infopanel from './common/infopanel';
 import NotificationShow from './common/notifications';
 

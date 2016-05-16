@@ -192,7 +192,9 @@ const MobileLayout = Component({
   renderLoading() {
     return (
       <div className="ui active dimmer">
-        <div className="ui text loader">Loading...</div>
+        <div className="ui text loader">
+          <img src="gears.svg" />
+        </div>
       </div>
     );
   },

@@ -20,7 +20,7 @@ const Layout = Component({
   },
 
   render() {
-    if (this.data.loading) return <div>Loading</div>;
+    if (this.data.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     if (this.props.mobile) return <MobileLayout/>;
     switch (this.props.layout) {
       case 'admin': return <AdminLayout />;
