@@ -17,7 +17,7 @@ const candelstick_intraday = React.createClass({
     render() {
         let {ChartCanvas, Chart, EventCapture} = ReStock;
 
-        let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
+        let {CandlestickSeries, BarSeries, LineSeries, AreaSeries, VolumeProfileSeries} = ReStock.series;
         let {discontinuousTimeScaleProvider} = ReStock.scale;
 
         let {EdgeIndicator} = ReStock.coordinates;
@@ -25,7 +25,7 @@ const candelstick_intraday = React.createClass({
 
         let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
         let {XAxis, YAxis} = ReStock.axes;
-        let {ema, sma} = ReStock.indicator;
+        let {ema, sma, change} = ReStock.indicator;
         let {fitWidth} = ReStock.helper;
         let {data, type, width} = this.props;
 
@@ -40,6 +40,7 @@ const candelstick_intraday = React.createClass({
         let smaVolume50 = sma().id(3).windowSize(50).source(d => d.volume).merge((d, c) => {
             d.smaVolume50 = c
         }).accessor(d => d.smaVolume50);
+        let changeCalculator = change();
 
         return (
             <ChartCanvas width={width} height={350} margin={{
@@ -47,72 +48,49 @@ const candelstick_intraday = React.createClass({
                 right: 80,
                 top: 10,
                 bottom: 30
-            }} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, smaVolume50]} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
+            }} type={type} seriesName="MSFT" data={data} calculator={[ema20, ema50, changeCalculator]} xExtents={[
+                new Date(2014, 9, 1),
+                new Date(2015, 2, 2)
+            ]} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
+                <Chart id={2} yExtents={[d => d.volume]} yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")} height={100} origin={(w, h) => [
+                    0, h - 100
+                ]}>
+                    <YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
+
+                    <BarSeries yAccessor={d => d.volume} widthRatio={0.95} opacity={0.3} fill={d => d.close > d.open
+                        ? "#6BA583"
+                        : "#FF0000"}/>
+                </Chart>
                 <Chart id={1} yExtents={[
                     d => [
                         d.high, d.low
                     ],
                     ema20.accessor(),
                     ema50.accessor()
-                ]} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={d3.format('.2f')} padding={{
+                ]} yMousePointerDisplayLocation="right" yMousePointerDisplayFormat={d3.format(".2f")} padding={{
                     top: 40,
                     bottom: 20
-                }} xExtents={[
-                    new Date(2015, 0, 1),
-                    new Date(2015, 5, 8)
-                ]}>
-                    >
-                    <XAxis axisAt='bottom' orient='bottom'/>
-                    <YAxis axisAt='right' orient='right' ticks={5}/>
+                }}>
+                    <XAxis axisAt="bottom" orient="bottom"/>
+                    <YAxis axisAt="right" orient="right" ticks={5}/>
 
+                    <VolumeProfileSeries/>
                     <CandlestickSeries/>
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
                     <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
-
-                    <CurrentCoordinate id={1} yAccessor={ema20.accessor()} fill={ema20.stroke()}/>
-                    <CurrentCoordinate id={2} yAccessor={ema50.accessor()} fill={ema50.stroke()}/>
-
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={ema20.accessor()} fill={ema20.fill()}/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={ema50.accessor()} fill={ema50.fill()}/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
-                        ? '#6BA583'
-                        : '#FF0000'}/>
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={ema20.accessor()} fill={ema20.fill()}/>
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={ema50.accessor()} fill={ema50.fill()}/>
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={d => d.close} fill={d => d.close > d.open
-                        ? '#6BA583'
-                        : '#FF0000'}/>
+                    <EdgeIndicator itemType="last" orient="right" edgeAt="right" yAccessor={d => d.close} fill={d => d.close > d.open
+                        ? "#6BA583"
+                        : "#FF0000"}/>
                 </Chart>
-                <Chart id={2} yExtents={[
-                    d => d.volume,
-                    smaVolume50.accessor()
-                ]} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
-                    0, h - 100
-                ]}>
-                    <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
-
-                    <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open
-                        ? '#6BA583'
-                        : '#FF0000'}/>
-                    <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
-
-                    <CurrentCoordinate id={0} yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()}/>
-                    <CurrentCoordinate id={1} yAccessor={d => d.volume} fill='#9B0A47'/>
-
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={smaVolume50.accessor()} displayFormat={d3.format('.4s')} fill={smaVolume50.fill()}/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={smaVolume50.accessor()} displayFormat={d3.format('.4s')} fill={smaVolume50.fill()}/>
-                </Chart>
-                <MouseCoordinates xDisplayFormat={d3.time.format('%H:%M:%S')} rectWidth={60}/>
+                <MouseCoordinates xDisplayFormat={d3.time.format("%Y-%m-%d")}/>
                 <EventCapture mouseMove={true} zoom={true} pan={true}/>
                 <TooltipContainer>
                     <OHLCTooltip forChart={1} origin={[-40, 0]}/>
                     <MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 15]} calculators={[ema20, ema50]}/>
                 </TooltipContainer>
             </ChartCanvas>
-          );
-        }
-      });
+        );
+    }
+});
 
 export default ReStock.helper.fitWidth(candelstick_intraday);
