@@ -67,7 +67,7 @@ HoverTooltip.propTypes = {
 	getCanvasContexts: PropTypes.func,
 	chartCanvasType: PropTypes.string,
 	chartConfig: PropTypes.array.isRequired,
-	currentItem: PropTypes.object.isRequired,
+	currentItem: PropTypes.object,
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
 	mouseXY: PropTypes.array,
@@ -164,7 +164,7 @@ function tooltipCanvas({ fontFamily, fontSize, fontFill }, content, ctx) {
 }
 
 function origin({ mouseXY, bgheight, bgwidth, xAccessor, currentItem, xScale }) {
-	var [... y] = mouseXY;
+	var y = last(mouseXY);
 
 	var snapX = xScale(xAccessor(currentItem));
 	var originX = (snapX - bgwidth - PADDING * 2 < 0) ? snapX + PADDING : snapX - bgwidth - PADDING;
@@ -242,7 +242,7 @@ export default pure(HoverTooltip, {
 	getAllCanvasDrawCallback: PropTypes.func,
 	chartCanvasType: PropTypes.string,
 	chartConfig: PropTypes.array.isRequired,
-	currentItem: PropTypes.object.isRequired,
+	currentItem: PropTypes.object,
 	mouseXY: PropTypes.array,
 	xScale: PropTypes.func.isRequired,
 	xAccessor: PropTypes.func.isRequired,

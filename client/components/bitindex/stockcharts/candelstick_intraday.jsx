@@ -5,21 +5,28 @@ import d3 from 'd3';
 
 import ReStock from '/client/lib/react-stockcharts';
 
-let {ChartCanvas, Chart, EventCapture} = ReStock;
-
-let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
-let {discontinuousTimeScaleProvider} = ReStock.scale;
-
-let {EdgeIndicator} = ReStock.coordinates;
-let {MouseCoordinates, CurrentCoordinate} = ReStock.coordinates;
-
-let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
-let {XAxis, YAxis} = ReStock.axes;
-let {ema, sma} = ReStock.indicator;
-let {fitWidth} = ReStock.helper;
-
-class candelstick_intraday extends React.Component {
+const candelstick_intraday = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired,
+        width: React.PropTypes.number.isRequired,
+        type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
+    },
+    defaultProps: {
+        type: 'svg'
+    },
     render() {
+        let {ChartCanvas, Chart, EventCapture} = ReStock;
+
+        let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
+        let {discontinuousTimeScaleProvider} = ReStock.scale;
+
+        let {EdgeIndicator} = ReStock.coordinates;
+        let {MouseCoordinates, CurrentCoordinate} = ReStock.coordinates;
+
+        let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
+        let {XAxis, YAxis} = ReStock.axes;
+        let {ema, sma} = ReStock.indicator;
+        let {fitWidth} = ReStock.helper;
         let {data, type, width} = this.props;
 
         let ema20 = ema().id(0).windowSize(20).merge((d, c) => {
@@ -50,9 +57,11 @@ class candelstick_intraday extends React.Component {
                 ]} yMousePointerDisplayLocation='right' yMousePointerDisplayFormat={d3.format('.2f')} padding={{
                     top: 40,
                     bottom: 20
-                }}
-                xExtents={[new Date(2015, 0, 1), new Date(2015, 5, 8)]}>
-                 >
+                }} xExtents={[
+                    new Date(2015, 0, 1),
+                    new Date(2015, 5, 8)
+                ]}>
+                    >
                     <XAxis axisAt='bottom' orient='bottom'/>
                     <YAxis axisAt='right' orient='right' ticks={5}/>
 
@@ -102,19 +111,8 @@ class candelstick_intraday extends React.Component {
                     <MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 15]} calculators={[ema20, ema50]}/>
                 </TooltipContainer>
             </ChartCanvas>
-        );
-    }
-}
+          );
+        }
+      });
 
-candelstick_intraday.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    width: React.PropTypes.number.isRequired,
-    type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
-};
-
-candelstick_intraday.defaultProps = {
-    type: 'svg'
-};
-candelstick_intraday = fitWidth(candelstick_intraday);
-
-export default candelstick_intraday;
+export default ReStock.helper.fitWidth(candelstick_intraday);

@@ -4,17 +4,27 @@ import React from 'react';
 import d3 from 'd3';
 import ReStock from '/client/lib/react-stockcharts';
 
-let {ChartCanvas, Chart} = ReStock;
-
-let {AreaSeries} = ReStock.series;
-
-let {fitWidth} = ReStock.helper;
-
-class areachart_infopanel extends React.Component {
+const areachart_infopanel = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired,
+        width: React.PropTypes.number.isRequired,
+        type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
+    },
+    defaultProps: {
+        type: 'svg'
+    },
     render() {
+        let {ChartCanvas, Chart} = ReStock;
+
+        let {AreaSeries} = ReStock.series;
+
+        let {fitWidth} = ReStock.helper;
         let {data, type, width} = this.props;
-        if (data.length > 100) data = _.last(data, 100);
+        if (data.length > 100)
+            data = _.last(data, 100);
+
         return (
+
             <ChartCanvas seriesName="seriesName1" width={width} height={25} margin={{
                 left: 0,
                 right: 0,
@@ -25,19 +35,9 @@ class areachart_infopanel extends React.Component {
                     <AreaSeries yAccessor={d => d.close}/>
                 </Chart>
             </ChartCanvas>
+
         );
     }
-}
+});
 
-areachart_infopanel.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    width: React.PropTypes.number.isRequired,
-    type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
-};
-
-areachart_infopanel.defaultProps = {
-    type: 'svg'
-};
-areachart_infopanel = fitWidth(areachart_infopanel);
-
-export default areachart_infopanel;
+export default ReStock.helper.fitWidth(areachart_infopanel);
