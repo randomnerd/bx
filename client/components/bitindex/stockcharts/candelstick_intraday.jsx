@@ -15,6 +15,10 @@ const candelstick_intraday = React.createClass({
       type: 'svg'
   },
   tooltipContent(calculators) {
+
+    let dateFormat = d3.time.format('%Y-%m-%d');
+    let numberFormat = d3.format('.2f');
+
     return ({currentItem, xAccessor}) => {
       return {
         x: dateFormat(xAccessor(currentItem)),
@@ -69,10 +73,6 @@ const candelstick_intraday = React.createClass({
     }).accessor(d => d.smaVolume50);
 
     let changeCalculator = change();
-
-    let dateFormat = d3.time.format('%Y-%m-%d');
-    let numberFormat = d3.format('.2f');
-
     let annotationProps = {
       fontFamily: 'Glyphicons Halflings',
       fontSize: 20,
