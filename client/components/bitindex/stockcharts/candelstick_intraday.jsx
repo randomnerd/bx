@@ -35,6 +35,9 @@ const candelstick_intraday = React.createClass({
           }, {
             label: 'close',
             value: numberFormat(currentItem.close)
+          },{
+            label: 'volume',
+            value: numberFormat(currentItem.volume)
           }
         ].concat(calculators.map(each => ({
           label: each.tooltipLabel(),
@@ -114,7 +117,7 @@ const candelstick_intraday = React.createClass({
                   <XAxis axisAt='bottom' orient='bottom'/>
                   <YAxis axisAt='right' orient='right' ticks={5}/>
 
-                  <VolumeProfileSeries/>
+                  <VolumeProfileSeries orient='left'/>
                   <CandlestickSeries/>
                   <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
                   <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
@@ -123,7 +126,7 @@ const candelstick_intraday = React.createClass({
                       : '#FF0000'}/>
               </Chart>
 
-              <HoverTooltip tooltipContent={this.tooltipContent([ema20, ema50])} bgwidth={120} bgheight={95}/>
+              <HoverTooltip tooltipContent={this.tooltipContent([ema20, ema50])} bgwidth={120} bgheight={105}/>
               <EventCapture mouseMove={true} zoom={true} pan={true}/>
 
           </ChartCanvas>
