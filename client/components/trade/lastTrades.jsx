@@ -11,7 +11,11 @@ const LastTrades = Component({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     return {
-      trades: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}).fetch(),
+      trades: Trades.find(
+        { pairId: this.props.pair._id },
+        {sort: {createdAt: -1},
+        limit: this.props.limit||40}
+      ).fetch(),
       tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
       tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
     };
