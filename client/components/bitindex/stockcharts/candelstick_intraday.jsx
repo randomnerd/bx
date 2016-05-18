@@ -128,7 +128,7 @@ const candelstick_intraday = React.createClass({
         let annotationProps = {
             fontFamily: 'opensans',
             fontSize: 20,
-            fill: '#060F8F',
+            fill: '#767676',
             opacity: 0.8,
             text: '\ue093',
             y: ({yScale}) => (yScale.range()[0] - 10)
@@ -156,7 +156,7 @@ const candelstick_intraday = React.createClass({
                 <Chart id={2} yExtents={this.state.yExtents} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
                     0, h - 100
                 ]}>
-                    <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')}/>
+                    <YAxis axisAt='left' orient='left' ticks={5} tickFormat={d3.format('s')} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
                     <BarSeries yAccessor={d => d.volume} widthRatio={0.95} opacity={0.3} fill={d => d.close > d.open
                         ? '#6BA583'
@@ -172,12 +172,12 @@ const candelstick_intraday = React.createClass({
                     top: 40,
                     bottom: 20
                 }}>
-                    <XAxis axisAt='bottom' orient='bottom'/>
-                    <YAxis axisAt='right' orient='right' ticks={5}/>
+                    <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
+                    <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
                     <Label x={(width - margin.left - margin.right) / 2} y={height - 45} fontSize='12' text='XAxis Label here'/>
 
-                    <YAxis axisAt='right' orient='right' ticks={5}/>
+                    <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
                     <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize='12' text='YAxis Label here'/>
 
@@ -188,9 +188,9 @@ const candelstick_intraday = React.createClass({
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
                     <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
 
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
+                    <EdgeIndicator itemType='last' type='horizontal' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
                         ? '#6BA583'
-                        : '#FF0000'}/>
+                        : '#FF0000'} fontSize='10'/>
                 </Chart>
 
                 <HoverTooltip tooltipContent={this.tooltipContent([ema20, ema50])} bgwidth={120} bgheight={105}/>
