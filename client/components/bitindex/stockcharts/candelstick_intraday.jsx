@@ -152,7 +152,7 @@ const candelstick_intraday = React.createClass({
 
         return (
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, changeCalculator]} xExtents={this.state.xExtents} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
-                <Label x={50 + (margin.left + margin.right)} fill='#767676' y={30} fontSize='30' text={pairText}/>
+                <Label x={0 + (margin.left + margin.right)} fill='#767676' y={30} fontSize='30' text={pairText}/>
 
                 <Chart id={2} yExtents={this.state.yExtents} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
                     0, h - 100
