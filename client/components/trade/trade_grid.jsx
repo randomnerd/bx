@@ -9,6 +9,9 @@ import Orders from './orderbook';
 import OpenOrders from './open_orders';
 import Balance from './balance';
 
+const heightChart = 350;
+
+
 const TradeGrid = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
@@ -173,7 +176,7 @@ const TradeGrid = Component({
           case 'candle':
               return (
                   <div><Charts.candelstick_intraday data={this.data.BTPR.
-                  slice(200)} type='hybrid' height={350} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
+                  slice(200)} type='hybrid' height={heightChart} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
               );
               break;
 
