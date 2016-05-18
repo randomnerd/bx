@@ -105,8 +105,17 @@ const TradeGrid = Component({
       BTPR_Loading: !handle_BTPR.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id,
-      user: Meteor.user()
+      user: Meteor.user(),
+      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
+  },
+  currName(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
   },
   showCandle(event) {
       $(this.refs.chartType).find('.item').removeClass('active');
@@ -164,7 +173,7 @@ const TradeGrid = Component({
           case 'candle':
               return (
                   <div><Charts.candelstick_intraday data={this.data.BTPR.
-                  slice(200)} type='hybrid' height={350} /></div>
+                  slice(200)} type='hybrid' height={350} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
               );
               break;
 

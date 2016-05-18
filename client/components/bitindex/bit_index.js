@@ -75,7 +75,7 @@ export default React.createClass({
       <div>
         <br/> <br/> <br/> <br/>
         <Charts.candelstick_intraday data={this.data.BTPR.
-        slice(200)} type='hybrid' height={450} height_bar={160}/>
+        slice(200)} type='hybrid' height={450} height_bar={160} pairText='text'/>
       </div>
     );
 

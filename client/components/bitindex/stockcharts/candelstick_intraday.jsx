@@ -12,7 +12,8 @@ const candelstick_intraday = React.createClass({
     propTypes: {
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
-        type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired
+        type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired,
+        pairText: React.PropTypes.string.isRequired
     },
     defaultProps: {
         type: 'svg'
@@ -99,7 +100,7 @@ const candelstick_intraday = React.createClass({
         let {ema, sma, change} = ReStock.indicator;
         let {Annotate, LabelAnnotation, Label} = ReStock.annotation;
         let {fitWidth} = ReStock.helper;
-        let {data, type, width} = this.props;
+        let {data, type, width, pairText} = this.props;
 
         let {Brush} = ReStock.interactive;
         let ema20 = ema().id(0).windowSize(20).merge((d, c) => {
@@ -135,8 +136,8 @@ const candelstick_intraday = React.createClass({
         };
 
         let margin = {
-            left: 40,
-            right: 80,
+            left: 20,
+            right: 70,
             top: 10,
             bottom: 30
         }
@@ -151,7 +152,7 @@ const candelstick_intraday = React.createClass({
 
         return (
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, changeCalculator]} xExtents={this.state.xExtents} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
-                <Label x={(width - margin.left - margin.right) / 2} y={30} fontSize='30' text='BTC USD'/>
+                <Label x={50 + (margin.left + margin.right)} fill='#767676' y={30} fontSize='30' text={pairText}/>
 
                 <Chart id={2} yExtents={this.state.yExtents} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
                     0, h - 100
