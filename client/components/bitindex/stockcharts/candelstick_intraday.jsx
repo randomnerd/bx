@@ -5,7 +5,7 @@ import d3 from 'd3';
 
 import ReStock from '/client/lib/react-stockcharts';
 
-const BRUSH_TYPE = "1D";
+const BRUSH_TYPE = '1D';
 
 const candelstick_intraday = React.createClass({
 
@@ -19,10 +19,10 @@ const candelstick_intraday = React.createClass({
         type: 'svg'
     },
     componentDidMount() {
-        document.addEventListener("keyup", this.onKeyPress);
+        document.addEventListener('keyup', this.onKeyPress);
     },
     componentWillUnmount() {
-        document.removeEventListener("keyup", this.onKeyPress);
+        document.removeEventListener('keyup', this.onKeyPress);
     },
     onKeyPress(e) {
         let keyCode = e.which;
@@ -47,7 +47,7 @@ const candelstick_intraday = React.createClass({
             xExtents: [
                 left, right
             ],
-            yExtents: BRUSH_TYPE === "2D"
+            yExtents: BRUSH_TYPE === '2D'
                 ? [low, high]
                 : this.state.yExtents
         })
@@ -136,10 +136,10 @@ const candelstick_intraday = React.createClass({
         };
 
         let margin = {
-            left: 20,
-            right: 70,
+            left: 7,
+            right: 60,
             top: 10,
-            bottom: 30
+            bottom: 20
         }
 
         let height = 350;
@@ -185,7 +185,7 @@ const candelstick_intraday = React.createClass({
                     <VolumeProfileSeries orient='left'/>
                     <CandlestickSeries/>
 
-                    <Brush ref="brush" id={0} enabled={true} type={BRUSH_TYPE} onStart={e => console.log("Start Event:", e)} onBrush={this.handleBrush}/>
+                    <Brush ref='brush' id={0} enabled={true} type={BRUSH_TYPE} onStart={e => console.log('Start Event:', e)} onBrush={this.handleBrush}/>
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
                     <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
 
