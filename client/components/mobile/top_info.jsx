@@ -60,7 +60,7 @@ const TopInfo = Component({
   componentDidMount() {
     let width=1;
     $(this.refs.runrow).find(".runrow_inner > .item").each(function(i){
-      width += jQuery(this, i).outerWidth(true); // thanks to Michael Haszprunar and Fabien Volpi
+      width += jQuery(this, i).outerWidth(true);
     });
     console.log(width, $(this.refs.runrow).width());
     if(width > $(this.refs.runrow).width()){

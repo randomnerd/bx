@@ -10,7 +10,13 @@ const router = Router({
      '/currencies/edit/:id' : 'admin.adminCurrsEdit',
      '/tradepairs' : 'admin.adminPairs',
      '/tradepairs/new' : 'admin.adminPairsNew',
-     '/tradepairs/edit/:id' : 'admin.adminPairsEdit'
+     '/tradepairs/edit/:id' : 'admin.adminPairsEdit',
+     '/currtypes' : 'admin.adminCurrTypes',
+     '/currtypes/new' : 'admin.adminCurrTypesNew',
+     '/currtypes/edit/:id' : 'admin.adminCurrTypesEdit',
+     '/pairtypes' : 'admin.adminPairTypes',
+     '/pairtypes/new' : 'admin.adminPairTypesNew',
+     '/pairtypes/edit/:id' : 'admin.adminPairTypesEdit'
    },
    '/u': {
      '/wallets': 'u.wallets',

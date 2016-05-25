@@ -12,6 +12,14 @@ html, body, html.ios, html.ios body{
 
 .ui.body{display: block;}
 
+.daologo{
+  padding-left: 70px !important;
+  background: url("/dao_logo.png") 11px 11px no-repeat !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+}
+
+
 :not(.buttons) > .ui.button:not(.attached){
   margin: 0 0.5em 0 0;
 }
@@ -1190,6 +1198,9 @@ tr.lesspadding th {
   overflow-x: hidden;
   width: 100%;
 }
+.ld .ui.grid{
+  margin-top: 0 !important;
+}
 .ld.noscroll{
   overflow-y: hidden !important;
 }
@@ -1214,6 +1225,7 @@ tr.lesspadding th {
 .ld .block{
   position: relative;
   width: 100%;
+  height: 100%;
 }
 .ld .block.opacity{
   height: 100%;
@@ -1222,7 +1234,7 @@ tr.lesspadding th {
 }
 .ld .block.background{
   display: block;
-  background-image: url("/bg_video.jpg");
+  background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   bottom: 0;
@@ -1260,9 +1272,10 @@ tr.lesspadding th {
   margin: -70px auto 0;
   position: absolute;
   text-align: center;
-  top: 50%;
+  top: 15%;
   height: inherit;
   width: inherit;
+  color: #000;
 }
 .ld .button{
   text-transform: uppercase;
@@ -1271,7 +1284,6 @@ tr.lesspadding th {
 .ld .scrolldown.button{
   position: absolute;
   margin-left: 50% !important;
-  top: 40% !important;
   left: -1.4em;
 }
 
@@ -1279,11 +1291,25 @@ tr.lesspadding th {
   font-size: 4rem;
   font-family: "Helvetica Neue";
   font-weight: lighter;
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
+}
+.ld .block .promo h3{
+  font-size: 2rem;
+  font-family: "Helvetica Neue";
+  font-weight: lighter;
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
 }
 .ld .block .promo p{
   font-size: 1.5rem;
   font-family: "Helvetica Neue";
-  font-weight: lighter;
+  width: 70%;
+  margin: 1.5em auto;
+  text-align: left;
+  font-weight: 200;
 }
 
 
@@ -1332,7 +1358,7 @@ tr.lesspadding th {
 }
 
 .ld .ui.segment .ui.header{
-  color: #0288AD;
+  color: #eee;
   font-size: 1.5em;
   font-style: italic;
   text-align: right;
@@ -1397,6 +1423,61 @@ tr.lesspadding th {
   font-weight: lighter;
   color: #eee;
 }
+
+.ld .sw{
+  padding: 5em 2em !important;
+}
+
+.ld .sw .bloc{
+  position: relative;
+  display: inline-block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  vertical-align: top;
+  width: 50%;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ld .ui.header{
+  padding: 10px 0;
+  text-align: left !important;
+  font-style: normal !important;
+}
+
+.ld .subheader{
+  position: relative;
+  float: left;
+  padding: 0 10px 0 0;
+}
+.ld .content{
+  position: relative;
+  float: left;
+}
+
+.ui.inverted.newgrey .ld .ui.table.heading {
+    margin-top: -1em !important;
+}
+
+.ld img{
+  width: 100%;
+  margin: auto;
+}
+
+.ldtrades{
+  width: 288px;
+}
+
+@media screen and (max-width: 1000px) {
+  .ld .sw .bloc{
+    width: 100%;
+  }
+}
+
+
+
 /*
 .ld .ui.segment .ui.header::after{
   font-family: Icons;

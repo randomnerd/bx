@@ -10,3 +10,5 @@ import './waddressbook';
 import './wallets';
 import './withdrawals';
 import './orders';
+import './currtypes';
+import './pairtypes';

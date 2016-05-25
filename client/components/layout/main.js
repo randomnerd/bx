@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
-import Home from '../home';
+import Home from '../new_home';
 import BitIndex from '../bitindex/bit_index';
 
 import WalletsPage from '../user/wallets';
@@ -22,7 +22,7 @@ import {TradePairs, Currencies} from '../../../both/collections';
 
 const MainLayout = Component({
   page: ['page'],
-  
+
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
@@ -41,7 +41,7 @@ const MainLayout = Component({
     <div className="ui inverted newgrey body">
       <Sidebar><Chat /></Sidebar>
       <div className="pusher">
-        <InfoPanel />
+        {3==2?<InfoPanel />:null}
         <div className="contwrapper pusher">
           {renderPage(props.page)}
         </div>

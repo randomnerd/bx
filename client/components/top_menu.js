@@ -109,12 +109,14 @@ const TopMenu = Component({
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container">
-          <a className="item " href="/"><i className="circle large red icon"></i>Bit.Exchange</a>
+          <a className="item daologo" href="/"></a>
           { this.renderMenuItems() }
           <TradePairsMenu pair={pair} />
-          <a className="icon item double" onClick={this.infoToggle}>
+          {3==2?<a className="icon item double" onClick={this.infoToggle}>
             <p><i className="dropdown large icon"></i></p>
           </a>
+          :
+          null}
           {pair ? <TopInfo pair={pair} /> : null}
 
           { !!this.props.user._id ?

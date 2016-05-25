@@ -30,9 +30,13 @@ Tracker.autorun(() => {
     subsManager.subscribe('withdrawals');
     subsManager.subscribe('waddressbook');
     subsManager.subscribe('myOrders');
+    subsManager.subscribe('currtypes');
+    subsManager.subscribe('pairtypes');
     if (user.isAdmin()) {
       subsManager.subscribe('currenciesAdmin');
       subsManager.subscribe('tradepairsAdmin');
+      subsManager.subscribe('currtypesAdmin');
+      subsManager.subscribe('pairtypesAdmin');
     }
   }
 });

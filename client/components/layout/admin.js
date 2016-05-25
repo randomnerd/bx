@@ -6,6 +6,10 @@ import AdminCurrencies from '../admin/currencies';
 import AdminCurrency from '../admin/currency_form';
 import AdminTradePairs from '../admin/TradePairs';
 import AdminTradePair from '../admin/tradepair_form';
+import CurrTypes from '../admin/currtypes';
+import CurrType from '../admin/currtype_form';
+import PairTypes from '../admin/pairtypes';
+import PairType from '../admin/pairtype_form';
 import AdminHome from '../admin/home';
 import {Component} from 'cerebral-view-react';
 
@@ -19,6 +23,10 @@ const Admin = Component({
       case "currency": return <AdminCurrency/>;
       case "tradepairs": return <AdminTradePairs/>;
       case "tradepair": return <AdminTradePair/>;
+      case "currtypes": return <CurrTypes/>;
+      case "currtype": return <CurrType/>;
+      case "pairtypes": return <PairTypes/>;
+      case "pairtype": return <PairType/>;
       default: return <AdminHome/>;
     }
   }

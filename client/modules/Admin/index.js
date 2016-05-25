@@ -44,6 +44,41 @@ function goPairsEdit ({input, state}) {
   state.set('layout', "admin");
 }
 
+function goCurrTypes ({input, state}) {
+  state.set('page', "currtypes");
+  state.set('layout', "admin");
+}
+
+function goCurrTypesNew ({input, state}) {
+  state.set('page', "currtype");
+  state.set('currtype', null);
+  state.set('layout', "admin");
+}
+
+function goCurrTypesEdit ({input, state}) {
+  state.set('page', "currtype");
+  state.set('currtype', input.id);
+  state.set('layout', "admin");
+}
+
+
+function goPairTypes ({input, state}) {
+  state.set('page', "pairtypes");
+  state.set('layout', "admin");
+}
+
+function goPairTypesNew ({input, state}) {
+  state.set('page', "pairtype");
+  state.set('pairtype', null);
+  state.set('layout', "admin");
+}
+
+function goPairTypesEdit ({input, state}) {
+  state.set('page', "pairtype");
+  state.set('pairtype', input.id);
+  state.set('layout', "admin");
+}
+
 const home = [
   goHome
 ];
@@ -70,6 +105,28 @@ const adminPairsEdit = [
   goPairsEdit
 ];
 
+const adminCurrTypes = [
+  goCurrTypes
+];
+
+const adminCurrTypesNew = [
+  goCurrTypesNew
+];
+const adminCurrTypesEdit = [
+  goCurrTypesEdit
+];
+
+const adminPairTypes = [
+  goPairTypes
+];
+
+const adminPairTypesNew = [
+  goPairTypesNew
+];
+const adminPairTypesEdit = [
+  goPairTypesEdit
+];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -85,6 +142,12 @@ export default (options = {}) => {
       adminPairs,
       adminPairsNew,
       adminPairsEdit,
+      adminCurrTypesNew,
+      adminCurrTypesEdit,
+      adminCurrTypes,
+      adminPairTypes,
+      adminPairTypesNew,
+      adminPairTypesEdit,
       // pair
     });
 

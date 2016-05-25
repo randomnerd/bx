@@ -36,22 +36,22 @@ const Balance = Component({
         <h4 className='ui header'>AVAILABLE</h4>
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
-            <strong className="name">{this.data.currency1.shortName}: </strong>
+            <strong className="name">{this.data.currency1 ? this.data.currency1.shortName : ""}: </strong>
             <span className="value">{balance1}</span>
           </div>
           <div className='ui small basic segment'>
-            <strong className="name">{this.data.currency2.shortName}: </strong>
+            <strong className="name">{this.data.currency2 ? this.data.currency2.shortName : ""}: </strong>
             <span className="value">{balance2}</span>
           </div>
         </div>
         <h4 className='ui header'>HELD FOR ORDERS</h4>
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
-            <strong className="name">{this.data.currency1.shortName}: </strong>
+            <strong className="name">{this.data.currency1 ? this.data.currency1.shortName : ""}: </strong>
             <span className="value">{held1}</span>
           </div>
           <div className='ui small basic segment'>
-            <strong className="name">{this.data.currency2.shortName}: </strong>
+            <strong className="name">{this.data.currency2 ? this.data.currency2.shortName : ""}: </strong>
             <span className="value">{held2}</span>
           </div>
         </div>

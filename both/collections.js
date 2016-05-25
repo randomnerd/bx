@@ -12,6 +12,8 @@ export const Withdrawals = new Mongo.Collection('withdrawals');
 export const Orders = new Mongo.Collection('orders');
 export const Trades = new Mongo.Collection('trades');
 export const OrderBookItems = new Mongo.Collection('orderbookitems');
+export const CurrTypes = new Mongo.Collection('currtypes');
+export const PairTypes = new Mongo.Collection('pairtypes');
 
 export const BitIndexIndicator_BTTC = new Mongo.Collection('BitIndexIndicator_BTTC');
 export const BitIndexIndicator_BTTN = new Mongo.Collection('BitIndexIndicator_BTTN');
