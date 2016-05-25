@@ -259,20 +259,20 @@ const Home = Component({
                 </div>
                 <div className="promo column">
                   <h1><br /></h1>
-                  <h3>Store trading data in to Blockchain</h3>
+                  <h2>Store trading data in to Blockchain</h2>
                   <p>We store all the trading data in to our private Blockchain
                       so you can be sure that every little process and trade on our
                       market will not be lost or compromised.</p>
 
-                  <h3>Store trading data in to Blockchain</h3>
-                  <p>We store all the trading data in to our private Blockchain
-                      so you can be sure that every little process and trade on our
-                      market will not be lost or compromised.</p>
+                  <h2>Ice Box - Cold Storage</h2>
+                  <p>Icebox is a simple Ether cold storage solution based on Lightwallet.
+                  It makes it easy to securely generate new keys and addresses on an
+                  airgapped device as well as spend from those addresses.</p>
 
-                  <h3>Store trading data in to Blockchain</h3>
-                  <p>We store all the trading data in to our private Blockchain
-                      so you can be sure that every little process and trade on our
-                      market will not be lost or compromised.</p>
+                  <h2>Trustless Token Management</h2>
+                  <p>Trustless (Contract Controlled) Token Management extends
+                  the managed Account function of DAO to be able to manage all
+                  tokens and token sets which will ever exist.</p>
 
                 </div>
               </div>

@@ -1295,6 +1295,14 @@ tr.lesspadding th {
   margin: 0 auto;
   text-align: left;
 }
+.ld .block .promo h2{
+  font-size: 3rem;
+  font-family: "Helvetica Neue";
+  font-weight: lighter;
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
+}
 .ld .block .promo h3{
   font-size: 2rem;
   font-family: "Helvetica Neue";
