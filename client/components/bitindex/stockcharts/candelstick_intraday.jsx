@@ -152,7 +152,7 @@ const candelstick_intraday = React.createClass({
 
         return (
             <ChartCanvas width={width} height={height} margin={margin} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, changeCalculator]} xExtents={this.state.xExtents} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
-                <Label x={0 + (margin.left + margin.right)} fill='#767676' y={30} fontSize='30' text={pairText}/>
+                <Label x={10 + (margin.left + margin.right)} fill='#767676' y={30} fontSize='30' text={pairText}/>
 
                 <Chart id={2} yExtents={this.state.yExtents} yMousePointerDisplayLocation='left' yMousePointerDisplayFormat={d3.format('.4s')} height={100} origin={(w, h) => [
                     0, h - 100
@@ -174,13 +174,12 @@ const candelstick_intraday = React.createClass({
                     bottom: 20
                 }}>
                     <XAxis axisAt='bottom' orient='bottom' fontSize={10} stroke='#767676' tickStroke='#767676'/>
-                    <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
-                    <Label x={(width - margin.left - margin.right) / 2} y={height - 45} fontSize='12' text='XAxis Label here'/>
+                    <Label x={(width - margin.left - margin.right) / 2} y={height - 45} fontSize='12' text={'Live market data' + ' ' + pairText}  fill='#767676' />
 
-                    <YAxis axisAt='right' orient='right' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
+                    <YAxis axisAt='right' orient='left' ticks={5} fontSize={10} stroke='#767676' tickStroke='#767676'/>
 
-                    <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize='12' text='YAxis Label here'/>
+                    <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize='12' text='Volume profile indicator' fill='#767676'/>
 
                     <VolumeProfileSeries orient='left'/>
                     <CandlestickSeries/>
