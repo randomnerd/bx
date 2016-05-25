@@ -188,9 +188,9 @@ const candelstick_intraday = React.createClass({
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
                     <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
 
-                    <EdgeIndicator itemType='last' type='horizontal' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
+                    <EdgeIndicator itemType='last' type='horizontal' orient='right' edgeAt='right'  yAccessor={d => d.close} fill={d => d.close > d.open
                         ? '#6BA583'
-                        : '#FF0000'} fontSize='10'/>
+                        : '#FF0000'} fontSize='11' />
                 </Chart>
 
                 <HoverTooltip tooltipContent={this.tooltipContent([ema20, ema50])} bgwidth={120} bgheight={105}/>

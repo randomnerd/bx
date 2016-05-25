@@ -35,7 +35,7 @@ class EdgeIndicator extends Component {
 		});
 	}
 	render() {
-		var { xScale, chartConfig, plotData, chartCanvasType } = this.props;
+		var { xScale, chartConfig, plotData, chartCanvasType, fontSize } = this.props;
 
 		if (chartCanvasType !== "svg") return null;
 
@@ -66,6 +66,7 @@ EdgeIndicator.propTypes = {
 	orient: PropTypes.oneOf(["left", "right"]),
 	edgeAt: PropTypes.oneOf(["left", "right"]),
 	displayFormat: PropTypes.func.isRequired,
+	fontSize: PropTypes.number,
 };
 
 EdgeIndicator.defaultProps = {
@@ -99,7 +100,7 @@ EdgeIndicator.drawOnCanvasStatic = (props, ctx, xScale, yScale, plotData) => {
 
 EdgeIndicator.helper = (props, xScale, yScale, plotData) => {
 	var { type: edgeType, displayFormat, itemType, edgeAt, yAxisPad, orient } = props;
-	var { yAccessor, xAccessor, fill, textFill } = props;
+	var { yAccessor, xAccessor, fill, textFill,fontSize } = props;
 
 	// var currentItem = ChartDataUtil.getCurrentItemForChartNew(currentItems, forChart);
 	var edge = null;
@@ -132,6 +133,7 @@ EdgeIndicator.helper = (props, xScale, yScale, plotData) => {
 			coordinate: displayFormat(yValue),
 			edgeAt: edgeX,
 			orient,
+			fontSize,
 		};
 	}
 	return edge;
