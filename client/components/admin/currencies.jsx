@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies} from '../../../both/collections';
+import {Currencies, CurrTypes} from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
@@ -23,12 +23,18 @@ const AdminCurrencies = Component({
   },
   getMeteorData() {
     return {
-      currencies: Currencies.find({}, {
-        sort: {
-          name: 1
-        }
-      }).fetch()
+      currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),
+      currtypes: CurrTypes.find().fetch()
     };
+  },
+
+  typeName(id) {
+    let curr = _.findWhere(this.data.currtypes, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
   },
   renderCurrenciesList() {
     return this.data.currencies.map((curr) => {
@@ -37,6 +43,7 @@ const AdminCurrencies = Component({
             <td>{curr.name}</td>
             <td>{curr.shortName}</td>
             <td>{curr.status}</td>
+            <td>{this.typeName(curr.type)}</td>
             <td>{curr.published ? 'true' : 'false'}</td>
             <td className='right aligned collapsing'>
               <div className='ui tiny icon buttons'>
@@ -65,6 +72,7 @@ const AdminCurrencies = Component({
               <th>Name</th>
               <th>Short name</th>
               <th>Status</th>
+              <th>Type</th>
               <th>Public</th>
               <th>Action</th>
             </tr>

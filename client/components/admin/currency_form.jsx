@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies} from '../../../both/collections';
+import {Currencies, CurrTypes} from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
@@ -18,10 +18,10 @@ const AdminCurrency = Component({
   },
 
   newCurr(event) {
-    let {name, shortName, published} = this.refs.curr.getCurrentValues();
+    let {name, shortName, published, currType} = this.refs.curr.getCurrentValues();
 
     Meteor.call('currrency_add',
-    {name: name, shortName: shortName, published: published ? true : false},
+    {name: name, shortName: shortName, published: published ? true : false, type: currType},
     function(error, result) {
       if (result) {
         console.log(result);
@@ -33,9 +33,11 @@ const AdminCurrency = Component({
     });
   },
   saveCurr(event) {
-    let currVals = this.refs.curr.getCurrentValues();
-    currVals.published = currVals.published ? true : false;
-    Meteor.call('currrency_update', this.data.currency._id, currVals, function(error, result) {
+    let {name, shortName, published, currType} = this.refs.curr.getCurrentValues();
+    published = published ? true : false;
+    Meteor.call('currrency_update', this.data.currency._id,
+    {name: name, shortName: shortName, published: published ? true : false, type: currType},
+    function(error, result) {
       if (result) {
         this.setState({errorMessage: err.message});
       } else {
@@ -43,9 +45,17 @@ const AdminCurrency = Component({
       }
     });
   },
+
+  typesForSearch() {
+    return this.data.currtypes.map((curr) => {
+      return {_id: curr._id, title: curr.shortName, description: curr.name};
+    });
+  },
+
   getMeteorData() {
     return {
-      currency: Currencies.findOne({_id: this.props.curr})
+      currency: Currencies.findOne({_id: this.props.curr}),
+      currtypes: CurrTypes.find().fetch()
     };
   },
   currentVal(what) {
@@ -77,6 +87,12 @@ const AdminCurrency = Component({
           <Semantic.Input name='withdrawalFee'
           label='Withdrawal fee' validations='isNumeric' placeholder='0.0001'
           value={this.currentVal('withdrawalFee')} />
+
+          <Semantic.Select name='currType' label='Currency type'
+          validations='minLength:3' placeholder='Select currency type'
+          required value={this.currentVal('type')} content={this.typesForSearch()} />
+
+
           <div className='two fields'>
 
             <Semantic.Checkbox name='published' label='Published' isChecked={this.published} />

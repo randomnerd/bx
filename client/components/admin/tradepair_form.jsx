@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies, TradePairs} from '../../../both/collections';
+import {Currencies, TradePairs, PairTypes} from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
@@ -18,7 +18,7 @@ const AdminTradePair = Component({
   },
 
   newPair(event) {
-    let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
+    let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
 
     Meteor.call('tradepair_add', {
       currId: currId,
@@ -26,37 +26,40 @@ const AdminTradePair = Component({
       buyFee: buyFee,
       sellFee: sellFee,
       published: !!published,
-      permalink: permalink
+      permalink: permalink,
+      market: market
     }, function(error, result) {
         if (result || error) {
           this.setState({errorMessage: error.message});
         }else {
-          FlowRouter.go('/admin/tradepairs');
+          //FlowRouter.go('/admin/tradepairs');
         }
       });
   },
   savePair(event) {
-    let {currId, marketCurrId, buyFee, sellFee, published, permalink} = this.refs.curr.getCurrentValues();
+    let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
     Meteor.call('tradepair_update', this.data.tradePairs._id, {
       currId: currId,
       marketCurrId: marketCurrId,
       buyFee: buyFee,
       sellFee: sellFee,
       published: !!published,
-      permalink: permalink
+      permalink: permalink,
+      market: market
     },
     function(error, result) {
       if (result) {
         this.setState({errorMessage: err.message});
       }else {
-        FlowRouter.go('/admin/tradepairs');
+        //FlowRouter.go('/admin/tradepairs');
       }
     });
   },
   getMeteorData() {
     return {
       tradePairs: TradePairs.findOne(this.props.adm_pair),
-      currencies: Currencies.find({}, {sort: {name: 1}}).fetch()
+      currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
+      markets: PairTypes.find().fetch()
     };
   },
   currentVal(what) {
@@ -68,6 +71,11 @@ const AdminTradePair = Component({
   currsForSearch() {
     return this.data.currencies.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
+    });
+  },
+  marketsForSearch() {
+    return this.data.markets.map((m) => {
+      return {_id: m._id, title: m.shortName, description: m.name};
     });
   },
 
@@ -101,6 +109,10 @@ const AdminTradePair = Component({
 
           <Semantic.Input name='permalink' label='Permalink' placeholder='ltc-btc'
           required value={this.currentVal('permalink')} />
+
+          <Semantic.Select name='market' label='Market'
+          validations='minLength:3' placeholder='Select market'
+          required value={this.currentVal('market')} content={this.marketsForSearch()} />
 
           <Semantic.Input name='buyFee' label='Buy fee'
           validations='isNumeric' placeholder='Enter name of currency'

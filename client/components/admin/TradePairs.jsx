@@ -1,5 +1,5 @@
 import React from 'react';
-import {Currencies, TradePairs}  from '../../../both/collections';
+import {Currencies, TradePairs, PairTypes}  from '../../../both/collections';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
@@ -35,10 +35,19 @@ const AdminTradePairs = Component({
       ? curr.shortName
       : '';
   },
+  marketName(id) {
+    let curr = _.findWhere(this.data.markets, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
+  },
   getMeteorData() {
     return {
       TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-      currencies: Currencies.find({}, { sort: { name: 1 } }).fetch()
+      currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),
+      markets: PairTypes.find().fetch()
     };
   },
   renderPairsList() {
@@ -47,6 +56,7 @@ const AdminTradePairs = Component({
           <tr key={pair._id}>
             <td>{this.currName(pair.currId)}</td>
             <td>{this.currName(pair.marketCurrId)}</td>
+            <td>{this.marketName(pair.market)}</td>
             <td>{pair.buyFee}</td>
             <td>{pair.sellFee}</td>
             <td>{pair.published
@@ -78,6 +88,7 @@ const AdminTradePairs = Component({
             <tr>
               <th>Currency</th>
               <th>Market currency</th>
+              <th>Market</th>
               <th>Buy fee</th>
               <th>Sell fee</th>
               <th>Published</th>
