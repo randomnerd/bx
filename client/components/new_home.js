@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
-import {Currencies, TradePairs, BitIndexIndicator_BTPR} from '../../both/collections';
+import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes} from '../../both/collections';
 import {Meteor} from 'meteor/meteor';
 import Trades from './trade/landing_trades';
 
@@ -26,13 +26,14 @@ const Home = Component({
   getMeteorData() {
     let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
     let pair = TradePairs.findOne();
-
     return {
       pair: pair,
+      pairs: TradePairs.find().fetch(),
       BTPR_Loading: !handle_BTPR.ready(),
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id,
-      user: Meteor.user()
+      user: Meteor.user(),
+      markets: PairTypes.find().fetch()
     };
   },
   componentDidMount() {
@@ -113,6 +114,23 @@ const Home = Component({
   scrollAll(){
     $(this.refs.ld).scrollTop(1).scroll();
   },
+
+  marketName(id) {
+    let curr = _.findWhere(this.data.markets, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
+  },
+
+  marketPairs(id) {
+    let curr = _.where(this.data.pairs, {
+      market: id
+    });
+    return curr || [];
+  },
+
   render() {
     return (
       <div className={"ld2" + (!this.state.holder?" scroll":"")} ref="ld2">

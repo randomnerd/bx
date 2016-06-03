@@ -11,7 +11,7 @@ const Layout = Component({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      loading: !Meteor.subs.ready(),
+      loading: !Meteor.subs.ready() || Meteor.loggingIn(),
     };
   },
 

@@ -6,7 +6,7 @@ import moment from 'moment';
 
 const LandingTrades = Component({
   layout: ['layout'],
-  pair: ['pair.pair']
+  pair: ['pair','pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {
@@ -71,6 +71,7 @@ const LandingTrades = Component({
           <thead>
           <tr className='lesspadding'>
             <th className='six wide center aligned'>{this.props.valute1}</th>
+            <th className='six wide center aligned'>Market currency</th>
             <th className='six wide center aligned'>Price</th>
             <th className='four wide right aligned'>Time</th>
           </tr>

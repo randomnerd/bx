@@ -6,7 +6,7 @@ import moment from 'moment';
 
 const LastTrades = Component({
   layout: ['layout'],
-  pair: ['pair.pair']
+  pair: ['pair','pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {

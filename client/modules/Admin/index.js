@@ -34,7 +34,7 @@ function goPairs ({input, state}) {
 
 function goPairsNew ({input, state}) {
   state.set('page', "tradepair");
-  state.set('pair', null);
+  state.set('adm_pair', null);
   state.set('layout', "admin");
 }
 

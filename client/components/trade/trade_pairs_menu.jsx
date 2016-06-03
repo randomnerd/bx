@@ -35,7 +35,7 @@ const TradePairsMenu = Component({
         <a className={'item' + (active._id === pair._id ? ' active' : '') }
         key = {pair.permalink}
         href = {'/pair/' + pair.permalink}>
-          <div className="ui label">{pair.dayVolume? parseFloat(pair.dayVolume).toFixed(4) : 0.0000}</div>
+          <div className="ui label">{pair.dayVolume? (parseFloat(pair.dayVolume)/100000000).toFixed(4) : 0.0000}</div>
           {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}
         </a>
       );
