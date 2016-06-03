@@ -12,7 +12,7 @@ const Layout = Component({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      loading: !(Meteor.subs.ready() && !Meteor.loggingIn() && this.props.pair) ,
+      loading: !Meteor.subs.ready() || Meteor.loggingIn(),
     };
   },
 
@@ -21,7 +21,6 @@ const Layout = Component({
   },
 
   render() {
-    console.log(this.data.loading);
     if (this.data.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     if (this.props.mobile) return <MobileLayout/>;
     switch (this.props.layout) {
