@@ -382,6 +382,8 @@ const TradeGrid = Component({
   },
 
   renderBalance(k){
+    let pair = this.props.pair||null;
+    let pairId = pair && pair._id
     let fixclass="";
     if(
       this.state.fixclass &&
@@ -396,8 +398,8 @@ const TradeGrid = Component({
       <div key={k} className={"ux column balance " + (this.positions.balance.size == "big" ? "fullheight" : "semiheight" ) + fixclass + " padding drag"} ref="balance" data-block="balance">
         <div className='ui basic segment h100'>
           <h3 className='ui header'>BALANCE</h3>
-          <Balance pair={this.props.pair} pairId={this.props.pair._id} wide={this.positions.balance.size == "small" ? "double" : false} />
-          <BuySell pair={this.props.pair} pairId={this.props.pair._id} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <Balance pair={pair} pairId={pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
+          <BuySell pair={pair} pairId={pairId} wide={this.positions.balance.size == "small" ? "double" : false} />
         </div>
       </div>
     );

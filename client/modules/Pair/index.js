@@ -5,6 +5,13 @@ import {User} from '/both/models';
 import {TradePairs} from '/both/collections';
 import {set, copy} from 'cerebral-addons';
 
+function subsReady({input, state, output, services}) {
+  Tracker.autorun(() => {
+    if (services.subsManager.ready()) {
+      output.success();
+    }
+  });
+}
 
 function showPair ({input, state, output, services}) {
   state.set('page', "pair");
@@ -12,6 +19,7 @@ function showPair ({input, state, output, services}) {
   state.set('pair_link', input.id);
   if (state.get('mobile')) state.set('mob.page', 'buysell');
   let pair = TradePairs.findOne({permalink: input.id});
+
   if (!pair) return;
   services.subsManager.subscribe('trades', pair._id);
   services.subsManager.subscribe('orderbook', pair._id);
@@ -28,7 +36,12 @@ function setBuySell ({input, state}) {
 }
 
 const show = [
-  showPair
+  [
+    subsReady, {
+      success: [showPair]
+    }
+  ]
+
   // set("pair", 'state:/page'),
   // set("main", 'state:/layout'),
   // copy('input:/id', 'state:/pair_link')

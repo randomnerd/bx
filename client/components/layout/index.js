@@ -6,12 +6,13 @@ import React from 'react';
 
 const Layout = Component({
   layout: ['layout'],
-  mobile: ['mobile']
+  mobile: ['mobile'],
+  pair: ['pair', 'pair'],
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      loading: !Meteor.subs.ready() || Meteor.loggingIn(),
+      loading: !(Meteor.subs.ready() && !Meteor.loggingIn() && this.props.pair) ,
     };
   },
 
@@ -20,6 +21,7 @@ const Layout = Component({
   },
 
   render() {
+    console.log(this.data.loading);
     if (this.data.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     if (this.props.mobile) return <MobileLayout/>;
     switch (this.props.layout) {
