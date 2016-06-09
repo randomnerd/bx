@@ -16,7 +16,10 @@ const router = Router({
      '/currtypes/edit/:id' : 'admin.adminCurrTypesEdit',
      '/pairtypes' : 'admin.adminPairTypes',
      '/pairtypes/new' : 'admin.adminPairTypesNew',
-     '/pairtypes/edit/:id' : 'admin.adminPairTypesEdit'
+     '/pairtypes/edit/:id' : 'admin.adminPairTypesEdit',
+     '/pairgroups' : 'admin.adminPairGroups',
+     '/pairgroups/new' : 'admin.adminPairGroupsNew',
+     '/pairgroups/edit/:id' : 'admin.adminPairGroupsEdit'
    },
    '/u': {
      '/wallets': 'u.wallets',

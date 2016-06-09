@@ -241,19 +241,21 @@ html, body, html.ios, html.ios body{
   font-family: Icons;
   content: "\f175";
   display: block;
-  float: right;
+  float: left;
   -webkit-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
+  margin-left: -2px;
 }
 .ui.inverted.newgrey .ui.table td.positive.arr::after{
   font-family: Icons;
   content: "\f176";
   display: block;
-  float: right;
+  float: left;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+  margin-left: -2px;
 }
 
 @-webkit-keyframes flash {
@@ -1433,7 +1435,8 @@ tr.lesspadding th {
 }
 
 .ld .sw{
-  padding: 5em 2em !important;
+  padding: 5em 0 5em 2em !important;
+  overflow: hidden;
 }
 
 .ld .sw .bloc{
@@ -1474,9 +1477,38 @@ tr.lesspadding th {
   margin: auto;
 }
 
-.ldtrades{
-  width: 288px;
+.ldtrades, .ldorders{
+  width: 352px;
+  padding-top: 5px;
 }
+
+.ldtrades .ui.table td.buy:first-child::after, .ldorders .ui.table td.buy:first-child::after{
+  font-family: Icons;
+  content: "\f175";
+  display: block;
+  float: right;;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  margin-right: 9px;
+}
+.ldtrades .ui.table td.sell:first-child::after, .ldorders .ui.table td.sell:first-child::after{
+  font-family: Icons;
+  content: "\f175";
+  display: block;
+  float: right;;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin-right: 11px;
+}
+
+.switcher{
+  height: 100%;
+  width: 105%;
+  overflow-y: auto;
+}
+
 
 @media screen and (max-width: 1000px) {
   .ld .sw .bloc{

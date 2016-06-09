@@ -25,6 +25,7 @@ const LastTrades = Component({
   renderTradesItems() {
     let nulls = '00000000';
     let data =this.data.trades;
+    //console.log(data);
     data.reverse();
     let prev = 1;
     data.map((item) => {

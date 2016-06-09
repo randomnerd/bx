@@ -1,5 +1,5 @@
 import {
-  Currencies, TradePairs, CurrTypes, PairTypes
+  Currencies, TradePairs, CurrTypes, PairTypes, PairGroups
 }
 from '../../both/collections';
 
@@ -68,8 +68,6 @@ Meteor.methods({
       }
     });
   },
-
-
   currtype_remove: function(id) {
     CurrTypes.remove(id, function(err) {
       if (!err) {
@@ -104,6 +102,37 @@ Meteor.methods({
 
   pairtype_remove: function(id) {
     PairTypes.remove(id, function(err) {
+      if (!err) {
+        return false;
+      } else {
+        return err;
+      }
+    });
+  },
+
+  pairgroup_add: function(cur) {
+    PairGroups.insert(cur, function(err, id) {
+      if (!err) {
+        return false;
+      } else {
+        console.log(err);
+        return err;
+      }
+    });
+  },
+  pairgroup_update: function(id, cur) {
+    PairGroups.update(id, {
+      $set: cur
+    }, function(err) {
+      if (!err) {
+        return false;
+      } else {
+        return err;
+      }
+    });
+  },
+  pairgroup_remove: function(id) {
+    PairGroups.remove(id, function(err) {
       if (!err) {
         return false;
       } else {

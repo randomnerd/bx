@@ -10,6 +10,8 @@ import CurrTypes from '../admin/currtypes';
 import CurrType from '../admin/currtype_form';
 import PairTypes from '../admin/pairtypes';
 import PairType from '../admin/pairtype_form';
+import PairGroups from '../admin/pairgroups';
+import PairGroup from '../admin/pairgroup_form';
 import AdminHome from '../admin/home';
 import {Component} from 'cerebral-view-react';
 
@@ -27,6 +29,8 @@ const Admin = Component({
       case "currtype": return <CurrType/>;
       case "pairtypes": return <PairTypes/>;
       case "pairtype": return <PairType/>;
+      case "pairgroups": return <PairGroups/>;
+      case "pairgroup": return <PairGroup/>;
       default: return <AdminHome/>;
     }
   }

@@ -2,11 +2,29 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
+import {TradePairs} from '/both/collections';
 
+function subsReady({input, state, output, services}) {
+  Tracker.autorun(() => {
+    if (services.subsManager.ready()) {
+      output.success();
+    }
+  });
+}; subsReady.async = true;
+
+function tradesSubs({input, state, output, services}) {
+  let pairs = TradePairs.find({published: true}).fetch();
+  for (let pair of pairs){
+    services.subsManager.subscribe('trades', pair._id);
+    services.subsManager.subscribe('orderbook', pair._id);
+  }
+}
 
 function goHome ({input, state}) {
   state.set('page', "home");
   state.set('layout', "home");
+
+
 }
 
 function goBitx ({input, state}) {
@@ -15,7 +33,14 @@ function goBitx ({input, state}) {
 }
 
 const home = [
-  goHome
+  subsReady, {
+    success: [
+      tradesSubs,
+      subsReady, {
+        success: [goHome]
+      }
+    ]
+  }
 ];
 
 const bitx = [

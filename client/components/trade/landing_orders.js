@@ -1,23 +1,25 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
-import {Trades, TradePairs, Currencies} from '../../../both/collections';
+import {TradePairs, OrderBookItems, Currencies} from '../../../both/collections';
 import moment from 'moment';
-const LandingTrades = Component({
+const LandingOrders = Component({
   layout: ['layout'],
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {
+    let lim = this.props.limit ? Math.ceil(this.props.limit/2) : false
     return {
-      trades: Trades.find(
+      ordersSell: OrderBookItems.find( { pairId: this.props.pair_ids , buy: false}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+      ordersBuy: OrderBookItems.find( { pairId: this.props.pair_ids , buy: true}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+      orders: OrderBookItems.find(
         { pairId: this.props.pair_ids },
         {sort: {createdAt: -1},
         limit: this.props.limit||40}
       ).fetch(),
+      tradesMax: OrderBookItems.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
       pairs: TradePairs.find({ published: true }).fetch(),
       currencies: Currencies.find({ published: true }).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
-      tradesLast: Trades.find({ pairId: this.props.pair_ids }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
     };
   },
   curr(id) {
@@ -37,17 +39,15 @@ const LandingTrades = Component({
   componentDidMount() {
     //console.log(this.props.pair_ids);
   },
-  renderTradesItems() {
+  renderTradesItems(direction) {
     let nulls = '00000000';
-    let data =this.data.trades;
-    //console.log(data);
-    data.reverse();
-    let prev = 1;
-    data.map((item) => {
-      item.direction = !!(prev < parseFloat(item.displayPrice()) );
-      prev = item.displayPrice();
-    });
-    data.reverse();
+    let data = [];
+    if(direction){
+      data =this.data.ordersBuy;
+    }else{
+      data =this.data.ordersSell;
+    }
+
 
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
@@ -69,7 +69,7 @@ const LandingTrades = Component({
       }
       return (
           <tr key={item._id} className='animate'>
-            <td className={'three wide ' + (item.direction ? 'buy' : 'sell') }>
+            <td className={'three wide ' + (direction ? 'buy' : 'sell') }>
               {curr.shortName}
             </td>
             <td className='two wide'>
@@ -79,9 +79,9 @@ const LandingTrades = Component({
               <div className='bignum left'>{ amount[0] }</div>
               <div className='bignum dot'>.</div>
               <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) }</div>
-              <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+              <span className={'leveler ' + (direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
             </td>
-            <td className={'five wide arr ' + (item.direction ? 'positive' : 'negative') }>
+            <td className={'five wide ' + (direction ? 'positive' : 'negative') }>
               <div className='bignum left'>{price[0]}</div>
               <div className='bignum dot'>.</div>
               <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
@@ -94,13 +94,15 @@ const LandingTrades = Component({
   render() {
     //console.log(this.props.pair_ids);
     return (
-      <div className='ui ldtrades'>
-        Last trades
+      <div className='ui ldorders'>
+        Last orders
         <div className='ux forscroll'>
           <div className='scrollable100'>
             <table className='ui selectable very compact very basic unstackable table'>
               <tbody>
-              { this.renderTradesItems() }
+              { this.renderTradesItems(false) }
+
+              { this.renderTradesItems(true) }
               </tbody>
             </table>
           </div>
@@ -109,4 +111,4 @@ const LandingTrades = Component({
     );
   }
 });
-export default LandingTrades;
+export default LandingOrders;

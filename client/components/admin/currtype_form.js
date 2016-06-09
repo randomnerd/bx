@@ -4,7 +4,7 @@ import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminCurrency = Component({
+const AdminCurrType = Component({
   layout: ['layout'],
   curr: ['currtype']
 }, {
@@ -95,4 +95,4 @@ const AdminCurrency = Component({
     );
   }
 });
-export default AdminCurrency;
+export default AdminCurrType;

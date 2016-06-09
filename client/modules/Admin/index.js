@@ -79,6 +79,23 @@ function goPairTypesEdit ({input, state}) {
   state.set('layout', "admin");
 }
 
+function goPairGroups ({input, state}) {
+  state.set('page', "pairgroups");
+  state.set('layout', "admin");
+}
+
+function goPairGroupsNew ({input, state}) {
+  state.set('page', "pairgroup");
+  state.set('pairgroup', null);
+  state.set('layout', "admin");
+}
+
+function goPairGroupsEdit ({input, state}) {
+  state.set('page', "pairgroup");
+  state.set('pairgroup', input.id);
+  state.set('layout', "admin");
+}
+
 const home = [
   goHome
 ];
@@ -127,6 +144,17 @@ const adminPairTypesEdit = [
   goPairTypesEdit
 ];
 
+const adminPairGroups = [
+  goPairGroups
+];
+
+const adminPairGroupsNew = [
+  goPairGroupsNew
+];
+const adminPairGroupsEdit = [
+  goPairGroupsEdit
+];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -148,6 +176,9 @@ export default (options = {}) => {
       adminPairTypes,
       adminPairTypesNew,
       adminPairTypesEdit,
+      adminPairGroups,
+      adminPairGroupsNew,
+      adminPairGroupsEdit,
       // pair
     });
 

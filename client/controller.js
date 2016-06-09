@@ -13,12 +13,15 @@ import Pair from './modules/Pair';
 import Notifications from './modules/Notifications';
 import U from './modules/U';
 
-const subsManager = new SubsManager({cacheLimit: 20});
+const subsManager = new SubsManager({cacheLimit: 50});
 Meteor.subs = subsManager;
 
 subsManager.subscribe('currencies');
 subsManager.subscribe('tradepairs');
 subsManager.subscribe('chat');
+subsManager.subscribe('currtypes');
+subsManager.subscribe('pairtypes');
+subsManager.subscribe('pairgroups');
 
 Tracker.autorun(() => {
   let user = Meteor.user();
@@ -30,13 +33,12 @@ Tracker.autorun(() => {
     subsManager.subscribe('withdrawals');
     subsManager.subscribe('waddressbook');
     subsManager.subscribe('myOrders');
-    subsManager.subscribe('currtypes');
-    subsManager.subscribe('pairtypes');
     if (user.isAdmin()) {
       subsManager.subscribe('currenciesAdmin');
       subsManager.subscribe('tradepairsAdmin');
       subsManager.subscribe('currtypesAdmin');
       subsManager.subscribe('pairtypesAdmin');
+      subsManager.subscribe('pairgroupsAdmin');
     }
   }
 });

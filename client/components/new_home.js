@@ -1,8 +1,9 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
-import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes} from '../../both/collections';
+import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes, PairGroups} from '../../both/collections';
 import {Meteor} from 'meteor/meteor';
-import Trades from './trade/landing_trades';
+import LandingTrades from './trade/landing_trades';
+import LandingOrders from './trade/landing_orders';
 
 const Home = Component({
   user: ['user'],
@@ -33,7 +34,8 @@ const Home = Component({
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id,
       user: Meteor.user(),
-      markets: PairTypes.find().fetch()
+      markets: PairTypes.find().fetch(),
+      groups: PairGroups.find().fetch()
     };
   },
   componentDidMount() {
@@ -91,6 +93,10 @@ const Home = Component({
 
     });
   },
+
+  showSignUpModal() {
+    this.props.signals.user.signUpClicked();
+  },
   scrollingTo(h,$scroll){
     let $this = this;
     $(this.refs.ld).animate(
@@ -125,12 +131,52 @@ const Home = Component({
   },
 
   marketPairs(id) {
-    let curr = _.where(this.data.pairs, {
+    let markets = _.where(this.data.pairs, {
       market: id
     });
-    return curr || [];
+    // console.log('markets');
+    // console.log(markets);
+    let mIds = [];
+    for(let market of markets) {
+      mIds.push(market._id);
+    }
+    return {$in: mIds};
   },
 
+  renderGroups(market){
+    let groups = _.where(this.data.groups, {market: market._id});
+    return groups.map((item) => {
+      //console.log(item.tradesCount);
+      let pair_ids = {$in: item.pairs};
+      let tradeCount = parseFloat(item.tradesCount)||1;
+      let orderCount = parseFloat(item.ordersCount)||1;
+      return (
+        <div>
+          <div className="subheader">
+            {item.name}
+          </div>
+          <div className="content">
+            <LandingTrades limit={tradeCount} pair_ids={pair_ids} />
+          </div>
+          <div className="content">
+            <LandingOrders limit={orderCount} pair_ids={pair_ids} />
+          </div>
+        </div>
+      );
+    });
+  },
+  renderMarkets(){
+    return this.data.markets.map((item) => {
+      return (
+        <div className="ui segment bloc">
+          <div className="ui header">
+            {item.name}
+          </div>
+          {this.renderGroups(item)}
+        </div>
+      );
+    });
+  },
   render() {
     return (
       <div className={"ld2" + (!this.state.holder?" scroll":"")} ref="ld2">
@@ -142,104 +188,8 @@ const Home = Component({
             <div className="ui grid">
               <div className="stackable two column row">
                 <div className="column ui inverted newgrey sw">
-                  <div className="ui segment bloc">
-                    <div className="ui header">
-                      Digital Currency Fiat Mar
-                    </div>
-                    <div className="subheader">
-                      BTC/USD
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={4}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-                    <div className="subheader">
-                      ETH/USD
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={4}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-
-                  </div>
-                  <div className="ui segment bloc">
-                    <div className="ui header">
-                      Digital Currency Market
-                    </div>
-                    <div className="subheader">
-                      BTC/D.A.O
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={4}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-                    <div className="subheader">
-                      ETH/D.A.O
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={2}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-                    <div className="subheader">
-                      USD/D.A.O
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={4}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-
-                  </div>
-                  <div className="ui segment bloc">
-                    <div className="ui header">
-                      D.A.O. Shares Market
-                    </div>
-                    <div className="subheader">
-                      BTC/USD
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={5}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
-                  </div>
-                  <div className="ui segment bloc">
-                    <div className="ui header">
-                      Digital Assets Market
-                    </div>
-                    <div className="subheader">
-                      BTC/USD
-                    </div>
-                    <div className="content">
-                      <Trades
-                        limit={5}
-                        pair={this.data.pair}
-                        pairId={this.data.pair._id}
-                        valute1={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[0]}
-                        valute2={this.data.pair.permalink&&this.data.pair.permalink.toUpperCase().split("-")[1]} />
-                    </div>
+                  <div className="switcher">
+                    {this.renderMarkets()}
                   </div>
                 </div>
                 <div className="promo column">
@@ -253,7 +203,7 @@ const Home = Component({
                      performs the agent's contract.</p>
 
                   { !this.props.user._id ? <div>
-                    <a className="ui massive teal button">create account</a>
+                    <a className="ui massive teal button" onClick={this.showSignUpModal}>create account</a>
 
                     <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
                   </div> : null }
