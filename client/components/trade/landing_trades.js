@@ -51,23 +51,26 @@ const LandingTrades = Component({
 
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
+      let pair = this.pair(item.pairId);
+
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
-      let pair = this.pair(item.pairId);
       //console.log(pair);
-      let curr = this.curr(pair.currId);
-      let mcurr = this.curr(pair.marketCurrId);
+      if(pair){
+        let curr = this.curr(pair.currId);
+        let mcurr = this.curr(pair.marketCurrId);
 
-      let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = item.displayPrice().toString().split('.');
-      //console.log(item.displayPrice().toString().split('.'));
-      if (!amount[1]) {
-        amount[1] = '';
-      }
-      if (!price[1] && price[1] != "0") {
-        price[1] = "0";
-      }
-      return (
+
+        let amount = parseFloat(item.displayAmount()).toString().split('.');
+        let price = item.displayPrice().toString().split('.');
+        //console.log(item.displayPrice().toString().split('.'));
+        if (!amount[1]) {
+          amount[1] = '';
+        }
+        if (!price[1] && price[1] != "0") {
+          price[1] = "0";
+        }
+        return (
           <tr key={item._id} className='animate'>
             <td className={'three wide ' + (item.direction ? 'buy' : 'sell') }>
               {curr.shortName}
@@ -89,6 +92,7 @@ const LandingTrades = Component({
             <td className='two wide right aligned'>{moment(item.createdAt).format("hh:mm:ss")}</td>
           </tr>
         );
+      }
     });
   },
   render() {
