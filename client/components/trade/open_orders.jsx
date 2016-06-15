@@ -51,9 +51,11 @@ const OpenOrders = Component({
       <div className='ui basic teal segment h100 noheader'>
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
+          { this.data.orders.length ? 
             <a className='item active' onClick={this.cancelOrders}>
               Cancel all
             </a>
+            : null }
           </div>
         </div>
         <div className='ui basic segment h100 tabheader'>

@@ -56,43 +56,41 @@ const LandingTrades = Component({
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
       //console.log(pair);
-      if(pair){
-        let curr = this.curr(pair.currId);
-        let mcurr = this.curr(pair.marketCurrId);
+      
+      let curr = this.curr(pair.currId);
+      let mcurr = this.curr(pair.marketCurrId);
 
-
-        let amount = parseFloat(item.displayAmount()).toString().split('.');
-        let price = item.displayPrice().toString().split('.');
-        //console.log(item.displayPrice().toString().split('.'));
-        if (!amount[1]) {
-          amount[1] = '';
-        }
-        if (!price[1] && price[1] != "0") {
-          price[1] = "0";
-        }
-        return (
-          <tr key={item._id} className='animate'>
-            <td className={'three wide ' + (item.direction ? 'buy' : 'sell') }>
-              {curr.shortName}
-            </td>
-            <td className='two wide'>
-              {mcurr.shortName}
-            </td>
-            <td className='four wide'>
-              <div className='bignum left'>{ amount[0] }</div>
-              <div className='bignum dot'>.</div>
-              <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) }</div>
-              <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
-            </td>
-            <td className={'five wide arr ' + (item.direction ? 'positive' : 'negative') }>
-              <div className='bignum left'>{price[0]}</div>
-              <div className='bignum dot'>.</div>
-              <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
-            </td>
-            <td className='two wide right aligned'>{moment(item.createdAt).format("hh:mm:ss")}</td>
-          </tr>
-        );
+      let amount = parseFloat(item.displayAmount()).toString().split('.');
+      let price = item.displayPrice().toString().split('.');
+      //console.log(item.displayPrice().toString().split('.'));
+      if (!amount[1]) {
+        amount[1] = '';
       }
+      if (!price[1] && price[1] != "0") {
+        price[1] = "0";
+      }
+      return (
+        <tr key={item._id} className='animate'>
+          <td className={'three wide ' + (item.direction ? 'buy' : 'sell') }>
+            {curr.shortName}
+          </td>
+          <td className='two wide'>
+            {mcurr.shortName}
+          </td>
+          <td className='four wide'>
+            <div className='bignum left'>{ amount[0] }</div>
+            <div className='bignum dot'>.</div>
+            <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) }</div>
+            <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+          </td>
+          <td className={'five wide arr ' + (item.direction ? 'positive' : 'negative') }>
+            <div className='bignum left'>{price[0]}</div>
+            <div className='bignum dot'>.</div>
+            <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
+          </td>
+          <td className='two wide right aligned'>{moment(item.createdAt).format("hh:mm:ss")}</td>
+        </tr>
+      );
     });
   },
   render() {

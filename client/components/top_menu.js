@@ -117,10 +117,11 @@ const TopMenu = Component({
           </a>
           :
           null}
-          {pair ? <TopInfo pair={pair} /> : null}
+
 
           { !!this.props.user._id ?
             <div className="right menu">
+            {pair ? <TopInfo pair={pair} /> : null}
               {this.state.drag ? <a className="icon item" onClick={this.resetBlocks} title="View reset">
                 <i className="refresh icon"></i>
               </a> : null}

@@ -16,10 +16,11 @@ const BuySell = Component({
     };
   },
   createOrder(buy) {
+
     let params = {
       pairId: this.props.pair._id,
-      amount: parseFloat(this.props.buysell.amount),
-      price:  parseFloat(this.props.buysell.price),
+      amount: parseFloat((this.props.buysell.amount).replace(',','.')),
+      price:  parseFloat((this.props.buysell.price).replace(',','.')),
       buy:    buy
     };
     Meteor.call('createOrder', params);
@@ -122,7 +123,7 @@ const BuySell = Component({
           </div>
           <div className='ui small basic segment'>
             <strong className="name">Fee: </strong>
-            <span className="value">{(parseFloat(this.state.amount * this.state.price * 0.002)).toFixed(8)}</span>
+            <span className="value">{(parseFloat(this.state.amount * this.state.price * this.props.pair.buyFee)).toFixed(8)}</span>
           </div>
         </div>
         <div className='ui small basic segment centered'>
