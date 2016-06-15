@@ -45,7 +45,7 @@ const WithdrawModal = Component({
   // },
   getAmount() {
     let curr    = this.data.currency;
-    let balance = this.data.balance.displayAmount();
+    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
     return {
       left: {
         buttons: [{
@@ -116,7 +116,7 @@ const WithdrawModal = Component({
     let curr = this.data.currency;
     if (!curr) return null;
     let fee = curr.withdrawalFee;
-    let balance = this.data.balance.displayAmount();
+    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}

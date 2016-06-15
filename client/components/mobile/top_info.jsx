@@ -30,6 +30,7 @@ const TopInfo = Component({
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   renderInfo(clss){
+    console.log(this.props.pair);
     return(
       <div className={clss}>
         <div className='item double'>
