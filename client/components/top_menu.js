@@ -108,7 +108,7 @@ const TopMenu = Component({
     let pair = this.props.pair? this.props.pair.pair : false;
     return (
       <div className="ui top fixed large menu">
-        <div className="ui fluid container">
+        <div className="ui fluid container topmenu">
           <a className="item daologo" href="/"></a>
           { this.renderMenuItems() }
           <TradePairsMenu pair={pair} />
@@ -117,11 +117,8 @@ const TopMenu = Component({
           </a>
           :
           null}
-
-
           { !!this.props.user._id ?
             <div className="right menu">
-            {pair ? <TopInfo pair={pair} /> : null}
               {this.state.drag ? <a className="icon item" onClick={this.resetBlocks} title="View reset">
                 <i className="refresh icon"></i>
               </a> : null}
@@ -136,6 +133,8 @@ const TopMenu = Component({
             </div>
             : this.renderLoginButtons()
           }
+
+          {pair ? <TopInfo pair={pair} /> : null}
 
 
         </div>

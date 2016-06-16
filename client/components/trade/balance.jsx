@@ -33,7 +33,7 @@ const Balance = Component({
     let held2 = this.data.balance2 ? this.data.balance2.displayHeld() : (0).toFixed(8);
     return (
       <div className='ui small basic segment teal' >
-        <h4 className='ui header'>AVAILABLE</h4>
+        <h4 className='ui header'>AVAILABLE FOR TRADE</h4>
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">{this.data.currency1 ? this.data.currency1.shortName : ""}: </strong>

@@ -46,6 +46,8 @@ html, body, html.ios, html.ios body{
   min-height: 3.4em;
 }
 
+
+
 /* Semantic new grey */
 
 .loader{
@@ -1668,11 +1670,32 @@ tr.lesspadding th {
 }
 
 /* MOBILE */
+.container.topmenu{
+  display: block !important;
+  position: relative;
+}
+
+.topmenu > .item{
+  display: block !important;
+  float: left;
+  height: 3.3em;
+  padding-top: 1.2em !important;
+}
+.topmenu > .right.menu{
+  display: block !important;
+  float: right;
+  height: 3.3em;
+}
+.topmenu > .right.menu > .item{
+  display: block !important;
+  float: left;
+  padding-top: 1.2em !important;
+}
+
 
 .runrow{
-  position: relative;
-  width: 100%;
   overflow: hidden;
+  height: 3.3em;
 }
 .runrow_outer{
   display: block;
