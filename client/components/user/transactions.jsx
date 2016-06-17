@@ -17,7 +17,14 @@ const TransactionsView = Component({
       deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch()
     }
   },
+  getInitialState(){
+    return{
+      test: 1
+    }
+  },
+  componentDidMount() {
 
+  },
   renderHistoryItems() {
     let unsortedItems = this.data.deposits.concat(this.data.withdrawals);
     let items = unsortedItems.sort((a, b) => {
@@ -25,14 +32,23 @@ const TransactionsView = Component({
       if (a.createdAt < b.createdAt) return 1;
       return 0;
     });
+    let confReq = this.data.currency.confReq||5;
+
     return items.map((item) => {
       let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
+      let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
       return  (
         <tr key={item._id} className={cls}>
-          <td className="three wide">{moment(item.createdAt).fromNow()}</td>
+          <td className="two wide">{moment(item.createdAt).fromNow()}</td>
           <td className="five wide">{item.address}</td>
-          <td className="three wide">{item.displayAmount()}</td>
+          <td className="two wide">{item.displayAmount()}</td>
           <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
+          <td className="two wide">
+            <div className="ui indicating progress" data-percent={curr} >
+              <div className="bar" style={ {width: curr + '%'} }><div className="progress">{curr + '%'}</div></div>
+
+            </div>
+          </td>
           <td className="three wide">{item.displayChanged()}</td>
         </tr>
 
@@ -101,10 +117,11 @@ const TransactionsView = Component({
               <table className="ui selectable very compact very basic striped unstackable table nomargin">
                 <thead>
                   <tr className="lesspadding">
-                    <th className="four wide" >Time</th>
+                    <th className="two wide" >Time</th>
                     <th className="five wide" >Address</th>
-                    <th className="three wide">Amount</th>
+                    <th className="two wide">Amount</th>
                     <th className="two wide">Fee</th>
+                    <th className="two wide">Status</th>
                     <th className="three wide">Balance</th>
                   </tr>
                 </thead>

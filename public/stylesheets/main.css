@@ -1061,6 +1061,10 @@ tr.lesspadding th {
 
 .nomargin { margin: 0 !important; }
 
+.ui.progress:last-child {
+  margin: 0 .8em 0 0;
+}
+
 /* notifications */
 
 .notifications .ui.down.floating{
