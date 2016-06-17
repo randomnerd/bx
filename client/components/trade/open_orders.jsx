@@ -32,12 +32,13 @@ const OpenOrders = Component({
   },
 
   renderOrderItems() {
+    console.log(this.data.orders);
     return this.data.orders.map((item) => {
       return  (
         <tr key={item._id} >
-          <td className='three wide' data-ord-price>{item.displayAmount()}</td>
+          <td className={'three wide ' + (item.buy? 'positive' : 'negative')} data-ord-price>{item.displayAmount()}</td>
           <td className='three wide' data-ord-amount>{item.displayRemain()}</td>
-          <td className='three wide' data-ord-amount>{item.displayPrice()}</td>
+          <td className={'three wide ' + (item.buy? 'positive' : 'negative')} data-ord-amount>{item.displayPrice()}</td>
           <td className='two wide' data-ord-amount>{moment(item.createdAt).format("hh:mm:ss")}</td>
           <td data-ord-amount className='one wide'>
             <a href='javascript:;' onClick={this.cancelOrder.bind(this, item)}>Cancel</a>
@@ -51,7 +52,7 @@ const OpenOrders = Component({
       <div className='ui basic teal segment h100 noheader'>
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
-          { this.data.orders.length ? 
+          { this.data.orders.length ?
             <a className='item active' onClick={this.cancelOrders}>
               Cancel all
             </a>

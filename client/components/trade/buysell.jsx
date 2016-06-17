@@ -6,7 +6,8 @@ import Semantic from '../semantic';
 const BuySell = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
-  buysell: ['pair', 'buysell']
+  buysell: ['pair', 'buysell'],
+  pair: ['pair', 'pair']
 }, {
   getInitialState: function() {
     return {
@@ -78,6 +79,7 @@ const BuySell = Component({
     );
   },
   changeAmount(event) {
+    console.log('1234123');
     this.props.signals.pair.setBuysell({
       amount: event.currentTarget.value,
       price: this.props.buysell.price,
@@ -86,6 +88,7 @@ const BuySell = Component({
     //this.setState({amount: event.currentTarget.value});
   },
   changePrice(event) {
+    console.log('fgwegwr');
     this.props.signals.pair.setBuysell({
       amount: this.props.buysell.amount,
       price: event.currentTarget.value,
@@ -119,11 +122,11 @@ const BuySell = Component({
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">Total: </strong>
-            <span className="value">{(parseFloat(this.state.amount * this.state.price)).toFixed(8)}</span>
+            <span className="value">{(parseFloat(this.props.buysell.amount * this.props.buysell.price)).toFixed(8)}</span>
           </div>
           <div className='ui small basic segment'>
             <strong className="name">Fee: </strong>
-            <span className="value">{(parseFloat(this.state.amount * this.state.price * this.props.pair.buyFee)).toFixed(8)}</span>
+            <span className="value">{(parseFloat(this.props.buysell.amount * this.props.buysell.price * this.props.pair.buyFee)).toFixed(8)}</span>
           </div>
         </div>
         <div className='ui small basic segment centered'>

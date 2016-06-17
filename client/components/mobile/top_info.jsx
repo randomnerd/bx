@@ -30,12 +30,11 @@ const TopInfo = Component({
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   renderInfo(clss){
-    console.log(this.props.pair);
     return(
       <div className={clss}>
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>{this.props.pair.lastPrice? parseFloat(this.props.pair.lastPrice).toFixed(4) : 0.0000}</p>
+          <p>{this.props.pair.lastPrice? (parseFloat(this.props.pair.lastPrice)*100000000).toFixed(4) : 0.0000}</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Ask</h4>

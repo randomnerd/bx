@@ -310,9 +310,11 @@ html, body, html.ios, html.ios body{
   font-weight: bold;
   width: auto !important;
   padding: 0 0px;
-  margin-right: -2px;
   display: inline-block;
   min-height: 11px;
+}
+.ui.inverted.newgrey .switcher .bignum.right span:first-child{
+  margin-right: -2px;
 }
 .ui.inverted.newgrey .bignum.right span:last-child{
   opacity: 0.6;

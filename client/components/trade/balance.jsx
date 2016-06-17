@@ -6,6 +6,7 @@ import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/col
 const Balance = Component({
   layout: ['layout'],
   pair_link: ['pair_link'],
+  pair: ['pair', 'pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -44,7 +45,7 @@ const Balance = Component({
             <span className="value">{balance2}</span>
           </div>
         </div>
-        <h4 className='ui header'>HELD FOR ORDERS</h4>
+        <h4 className='ui header'>IN TRADES</h4>
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">{this.data.currency1 ? this.data.currency1.shortName : ""}: </strong>

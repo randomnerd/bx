@@ -47,18 +47,18 @@ const Orderbook = Component({
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
-          <td className='five wide'>
+          <td>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{amount[1]}</span>
-            { nulls.substr(0, 7 - amount[1].length) }
+            { nulls.substr(0, 8 - amount[1].length) }
             </div>
 
             <span className='leveler negative'
                 style={{width: weight + '%'}}>
             </span>
           </td>
-          <td className='six wide center aligned negative'>
+          <td className='center aligned negative'>
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
@@ -66,7 +66,7 @@ const Orderbook = Component({
               {nulls.substr(0, 8 - price[1].length)}
             </div>
           </td>
-          <td className='five wide right aligned'>
+          <td className='right aligned'>
             <div className='bignum left'>{total[0].substr(0, 5)}</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{total[1]}</span>
@@ -94,7 +94,7 @@ const Orderbook = Component({
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
-          <td className='five wide'>
+          <td>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{amount[1]}</span>
@@ -105,7 +105,7 @@ const Orderbook = Component({
                 style={{width: weight + '%'}}>
             </span>
           </td>
-          <td className='six wide center aligned positive'>
+          <td className='center aligned positive'>
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
@@ -113,7 +113,7 @@ const Orderbook = Component({
               {nulls.substr(0, 8 - price[1].length)}
             </div>
           </td>
-          <td className='five wide right aligned'>
+          <td className='right aligned'>
             <div className='bignum left'>{total[0].substr(0, 5)}</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{total[1]}</span>
@@ -149,7 +149,7 @@ const Orderbook = Component({
     return (
 
         <tr className='ui white text opacity' >
-          <td className='five wide red markered text'>
+          <td className='red markered text'>
             <span className='direction'>Lowest <i className='long arrow down icon'></i></span>
             <div className='bignum left'>{ lowPrice[0] }</div>
             <div className='bignum dot'>.</div>
@@ -157,7 +157,7 @@ const Orderbook = Component({
               { nulls.substr(0, 8 - lowPrice[1].length) }
             </div>
           </td>
-          <td className='six wide center aligned white markered text'>
+          <td className='center aligned white markered text'>
             <div className='bignum left'>{ lastPrice[0] }</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{ lastPrice[1] }</span>
@@ -168,7 +168,7 @@ const Orderbook = Component({
               ({diffPerc}%)
             </span>
           </td>
-          <td className='five wide right aligned green markered text'>
+          <td className='right aligned green markered text'>
             <span className='direction'>Higest <i className='long arrow up icon'></i></span>
             <div className='bignum left'>{ hiPrice[0] }</div>
             <div className='bignum dot'>.</div>
@@ -195,7 +195,7 @@ const Orderbook = Component({
         </table>
         <div className='ux forscroll'>
           <div className='scrollable100'>
-            <table className='ui selectable very compact very basic striped unstackable table'>
+            <table className='ui selectable very compact very basic striped unstackable fixed table'>
               <tbody>
 
                 { this.renderSellItems() }
