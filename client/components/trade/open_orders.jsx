@@ -32,7 +32,6 @@ const OpenOrders = Component({
   },
 
   renderOrderItems() {
-    console.log(this.data.orders);
     return this.data.orders.map((item) => {
       return  (
         <tr key={item._id} >

@@ -12,6 +12,7 @@ const TopInfo = Component({
   getMeteorData() {
     return {
       user: Meteor.user(),
+      pair: TradePairs.findOne({_id : this.props.pair._id}),
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
       tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
       tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
@@ -30,11 +31,13 @@ const TopInfo = Component({
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
   },
   renderInfo(clss){
+    console.log(this.data.pair);
+    console.log(this.props.pair);
     return(
       <div className={clss}>
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>{this.props.pair.lastPrice? (parseFloat(this.props.pair.lastPrice)*100000000).toFixed(4) : 0.0000}</p>
+          <p>{this.data.pair.lastPrice? (parseFloat(this.data.pair.lastPrice)/100000000).toFixed(4) : 0.0000}</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Ask</h4>
