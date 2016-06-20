@@ -37,6 +37,7 @@ const TransactionsView = Component({
     return items.map((item) => {
       let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
       let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
+      curr = curr > 100 ? 100 : curr;
       return  (
         <tr key={item._id} className={cls}>
           <td className="two wide">{moment(item.createdAt).fromNow()}</td>
