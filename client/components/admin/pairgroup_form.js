@@ -19,8 +19,8 @@ const AdminPairGroup = Component({
   },
 
   newCurr(event) {
-    let {name, market, tradesCount, ordersCount} = this.refs.curr.getCurrentValues();
-    console.log({name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs)});
+    let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
+    console.log({name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published});
     Meteor.call('pairgroup_add',
     {name: name, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs)},
     function(error, result) {
@@ -34,9 +34,9 @@ const AdminPairGroup = Component({
     });
   },
   saveCurr(event) {
-    let {name, market, tradesCount, ordersCount} = this.refs.curr.getCurrentValues();
+    let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
     Meteor.call('pairgroup_update', this.data.pairgrup._id,
-    {name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs)},
+    {name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published},
     function(error, result) {
       if (result) {
         console.log('res: '+result);

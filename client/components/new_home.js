@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Component} from 'cerebral-view-react';
 import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes, PairGroups} from '../../both/collections';
 import {Meteor} from 'meteor/meteor';
@@ -35,10 +36,12 @@ const Home = Component({
       pairId: pair && pair._id,
       user: Meteor.user(),
       markets: PairTypes.find().fetch(),
-      groups: PairGroups.find().fetch()
+      groups: PairGroups.find().fetch(),
+      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
     };
   },
   componentDidMount() {
+    $('.groupmenu').dropdown({on: 'hover', action: 'hide'});
 
     let ld = $(this.refs.ld);
 
@@ -142,27 +145,69 @@ const Home = Component({
     }
     return {$in: mIds};
   },
+  currName(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
+      ? curr.shortName
+      : '';
+  },
+  renderPairsInGroup(group){
+    
+    return this.data.pairs.map((pair) => {
+      //console.log(this.data.currencies);
+      if(_.contains(group, pair._id)){
+        return (
+          <a className='item'
+          key = {pair.permalink}
+          href = {'/pair/' + pair.permalink}>
+            <div className="ui label">{pair.dayVolume? (parseFloat(pair.dayVolume)/100000000).toFixed(4) : 0.0000}</div>
+            {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}
+          </a>
+        );
+      }
+    });
+  },
 
   renderGroups(market){
     let groups = _.where(this.data.groups, {market: market._id});
     return groups.map((item) => {
-      //console.log(item.tradesCount);
-      let pair_ids = {$in: item.pairs};
-      let tradeCount = parseFloat(item.tradesCount)||1;
-      let orderCount = parseFloat(item.ordersCount)||1;
-      return (
-        <div>
-          <div className="subheader">
-            {item.name}
+      if(item.published){
+        let pair_ids = {$in: item.pairs};
+        let tradeCount = parseFloat(item.tradesCount)||1;
+        let orderCount = parseFloat(item.ordersCount)||1;
+        return (
+          <div>
+            <div className="subheader">
+              <div className="ui dropdown groupmenu">
+                <div className="text">{item.name}</div>
+                <i className="dropdown icon"></i>
+                <div className='ui vertical menu pairs'>
+                  {this.renderPairsInGroup(item.pairs)}
+                </div>
+              </div>
+            </div>
+            <div className="content">
+              <LandingTrades limit={tradeCount} pair_ids={pair_ids} />
+            </div>
+            <div className="content">
+              <LandingOrders limit={orderCount} pair_ids={pair_ids} />
+            </div>
           </div>
-          <div className="content">
-            <LandingTrades limit={tradeCount} pair_ids={pair_ids} />
+        );
+      }else{
+        return (
+          <div className="not-available">
+            <div className="subheader">
+              {item.name}
+            </div>
+            <div className="content">
+              coming soon
+            </div>
           </div>
-          <div className="content">
-            <LandingOrders limit={orderCount} pair_ids={pair_ids} />
-          </div>
-        </div>
-      );
+        );
+      }
     });
   },
   renderMarkets(){

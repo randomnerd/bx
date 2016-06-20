@@ -1494,7 +1494,7 @@ tr.lesspadding th {
 
 .ldtrades, .ldorders{
   min-width: 334px;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .ldtrades .ui.table td.buy:first-child::after, .ldorders .ui.table td.buy:first-child::after{
@@ -1524,6 +1524,16 @@ tr.lesspadding th {
   overflow-y: auto;
 }
 
+.switcher .not-available{
+  vertical-align: middle;
+}
+.not-available .content{
+  color: #485568;
+  font-size: 3em;
+  font-weight: bold;
+  padding: 2.8em 0;
+  text-align: center;
+}
 
 @media screen and (min-width: 1120px) and (max-width: 1438px) {
   .ld .sw .bloc{

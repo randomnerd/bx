@@ -169,7 +169,7 @@ const Orderbook = Component({
             </span>
           </td>
           <td className='right aligned green markered text'>
-            <span className='direction'>Higest <i className='long arrow up icon'></i></span>
+            <span className='direction'>Highest <i className='long arrow up icon'></i></span>
             <div className='bignum left'>{ hiPrice[0] }</div>
             <div className='bignum dot'>.</div>
             <div className='bignum right'><span>{ hiPrice[1] }</span>
