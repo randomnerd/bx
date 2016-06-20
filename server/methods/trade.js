@@ -5,10 +5,11 @@ import {Jobs} from '../job_collection';
 Meteor.methods({
   addBalance: function(params) {
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
     let balance = Meteor.user().balanceFor(params.currId);
     if (!balance) {
       Balances.insert({
-        userId: Meteor.userId(),
+        userId: params.userId || Meteor.userId(),
         currId: params.currId,
         held: 0,
         amount: params.amount * Math.pow(10, 8)
