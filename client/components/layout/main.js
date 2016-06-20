@@ -17,6 +17,7 @@ import SignUpModal from '../sign_up_modal';
 import WithdrawModal from '../user/withdraw_modal';
 import WithdrawAddressModal from '../user/withdraw_addressbook';
 import NotificationPopups from '../common/notification_popups';
+import Notifications from '../user/notifications_page';
 import Chat from '../common/chat';
 import {TradePairs, Currencies} from '../../../both/collections';
 
@@ -33,6 +34,7 @@ const MainLayout = Component({
       case "settings": return <Settings/>;
       case "password": return <PasswordPage/>;
       case "pair": return <TradeGrid/>;
+      case "notifications": return <Notifications/>;
       case "bitindex": return <BitIndex/>;
       default: return <Home/>;
     }

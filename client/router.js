@@ -25,7 +25,8 @@ const router = Router({
      '/wallets': 'u.wallets',
      '/wallet/:id': 'u.wallet',
      '/settings': 'u.settings',
-     '/password': 'u.password'
+     '/password': 'u.password',
+     '/notifications': 'u.notifications'
    },
    '/pair/:id': 'pair.show',
    //'/mobile/:id':'mob.page'
