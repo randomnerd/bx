@@ -18,10 +18,15 @@ const AdminCurrency = Component({
   },
 
   newCurr(event) {
-    let {name, shortName, published, currType} = this.refs.curr.getCurrentValues();
+    let {name, shortName, published, currType, confReq} = this.refs.curr.getCurrentValues();
 
-    Meteor.call('currrency_add',
-    {name: name, shortName: shortName, published: published ? true : false, type: currType},
+    Meteor.call('currrency_add', {
+      name,
+      shortName,
+      published: !!published,
+      type: currType,
+      confReq: parseFloat(confReq)
+    },
     function(error, result) {
       if (result) {
         console.log(result);
@@ -33,10 +38,15 @@ const AdminCurrency = Component({
     });
   },
   saveCurr(event) {
-    let {name, shortName, published, currType} = this.refs.curr.getCurrentValues();
-    published = published ? true : false;
-    Meteor.call('currrency_update', this.data.currency._id,
-    {name: name, shortName: shortName, published: published ? true : false, type: currType},
+    let {name, shortName, published, currType, confReq} = this.refs.curr.getCurrentValues();
+    published = !!published;
+    Meteor.call('currrency_update', this.data.currency._id, {
+      name,
+      shortName,
+      published,
+      type: currType,
+      confReq: parseFloat(confReq)
+    },
     function(error, result) {
       if (result) {
         this.setState({errorMessage: err.message});
@@ -91,6 +101,10 @@ const AdminCurrency = Component({
           <Semantic.Select name='currType' label='Currency type'
           validations='minLength:3' placeholder='Select currency type'
           required value={this.currentVal('type')} content={this.typesForSearch()} />
+
+          <Semantic.Input name='confReq'
+          label='Deposit confirmations' validations='isNumeric' placeholder='3'
+          value={this.currentVal('confReq')} />
 
 
           <div className='two fields'>
