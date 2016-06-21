@@ -205,6 +205,11 @@ Meteor.methods({
     if (!Meteor.userId())
       throw new Meteor.Error('Unauthorized');
     let curr = Currencies.findOne(params.currId);
+    let user = Meteor.user();
+    let amount = Math.round(parseFloat(amount) * Math.pow(10, 8));
+    let balance = user.balanceFor(params.currId);
+    if (amount > balance) throw new Meteor.Error('wrong amount');
+
     Withdrawals.insert({
       userId: Meteor.userId(),
       currId: params.currId,

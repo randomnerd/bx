@@ -32,7 +32,7 @@ Meteor.methods({
     let currId = params.buy ? pair.marketCurrId : pair.currId;
     let balance = user.balanceFor(currId);
 
-    if (balance.amount < params.amount) throw new Meteor.Error('Not enough balance');
+    // if (balance.amount < params.amount) throw new Meteor.Error('Not enough balance');
 
     var job = new Job(Jobs, 'newOrder', {
       price:  params.price,
