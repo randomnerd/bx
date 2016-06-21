@@ -201,6 +201,7 @@ Meteor.methods({
       });
   },
   withdraw: function(params) {
+    if (!params.amount || parseFloat(params.amount) <= 0) throw new Meteor.Error('wrong amount');
     if (!Meteor.userId())
       throw new Meteor.Error('Unauthorized');
     let curr = Currencies.findOne(params.currId);

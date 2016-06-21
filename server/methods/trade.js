@@ -5,8 +5,9 @@ import {Jobs} from '../job_collection';
 Meteor.methods({
   addBalance: function(params) {
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
-    let balance = Meteor.user().balanceFor(params.currId);
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) console.log('not admin');
+    let user = params.userId ? Meteor.users.findOne({_id: params.userId}) : Meteor.user();
+    let balance = user.balanceFor(params.currId);
     if (!balance) {
       Balances.insert({
         userId: params.userId || Meteor.userId(),
@@ -20,6 +21,10 @@ Meteor.methods({
   },
 
   createOrder: function(params) {
+    let price = parseFloat(params.price);
+    let amount = parseFloat(params.amount);
+    if (!price || price <= 0) throw new Meteor.Error('wrong order');
+    if (!amount || amount <= 0) throw new Meteor.Error('wrong order');
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     let user = Meteor.user();
 
@@ -27,7 +32,7 @@ Meteor.methods({
     let currId = params.buy ? pair.marketCurrId : pair.currId;
     let balance = user.balanceFor(currId);
 
-    // if (balance.amount < params.amount) throw new Meteor.Error('Not enough balance');
+    if (balance.amount < params.amount) throw new Meteor.Error('Not enough balance');
 
     var job = new Job(Jobs, 'newOrder', {
       price:  params.price,
