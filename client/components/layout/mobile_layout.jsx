@@ -16,6 +16,7 @@ import WalletsPage from '../mobile/wallets';
 import WalletPage from '../mobile/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
+import Notifications from '../user/notifications_page';
 
 import Trades from '../trade/lastTrades';
 import Orders from '../trade/orderbook';
@@ -102,6 +103,7 @@ const MobileLayout = Component({
       case "wallet": return <WalletPage/>;
       case "settings": return <Settings/>;
       case "password": return <PasswordPage/>;
+      case "notifications": return <Notifications/>;
       default: return <WalletsPage/>;
     }
   },

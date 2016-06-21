@@ -46,6 +46,12 @@ function goPairsNew ({input, state}) {
   state.set('layout', "admin");
 }
 
+function goNotifs ({input, state}) {
+  state.set('page', "notifications");
+  state.set('pair', null);
+  state.set('layout', "main");
+}
+
 const home = [
   goHome
 ];
@@ -74,6 +80,11 @@ const adminPairsNew = [
   goPairsNew
 ];
 
+const notifications = [
+  goNotifs
+];
+
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -87,7 +98,8 @@ export default (options = {}) => {
       wallet,
       settings,
       password,
-      walletSet
+      walletSet,
+      notifications
       // pair
     });
 

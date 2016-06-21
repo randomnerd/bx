@@ -74,6 +74,10 @@ const TransactionsView = Component({
               <button className="ui right floated blue button" onClick={this.showWithdraw}>
                 Withdraw {this.data.currency.shortName}
               </button>
+              <a href="/u/wallets" className="ui right floated white button">
+                <i className="icon left arrow"></i>
+                <span>back</span>
+              </a>
               <h1>{this.data.currency.name} balance</h1>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Formsy from 'formsy-react'
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
@@ -57,11 +58,11 @@ const BuySell = Component({
       <div className={this.props.wide ? "two fields" : ""}>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
         value={buysell.amount} onChg={this.changeAmount}
-        placeholder='0.0000' ref='amount' validations='isNumeric'
+        placeholder='0.0000' ref='amount'
         labeled labelName={this.props.currency}/>
         <Semantic.Input className='nomargin' name='price' label='Price' icon='shop'
         value={buysell.price}
-        placeholder='0.0000' ref='price' validations='isNumeric' labeled labelName='BTC'
+        placeholder='0.0000' ref='price' labeled labelName='BTC'
         onChg={this.changePrice} />
       </div>
     );
@@ -72,28 +73,51 @@ const BuySell = Component({
       <div>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
         value={buysell.amount} onChg={this.changeAmount}
-        placeholder='0.0000' ref='amount' validations='isNumeric'
+        placeholder='0.0000' ref='amount'
         labeled labelName={this.props.currency}/>
 
       </div>
     );
   },
   changeAmount(event) {
-    console.log('1234123');
-    this.props.signals.pair.setBuysell({
-      amount: event.currentTarget.value,
-      price: this.props.buysell.price,
-      //direction: this.props.direction,
-    });
+    //console.log('1234123');
+    let matcher = new RegExp("^\\d*\\.*\\d*$");
+    let isOk = matcher.exec(event.currentTarget.value);
+    //console.log(event.currentTarget);
+    if(!isOk){
+      $(event.currentTarget).val(this.props.buysell.amount)
+      this.props.signals.pair.setBuysell({
+        amount: this.props.buysell.amount,
+        price: this.props.buysell.price,
+        //direction: this.props.direction,
+      });
+    }else{
+      this.props.signals.pair.setBuysell({
+        amount: event.currentTarget.value,
+        price: this.props.buysell.price,
+        //direction: this.props.direction,
+      });
+    }
     //this.setState({amount: event.currentTarget.value});
   },
   changePrice(event) {
-    console.log('fgwegwr');
-    this.props.signals.pair.setBuysell({
-      amount: this.props.buysell.amount,
-      price: event.currentTarget.value,
-      //direction: this.props.direction,
-    });
+    let matcher = new RegExp("^\\d*\\.*\\d*$");
+    let isOk = matcher.exec(event.currentTarget.value);
+    //console.log(event.currentTarget);
+    if(!isOk){
+      $(event.currentTarget).val(this.props.buysell.price)
+      this.props.signals.pair.setBuysell({
+        amount: this.props.buysell.amount,
+        price: this.props.buysell.price,
+        //direction: this.props.direction,
+      });
+    }else{
+      this.props.signals.pair.setBuysell({
+        amount: this.props.buysell.amount,
+        price: event.currentTarget.value,
+        //direction: this.props.direction,
+      });
+    }
   },
   allowSubmit() {
     this.setState({allowSubmit: true});
