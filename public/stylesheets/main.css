@@ -1092,6 +1092,16 @@ tr.lesspadding th {
 
 }
 
+.notifications > .menu {
+  width: 300px !important;
+}
+.notifications > .menu .item {
+  white-space: normal !important;
+}
+.notifications > .menu > .scrolling.menu {
+    max-height: 14rem;
+}
+
 .ui.table td.info, .ui.table tr.info {
     box-shadow: 0 0 0 #a9d5de inset;
     background-color: #f8ffff;
