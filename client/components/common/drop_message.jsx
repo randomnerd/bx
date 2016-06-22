@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
@@ -52,7 +53,7 @@ const DropMessage = Component({
       }
     }
   },
-  delMessage() {
+  readMessage() {
     $(ReactDOM.findDOMNode(this)).transition({
       animation: 'fade',
       onComplete: () => {
@@ -68,6 +69,24 @@ const DropMessage = Component({
       }
     });
   },
+  delMessage() {
+    if(confirm("Delete completely?")){
+      $(ReactDOM.findDOMNode(this)).transition({
+        animation: 'fade',
+        onComplete: () => {
+          this.setState({closed: true});
+          this.props.signals.notif.delOne({id: this.props.item._id});
+          Meteor.call('notifications/del_realy', this.props.item._id, function(error, result) {
+            if (error) {
+              this.setState({errorMessage: error.message});
+            }else {
+              return false;
+            }
+          });
+        }
+      });
+    }
+  },
   addHeader(item){
     return(
       <h4 className='ui header'>
@@ -77,6 +96,12 @@ const DropMessage = Component({
           + ' icon ' +
           (item.type ? this.types.messageAccent[ this.types.vitalyTypes[ item.type ] ] : '')}></i>
         {item.title}
+        {this.props.newitem ?
+          <span className="ui horizontal blue label">
+            new
+          </span>
+          : null
+        }
       </h4>
     )
   },
@@ -84,7 +109,7 @@ const DropMessage = Component({
     return (
       <a className=
       {'item ' + (this.props.item.type ? this.types.messageAccent[ this.types.vitalyTypes[ this.props.item.type ] ] : '')}
-      onClick={this.props.closable ? this.delMessage : ''}>
+      onClick={this.props.newitem ? this.readMessage : this.delMessage}>
 
           {this.props.item.title ?
             this.addHeader(this.props.item)

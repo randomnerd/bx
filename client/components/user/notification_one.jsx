@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Component} from 'cerebral-view-react';
 
 const Notification = Component({
