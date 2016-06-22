@@ -21,8 +21,8 @@ const BuySell = Component({
 
     let params = {
       pairId: this.props.pair._id,
-      amount: parseFloat((this.props.buysell.amount).replace(',','.')),
-      price:  parseFloat((this.props.buysell.price).replace(',','.')),
+      amount: parseFloat(this.props.buysell.amount),
+      price:  parseFloat(this.props.buysell.price),
       buy:    buy
     };
     Meteor.call('createOrder', params);
