@@ -181,7 +181,8 @@ const candelstick_intraday = React.createClass({
 
                     <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize='12' text='Volume profile indicator' fill='#767676'/>
 
-                    <VolumeProfileSeries orient='left'/>
+                    <VolumeProfileSeries bySession orient="right" />
+
                     <CandlestickSeries/>
 
                     <Brush ref='brush' id={0} enabled={true} type={BRUSH_TYPE} onStart={e => console.log('Start Event:', e)} onBrush={this.handleBrush}/>
