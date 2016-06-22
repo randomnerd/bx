@@ -9,7 +9,7 @@ const NotificationsPage = Component({
 }, {
   mixins: [ReactMeteorData],
   clearAll(event) {
-    if (confirm('Clear all notifications&')) {
+    if (confirm('Clear all notifications?')) {
       Meteor
         .call('notifications/clear_all', function(error, result) {
           if (result) {

@@ -66,12 +66,13 @@ const TransactionsView = Component({
     let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
     let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
     let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
+    let allowWithdraw = parseFloat(avail) > 0;
     return (
       <div className="ui main container">
         <div className="ui segments">
           <div className="ui secondary segment">
             <div className="ui header clearfix">
-              <button className="ui right floated blue button" onClick={this.showWithdraw}>
+              <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw}>
                 Withdraw {this.data.currency.shortName}
               </button>
               <a href="/u/wallets" className="ui right floated white button">
