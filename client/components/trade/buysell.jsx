@@ -53,7 +53,7 @@ const BuySell = Component({
     // this.setState({ordType: 'stop'});
   },
   showWithPrice() {
-    let buysell = this.props.buysell || {amount: '', price: ''};
+    let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
       <div className={this.props.wide ? "two fields" : ""}>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
@@ -68,7 +68,7 @@ const BuySell = Component({
     );
   },
   showWithoutPrice() {
-    let buysell = this.props.buysell || {amount: '', price: ''};
+    let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
       <div>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
@@ -126,6 +126,7 @@ const BuySell = Component({
     this.setState({allowSubmit: false});
   },
   render() {
+    let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
       <div>
         <div className='ui small basic segment teal' >
@@ -146,11 +147,11 @@ const BuySell = Component({
         <div className={"ui segments" + (this.props.wide ? " horizontal" : "") + " fee"}>
           <div className='ui small basic segment'>
             <strong className="name">Total: </strong>
-            <span className="value">{(parseFloat(this.props.buysell.amount * this.props.buysell.price)).toFixed(8)}</span>
+            <span className="value">{(parseFloat(buysell.amount * buysell.price)).toFixed(8)}</span>
           </div>
           <div className='ui small basic segment'>
             <strong className="name">Fee: </strong>
-            <span className="value">{(parseFloat(this.props.buysell.amount * this.props.buysell.price * this.props.pair.buyFee)).toFixed(8)}</span>
+            <span className="value">{(parseFloat(buysell.amount * buysell.price * this.props.pair.buyFee)).toFixed(8)}</span>
           </div>
         </div>
         <div className='ui small basic segment centered'>

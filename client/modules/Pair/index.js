@@ -23,16 +23,16 @@ function showPair ({input, state, output, services}) {
   if (!pair) return;
   services.subsManager.subscribe('trades', pair._id);
   services.subsManager.subscribe('orderbook', pair._id);
-  state.set('pair.pair', pair);
+  state.set(['pair', 'pair'], pair);
 }
 
 function setPairObj ({input, state}) {
-  state.set('pair.pair', input.pair);
+  state.set(['pair', 'pair'], input.pair);
 }
 
 function setBuySell ({input, state}) {
-  state.set('pair.buysell.price', input.price);
-  state.set('pair.buysell.amount', input.amount);
+  state.set(['pair', 'buysell', 'price'], Math.abs(parseFloat(input.price)));
+  state.set(['pair', 'buysell', 'amount'], Math.abs(parseFloat(input.amount)));
 }
 
 const show = [
@@ -63,8 +63,8 @@ export default (options = {}) => {
     module.addState({
       pair: null,
       buysell: {
-        price: null,
-        amount: null
+        price: 0,
+        amount: 0
       }
     });
 

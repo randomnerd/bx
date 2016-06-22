@@ -42,13 +42,13 @@ function goPassword ({input, state}) {
 
 function goPairsNew ({input, state}) {
   state.set('page', "tradepair");
-  state.set('pair', null);
+  state.set(['pair', 'pair'], null);
   state.set('layout', "admin");
 }
 
 function goNotifs ({input, state}) {
   state.set('page', "notifications");
-  state.set('pair', null);
+  state.set(['pair', 'pair'], null);
   state.set('layout', "main");
 }
 

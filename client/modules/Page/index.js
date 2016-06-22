@@ -23,8 +23,7 @@ function tradesSubs({input, state, output, services}) {
 function goHome ({input, state}) {
   state.set('page', "home");
   state.set('layout', "home");
-  state.set('pair.pair', null);
-
+  state.set(['pair', 'pair'], null);
 }
 
 function goBitx ({input, state}) {
