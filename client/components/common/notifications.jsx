@@ -27,7 +27,16 @@ const NotificationShow = Component({
       notifications: Notifications.find({}, {limit: 10}, {sort: {createdAt: -1}}).fetch()
     };
   },
+  newnew(){
+    Meteor.call('notifications/add', function(error, result) {
+      if (error) {
+        this.setState({errorMessage: error.message});
+      }else {
+        return false;
+      }
+    });
 
+  },
   componentWillReceiveProps(nextProps){
     if (nextProps.notif.changeTime) {
       this.setState({ nowDate: new Date().valueOf() });
@@ -63,13 +72,13 @@ const NotificationShow = Component({
     if (this.data.notifications_new.length) {
       return this.data.notifications_new.map((item) => {
         return (
-          <DropMessage key={item._id} item={item} closable={true} />
+          <DropMessage key={item._id} item={item} closable={true} newitem={true} />
         );
       });
     }else {
       return this.data.notifications.map((item) => {
         return (
-          <DropMessage key={item._id} item={item} closable={false} />
+          <DropMessage key={item._id} item={item} closable={false} newitem={false} />
         );
       });
     }
@@ -96,7 +105,7 @@ const NotificationShow = Component({
               </a>
               : ''
             }
-          <a className='item' href='/u/notifications'>
+          <a className='item' onClick={this.newnew}>
             See all notifications
           </a>
         </div>
