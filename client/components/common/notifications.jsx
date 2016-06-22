@@ -105,7 +105,7 @@ const NotificationShow = Component({
               </a>
               : ''
             }
-          <a className='item' onClick={this.newnew}>
+          <a className='item' href='/u/notifications'>
             See all notifications
           </a>
         </div>
