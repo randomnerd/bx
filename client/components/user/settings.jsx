@@ -12,8 +12,19 @@ const Settings = Component({
     return {
       errorMessage: null,
       allowSubmit: false,
+      totpEnabled: false,
+      qr: null,
       published:''
     };
+  },
+  componentDidMount() {
+    Meteor.call('/totp/key', (err, data) => {
+      if (err) {
+        this.setState({totpEnabled: true});
+      } else {
+        this.setState({qr: data.qr});
+      }
+    });
   },
   getMeteorData() {
     return {
@@ -21,7 +32,14 @@ const Settings = Component({
     };
   },
   twoFactorAuth(){
-
+    Meteor.call('/totp/key', true, (err, data) => {
+      console.log(err, data);
+      if (err) {
+        this.setState({totpEnabled: true});
+      } else {
+        this.setState({qr: data.qr});
+      }
+    });
   },
   saveName(){
     var name = this.refs.chat.getCurrentValues();
@@ -36,6 +54,21 @@ const Settings = Component({
       }
     }
   },
+
+  verifyTOTP(token) {
+    Meteor.call('/totp/verify', token, (err, result) => {
+      if (err) return console.error('TOTP verify', err);
+      console.log('TOTP verify', result);
+    })
+  },
+
+  enableTOTP(token) {
+    Meteor.call('/totp/enable', token, (err, result) => {
+      if (err) return console.error('TOTP enable', err);
+      this.setState({totpEnabled: result.totpEnabled});
+    })
+  },
+
   render() {
     return (
       <UserOnly redirect='/'>
@@ -44,26 +77,28 @@ const Settings = Component({
             <div className="ui basic segment">
               <h2 className='ui header'>Account settings</h2>
             </div>
+
             <div className="ui basic segment">
               <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
                 <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" adds={this.getAdds()} required />
               </Formsy.Form>
             </div>
+
             <div className="ui basic segment">
               <Formsy.Form key={this.props.k+3} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='auth'>
-                <Semantic.Checkbox name="confirmation" label="Don't ask for order confirmation" isChecked={this.published} />
                 <h2 className="ui header">Two-factor authentication</h2>
                 <p>
                   Scan this QR code with
                   <a target="_blank" href="https://support.google.com/accounts/answer/1066447"> Google Authenticator</a>
                 </p>
                 <p>
-                  <img src="https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/CoinEx-1st_man@mail.ru?secret=3jvq42j57qpecw3n" />
+                  <img src={this.state.qr}/>
                 </p>
+
                 <Semantic.Input name="qr_code" validations="minLength:3" placeholder="and type your code here" required />
 
                 <div className="field">
-                  <a className="ui blue labeled icon button" onClick={this.twoFactorAuth()}>
+                  <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
                     <i className="refresh icon" />
                     Or generate a new key
                   </a>
@@ -76,7 +111,7 @@ const Settings = Component({
               <h2 className="ui header lpadding">
                 API Access
               </h2>
-              <a className="ui blue labeled icon button" onClick={this.twoFactorAuth()}>
+              <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
                 <i className="refresh icon" />
                 Generate new API key pair
               </a>
