@@ -16,6 +16,7 @@ function tradesSubs({input, state, output, services}) {
   let pairs = TradePairs.find({published: true}).fetch();
   for (let pair of pairs){
     services.subsManager.subscribe('trades', pair._id);
+    services.subsManager.subscribe('chartitems', pair._id);
     services.subsManager.subscribe('orderbook', pair._id);
   }
 }
@@ -27,6 +28,9 @@ function goHome ({input, state}) {
 }
 
 function goBitx ({input, state}) {
+  let pair = TradePairs.findOne({permalink: input.id});
+  if (!pair) return;
+  state.set(['pair', 'pair'], pair);
   state.set('page', "bitindex");
   state.set('layout', "home");
 }
@@ -43,7 +47,11 @@ const home = [
 ];
 
 const bitx = [
-  goBitx
+  subsReady, {
+    success: [
+      goBitx
+    ]
+  }
 ];
 
 
