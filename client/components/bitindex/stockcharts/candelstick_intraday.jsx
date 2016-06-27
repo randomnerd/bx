@@ -26,7 +26,7 @@ const candelstick_intraday = React.createClass({
     },
     onKeyPress(e) {
         let keyCode = e.which;
-        console.log(keyCode);
+
         switch (keyCode) {
             case 27:
                 { // ESC
@@ -41,7 +41,7 @@ const candelstick_intraday = React.createClass({
         let low = Math.min(brushCoords.y1, brushCoords.y2);
         let high = Math.max(brushCoords.y1, brushCoords.y2);
 
-        console.log(arguments);
+
         // uncomment the line below to make the brush to zoom
         this.setState({
             xExtents: [

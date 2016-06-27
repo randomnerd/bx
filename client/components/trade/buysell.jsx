@@ -80,6 +80,7 @@ const BuySell = Component({
     );
   },
   changeAmount(event) {
+<<<<<<< HEAD
     let matcher = new RegExp("^\\d*\\.*\\d*$");
     let isOk = matcher.exec(event.currentTarget.value);
     //console.log(event.currentTarget);
@@ -91,32 +92,51 @@ const BuySell = Component({
         //direction: this.props.direction,
       });
     }else{
+=======
+    //console.log('1234123');
+    // let matcher = new RegExp("^\\d*\\.*\\d*$");
+    // let isOk = matcher.exec(event.currentTarget.value);
+    // //console.log(event.currentTarget);
+    // if(!isOk){
+    //   $(event.currentTarget).val(this.props.buysell.amount)
+    //   this.props.signals.pair.setBuysell({
+    //     amount: this.props.buysell.amount,
+    //     price: this.props.buysell.price,
+    //     //direction: this.props.direction,
+    //   });
+    // }else{
+>>>>>>> a47968fc8449b7cb63cfb6f8089afe63dca23d15
       this.props.signals.pair.setBuysell({
         amount: event.currentTarget.value || 0,
         price: this.props.buysell.price,
-        //direction: this.props.direction,
+        direction: this.props.direction,
       });
+<<<<<<< HEAD
     }
 
+=======
+    // }
+    //this.setState({amount: event.currentTarget.value});
+>>>>>>> a47968fc8449b7cb63cfb6f8089afe63dca23d15
   },
   changePrice(event) {
-    let matcher = new RegExp("^\\d*\\.*\\d*$");
-    let isOk = matcher.exec(event.currentTarget.value);
-    //console.log(event.currentTarget);
-    if(!isOk){
-      $(event.currentTarget).val(this.props.buysell.price)
-      this.props.signals.pair.setBuysell({
-        amount: this.props.buysell.amount,
-        price: this.props.buysell.price,
-        //direction: this.props.direction,
-      });
-    }else{
+    // let matcher = new RegExp("^\\d*\\.*\\d*$");
+    // let isOk = matcher.exec(event.currentTarget.value);
+    // //console.log(event.currentTarget);
+    // if(!isOk){
+    //   $(event.currentTarget).val(this.props.buysell.price)
+    //   this.props.signals.pair.setBuysell({
+    //     amount: this.props.buysell.amount,
+    //     price: this.props.buysell.price,
+    //     //direction: this.props.direction,
+    //   });
+    // }else{
       this.props.signals.pair.setBuysell({
         amount: this.props.buysell.amount,
         price: event.currentTarget.value || 0,
         //direction: this.props.direction,
       });
-    }
+    // }
   },
   allowSubmit() {
     this.setState({allowSubmit: true});
