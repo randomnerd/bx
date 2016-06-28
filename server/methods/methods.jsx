@@ -86,7 +86,7 @@ Meteor.methods({
   },
 
   "userblocs/update": function(blocs) {
-    check(sets, Object);
+    check(blocs, Object);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
 
     Meteor.users.update(Meteor.userId(), { $set: { profile: { blocs } } });
