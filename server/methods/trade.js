@@ -1,11 +1,13 @@
+import { check } from 'meteor/check';
 import {TradePairs, Orders, Balances} from '/both/collections';
 import {TradePair, Balance, User} from '/both/models';
 import {Jobs} from '../job_collection';
 
 Meteor.methods({
   addBalance: function(params) {
+    check(params, Object);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) console.log('not admin');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
     let user = params.userId ? Meteor.users.findOne({_id: params.userId}) : Meteor.user();
     let balance = user.balanceFor(params.currId);
     if (!balance) {
@@ -21,6 +23,7 @@ Meteor.methods({
   },
 
   createOrder: function(params) {
+    check(params, Object);
     let price = parseFloat(params.price);
     let amount = parseFloat(params.amount);
     if (!price || price <= 0) throw new Meteor.Error('wrong order');
@@ -45,6 +48,7 @@ Meteor.methods({
   },
 
   cancelOrder: function(id) {
+    check(id, String);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     let order = Orders.findOne({_id: id});
     if (!order) throw new Meteor.Error('Order not found');
@@ -55,6 +59,7 @@ Meteor.methods({
   },
 
   cancelOrders: function(id) {
+    check(id, String);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     let order = Orders.find({_id: id});
     if (!order) throw new Meteor.Error('Order not found');

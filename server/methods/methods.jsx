@@ -1,209 +1,101 @@
+import { check } from 'meteor/check';
 import {Currencies, Notifications, wAddressBook, Chat, Withdrawals} from '/both/collections';
 import {Jobs} from '../job_collection';
 
 Meteor.methods({
   'jobs/wallet/newWallet': (currId) => {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    var job = new Job(Jobs, 'newAddress', {
-      currId: currId,
-      userId: Meteor.userId()
-    });
+    check(currId, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    let job = new Job(Jobs, 'newAddress', { currId, userId: Meteor.userId() });
     job.save();
   },
+
   'notifications/del': (_id) => {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Notifications.update({
-      _id: _id,
-      userId: Meteor.userId()
-    }, {
-      $set: {
-        ack: true
-      }
-    }, (err) => {
-      if (err) {
-        return err
-      } else {
-        return false
-      }
-    })
+    check(_id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    Notifications.update({ _id, userId: Meteor.userId() }, { $set: { ack: true } });
   },
+
   'notifications/del_realy': (_id) => {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Notifications.remove({
-      _id: _id
-    }, (err) => {
-      if (err) {
-        return err
-      } else {
-        return false
-      }
-    })
+    check(_id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    Notifications.remove({_id});
   },
-  'notifications/clear_all': (_id) => {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Notifications.remove({
-      userId: Meteor.userId()
-    }, (err) => {
-      if (err) {
-        return err
-      } else {
-        return false
-      }
-    })
+
+  'notifications/clear_all': () => {
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    Notifications.remove({ userId: Meteor.userId() });
   },
-  //
-  'notifications/add': () =>{
-    //Notifications.remove({},()=>{
-      var arr=[
-        {userId: Meteor.userId(), type:'warning',title:'Password changed!', message:'A dropdown can include a search prompt inside its menu',ack: false, createdAt: new Date()},
-        {userId: Meteor.userId(), type:'accept',title:'Your password changed!', message: 'A dropdown menu can appear to be floating below an element.',ack: false, createdAt: new Date()},
-        {userId: Meteor.userId(), type:'info',title:'You won an one million dollars!', message: 'menu can contain dividers to separate related content.',ack: false, createdAt: new Date()},
-        {userId: Meteor.userId(), type:'chat',title:'Your password changed!', message: 'A dropdown menu can appear to be floating below an element.',ack: false, createdAt: new Date()},
-        {userId: Meteor.userId(), type:'error',title:'You won an one million dollars!', message: 'menu can contain dividers to separate related content.',ack: false, createdAt: new Date()},
-      ]
-      if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-      for(var i=0; i<5; i++){
-        Notifications.insert(
-          arr[i],
-          (err)=>{
-            if(err){
-              //return err
-            }else {
-              //return false
-            }
-          }
-        )
-      }
-    //})
+
+  'notifications/add': () => {
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    let arr = [
+      { userId: Meteor.userId(), type: 'warning', title: 'Password changed!', message: 'A dropdown can include a search prompt inside its menu', ack: false, createdAt: new Date() },
+      { userId: Meteor.userId(), type: 'accept', title: 'Your password changed!', message: 'A dropdown menu can appear to be floating below an element.', ack: false, createdAt: new Date() },
+      { userId: Meteor.userId(), type: 'info', title: 'You won an one million dollars!', message: 'menu can contain dividers to separate related content.', ack: false, createdAt: new Date() },
+      { userId: Meteor.userId(), type: 'chat', title: 'Your password changed!', message: 'A dropdown menu can appear to be floating below an element.', ack: false, createdAt: new Date() },
+      { userId: Meteor.userId(), type: 'error', title: 'You won an one million dollars!', message: 'menu can contain dividers to separate related content.', ack: false, createdAt: new Date() },
+    ]
+
+    for (let item of arr) Notifications.insert(item);
   },
-  //
 
   'address/add': function(address) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    address.userId = Meteor.userId()
-    wAddressBook
-      .insert(address, function(err, id) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+    check(address, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    address.userId = Meteor.userId();
+    wAddressBook.insert(address);
   },
+
   "address/update": function(id, address) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    wAddressBook
-      .update(id, {
-        $set: address
-      }, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+    check(id, String);
+    check(address, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    wAddressBook.update(id, { $set: { address } });
   },
 
   'address/remove': function(id) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    wAddressBook
-      .remove(id, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    wAddressBook.remove(id);
   },
 
   'chat/add': function(message) {
-    //Chat.remove({})
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
+    check(message, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
     message.userId = Meteor.userId()
-    message.userName = Meteor.user()
-      .username
+    message.userName = Meteor.user().displayName();
     message.createdAt = new Date()
-    Chat
-      .insert(message, function(err, id) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
-  },
-  "chat/update": function(id, address) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Chat
-      .update(id, {
-        $set: address
-      }, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+    Chat.insert(message);
   },
 
-  'chat/remove': function(id) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Chat
-      .remove(id, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+  "chatname/update": function(username) {
+    check(username, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    Meteor.users.update(Meteor.userId(), { $set: { username } });
   },
 
-  "chatname/update": function(name) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Meteor.users
-      .update(Meteor.userId(), {
-        $set: {
-          username: name
-        }
-      }, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
+  "userblocs/update": function(blocs) {
+    check(sets, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+
+    Meteor.users.update(Meteor.userId(), { $set: { profile: { blocs } } });
   },
-  "userblocs/update": function(sets) {
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
-    Meteor.users
-      .update(Meteor.userId(), {
-        $set: {
-          profile: {blocs :sets}
-        }
-      }, function(err) {
-        if (!err) {
-          return false
-        } else {
-          return err
-        }
-      });
-  },
+
   withdraw: function(params) {
+    check(params, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     if (!params.amount || parseFloat(params.amount) <= 0) throw new Meteor.Error('wrong amount');
-    if (!Meteor.userId())
-      throw new Meteor.Error('Unauthorized');
     let curr = Currencies.findOne(params.currId);
     let user = Meteor.user();
     let amount = Math.round(parseFloat(params.amount) * Math.pow(10, 8));

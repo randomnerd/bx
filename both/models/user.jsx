@@ -1,5 +1,9 @@
 import {Balances} from '../collections';
 
+Meteor.users.deny({
+  update() { return true; }
+});
+
 Meteor.users._transform = (user) => {
   return new User(user);
 };

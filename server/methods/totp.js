@@ -1,5 +1,6 @@
 import base32 from 'thirty-two';
 import notp from 'notp';
+import { check } from 'meteor/check';
 import {Meteor} from 'meteor/meteor';
 import {Random} from 'meteor/random';
 
@@ -14,10 +15,12 @@ function getQRCode(label, key) {
 
 Meteor.methods({
   '/totp/key': function(force) {
+    check(force, Boolean);
     if (!this.userId) throw new Meteor.Error('Unauthorized');
     let user = Meteor.user();
     if (user.totpKey && user.totpEnabled) throw new Meteor.Error('TOTP must be disabled to generate a new key');
     let key = null;
+
     if (user.totpKey && !force) {
       key = user.totpKey;
     } else {
@@ -29,17 +32,22 @@ Meteor.methods({
   },
 
   '/totp/verify': function(token) {
+    check(token, String);
     if (!this.userId) throw new Meteor.Error('Unauthorized');
     let user = Meteor.user();
     if (!user.totpKey) throw new Meteor.Error('No TOTP key set, unable to verify');
+
     return !!notp.totp.verify(token, user.totpKey);
   },
 
   '/totp/enable': function(token, disable) {
+    check(token, String);
+    check(disable, Boolean);
     if (!this.userId) throw new Meteor.Error('Unauthorized');
     let user = Meteor.user();
     if (!user.totpKey) throw new Meteor.Error('No TOTP key set, unable to verify');
     if (!notp.totp.verify(token, user.totpKey)) throw new Meteor.Error('Wrong token');
+
     Meteor.users.update({_id: this.userId}, {$set: {totpEnabled: !disable}});
     return {totpEnabled: !disable};
   }
