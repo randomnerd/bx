@@ -18,7 +18,7 @@ const Settings = Component({
     };
   },
   componentDidMount() {
-    Meteor.call('/totp/key', (err, data) => {
+    Meteor.call('/totp/key', false, (err, data) => {
       if (err) {
         this.setState({totpEnabled: true});
       } else {
@@ -33,7 +33,6 @@ const Settings = Component({
   },
   twoFactorAuth(){
     Meteor.call('/totp/key', true, (err, data) => {
-      console.log(err, data);
       if (err) {
         this.setState({totpEnabled: true});
       } else {

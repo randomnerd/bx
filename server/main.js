@@ -7,6 +7,11 @@ import './job_collection';
 
 import { Meteor } from 'meteor/meteor';
 
+BrowserPolicy.content.allowOriginForAll('https://chart.googleapis.com');
+BrowserPolicy.content.allowOriginForAll('https://fonts.googleapis.com');
+BrowserPolicy.content.allowOriginForAll('https://fonts.gstatic.com');
+BrowserPolicy.content.allowFontDataUrl();
+
 Meteor.startup(() => {
   Accounts.onLogin(function(session) {
     if (Roles.getUsersInRole('admin').count() > 0) return;
