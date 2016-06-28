@@ -32,3 +32,4 @@ gadicc:hot-build@2.0.0-beta.6
 gadicc:modules-runtime-hot@0.6.4-beta.1
 audit-argument-checks
 check
+browser-policy
