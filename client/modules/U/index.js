@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
+import {subsReady} from '../Tools';
 
 
 function goHome ({input, state}) {

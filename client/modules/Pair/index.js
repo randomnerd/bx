@@ -4,14 +4,8 @@ import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
 import {TradePairs} from '/both/collections';
 import {set, copy} from 'cerebral-addons';
+import {subsReady} from '../Tools';
 
-function subsReady({input, state, output, services}) {
-  Tracker.autorun(() => {
-    if (services.subsManager.ready()) {
-      output.success();
-    }
-  });
-}
 
 function showPair ({input, state, output, services}) {
   state.set('page', "pair");

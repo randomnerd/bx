@@ -3,6 +3,13 @@ import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
 
+export function subsReady({input, state, output, services}) {
+  Tracker.autorun(() => {
+    if (services.subsManager.ready()) {
+      output.success();
+    }
+  });
+}
 
 function setMobile ({input, state}) {
   state.set('mobile',($('body').width() > 680) ? false : true);

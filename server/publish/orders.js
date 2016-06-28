@@ -29,3 +29,8 @@ Meteor.publish('trades', function(pairId, permalink) {
   };
   return Trades.find({pairId: pairId}, {sort: {createdAt: -1}, limit: 40});
 });
+
+Meteor.publish('uTrades', function(skip, limit) {
+  if (!this.userId) throw new Meteor.Error('unauthorized');
+  return Trades.find({userId: this.userId}, {sort: {createdAt: -1}, skip: skip || 0, limit: limit || 40});
+});
