@@ -15,20 +15,42 @@ const BitIndex = Component({
 }, {
   mixins: [ReactMeteorData],
   getMeteorData: function() {
-
+    console.log(this.props);
+    window.ch = ChartItems;
     return {
         chartItems: ChartItems.find( { pairId: this.props.pair._id }, { sort: { time: -1 } } ).fetch(),
     };
 
   },
+  mapList: function(list) {
 
+    return list.map((item) => {
+       return {
+         pairId: item.pairId,
+         date: item.time,
+         open: (item.open / Math.pow(10, 8)).toFixed(8),
+         high: (item.high / Math.pow(10, 8)).toFixed(8),
+         low: (item.low / Math.pow(10, 8)).toFixed(8),
+         close: (item.close / Math.pow(10, 8)).toFixed(8),
+         volume: (item.volume / Math.pow(10,8)).toFixed(8),
 
+       };
+     });
+   },
   render: function() {
-    console.log(this.data.chartItems);
-    return (
-      <div>
-      </div>
-    );
+
+      console.log(this.data.chartItems);
+      console.log(this.mapList(this.data.chartItems));
+
+    //  let {data} = this.mapList(this.data.chartItems);
+
+
+        return (
+          <div>
+          <Charts.candelstick_intraday data={this.mapList(this.data.chartItems)} type='hybrid' height={150} pairText={"sds"}/>
+          </div>
+        )
+
 
   }
 
