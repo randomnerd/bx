@@ -5,5 +5,8 @@ Meteor.publish('currencies', function() {
 });
 
 Meteor.publish('currenciesAdmin', function() {
+  if (!this.userId) throw new Meteor.Error('Unauthorized');
+  if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Unauthorized');
+
   return Currencies.find({});
 });

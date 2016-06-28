@@ -1,179 +1,136 @@
-import {
-  Currencies, TradePairs, CurrTypes, PairTypes, PairGroups
-}
-from '../../both/collections';
+import { check } from 'meteor/check';
+import { Currencies, TradePairs, CurrTypes, PairTypes, PairGroups } from '../../both/collections';
 
 Meteor.methods({
-
   currrency_add: function(cur) {
-    Currencies.insert(cur, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
-  },
-  currrency_update: function(id, cur) {
-    Currencies.update(id, {
-      $set: cur
-    }, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(cur, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    Currencies.insert(cur);
   },
 
+  currrency_update: function(id, $set) {
+    check($set, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    Currencies.update(id, { $set });
+  },
 
   currrency_remove: function(id) {
-    Currencies.remove(id, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    Currencies.remove(id);
   },
 
-
   tradepair_add: function(pair) {
-    TradePairs.insert(pair, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(pair, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    TradePairs.insert(pair);
   },
 
   currtype_add: function(cur) {
-    CurrTypes.insert(cur, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(cur, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    CurrTypes.insert(cur);
   },
-  currtype_update: function(id, cur) {
-    CurrTypes.update(id, {
-      $set: cur
-    }, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+
+  currtype_update: function(id, $set) {
+    check(id, String);
+    check($set, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    CurrTypes.update(id, { $set });
   },
+
   currtype_remove: function(id) {
-    CurrTypes.remove(id, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    CurrTypes.remove(id);
   },
 
   pairtype_add: function(cur) {
-    PairTypes.insert(cur, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
-  },
-  pairtype_update: function(id, cur) {
-    PairTypes.update(id, {
-      $set: cur
-    }, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(cur, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairTypes.insert(cur);
   },
 
+  pairtype_update: function(id, $set) {
+    check(id, String);
+    check($set, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairTypes.update(id, { $set });
+  },
 
   pairtype_remove: function(id) {
-    PairTypes.remove(id, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairTypes.remove(id);;
   },
 
   pairgroup_add: function(cur) {
-    PairGroups.insert(cur, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        console.log(err);
-        return err;
-      }
-    });
+    check(cur, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairGroups.insert(cur);
   },
-  pairgroup_update: function(id, cur) {
-    PairGroups.update(id, {
-      $set: cur
-    }, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+
+  pairgroup_update: function(id, $set) {
+    check(id, String);
+    check($set, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairGroups.update(id, { $set });
   },
+
   pairgroup_remove: function(id) {
-    PairGroups.remove(id, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    PairGroups.remove(id);
   },
-
-
 
   tradepair_add: function(pair) {
-    TradePairs.insert(pair, function(err, id) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
+    check(pair, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+
+    TradePairs.insert(pair);
   },
 
-  tradepair_update: function(id, pair) {
-    TradePairs.update(id, {
-      $set: pair
-    }, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
-  },
+  tradepair_update: function(id, $set) {
+    check(id, String);
+    check($set, Object);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
 
+    TradePairs.update(id, { $set });
+  },
 
   tradepair_remove: function(id) {
-    TradePairs.remove(id, function(err) {
-      if (!err) {
-        return false;
-      } else {
-        return err;
-      }
-    });
-  },
+    check(id, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
 
+    TradePairs.remove(id);
+  }
 });

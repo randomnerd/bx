@@ -5,5 +5,7 @@ Meteor.publish('pairtypes', function() {
 });
 
 Meteor.publish('pairtypesAdmin', function() {
+  if (!this.userId) throw new Meteor.Error('Unauthorized');
+  if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Unauthorized');
   return PairTypes.find({});
 });

@@ -2,6 +2,7 @@ accounts-base@1.2.8
 accounts-password@1.1.11
 alanning:roles@1.2.15
 allow-deny@1.0.5
+audit-argument-checks@1.0.7
 autoupdate@1.2.10
 babel-compiler@6.8.3
 babel-runtime@0.1.9_1
@@ -10,6 +11,10 @@ binary-heap@1.0.9
 blaze@2.1.8
 blaze-tools@1.0.9
 boilerplate-generator@1.0.9
+browser-policy@1.0.9
+browser-policy-common@1.0.10
+browser-policy-content@1.0.11
+browser-policy-framing@1.0.11
 caching-compiler@1.0.5_1
 caching-html-compiler@1.0.6
 callback-hook@1.0.9

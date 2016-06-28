@@ -5,3 +5,4 @@ import './withdrawal';
 import './order';
 import './orderbook';
 import './last_trades';
+import './chart_item';

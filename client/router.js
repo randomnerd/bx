@@ -2,7 +2,7 @@ import Router from 'cerebral-module-router';
 
 const router = Router({
    '/': 'page.home',
-   '/bitindex': 'page.bitx',
+   '/bitindex/:id': 'page.bitx',
    '/admin': {
      '/': 'admin.home',
      '/currencies' : 'admin.adminCurrs',

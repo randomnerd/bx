@@ -5,5 +5,8 @@ Meteor.publish('currtypes', function() {
 });
 
 Meteor.publish('currtypesAdmin', function() {
+  if (!this.userId) throw new Meteor.Error('Unauthorized');
+  if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Unauthorized');
+
   return CurrTypes.find({});
 });
