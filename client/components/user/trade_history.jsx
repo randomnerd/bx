@@ -28,7 +28,6 @@ const UserTradeHistory = Component({
   renderHistoryItems() {
     let nulls = '00000000';
     let data =this.data.trades;
-    //console.log(data);
     data.reverse();
     let prev = 1;
     data.map((item) => {
@@ -43,7 +42,6 @@ const UserTradeHistory = Component({
 
       let amount = parseFloat(item.displayAmount()).toString().split('.');
       let price = item.displayPrice().toString().split('.');
-      //console.log(item.displayPrice().toString().split('.'));
       if (!amount[1]) {
         amount[1] = '';
       }
