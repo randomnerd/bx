@@ -17,6 +17,7 @@ function showPair ({input, state, output, services}) {
   if (!pair) return;
   services.subsManager.subscribe('trades', pair._id);
   services.subsManager.subscribe('orderbook', pair._id);
+  services.subsManager.subscribe('chartitems', pair._id);
   state.set(['pair', 'pair'], pair);
 }
 
