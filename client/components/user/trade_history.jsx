@@ -28,7 +28,7 @@ const UserTradeHistory = Component({
   renderHistoryItems() {
     let nulls = '00000000';
     let data =this.data.trades;
-    console.log(data);
+    //console.log(data);
     data.reverse();
     let prev = 1;
     data.map((item) => {
