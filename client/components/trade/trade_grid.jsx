@@ -188,6 +188,8 @@ const TradeGrid = Component({
       switch (this.state.chartType) {
 
           case 'candle':
+
+            console.log(this.chartItemsPrepare(this.data.chartItems));
               return (
                   <div><Charts.candelstick_intraday data={this.chartItemsPrepare(this.data.chartItems)}
                 type='hybrid' height={heightChart} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
