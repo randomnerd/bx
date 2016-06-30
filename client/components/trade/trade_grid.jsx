@@ -1,5 +1,7 @@
 import React from 'react';
 import {Currencies, TradePairs, BitIndexIndicator_BTPR} from '../../../both/collections';
+import { ChartItems } from '/both/collections';
+
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import BuySell from './buysell';
@@ -105,11 +107,10 @@ const TradeGrid = Component({
 
     return {
       pair: pair,
-      BTPR_Loading: !handle_BTPR.ready(),
-      BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id,
       user: Meteor.user(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
+      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
+      chartItems: ChartItems.find( { pairId: this.props.pair._id }, { sort: { time: -1 } } ).fetch()
     };
   },
   currName(id) {
@@ -170,13 +171,14 @@ const TradeGrid = Component({
       $(event.currentTarget).addClass('active');
       this.setState({chartType: 'renko'});
   },
+
   renderBlockChainIndicator() {
       switch (this.state.chartType) {
 
           case 'candle':
               return (
-                  <div><Charts.candelstick_intraday data={this.data.BTPR.
-                  slice(200)} type='hybrid' height={heightChart} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
+                  <div><Charts.candelstick_intraday data={this.chartItemsPrepare(this.data.chartItems)}
+                type='hybrid' height={heightChart} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
               );
               break;
 
@@ -240,7 +242,20 @@ const TradeGrid = Component({
               break;
       }
   },
+  chartItemsPrepare: function (items) {
+    return items.map((item) => {
+      return {
+        pairId: item.pairId,
+        date: item.time,
+        open: (item.open / Math.pow(10, 8)).toFixed(8),
+        high: (item.high / Math.pow(10, 8)).toFixed(8),
+        low: (item.low / Math.pow(10, 8)).toFixed(8),
+        close: (item.close / Math.pow(10, 8)).toFixed(8),
+        volume: (item.volume / Math.pow(10,8)).toFixed(8),
 
+      };
+    });
+  },
   wides(){
     let left = '';
     let right = '';
@@ -938,7 +953,7 @@ const TradeGrid = Component({
                         </div>
                         <div className='ui basic segment nopadding'>
                           {
-                            this.data.BTPR_Loading ? <div className='cube'></div> :
+
                             this.renderBlockChainIndicator()
                           }
                         </div>
