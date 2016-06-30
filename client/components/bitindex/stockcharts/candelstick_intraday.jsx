@@ -181,7 +181,7 @@ const candelstick_intraday = React.createClass({
 
                     <Label x={yAxisLabelX} y={yAxisLabelY} rotate={-90} fontSize='12' text='Volume profile indicator' fill='#767676'/>
 
-                    <VolumeProfileSeries bySession orient="right" />
+      
 
                     <CandlestickSeries/>
 
