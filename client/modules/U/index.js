@@ -53,6 +53,19 @@ function goNotifs ({input, state}) {
   state.set('layout', "main");
 }
 
+function goHistory ({input, state, output, services}) {
+  services.subsManager.subscribe( 'uTrades', 40, 0 );
+
+  state.set('page', "history");
+  state.set(['pair', 'pair'], null);
+  state.set('layout', "main");
+}
+
+function loadHistory ({input, state, output, services}) {
+  services.subsManager.subscribe('uTrades', input.limit || 40, input.skip || 0, input.pair);
+
+}
+
 const home = [
   goHome
 ];
@@ -85,6 +98,21 @@ const notifications = [
   goNotifs
 ];
 
+const history = [
+  [
+    subsReady, {
+      success: [goHistory]
+    }
+  ]
+];
+
+const getHistory = [
+  [
+    subsReady, {
+      success: [loadHistory]
+    }
+  ]
+];
 
 export default (options = {}) => {
   return (module, controller) => {
@@ -100,7 +128,9 @@ export default (options = {}) => {
       settings,
       password,
       walletSet,
-      notifications
+      notifications,
+      history,
+      getHistory
       // pair
     });
 

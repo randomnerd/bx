@@ -17,6 +17,7 @@ const UserTopMenu = Component({
   getMenuItems() {
     return [
       { href: '/u/wallets', label: 'My wallets', extraCls: ''},
+      { href: '/u/history', label: 'My history', extraCls: ''},
       { href: '/u/settings', label: 'Settings', extraCls: ''},
       { href: '/u/password', label: 'Change password', extraCls: ''},
       { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }

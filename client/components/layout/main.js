@@ -7,6 +7,7 @@ import WalletsPage from '../user/wallets';
 import WalletPage from '../user/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
+import HistoryPage from '../user/trade_history';
 
 import Sidebar from '../common/sidebar';
 import InfoPanel from '../common/infopanel';
@@ -31,6 +32,7 @@ const MainLayout = Component({
       case "home": return <Home/>;
       case "wallets": return <WalletsPage/>;
       case "wallet": return <WalletPage/>;
+      case "history": return <HistoryPage/>;
       case "settings": return <Settings/>;
       case "password": return <PasswordPage/>;
       case "pair": return <TradeGrid/>;

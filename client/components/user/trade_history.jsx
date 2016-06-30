@@ -2,7 +2,7 @@ import React from 'react';
 import {Tracker} from 'meteor/tracker';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
-import {Trades} from '../../../both/collections';
+import {Trades, TradePairs, Currencies} from '../../../both/collections';
 import moment from 'moment';
 
 const UserTradeHistory = Component({
@@ -12,18 +12,9 @@ const UserTradeHistory = Component({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      tradesPair: Trades.find(
-        { pairId: this.props.pair._id, userId: this.userId },
-        {sort: {createdAt: -1},
-        limit: this.props.limit||40}
-      ).fetch(),
-      trades: Trades.find(
-        {userId: this.userId},
-        {sort: {createdAt: -1},
-        limit: this.props.limit||40}
-      ).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
-      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+      trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
+      currencies: Currencies.find({}).fetch(),
+      pairs: TradePairs.find({}).fetch()
     };
   },
   getInitialState(){
@@ -32,43 +23,68 @@ const UserTradeHistory = Component({
     }
   },
   componentDidMount() {
-
+    this.props.signals.u.getHistory({limit: 40, skip: 0});
   },
   renderHistoryItems() {
-    let unsortedItems = this.data.deposits.concat(this.data.withdrawals);
-    let items = unsortedItems.sort((a, b) => {
-      if (a.createdAt > b.createdAt) return -1;
-      if (a.createdAt < b.createdAt) return 1;
-      return 0;
+    let nulls = '00000000';
+    let data =this.data.trades;
+    console.log(data);
+    data.reverse();
+    let prev = 1;
+    data.map((item) => {
+      item.direction = !!(prev < parseFloat(item.displayPrice()) );
+      prev = item.displayPrice();
     });
-    let confReq = this.data.currency.confReq||5;
+    data.reverse();
 
-    return items.map((item) => {
-      let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
-      let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
-      curr = curr > 100 ? 100 : curr;
-      return  (
-        <tr key={item._id} className={cls}>
-          <td className="two wide">{moment(item.createdAt).fromNow()}</td>
-          <td className="five wide">{item.address}</td>
-          <td className="two wide">{item.displayAmount()}</td>
-          <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
-          <td className="two wide">
-            <div className="ui indicating progress" data-percent={curr} >
-              <div className="bar" style={ {width: curr + '%'} }><div className="progress">{curr + '%'}</div></div>
+    let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
+    return data.map((item) => {
+      let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
-            </div>
-          </td>
-          <td className="three wide">{item.displayChanged()}</td>
-        </tr>
-
-      );
+      let amount = parseFloat(item.displayAmount()).toString().split('.');
+      let price = item.displayPrice().toString().split('.');
+      //console.log(item.displayPrice().toString().split('.'));
+      if (!amount[1]) {
+        amount[1] = '';
+      }
+      if (!price[1] && price[1] != "0") {
+        price[1] = "0";
+      }
+      return (
+          <tr key={item._id} className='animate'>
+            <td className='six wide'>
+              <div className='bignum left'>{ amount[0] }</div>
+              <div className='bignum dot'>.</div>
+              <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) } {this.curr(item.sellId)}</div>
+              <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+            </td>
+            <td className={'seven wide arr ' + (item.direction ? 'positive' : 'negative') }>
+              <div className='bignum left'>{price[0]}</div>
+              <div className='bignum dot'>.</div>
+              <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
+            </td>
+            <td className='three wide right aligned'>{moment(item.createdAt).format("DD.MM.YYYY - hh:mm:ss")}</td>
+          </tr>
+        );
     });
   },
+  curr(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
 
+  },
+  pair(id) {
+    let pair = _.findWhere(this.data.pairs, {
+      _id: id
+    });
+    return pair
+
+  },
   showWithdraw(){
-    this.props.signals.tools.withdraw({action: 'open'});
-    this.props.signals.u.walletSet({id: this.props.wallet});
+    // this.props.signals.tools.withdraw({action: 'open'});
+    // this.props.signals.u.walletSet({id: this.props.wallet});
   },
 
   render() {
@@ -82,13 +98,13 @@ const UserTradeHistory = Component({
           <div className="ui secondary segment">
             <div className="ui header clearfix">
               <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw}>
-                Withdraw {this.data.currency.shortName}
+                Withdraw
               </button>
               <a href="/u/wallets" className="ui right floated white button">
                 <i className="icon left arrow"></i>
                 <span>back</span>
               </a>
-              <h1>{this.data.currency.name} balance</h1>
+              <h1> balance</h1>
             </div>
           </div>
             <div className="ui secondary segment">
@@ -102,17 +118,18 @@ const UserTradeHistory = Component({
                     <th className="five wide" >Address</th>
                     <th className="two wide">Amount</th>
                     <th className="two wide">Fee</th>
-                    <th className="two wide">Status</th>
                     <th className="three wide">Balance</th>
                   </tr>
                 </thead>
               </table>
-              <div className="scrollable10rows">
-                <table className="ui selectable very compact very basic striped unstackable table">
-                  <tbody>
+              <div className='ux forscroll'>
+                <div className='scrollable100'>
+                  <table className='ui selectable very compact very basic unstackable table'>
+                    <tbody>
                     { this.renderHistoryItems() }
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import {TradePairs, Trades, Orders, OrderBookItems} from '/both/collections';
 
 Meteor.publish('orderQueue', function() {
@@ -35,7 +35,14 @@ Meteor.publish('trades', function(pairId, permalink) {
   return Trades.find({ pairId }, { sort: { createdAt: -1 }, limit: 40 });
 });
 
-Meteor.publish('uTrades', function(skip, limit) {
+Meteor.publish('uTrades', function(limit, skip, pair) {
   if (!this.userId) throw new Meteor.Error('unauthorized');
-  return Trades.find({userId: this.userId}, {sort: {createdAt: -1}, skip: skip || 0, limit: limit || 40});
+  check(limit, Number);
+  check(skip, Number);
+  check(pair, Match.Maybe(String));
+  let q = {$or: [{buyerId: this.userId}, {sellerId: this.userId}]}
+  if(pair){
+    q.pairId = pair;
+  }
+  return Trades.find(q, {sort: {createdAt: -1}, skip: skip || 0, limit: limit || 40});
 });
