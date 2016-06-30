@@ -102,7 +102,6 @@ const TradeGrid = Component({
   // },
 
   getMeteorData() {
-    let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
     let pair = TradePairs.findOne({permalink: this.props.pair_link});
 
     return {
@@ -110,8 +109,21 @@ const TradeGrid = Component({
       pairId: pair && pair._id,
       user: Meteor.user(),
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-      chartItems: ChartItems.find( { pairId: this.props.pair._id }, { sort: { time: -1 } } ).fetch()
+      chartItems: ChartItems.find({ pairId: this.props.pair._id }, { sort: { time: -1 } }).fetch(),
     };
+  },
+  chartItemsPrepare: function (list) {
+    return list.map((item) => {
+      return {
+        pairId: item.pairId,
+        date: item.time,
+        open: (item.open / Math.pow(10, 8)).toFixed(8),
+        high: (item.high / Math.pow(10, 8)).toFixed(8),
+        low: (item.low / Math.pow(10, 8)).toFixed(8),
+        close: (item.close / Math.pow(10, 8)).toFixed(8),
+        volume: (item.volume / Math.pow(10,8)).toFixed(8),
+      };
+    });
   },
   currName(id) {
     let curr = _.findWhere(this.data.currencies, {
@@ -241,20 +253,6 @@ const TradeGrid = Component({
           default:
               break;
       }
-  },
-  chartItemsPrepare: function (items) {
-    return items.map((item) => {
-      return {
-        pairId: item.pairId,
-        date: item.time,
-        open: (item.open / Math.pow(10, 8)).toFixed(8),
-        high: (item.high / Math.pow(10, 8)).toFixed(8),
-        low: (item.low / Math.pow(10, 8)).toFixed(8),
-        close: (item.close / Math.pow(10, 8)).toFixed(8),
-        volume: (item.volume / Math.pow(10,8)).toFixed(8),
-
-      };
-    });
   },
   wides(){
     let left = '';
@@ -953,7 +951,6 @@ const TradeGrid = Component({
                         </div>
                         <div className='ui basic segment nopadding'>
                           {
-
                             this.renderBlockChainIndicator()
                           }
                         </div>
