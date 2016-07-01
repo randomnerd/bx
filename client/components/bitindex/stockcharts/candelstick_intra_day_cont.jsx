@@ -71,7 +71,7 @@ const candelstick_intra_day_cont = React.createClass({
             				<Chart id={2}
             						yExtents={[d => d.volume, smaVolume50.accessor()]}
             						yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
-            						height={150} origin={(w, h) => [0, h - 150]}>
+            						height={150} origin={(w, h) => [0, h - 100]}>
             					<YAxis axisAt="left" orient="left" ticks={10} tickFormat={d3.format("s")}/>
 
             					<BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"} />
