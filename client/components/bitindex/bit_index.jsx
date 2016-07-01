@@ -49,6 +49,10 @@ const BitIndex = Component({
           <div>
           <br></br>
           <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <Charts.candelstick_intra_day_cont data={this.mapList(this.data.chartItems)} type='hybrid' height={150} pairText={"sds"}/>
           </div>
         )

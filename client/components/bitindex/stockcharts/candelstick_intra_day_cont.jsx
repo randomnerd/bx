@@ -63,7 +63,7 @@ const candelstick_intra_day_cont = React.createClass({
 
         return (
 
-            <ChartCanvas width={width} height={400}
+            <ChartCanvas width={width} height={600}
             					margin={{left: 80, right: 80, top:10, bottom: 30}} type={type}
             					seriesName="MSFT"
             					data={data} calculator={[ema20, ema50, smaVolume50]}
