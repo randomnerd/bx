@@ -12,7 +12,8 @@ const candelstick_intra_day_cont = React.createClass({
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
         type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired,
-        pairText: React.PropTypes.string.isRequired
+        pairText: React.PropTypes.string.isRequired,
+
     },
     defaultProps: {
         type: 'svg'
@@ -51,13 +52,12 @@ const candelstick_intra_day_cont = React.createClass({
 			.merge((d, c) => {d.smaVolume50 = c})
 			.accessor(d => d.smaVolume50);
 
-        let margin = {
-            left: 7,
-            right: 60,
-            top: 10,
-            bottom: 20
-        }
-
+      let margin = {
+          left: 7,
+          right: 60,
+          top: 10,
+          bottom: 20
+      }
         let height = 350;
 
 

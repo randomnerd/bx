@@ -1,6 +1,6 @@
 import React from 'react';
-import {Currencies, TradePairs, BitIndexIndicator_BTPR} from '../../../both/collections';
-import { ChartItems } from '/both/collections';
+import {Currencies, TradePairs, BitIndexIndicator_BTPR, ChartItems} from '../../../both/collections';
+
 
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
@@ -10,6 +10,8 @@ import Charts from '../bitindex';
 import Orders from './orderbook';
 import OpenOrders from './open_orders';
 import Balance from './balance';
+
+
 
 const heightChart = 350;
 
@@ -109,7 +111,7 @@ const TradeGrid = Component({
       pairId: pair && pair._id,
       user: Meteor.user(),
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-      chartItems: ChartItems.find({ pairId: this.props.pair._id }, { sort: { time: -1 } }).fetch(),
+      chartItems: ChartItems.find({ pairId: this.props.pair._id }).fetch(),
     };
   },
   chartItemsPrepare: function (list) {
@@ -189,10 +191,11 @@ const TradeGrid = Component({
 
           case 'candle':
 
-            console.log(this.chartItemsPrepare(this.data.chartItems));
+
               return (
-                  <div><Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.data.chartItems)}
-                type='hybrid' height={heightChart} pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
+                  <div>
+                  <Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.data.chartItems)}
+                type='svg' pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
               );
               break;
 

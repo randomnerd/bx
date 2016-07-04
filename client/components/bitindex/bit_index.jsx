@@ -16,7 +16,7 @@ const BitIndex = Component({
   mixins: [ReactMeteorData],
   getMeteorData: function() {
     console.log(this.props);
-    window.ch = ChartItems;
+
     return {
         chartItems: ChartItems.find( { pairId: this.props.pair._id }  ).fetch(),
     };
@@ -27,7 +27,7 @@ const BitIndex = Component({
     return list.map((item) => {
        return {
          pairId: item.pairId,
-         date: new Date(item.time),
+         date: item.time,
          open: (item.open / Math.pow(10, 8)).toFixed(8),
          high: (item.high / Math.pow(10, 8)).toFixed(8),
          low: (item.low / Math.pow(10, 8)).toFixed(8),
@@ -53,7 +53,7 @@ const BitIndex = Component({
           <br></br>
           <br></br>
           <br></br>
-          <Charts.candelstick_intra_day_cont data={this.mapList(this.data.chartItems)} type='hybrid' height={150} pairText={"sds"}/>
+          <Charts.candelstick_intra_day_cont data={this.mapList(this.data.chartItems)} type='hybrid' height={350} pairText={"sds"}/>
           </div>
         )
 
