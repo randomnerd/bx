@@ -63,7 +63,7 @@ const candelstick_intra_day_cont = React.createClass({
 
         return (
 
-            <ChartCanvas width={width} height={600}
+            <ChartCanvas width={width} height={350}
             					margin={{left: 80, right: 80, top:10, bottom: 30}} type={type}
             					seriesName="MSFT"
             					data={data} calculator={[ema20, ema50, smaVolume50]}
@@ -71,7 +71,7 @@ const candelstick_intra_day_cont = React.createClass({
             				<Chart id={2}
             						yExtents={[d => d.volume, smaVolume50.accessor()]}
             						yMousePointerDisplayLocation="left" yMousePointerDisplayFormat={d3.format(".4s")}
-            						height={150} origin={(w, h) => [0, h - 100]}>
+            						height={100} origin={(w, h) => [0, h - 100]}>
             					<YAxis axisAt="left" orient="left" ticks={10} tickFormat={d3.format("s")}/>
 
             					<BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"} />
