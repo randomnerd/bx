@@ -80,7 +80,7 @@ const candelstick_intra_day_cont = React.createClass({
             					<CurrentCoordinate id={0} yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()} />
             					<CurrentCoordinate id={1} yAccessor={d => d.volume} fill="#9B0A47" />
 
-            					<EdgeIndicator itemType="first" orient="left" edgeAt="left"
+            					<EdgeIndicator itemType="first" orient="right" edgeAt="left"
             						yAccessor={d => d.volume} displayFormat={d3.format(".4s")} fill="#0F0F0F"/>
             					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
             						yAccessor={d => d.volume} displayFormat={d3.format(".4s")} fill="#0F0F0F"/>
@@ -97,33 +97,14 @@ const candelstick_intra_day_cont = React.createClass({
             					<YAxis axisAt="right" orient="right" ticks={10} />
 
             					<CandlestickSeries />
-            					<LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
-            					<LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
 
-            					<CurrentCoordinate id={1} yAccessor={ema20.accessor()} fill={ema20.stroke()} />
-            					<CurrentCoordinate id={2} yAccessor={ema50.accessor()} fill={ema50.stroke()} />
 
-            					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
-            						yAccessor={ema20.accessor()} fill={ema20.fill()}/>
-            					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
-            						yAccessor={ema50.accessor()} fill={ema50.fill()}/>
-            					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
-            						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
-            					<EdgeIndicator itemType="first" orient="left" edgeAt="left"
-            						yAccessor={ema20.accessor()} fill={ema20.fill()}/>
-            					<EdgeIndicator itemType="first" orient="left" edgeAt="left"
-            						yAccessor={ema50.accessor()} fill={ema50.fill()}/>
-            					<EdgeIndicator itemType="first" orient="left" edgeAt="left"
-            						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
+
             				</Chart>
 
             				<MouseCoordinates xDisplayFormat={d3.time.format("%H:%M:%S")} rectWidth={60} />
             				<EventCapture mouseMove={true} zoom={true} pan={true} />
-            				<TooltipContainer>
-            					<OHLCTooltip forChart={1} origin={[-40, 0]} xDisplayFormat={d3.time.format("%Y-%m-%d %H:%M:%S")}/>
-            					<MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 15]}
-            						calculators={[ema20, ema50]}/>
-            				</TooltipContainer>
+
             			</ChartCanvas>
 
         );
@@ -131,3 +112,16 @@ const candelstick_intra_day_cont = React.createClass({
 });
 
 export default ReStock.helper.fitWidth(candelstick_intra_day_cont);
+
+
+// <TooltipContainer>
+//   <OHLCTooltip forChart={1} origin={[-40, 0]} xDisplayFormat={d3.time.format("%Y-%m-%d %H:%M:%S")}/>
+//   <MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 15]}
+//     calculators={[ema20, ema50]}/>
+// </TooltipContainer>
+//
+// <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
+// <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
+//
+// <CurrentCoordinate id={1} yAccessor={ema20.accessor()} fill={ema20.stroke()} />
+// <CurrentCoordinate id={2} yAccessor={ema50.accessor()} fill={ema50.stroke()} />
