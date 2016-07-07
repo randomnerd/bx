@@ -11,6 +11,7 @@ Meteor.methods({
   },
 
   currrency_update: function(id, $set) {
+    check(id, String);
     check($set, Object);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
