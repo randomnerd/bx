@@ -53,7 +53,17 @@ const Settings = Component({
       }
     }
   },
-
+  checkTotp(){
+    var {totp} = this.refs.totp.getCurrentValues();
+    this.enableTOTP(totp);
+  },
+  totpAdds(){
+    return {
+      right:{
+        buttons:[{name:"Check",icon:'checkmark',accent:'blue',action:()=>{this.checkTotp()}}]
+      }
+    }
+  },
   verifyTOTP(token) {
     Meteor.call('/totp/verify', token, (err, result) => {
       if (err) return console.error('TOTP verify', err);
@@ -65,6 +75,7 @@ const Settings = Component({
     Meteor.call('/totp/enable', token, (err, result) => {
       if (err) return console.error('TOTP enable', err);
       this.setState({totpEnabled: result.totpEnabled});
+      this.setState({qr: ""});
     })
   },
 
@@ -78,7 +89,7 @@ const Settings = Component({
             </div>
 
             <div className="ui basic segment">
-              <Formsy.Form key={this.props.k} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='chat'>
+              <Formsy.Form key={this.props.k} className="ui form" ref='chat'>
                 <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" adds={this.getAdds()} required />
               </Formsy.Form>
             </div>
@@ -93,9 +104,9 @@ const Settings = Component({
                 <p>
                   <img src={this.state.qr}/>
                 </p>
-
-                <Semantic.Input name="qr_code" validations="minLength:3" placeholder="and type your code here" required />
-
+                <Formsy.Form key={this.props.k+5} className="ui form" ref='totp'>
+                  <Semantic.Input name="totp" validations="minLength:6" placeholder="and type your code here" required adds={this.totpAdds()} />
+                </Formsy.Form>
                 <div className="field">
                   <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
                     <i className="refresh icon" />

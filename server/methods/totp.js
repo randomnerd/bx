@@ -42,7 +42,7 @@ Meteor.methods({
 
   '/totp/enable': function(token, disable) {
     check(token, String);
-    check(disable, Boolean);
+    check(disable, Match.Maybe(Boolean));
     if (!this.userId) throw new Meteor.Error('Unauthorized');
     let user = Meteor.user();
     if (!user.totpKey) throw new Meteor.Error('No TOTP key set, unable to verify');
