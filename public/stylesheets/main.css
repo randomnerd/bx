@@ -307,7 +307,6 @@ html, body, html.ios, html.ios body{
   text-align: left;
 }
 .ui.inverted.newgrey .bignum.right span:first-child{
-  font-weight: bold;
   width: auto !important;
   padding: 0 0px;
   display: inline-block;
@@ -1599,6 +1598,19 @@ tr.lesspadding th {
   font-weight: normal;
 }
 
+/* HISTORY */
+.ui.inverted.newgrey .myhistory .bignum.right span:first-child{
+  margin-left: 1.5px;
+}
+.ui.inverted.newgrey .myhistory .bignum.dot{
+  width: 2%;
+}
+.ui.inverted.newgrey .myhistory .bignum.left{
+  width: 35%
+}
+.ui.inverted.newgrey .myhistory .bignum.right{
+  width: 42%
+}
 /* LANDING */
 
 /* COLORS

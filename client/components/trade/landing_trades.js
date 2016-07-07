@@ -56,7 +56,7 @@ const LandingTrades = Component({
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
       //console.log(pair);
-      
+
       let curr = this.curr(pair.currId);
       let mcurr = this.curr(pair.marketCurrId);
 
@@ -71,7 +71,7 @@ const LandingTrades = Component({
       }
       return (
         <tr key={item._id} className='animate'>
-          <td className={'three wide ' + (item.direction ? 'buy' : 'sell') }>
+          <td className='three wide '>
             {curr.shortName}
           </td>
           <td className='two wide'>
