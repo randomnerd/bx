@@ -15,4 +15,7 @@ export default class Trade {
   displayPrice() {
     return ((this.price) / Math.pow(10, 8)).toFixed(8);
   }
+  displayMarketAmount() {
+    return ( this.displayAmount() * this.displayPrice() ).toFixed(8);
+  }
 }

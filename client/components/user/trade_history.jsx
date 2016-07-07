@@ -13,14 +13,27 @@ const UserTradeHistory = Component({
   getMeteorData() {
     return {
       trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
-      currencies: Currencies.find({}).fetch(),
-      pairs: TradePairs.find({}).fetch()
+      currencies: Currencies.find().fetch(),
+      pairs: TradePairs.find().fetch()
     };
   },
   getInitialState(){
     return{
       test: 1
     }
+  },
+  curr(id) {
+    let curr = _.findWhere(this.data.currencies, {
+      _id: id
+    });
+    return curr
+  },
+  pair(id) {
+    let pair = _.findWhere(this.data.pairs, {
+      _id: id
+    });
+    return pair
+
   },
   componentDidMount() {
     this.props.signals.u.getHistory({limit: 40, skip: 0});
@@ -30,6 +43,7 @@ const UserTradeHistory = Component({
     let data =this.data.trades;
     data.reverse();
     let prev = 1;
+
     data.map((item) => {
       item.direction = !!(prev < parseFloat(item.displayPrice()) );
       prev = item.displayPrice();
@@ -38,23 +52,37 @@ const UserTradeHistory = Component({
 
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
+
+      let pair = this.pair(item.pairId);
+      let curr = this.curr(pair.currId);
+      let mcurr = this.curr(pair.marketCurrId);
+
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
       let amount = parseFloat(item.displayAmount()).toString().split('.');
+      let mamount = parseFloat(item.displayMarketAmount()).toString().split('.');
       let price = item.displayPrice().toString().split('.');
       if (!amount[1]) {
         amount[1] = '';
       }
+      if (!mamount[1]) {
+        mamount[1] = '';
+      }
       if (!price[1] && price[1] != "0") {
         price[1] = "0";
       }
+      console.log(item);
       return (
           <tr key={item._id} className='animate'>
-            <td className='six wide'>
+            <td className='three wide'>
               <div className='bignum left'>{ amount[0] }</div>
               <div className='bignum dot'>.</div>
-              <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) } {this.curr(item.sellId)}</div>
-              <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
+              <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) } {curr.shortName}</div>
+            </td>
+            <td className='three wide'>
+              <div className='bignum left'>{ mamount[0] }</div>
+              <div className='bignum dot'>.</div>
+              <div className='bignum right'><span>{ mamount[1]} </span> { nulls.substr(0,7 - mamount[1].length) } {mcurr.shortName}</div>
             </td>
             <td className={'seven wide arr ' + (item.direction ? 'positive' : 'negative') }>
               <div className='bignum left'>{price[0]}</div>
@@ -65,20 +93,6 @@ const UserTradeHistory = Component({
           </tr>
         );
     });
-  },
-  curr(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
-
-  },
-  pair(id) {
-    let pair = _.findWhere(this.data.pairs, {
-      _id: id
-    });
-    return pair
-
   },
   showWithdraw(){
     // this.props.signals.tools.withdraw({action: 'open'});
@@ -95,14 +109,7 @@ const UserTradeHistory = Component({
         <div className="ui segments">
           <div className="ui secondary segment">
             <div className="ui header clearfix">
-              <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw}>
-                Withdraw
-              </button>
-              <a href="/u/wallets" className="ui right floated white button">
-                <i className="icon left arrow"></i>
-                <span>back</span>
-              </a>
-              <h1> balance</h1>
+              <h1>My history</h1>
             </div>
           </div>
             <div className="ui secondary segment">
