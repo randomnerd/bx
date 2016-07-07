@@ -18,13 +18,7 @@ const Settings = Component({
     };
   },
   componentDidMount() {
-    Meteor.call('/totp/key', false, (err, data) => {
-      if (err) {
-        this.setState({totpEnabled: true});
-      } else {
-        this.setState({qr: data.qr});
-      }
-    });
+    this.getQR();
   },
   getMeteorData() {
     return {
@@ -33,6 +27,15 @@ const Settings = Component({
   },
   twoFactorAuth(){
     Meteor.call('/totp/key', true, (err, data) => {
+      if (err) {
+        this.setState({totpEnabled: true});
+      } else {
+        this.setState({qr: data.qr});
+      }
+    });
+  },
+  getQR(){
+    Meteor.call('/totp/key', false, (err, data) => {
       if (err) {
         this.setState({totpEnabled: true});
       } else {
@@ -56,11 +59,12 @@ const Settings = Component({
   checkTotp(){
     var {totp} = this.refs.totp.getCurrentValues();
     this.enableTOTP(totp);
+    if(!this.state.totpEnabled) this.getQR();
   },
   totpAdds(){
     return {
       right:{
-        buttons:[{name:"Check",icon:'checkmark',accent:'blue',action:()=>{this.checkTotp()}}]
+        buttons:[{name:(this.state.totpEnabled?"Disable":"Enable"),icon:'checkmark',accent:'blue',action:()=>{this.checkTotp()}}]
       }
     }
   },
@@ -72,10 +76,10 @@ const Settings = Component({
   },
 
   enableTOTP(token) {
-    Meteor.call('/totp/enable', token, (err, result) => {
+    Meteor.call('/totp/enable', token, this.state.totpEnabled, (err, result) => {
       if (err) return console.error('TOTP enable', err);
       this.setState({totpEnabled: result.totpEnabled});
-      this.setState({qr: ""});
+
     })
   },
 
@@ -102,7 +106,7 @@ const Settings = Component({
                   <a target="_blank" href="https://support.google.com/accounts/answer/1066447"> Google Authenticator</a>
                 </p>
                 <p>
-                  <img src={this.state.qr}/>
+                  <img src={this.state.totpEnabled?"":this.state.qr}/>
                 </p>
                 <Formsy.Form key={this.props.k+5} className="ui form" ref='totp'>
                   <Semantic.Input name="totp" validations="minLength:6" placeholder="and type your code here" required adds={this.totpAdds()} />
