@@ -63,19 +63,19 @@ const UserTradeHistory = Component({
       if (!amount[1]) {
         amount[1] = '';
       }else{
-        amount[0] = parseInt(amount[0]).toString();
+        //amount[0] = parseInt(amount[0]).toString();
         amount[1] = parseInt(amount[1]).toString();
       }
       if (!mamount[1]) {
         mamount[1] = '';
       }else{
-        mamount[0] = parseInt(mamount[0]).toString();
+        //mamount[0] = parseInt(mamount[0]).toString();
         mamount[1] = parseInt(mamount[1]).toString();
       }
       if (!price[1]) {
         price[1] = "";
       }else{
-        price[0] = parseInt(price[0]).toString();
+        //price[0] = parseInt(price[0]).toString();
         price[1] = parseInt(price[1]).toString();
       }
       console.log(item);

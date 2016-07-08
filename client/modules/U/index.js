@@ -23,6 +23,10 @@ function goWallet ({input, state}) {
   if(state.get('mobile')){state.set('mob.page', false);}
 }
 
+function getWalletTrades({input, state, output, services}) {
+  services.subsManager.subscribe('wallet_trades', input.id);
+}
+
 function setWallet ({input, state}) {
   state.set('wallet', input.id);
 }
@@ -75,7 +79,11 @@ const wallets = [
 ];
 
 const wallet = [
-  goWallet
+  getWalletTrades,
+  [subsReady, {
+    success:  [goWallet]
+  }]
+
 ];
 
 const walletSet = [

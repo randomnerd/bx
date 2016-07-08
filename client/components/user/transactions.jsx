@@ -1,7 +1,7 @@
 import React from 'react';
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
-import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/collections';
+import {Balances, Currencies, Withdrawals, Transactions, TradePairs, Trades} from '../../../both/collections';
 import moment from 'moment';
 
 const TransactionsView = Component({
@@ -10,15 +10,21 @@ const TransactionsView = Component({
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
+    let pairs = TradePairs.find({$or:[{currId: this.props.wallet}, {marketCurrId: this.props.wallet}]}).fetch();
+    let pair_ids = pairs.map(function(pair) {
+      return pair._id;
+    });
+    console.log(pair_ids, Trades.find({pairId: {$in: pair_ids}}).fetch());
     return {
       balance: Balances.findOne({currId: this.props.wallet}),
       currency: Currencies.findOne({_id:this.props.wallet}),
       withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
-      deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch()
+      deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+      trades: Trades.find({pairId: {$in: pair_ids}}).fetch()
     }
   },
-  getInitialState(){
-    return{
+  getInitialState() {
+    return {
       test: 1
     }
   },
@@ -26,7 +32,8 @@ const TransactionsView = Component({
 
   },
   renderHistoryItems() {
-    let unsortedItems = this.data.deposits.concat(this.data.withdrawals);
+    console.log(this.data.trades);
+    let unsortedItems = this.data.deposits.concat(this.data.withdrawals).concat(this.data.trades);
     let items = unsortedItems.sort((a, b) => {
       if (a.createdAt > b.createdAt) return -1;
       if (a.createdAt < b.createdAt) return 1;
@@ -50,7 +57,7 @@ const TransactionsView = Component({
 
             </div>
           </td>
-          <td className="three wide">{item.displayChanged()}</td>
+          <td className="three wide">{item.displayChanged && item.displayChanged()}</td>
         </tr>
 
       );
