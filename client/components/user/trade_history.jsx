@@ -78,7 +78,6 @@ const UserTradeHistory = Component({
         //price[0] = parseInt(price[0]).toString();
         price[1] = parseInt(price[1]).toString();
       }
-      console.log(item);
       return (
           <tr key={item._id} className='animate'>
             <td className='three wide'>

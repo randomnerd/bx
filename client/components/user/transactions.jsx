@@ -15,7 +15,6 @@ const TransactionsView = Component({
       return pair._id;
     });
     let user = Meteor.user();
-    //console.log(pair_ids, Trades.find({pairId: {$in: pair_ids}}).fetch());
     return {
       balance: Balances.findOne({currId: this.props.wallet}),
       currency: Currencies.findOne({_id:this.props.wallet}),
@@ -34,7 +33,6 @@ const TransactionsView = Component({
 
   },
   renderHistoryItems() {
-    console.log(this.data.trades);
     let unsortedItems = this.data.deposits.concat(this.data.withdrawals).concat(this.data.trades);
     let items = unsortedItems.sort((a, b) => {
       if (a.createdAt > b.createdAt) return -1;
