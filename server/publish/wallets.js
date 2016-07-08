@@ -11,5 +11,5 @@ Meteor.publish('wallet_trades', function(currId) {
   let pair_ids = pairs.map(function(pair) {
     return pair._id;
   });
-  return Trades.find({pairId: {$in: pair_ids}});
+  return Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: this.userId}, {sellerId: this.userId}]});
 });

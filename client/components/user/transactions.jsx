@@ -14,13 +14,15 @@ const TransactionsView = Component({
     let pair_ids = pairs.map(function(pair) {
       return pair._id;
     });
-    console.log(pair_ids, Trades.find({pairId: {$in: pair_ids}}).fetch());
+    let user = Meteor.user();
+    //console.log(pair_ids, Trades.find({pairId: {$in: pair_ids}}).fetch());
     return {
       balance: Balances.findOne({currId: this.props.wallet}),
       currency: Currencies.findOne({_id:this.props.wallet}),
       withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
       deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
-      trades: Trades.find({pairId: {$in: pair_ids}}).fetch()
+      trades: Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: user._id}, {sellerId: user._id}]}).fetch(),
+      user: Meteor.user()
     }
   },
   getInitialState() {
@@ -42,11 +44,19 @@ const TransactionsView = Component({
     let confReq = this.data.currency.confReq||5;
 
     return items.map((item) => {
-      let cls = item.constructor.name === 'Transaction' ? 'positive' : 'negative';
+      let cls = item.constructor.name === 'Transaction' ? ['li_vallet', 'add green', 'Deposit']    :
+      (item.constructor.name === 'Withdrawal' ? ['li_vallet', 'minus red', 'Withdrawal'] :
+      (item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell']));
       let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
       curr = curr > 100 ? 100 : curr;
       return  (
         <tr key={item._id} className={cls}>
+          <td className="one wide">
+            <i className="big icons" title={cls[2]}>
+              <i className={cls[0] + " icon"}></i>
+              <i className={cls[1] + " corner icon"}></i>
+            </i>
+          </td>
           <td className="two wide">{moment(item.createdAt).fromNow()}</td>
           <td className="five wide">{item.address}</td>
           <td className="two wide">{item.displayAmount()}</td>
@@ -57,7 +67,7 @@ const TransactionsView = Component({
 
             </div>
           </td>
-          <td className="three wide">{item.displayChanged && item.displayChanged()}</td>
+          <td className="two wide">{item.displayChanged && item.displayChanged()}</td>
         </tr>
 
       );
@@ -130,12 +140,13 @@ const TransactionsView = Component({
               <table className="ui selectable very compact very basic striped unstackable table nomargin">
                 <thead>
                   <tr className="lesspadding">
+                    <th className="one wide" >Type</th>
                     <th className="two wide" >Time</th>
                     <th className="five wide" >Address</th>
                     <th className="two wide">Amount</th>
                     <th className="two wide">Fee</th>
                     <th className="two wide">Status</th>
-                    <th className="three wide">Balance</th>
+                    <th className="two wide">Balance</th>
                   </tr>
                 </thead>
               </table>
