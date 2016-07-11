@@ -39,7 +39,7 @@ const Orderbook = Component({
       //.displayRemain() и .displayPrice()
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
       let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = item.displayPrice().toString().split('.');
+      let price = parseFloat(item.displayPrice()).toString().split('.');
       let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       //console.log(item.displayPrice().toString().split('.'));
       if (!amount[1]) { amount[1] = ''; }
@@ -87,7 +87,7 @@ const Orderbook = Component({
 
       let weight = parseFloat(70 * (parseFloat(item.displayAmount()) / max).toFixed(8));
       let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = item.displayPrice().toString().split('.');
+      let price = parseFloat(item.displayPrice()).toString().split('.');
       let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
       if (!amount[1]) { amount[1] = ''; }
       if (!price[1]) { price[1] = ''; }

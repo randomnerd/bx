@@ -39,7 +39,7 @@ const LastTrades = Component({
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
       let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = item.displayPrice().toString().split('.');
+      let price = parseFloat(item.displayPrice()).toString().split('.');
       //console.log(item.displayPrice().toString().split('.'));
       if (!amount[1]) {
         amount[1] = '';
