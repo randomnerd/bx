@@ -52,13 +52,13 @@ const LastTrades = Component({
             <td className='six wide'>
               <div className='bignum left'>{ amount[0] }</div>
               <div className='bignum dot'>.</div>
-              <div className='bignum right'><span>{ amount[1]} </span> { nulls.substr(0,7 - amount[1].length) }</div>
+              <div className='bignum right'>{ amount[1]}<span>{ nulls.substr(0,7 - amount[1].length) }</span></div>
               <span className={'leveler ' + (item.direction ? 'positive' : 'negative')} style={{width: weight + '%'}}></span>
             </td>
             <td className={'seven wide arr ' + (item.direction ? 'positive' : 'negative') }>
               <div className='bignum left'>{price[0]}</div>
               <div className='bignum dot'>.</div>
-              <div className='bignum right'><span>{price[1]}</span>{nulls.substr(0,8-price[1].length)}</div>
+              <div className='bignum right'>{price[1]}<span>{nulls.substr(0,8-price[1].length)}</span></div>
             </td>
             <td className='three wide right aligned'>{moment(item.createdAt).format("hh:mm:ss")}</td>
           </tr>

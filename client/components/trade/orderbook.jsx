@@ -50,8 +50,8 @@ const Orderbook = Component({
           <td>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{amount[1]}</span>
-            { nulls.substr(0, 8 - amount[1].length) }
+            <div className='bignum right'>{amount[1]}
+              <span>{ nulls.substr(0, 8 - amount[1].length) }</span>
             </div>
 
             <span className='leveler negative'
@@ -62,15 +62,15 @@ const Orderbook = Component({
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{price[1]}</span>
-              {nulls.substr(0, 8 - price[1].length)}
+            <div className='bignum right'>{price[1]}
+              <span>{nulls.substr(0, 8 - price[1].length)}</span>
             </div>
           </td>
           <td className='right aligned'>
             <div className='bignum left'>{total[0].substr(0, 5)}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{total[1]}</span>
-              {nulls.substr(0, 8 - total[1].length)}
+            <div className='bignum right'>{total[1]}
+              <span>{nulls.substr(0, 8 - total[1].length)}</span>
             </div>
           </td>
         </tr>
@@ -97,8 +97,8 @@ const Orderbook = Component({
           <td>
             <div className='bignum left'>{amount[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{amount[1]}</span>
-            { nulls.substr(0, 8 - amount[1].length) }
+            <div className='bignum right'>{amount[1]}
+              <span>{ nulls.substr(0, 8 - amount[1].length) }</span>
             </div>
 
             <span className='leveler positive'
@@ -109,15 +109,15 @@ const Orderbook = Component({
 
             <div className='bignum left'>{price[0]}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{price[1]}</span>
-              {nulls.substr(0, 8 - price[1].length)}
+            <div className='bignum right'>{price[1]}
+              <span>{nulls.substr(0, 8 - price[1].length)}</span>
             </div>
           </td>
           <td className='right aligned'>
             <div className='bignum left'>{total[0].substr(0, 5)}</div>
             <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{total[1]}</span>
-              {nulls.substr(0, 8 - total[1].length)}
+            <div className='bignum right'>{total[1]}
+              <span>{nulls.substr(0, 8 - total[1].length)}</span>
             </div>
           </td>
         </tr>
