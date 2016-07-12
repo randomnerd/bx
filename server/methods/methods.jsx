@@ -1,6 +1,7 @@
 import { check } from 'meteor/check';
 import {Currencies, Notifications, wAddressBook, Chat, Withdrawals} from '/both/collections';
 import {Jobs} from '../job_collection';
+import notp from 'notp';
 
 Meteor.methods({
   'jobs/wallet/newWallet': (currId) => {
@@ -97,7 +98,13 @@ Meteor.methods({
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
     if (!params.amount || parseFloat(params.amount) <= 0) throw new Meteor.Error('wrong amount');
     let curr = Currencies.findOne(params.currId);
+
     let user = Meteor.user();
+    if (user.totpKey && user.totpEnabled) {
+      if (!params.totp) throw new Meteor.Error('TOTP required');
+      if (!notp.totp.verify(params.totp, user.totpKey)) throw new Meteor.Error('wrong TOTP token');
+    }
+
     let amount = Math.round(parseFloat(params.amount) * Math.pow(10, 8));
     let balance = user.balanceFor(params.currId);
     if (!balance || balance.amount < amount) throw new Meteor.Error('wrong amount');
