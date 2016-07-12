@@ -40,7 +40,7 @@ const OpenOrders = Component({
           <td className={'three wide ' + (item.buy? 'positive' : 'negative')} data-ord-amount>{item.displayPrice()}</td>
           <td className='two wide' data-ord-amount>{moment(item.createdAt).format("hh:mm:ss")}</td>
           <td data-ord-amount className='one wide'>
-            <a href='javascript:;' onClick={this.cancelOrder.bind(this, item)}>Cancel</a>
+            <i className="ui remove red icon" onClick={this.cancelOrder.bind(this, item)}></i>
           </td>
         </tr>
       );

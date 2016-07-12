@@ -29,7 +29,8 @@ const WithdrawModal = Component({
       withdraw: false,
       currId: null,
       allowSubmit: false,
-      errorMessage: null
+      errorMessage: null,
+      totpEnabled: false
     };
   },
 
@@ -43,6 +44,16 @@ const WithdrawModal = Component({
   // componentWillReceiveProps(newProps){
   //   this.setState({withdraw: newProps.tools.withdraw});
   // },
+
+  getQR(){
+    Meteor.call('/totp/key', false, (err, data) => {
+      if (err) {
+        this.setState({totpEnabled: true});
+      } else {
+        this.setState({totpEnabled: false});
+      }
+    });
+  },
   getAmount() {
     let curr    = this.data.currency;
     let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
@@ -88,6 +99,7 @@ const WithdrawModal = Component({
   },
 
   componentDidMount() {
+    this.getQR();
     this.setState({currId: this.props.tools.wallet});
   },
 
@@ -104,7 +116,8 @@ const WithdrawModal = Component({
     Meteor.call('withdraw', {
       currId: this.data.currency._id,
       amount: this.refs.amount.getValue(),
-      address: this.refs.address.getValue()
+      address: this.refs.address.getValue(),
+      totp: this.refs.totp.getValue()
     });
 
     this.props.signals.notif.newOne({_id: 'withdrawal_requested' + Math.random(), type: 'accept', icon: 'accept', title: 'Withdrawal request sent!',
@@ -129,7 +142,7 @@ const WithdrawModal = Component({
             adds={this.getAmount()} required />
 
             <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
-            <Semantic.Input name='tfa' label='TFA code' placeholder='Type your TFA code here' ref='tfa' />
+            {this.state.totpEnabled ? <Semantic.Input name='totp' label='TFA code' placeholder='Type your TFA code here' ref='totp' /> : null}
             <input type='submit' className='hidden' />
           </Formsy.Form>
         </Semantic.Modal>
