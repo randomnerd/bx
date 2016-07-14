@@ -55,7 +55,7 @@ const TopInfo = Component({
         </div>
         <div className='item double'>
           <h4 className="ui header">Volume</h4>
-          <p>{this.props.pair.dayVolume? (parseFloat(this.props.pair.dayVolume)/100000000).toFixed(4) : 0.0000}</p>
+          <p>{this.data.pair.dayVolume? (parseFloat(this.data.pair.dayVolume)/100000000).toFixed(4) : 0.0000}</p>
         </div>
       </div>
     )

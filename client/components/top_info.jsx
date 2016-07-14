@@ -4,11 +4,13 @@ import {Meteor} from 'meteor/meteor';
 import {Currencies, Trades, OrderBookItems, TradePairs} from '../../both/collections';
 
 const TopInfo = Component({
-  layout: ['layout']
+  layout: ['layout'],
+  pair: ['pair', 'pair']
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
+      pair: TradePairs.findOne({_id: this.props.pair._id}),
       user: Meteor.user(),
       currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
       tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
@@ -33,7 +35,7 @@ const TopInfo = Component({
 
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>{this.props.pair.lastPrice? parseFloat(this.props.pair.lastPrice).toFixed(4) : 0.0000}</p>
+          <p>{this.data.pair.lastPrice? parseFloat(this.data.pair.lastPrice).toFixed(4) : 0.0000}</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Ask</h4>
@@ -51,7 +53,7 @@ const TopInfo = Component({
         </div>
         <div className='item double'>
           <h4 className="ui header">Volume</h4>
-          <p>{this.props.pair.dayVolume? parseFloat(this.props.pair.dayVolume).toFixed(4) : 0.0000}</p>
+          <p>{this.data.pair.dayVolume? parseFloat(this.data.pair.dayVolume).toFixed(4) : 0.0000}</p>
         </div>
       </div>
     );
