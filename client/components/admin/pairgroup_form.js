@@ -23,13 +23,11 @@ const AdminPairGroup = Component({
     console.log({name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published});
     Meteor.call('pairgroup_add',
     {name: name, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs)},
-    function(error, result) {
-      if (result) {
-        console.log('res: '+result);
-        //this.setState({errorMessage: err.message});
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        console.log('err:' + error);
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminPairGroups();
       }
     });
   },
@@ -37,13 +35,11 @@ const AdminPairGroup = Component({
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
     Meteor.call('pairgroup_update', this.data.pairgrup._id,
     {name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published},
-    function(error, result) {
-      if (result) {
-        console.log('res: '+result);
-        //this.setState({errorMessage: err.message});
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        console.log('err:' + error);
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminPairGroups();
       }
     });
   },
@@ -96,11 +92,12 @@ const AdminPairGroup = Component({
       this.setState({pairs:pairs});
     }
   },
-
+  checkboxToggle() {
+    this.setState({published: (this.state.published ? false : true)});
+  },
   allowSubmit() { this.setState({allowSubmit: true}); },
   disallowSubmit() { this.setState({allowSubmit: false}); },
   render() {
-    this.published = this.currentVal('published') ? 'checked' : false;
     return (
       <div>
 
@@ -138,7 +135,7 @@ const AdminPairGroup = Component({
 
           <div className='two fields'>
 
-            <Semantic.Checkbox name='published' label='Published' isChecked={this.published} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.pairgrup && this.data.pairgrup.published ? true : false} />
 
             <div className='field'>
 

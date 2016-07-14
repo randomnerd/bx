@@ -80,8 +80,9 @@ const BuySell = Component({
     );
   },
   changeAmount(event) {
-    let matcher = new RegExp("^\\d*\\.*\\d*$");
-    let isOk = matcher.exec(event.currentTarget.value);
+    let val = event.currentTarget.value;
+    let matcher = new RegExp("^\\d*\\.?\\d*$");
+    let isOk = matcher.exec(val);
     //console.log(event.currentTarget);
     if(!isOk){
       $(event.currentTarget).val(this.props.buysell.amount)
@@ -92,18 +93,18 @@ const BuySell = Component({
       });
     }else{
       this.props.signals.pair.setBuysell({
-        amount: event.currentTarget.value || 0,
+        amount: val,
         price: this.props.buysell.price,
-        direction: this.props.direction,
       });
     }
 
 
   },
   changePrice(event) {
-    let matcher = new RegExp("^\\d*\\.*\\d*$");
-    let isOk = matcher.exec(event.currentTarget.value);
-    //console.log(event.currentTarget);
+    let val = event.currentTarget.value;
+    let matcher = new RegExp("^\\d*\\.?\\d*$");
+    let isOk = matcher.exec(val);
+    console.log(val);
     if(!isOk){
       $(event.currentTarget).val(this.props.buysell.price)
       this.props.signals.pair.setBuysell({
@@ -114,8 +115,7 @@ const BuySell = Component({
     }else{
       this.props.signals.pair.setBuysell({
         amount: this.props.buysell.amount,
-        price: event.currentTarget.value || 0,
-        //direction: this.props.direction,
+        price: val,
       });
      }
   },

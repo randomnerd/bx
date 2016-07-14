@@ -19,13 +19,18 @@ export default React.createClass({
       $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('set disabled')
       $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('uncheck')
     }
-    this.props.isChecked?$(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('check'):false;
+    if (this.props.isChecked) {
+      $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox('check');
+      $that.setValue(1);
+    } else {
+      $that.setValue(0);
+    };
     $(ReactDOM.findDOMNode(this)).find('.ui.checkbox').checkbox({
       onChecked: function() {
         $that.setValue(1);
       },
       onUnchecked: function() {
-        $that.setValue(undefined);
+        $that.setValue(0);
       },
     });
 

@@ -22,24 +22,23 @@ const AdminCurrType = Component({
 
     Meteor.call('currtype_add',
     {name: name, shortName: shortName, published: published ? true : false},
-    function(error, result) {
-      if (result) {
-        console.log(result);
-        //this.setState({errorMessage: err.message});
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        console.log(error);
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminCurrTypes();
       }
     });
   },
   saveCurr(event) {
     let currVals = this.refs.curr.getCurrentValues();
     currVals.published = currVals.published ? true : false;
-    Meteor.call('currtype_update', this.data.currency._id, currVals, function(error, result) {
-      if (result) {
-        this.setState({errorMessage: err.message});
+    Meteor.call('currtype_update', this.data.currency._id, currVals,
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminCurrTypes();
       }
     });
   },
@@ -47,6 +46,9 @@ const AdminCurrType = Component({
     return {
       currency: CurrTypes.findOne({_id: this.props.curr})
     };
+  },
+  checkboxToggle() {
+    this.setState({published: (this.state.published ? false : true)});
   },
   currentVal(what) {
     return this.data.currency ? this.data.currency[what] : '';
@@ -77,7 +79,7 @@ const AdminCurrType = Component({
 
           <div className='two fields'>
 
-            <Semantic.Checkbox name='published' label='Published' isChecked={this.published} />
+            <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
 
             <div className='field'>
 

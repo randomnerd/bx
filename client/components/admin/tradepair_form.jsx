@@ -28,13 +28,13 @@ const AdminTradePair = Component({
       published: !!published,
       permalink: permalink,
       market: market
-    }, function(error, result) {
-        if (result || error) {
-          this.setState({errorMessage: error.message});
-        }else {
-          //FlowRouter.go('/admin/tradepairs');
-        }
-      });
+    }, (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
+      } else {
+        this.props.signals.admin.adminPairs();
+      }
+    });
   },
   savePair(event) {
     let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
@@ -47,11 +47,11 @@ const AdminTradePair = Component({
       permalink: permalink,
       market: market
     },
-    function(error, result) {
-      if (result) {
-        this.setState({errorMessage: err.message});
-      }else {
-        //FlowRouter.go('/admin/tradepairs');
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
+      } else {
+        this.props.signals.admin.adminPairs();
       }
     });
   },
@@ -79,6 +79,9 @@ const AdminTradePair = Component({
     });
   },
 
+  checkboxToggle() {
+    this.setState({published: (this.state.published ? false : true)});
+  },
   render() {
     let published = this.currentVal('published') ? 'checked' : false;
 
@@ -123,7 +126,7 @@ const AdminTradePair = Component({
           required value={this.currentVal('sellFee')} />
 
           <div className='two fields'>
-            <Semantic.Checkbox name='published' label='Published' isChecked={published} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.tradePairs && this.data.tradePairs.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
                 onClick={this.props.adm_pair ? this.savePair : this.newPair}>

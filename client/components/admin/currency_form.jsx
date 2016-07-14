@@ -13,7 +13,7 @@ const AdminCurrency = Component({
     return {
       errorMessage: null,
       allowSubmit: false,
-      published: ''
+      published: false
     };
   },
 
@@ -27,13 +27,11 @@ const AdminCurrency = Component({
       type: currType,
       confReq: parseFloat(confReq)
     },
-    function(error, result) {
+    (error, result) => {
       if (result) {
-        console.log(result);
-        //this.setState({errorMessage: err.message});
+      this.setState({errorMessage: error.message});
       } else {
-        console.log(error);
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminCurrs();
       }
     });
   },
@@ -47,15 +45,17 @@ const AdminCurrency = Component({
       type: currType,
       confReq: parseFloat(confReq)
     },
-    function(error, result) {
-      if (result) {
-        this.setState({errorMessage: err.message});
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminCurrs();
       }
     });
   },
-
+  checkboxToggle() {
+    this.setState({published: (this.state.published ? false : true)});
+  },
   typesForSearch() {
     return this.data.currtypes.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
@@ -68,13 +68,18 @@ const AdminCurrency = Component({
       currtypes: CurrTypes.find().fetch()
     };
   },
+  componentDidMount() {
+    let {currency} = this.data;
+    this.setState({published: (this.data.currency && this.data.currency.published ? true : false)});
+  },
   currentVal(what) {
     return this.data.currency ? this.data.currency[what] : '';
   },
   allowSubmit() { this.setState({allowSubmit: true}); },
   disallowSubmit() { this.setState({allowSubmit: false}); },
   render() {
-    this.published = this.currentVal('published') ? 'checked' : false;
+    //let {currency} = this.data;
+    //this.setState({published: (currency && currency.published ? true : false)});
     return (
       <div>
 
@@ -100,16 +105,16 @@ const AdminCurrency = Component({
 
           <Semantic.Select name='currType' label='Currency type'
           validations='minLength:3' placeholder='Select currency type'
-          required value={this.currentVal('type')} content={this.typesForSearch()} />
+          required defaultValue={this.currentVal('type')} content={this.typesForSearch()} />
 
           <Semantic.Input name='confReq'
           label='Deposit confirmations' validations='isNumeric' placeholder='3'
-          value={this.currentVal('confReq')} />
+          value={this.currentVal('confReq')||3} />
 
 
           <div className='two fields'>
 
-            <Semantic.Checkbox name='published' label='Published' isChecked={this.published} />
+            <Semantic.Checkbox name='published' label='Published' ref='published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
 
             <div className='field'>
 

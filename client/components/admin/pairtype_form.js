@@ -22,24 +22,23 @@ const AdminCurrency = Component({
 
     Meteor.call('pairtype_add',
     {name: name, shortName: shortName, published: published ? true : false, permalink: permalink},
-    function(error, result) {
-      if (result) {
-        console.log(result);
-        //this.setState({errorMessage: err.message});
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        console.log(error);
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminPairTypes();
       }
     });
   },
   saveCurr(event) {
     let currVals = this.refs.curr.getCurrentValues();
     currVals.published = currVals.published ? true : false;
-    Meteor.call('pairtype_update', this.data.currency._id, currVals, function(error, result) {
-      if (result) {
-        this.setState({errorMessage: err.message});
+    Meteor.call('pairtype_update', this.data.currency._id, currVals,
+    (error, result) => {
+      if (error) {
+        this.setState({errorMessage: error.message});
       } else {
-        //FlowRouter.go('/admin/currencies');
+        this.props.signals.admin.adminPairTypes();
       }
     });
   },
@@ -50,6 +49,9 @@ const AdminCurrency = Component({
   },
   currentVal(what) {
     return this.data.currency ? this.data.currency[what] : '';
+  },
+  checkboxToggle() {
+    this.setState({published: (this.state.published ? false : true)});
   },
   allowSubmit() { this.setState({allowSubmit: true}); },
   disallowSubmit() { this.setState({allowSubmit: false}); },
@@ -80,7 +82,7 @@ const AdminCurrency = Component({
 
           <div className='two fields'>
 
-            <Semantic.Checkbox name='published' label='Published' isChecked={this.published} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
 
             <div className='field'>
 

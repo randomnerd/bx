@@ -26,8 +26,9 @@ function setPairObj ({input, state}) {
 }
 
 function setBuySell ({input, state}) {
-  state.set(['pair', 'buysell', 'price'], Math.abs(parseFloat(input.price)));
-  state.set(['pair', 'buysell', 'amount'], Math.abs(parseFloat(input.amount)));
+  let {price, amount} = input;
+  if (parseFloat(price)) state.set(['pair', 'buysell', 'price'], Math.abs(parseFloat(price)));
+  if (parseFloat(amount)) state.set(['pair', 'buysell', 'amount'], Math.abs(parseFloat(amount)));
 }
 
 const show = [
