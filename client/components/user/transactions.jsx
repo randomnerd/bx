@@ -42,24 +42,23 @@ const TransactionsView = Component({
     let confReq = this.data.currency.confReq||5;
 
     return items.map((item) => {
-      let cls = item.constructor.name === 'Transaction' ? ['li_vallet', 'add green', 'Deposit']    :
-        (item.constructor.name === 'Withdrawal' ? ['li_vallet', 'minus red', 'Withdrawal'] :
-        (item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell']));
+      let cls = [];
 
-      // let curr, mcurr, amount, mamount;
-      // if(item.buyerId == this.data.user._id){
-      //   curr = this.curr(pair.currId);
-      //   mcurr = this.curr(pair.marketCurrId);
-      //
-      //   amount = parseFloat(item.displayAmount().toString()).toString().split('.');
-      //   mamount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
-      // }else{
-      //   mcurr = this.curr(pair.currId);
-      //   curr = this.curr(pair.marketCurrId);
-      //
-      //   mamount = parseFloat(item.displayAmount().toString()).toString().split('.');
-      //   amount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
-      // }
+      let mcurr, amount, mamount;
+      if(item.constructor.name === 'Transaction'){
+        cls = ['li_vallet', 'add green', 'Deposit'];
+        amount = item.displayAmount();
+      }else if(item.constructor.name === 'Withdrawal'){
+        cls = ['li_vallet', 'minus red', 'Withdrawal'];
+        amount = item.displayAmount();
+      }else{
+        cls = item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
+        if(item.buyerId == this.data.user._id){
+          amount = item.displayAmount();
+        }else{
+          amount = item.displayMarketAmount();
+        }
+      }
       let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
       curr = curr > 100 ? 100 : curr;
       return  (
@@ -71,8 +70,8 @@ const TransactionsView = Component({
             </i>
           </td>
           <td className="two wide">{moment(item.createdAt).fromNow()}</td>
-          <td className="five wide">{item.address}</td>
-          <td className="two wide">{item.displayAmount()}</td>
+          <td className="five wide">{item.address || '-'}</td>
+          <td className="two wide">{amount}</td>
           <td className="two wide">{item.fee ? item.displayFee() : '-'}</td>
           <td className="two wide">
             <div className="ui indicating progress" data-percent={curr} >
