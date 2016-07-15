@@ -111,30 +111,34 @@ const Settings = Component({
                 <Formsy.Form key={this.props.k+5} className="ui form" ref='totp'>
                   <Semantic.Input name="totp" validations="minLength:6" placeholder="and type your code here" required adds={this.totpAdds()} />
                 </Formsy.Form>
-                <div className="field">
-                  <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
-                    <i className="refresh icon" />
-                    Or generate a new key
-                  </a>
-
-                </div>
+                {this.state.totpEnabled?
+                  null :
+                  <div className="field">
+                    <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
+                      <i className="refresh icon" />
+                      Or generate a new key
+                    </a>
+                  </div>
+                }
               </Formsy.Form>
             </div>
-            <div className="ui basic segment">
+            { (2==3)?
+              <div className="ui basic segment">
 
-              <h2 className="ui header lpadding">
-                API Access
-              </h2>
-              <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
-                <i className="refresh icon" />
-                Generate new API key pair
-              </a>
+                <h2 className="ui header lpadding">
+                  API Access
+                </h2>
+                <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
+                  <i className="refresh icon" />
+                  Generate new API key pair
+                </a>
 
-              <Formsy.Form key={this.props.k+5} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='api'>
-                <Semantic.Input name="qr_code" label="API key" validations="minLength:3" placeholder="and type your code here" required />
-                <Semantic.Input name="chat_name" label="API Secret" validations="minLength:3" placeholder="Enter yor chat name" buttonAction={this.saveName} actionButton buttonName="Save" required />
-              </Formsy.Form>
-            </div>
+                <Formsy.Form key={this.props.k+5} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='api'>
+                  <Semantic.Input name="qr_code" label="API key" validations="minLength:3" placeholder="and type your code here" required />
+                  <Semantic.Input name="chat_name" label="API Secret" validations="minLength:3" placeholder="Enter yor chat name" buttonAction={this.saveName} actionButton buttonName="Save" required />
+                </Formsy.Form>
+              </div>
+            : null }
           </div>
         </div>
       </UserOnly>

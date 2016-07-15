@@ -43,8 +43,23 @@ const TransactionsView = Component({
 
     return items.map((item) => {
       let cls = item.constructor.name === 'Transaction' ? ['li_vallet', 'add green', 'Deposit']    :
-      (item.constructor.name === 'Withdrawal' ? ['li_vallet', 'minus red', 'Withdrawal'] :
-      (item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell']));
+        (item.constructor.name === 'Withdrawal' ? ['li_vallet', 'minus red', 'Withdrawal'] :
+        (item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell']));
+
+      // let curr, mcurr, amount, mamount;
+      // if(item.buyerId == this.data.user._id){
+      //   curr = this.curr(pair.currId);
+      //   mcurr = this.curr(pair.marketCurrId);
+      //
+      //   amount = parseFloat(item.displayAmount().toString()).toString().split('.');
+      //   mamount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
+      // }else{
+      //   mcurr = this.curr(pair.currId);
+      //   curr = this.curr(pair.marketCurrId);
+      //
+      //   mamount = parseFloat(item.displayAmount().toString()).toString().split('.');
+      //   amount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
+      // }
       let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
       curr = curr > 100 ? 100 : curr;
       return  (
