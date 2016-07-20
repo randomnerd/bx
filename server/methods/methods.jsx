@@ -76,6 +76,11 @@ Meteor.methods({
     message.userId = Meteor.userId()
     message.userName = Meteor.user().displayName();
     message.createdAt = new Date()
+    if (message.replyId) {
+      let replyUser = Meteor.users.findOne({_id: message.replyId});
+      if (!replyUser) throw new Meteor.Error('wrong replyId');
+      message.replyName = replyUser.displayName();
+    }
     Chat.insert(message);
   },
 
