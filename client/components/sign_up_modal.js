@@ -6,7 +6,14 @@ import {Component} from 'cerebral-view-react';
 Formsy.addValidationRule('passwordConfirmationMatch', (values, value) => {
   return values.password === values.password_confirm;
 });
-
+Formsy.addValidationRule('passwordSecure', (values, value) => {
+  if (values.password && values.password.length < 6) return false;
+  let digit = new RegExp("\\d+");
+  let letter = new RegExp("[a-zA-Z]+");
+  let hasDigit = digit.exec(values.password);
+  let hasLetter = letter.exec(values.password);
+  return hasDigit && hasLetter;
+});
 const SignUpModal = Component({
   show: ['showSignUpModal']
 }, {
@@ -45,7 +52,7 @@ const SignUpModal = Component({
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
-            ref="password" validations="passwordConfirmationMatch" required />
+            ref="password" validations="passwordConfirmationMatch,passwordSecure" required />
           <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"
             ref="password_confirm" validations="passwordConfirmationMatch" required/>
           <input type="submit" className="hidden" />

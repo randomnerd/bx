@@ -10,7 +10,6 @@ const Balance = Component({
 }, {
   mixins: [ReactMeteorData],
   getMeteorData() {
-    //console.log(this.props.pair);
     return {
       balance1: Balances.findOne({currId: this.props.pair.currId}),
       balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),

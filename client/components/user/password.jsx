@@ -54,7 +54,7 @@ const PasswordPage = Component({
                 placeholder='Enter old password' required />
 
                 <Semantic.Input name='password' ref='password'
-                validations='passwordConfirmationMatch' type='password' label='New password' className="eight wide centered"
+                validations='passwordConfirmationMatch,passwordSecure' type='password' label='New password' className="eight wide centered"
                 placeholder='Enter new password' required />
 
                 <Semantic.Input name='password_confirm' ref='password_confirm' className="eight wide centered"

@@ -2,6 +2,7 @@ import React from 'react';
 import Formsy from 'formsy-react'
 import {Component} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
+import {Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 
 const BuySell = Component({
@@ -16,6 +17,14 @@ const BuySell = Component({
       price: 0,
       ordType: 'limit'
     };
+  },
+  getMeteorData() {
+    return {
+      balance1: Balances.findOne({currId: this.props.pair.currId}),
+      balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
+      currency1: Currencies.findOne({_id: this.props.pair.currId}),
+      currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
+    }
   },
   createOrder(buy) {
 
