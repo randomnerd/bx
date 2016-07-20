@@ -43,19 +43,7 @@ const Settings = Component({
       }
     });
   },
-  saveName(){
-    var name = this.refs.chat.getCurrentValues();
-    Meteor.call('chatname/update', name.chat_name , (err, result) => {
-       if(err) console.log(err.message);
-    });
-  },
-  getAdds(){
-    return {
-      right:{
-        buttons:[{name:"Save",icon:'checkmark',accent:'blue',action:()=>{this.saveName()}}]
-      }
-    }
-  },
+  
   checkTotp(){
     var {totp} = this.refs.totp.getCurrentValues();
     this.enableTOTP(totp);
@@ -90,12 +78,6 @@ const Settings = Component({
           <div className="ui segments">
             <div className="ui basic segment">
               <h2 className='ui header'>Account settings</h2>
-            </div>
-
-            <div className="ui basic segment">
-              <Formsy.Form key={this.props.k} className="ui form" ref='chat'>
-                <Semantic.Input name="chat_name" icon="user left" label="Chat name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" adds={this.getAdds()} required />
-              </Formsy.Form>
             </div>
 
             <div className="ui basic segment">

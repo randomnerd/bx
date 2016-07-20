@@ -29,9 +29,9 @@ const SignUpModal = Component({
     this.props.signals.user.signUpDone();
   },
   signUp() {
-    var {email, password} = this.refs.form.getCurrentValues();
+    var {email, password, chat_name} = this.refs.form.getCurrentValues();
 
-    Accounts.createUser({email: email, password: password}, (err) => {
+    Accounts.createUser({email: email, password: password, username: chat_name}, (err) => {
       if (err) {
         this.setState({errorMessage: err.message});
       } else {
@@ -51,6 +51,9 @@ const SignUpModal = Component({
         <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
+
+          <Semantic.Input name="chat_name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" required />
+
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
             ref="password" validations="passwordConfirmationMatch,passwordSecure" required />
           <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"

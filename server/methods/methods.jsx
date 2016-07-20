@@ -84,13 +84,6 @@ Meteor.methods({
     Chat.insert(message);
   },
 
-  "chatname/update": function(username) {
-    check(username, String);
-    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
-
-    Meteor.users.update(Meteor.userId(), { $set: { username } });
-  },
-
   "userblocs/update": function(blocs) {
     check(blocs, Object);
     if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
