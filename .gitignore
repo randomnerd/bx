@@ -9,3 +9,4 @@ npm-debug.log
 docker/nginx/bundle
 docker/meteor/bundle
 .vagrant
+.meteor/dev_bundle
