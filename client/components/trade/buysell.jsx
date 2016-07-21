@@ -113,7 +113,6 @@ const BuySell = Component({
     let val = event.currentTarget.value;
     let matcher = new RegExp("^\\d*\\.?\\d*$");
     let isOk = matcher.exec(val);
-    console.log(val);
     if(!isOk){
       $(event.currentTarget).val(this.props.buysell.price)
       this.props.signals.pair.setBuysell({

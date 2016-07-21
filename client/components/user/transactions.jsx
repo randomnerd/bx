@@ -21,7 +21,8 @@ const TransactionsView = Component({
       withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
       deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
       trades: Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: user._id}, {sellerId: user._id}]}).fetch(),
-      user: Meteor.user()
+      user: Meteor.user(),
+      pairs: pairs
     }
   },
   getInitialState() {
@@ -56,7 +57,10 @@ const TransactionsView = Component({
           break;
         default:
           cls = item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
-          if (item.buyerId == this.data.user._id) {
+          let pair = _.find(this.data.pairs, (i) =>{
+            return i._id == item.pairId;
+          });
+          if(pair.currId == this.props.wallet){
             amount = item.displayAmount();
           } else {
             amount = item.displayMarketAmount();
