@@ -11,12 +11,12 @@ if (rootUrl == 'http://localhost:3000/') {
   BrowserPolicy.content.allowConnectOrigin('ws://localhost:3002');
 }
 
-if (rootUrl == 'http://dstock.io') {
+if (rootUrl == 'http://dstock.io/') {
   BrowserPolicy.content.allowConnectOrigin('http://*.dstock.io');
   BrowserPolicy.content.allowConnectOrigin('ws://*.dstock.io');
 }
 
-if (rootUrl == 'https://dstock.io') {
+if (rootUrl == 'https://dstock.io/') {
   BrowserPolicy.content.allowConnectOrigin('https://*.dstock.io');
   BrowserPolicy.content.allowConnectOrigin('wss://*.dstock.io');
 }
