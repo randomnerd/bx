@@ -6,6 +6,7 @@ Withdrawals._transform = (obj) => {
 
 class Withdrawal {
   constructor(data) {
+    this.className = 'Withdrawal';
     _.extend(this, data);
   }
   displayAmount() {

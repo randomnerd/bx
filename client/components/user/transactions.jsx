@@ -45,20 +45,24 @@ const TransactionsView = Component({
       let cls = [];
 
       let mcurr, amount, mamount;
-      if(item.constructor.name === 'Transaction'){
-        cls = ['li_vallet', 'add green', 'Deposit'];
-        amount = item.displayAmount();
-      }else if(item.constructor.name === 'Withdrawal'){
-        cls = ['li_vallet', 'minus red', 'Withdrawal'];
-        amount = item.displayAmount();
-      }else{
-        cls = item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
-        if(item.buyerId == this.data.user._id){
+      switch(item.className) {
+        case 'Transaction':
+          cls = ['li_vallet', 'add green', 'Deposit'];
           amount = item.displayAmount();
-        }else{
-          amount = item.displayMarketAmount();
-        }
+          break;
+        case 'Withdrawal':
+          cls = ['li_vallet', 'minus red', 'Withdrawal'];
+          amount = item.displayAmount();
+          break;
+        default:
+          cls = item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
+          if (item.buyerId == this.data.user._id) {
+            amount = item.displayAmount();
+          } else {
+            amount = item.displayMarketAmount();
+          }
       }
+
       let curr = parseInt(((item.confirmations? item.confirmations : confReq)/confReq)*100);
       curr = curr > 100 ? 100 : curr;
       return  (

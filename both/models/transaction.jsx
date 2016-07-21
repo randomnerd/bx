@@ -6,6 +6,7 @@ Transactions._transform = (obj) => {
 
 class Transaction {
   constructor(data) {
+    this.className = 'Transaction';
     _.extend(this, data);
   }
   displayAmount() {
