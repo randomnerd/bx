@@ -117,7 +117,7 @@ const WithdrawModal = Component({
       currId: this.data.currency._id,
       amount: this.refs.amount.getValue(),
       address: this.refs.address.getValue(),
-      totp: this.refs.totp.getValue()
+      totp: this.state.totpEnabled ? this.refs.totp.getValue() : null
     });
 
     this.props.signals.notif.newOne({_id: 'withdrawal_requested' + Math.random(), type: 'accept', icon: 'accept', title: 'Withdrawal request sent!',
