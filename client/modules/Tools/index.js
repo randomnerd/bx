@@ -5,7 +5,7 @@ import {User} from '/both/models';
 
 export async function subsReady({input, state, output, services}) {
   Tracker.autorun(() => {
-    if (services.subsManager.ready()) {
+    if (services.subsManager && services.subsManager.ready()) {
       output.success();
     }
   });
