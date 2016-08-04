@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from "react";
 
 import wrap from "./wrap";
 
-import Line from "./Line";
+import LineSeries from "./LineSeries";
 import StraightLine from "./StraightLine";
 
 class StochasticSeries extends Component {
@@ -24,20 +24,14 @@ class StochasticSeries extends Component {
 		return yAccessor(d) && yAccessor(d).K;
 	}
 	render() {
-		var { className, calculator, xScale, yScale, xAccessor, plotData, stroke, type } = this.props;
+		var { className, calculator, stroke, type } = this.props;
 		var seriesStroke = calculator.stroke();
 		return (
 			<g className={className}>
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForD}
-					plotData={plotData}
+				<LineSeries yAccessor={this.yAccessorForD}
 					stroke={seriesStroke.D} fill="none"
 					type={type} />
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForK}
-					plotData={plotData}
+				<LineSeries yAccessor={this.yAccessorForK}
 					stroke={seriesStroke.K} fill="none"
 					type={type} />
 				{StochasticSeries.getHorizontalLine(this.props, calculator.overSold(), stroke.top)}

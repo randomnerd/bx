@@ -1,13 +1,13 @@
 "use strict";
 
 import React, { PropTypes, Component } from "react";
-import Line from "./Line";
+import LineSeries from "./LineSeries";
 import StraightLine from "./StraightLine";
 import wrap from "./wrap";
 
 class RSISeries extends Component {
 	render() {
-		var { className, xScale, yScale, xAccessor, calculator, plotData, stroke, type } = this.props;
+		var { className, calculator, stroke, type } = this.props;
 		var yAccessor = calculator.accessor();
 		var overSold = calculator.overSold();
 		var middle = calculator.middle();
@@ -15,11 +15,9 @@ class RSISeries extends Component {
 
 		return (
 			<g className={className}>
-				<Line
+				<LineSeries
 					className={className}
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={yAccessor}
-					plotData={plotData}
+					yAccessor={yAccessor}
 					stroke={stroke.line} fill="none"
 					type={type} />
 				{RSISeries.getHorizontalLine(this.props, overSold, stroke.top)}

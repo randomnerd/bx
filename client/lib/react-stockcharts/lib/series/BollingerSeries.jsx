@@ -2,8 +2,8 @@
 
 import React, { PropTypes, Component } from "react";
 
-import Line from "./Line";
-import Area from "./Area";
+import LineSeries from "./LineSeries";
+import AreaOnlySeries from "./AreaOnlySeries";
 
 import wrap from "./wrap";
 
@@ -36,7 +36,6 @@ class BollingerSeries extends Component {
 		return scale(yAccessor(d) && yAccessor(d).bottom);
 	}
 	render() {
-		var { xScale, yScale, xAccessor, plotData, type } = this.props;
 		var { calculator, areaClassName, className, opacity } = this.props;
 
 		var stroke = calculator.stroke();
@@ -44,32 +43,17 @@ class BollingerSeries extends Component {
 
 		return (
 			<g className={className}>
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForTop}
-					plotData={plotData}
-					stroke={stroke.top} fill="none"
-					type={type} />
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForMiddle}
-					plotData={plotData}
-					stroke={stroke.middle} fill="none"
-					type={type} />
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForBottom}
-					plotData={plotData}
-					stroke={stroke.bottom} fill="none"
-					type={type} />
-				<Area
-					className={areaClassName}
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForTop}
+				<LineSeries yAccessor={this.yAccessorForTop}
+					stroke={stroke.top} fill="none" />
+				<LineSeries yAccessor={this.yAccessorForMiddle}
+					stroke={stroke.middle} fill="none" />
+				<LineSeries yAccessor={this.yAccessorForBottom}
+					stroke={stroke.bottom} fill="none" />
+				<AreaOnlySeries className={areaClassName}
+					yAccessor={this.yAccessorForTop}
 					base={this.yAccessorForScalledBottom}
-					plotData={plotData}
-					stroke="none" fill={fill} opacity={opacity}
-					type={type} />
+					stroke="none" fill={fill}
+					opacity={opacity} />
 			</g>
 		);
 	}

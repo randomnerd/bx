@@ -3,7 +3,7 @@
 import React, { PropTypes, Component } from "react";
 
 import BarSeries from "./BarSeries";
-import Line from "./Line";
+import LineSeries from "./LineSeries";
 import StraightLine from "./StraightLine";
 
 import wrap from "./wrap";
@@ -35,22 +35,17 @@ class MACDSeries extends Component {
 		return yScale(0);
 	}
 	render() {
-		var { className, xScale, yScale, xAccessor, plotData, type, opacity, divergenceStroke, calculator } = this.props;
+		var { className, type, opacity, divergenceStroke, calculator } = this.props;
 		var stroke = calculator.stroke();
 		var fill = calculator.fill();
-		// console.log(this.props.yAccessor)
 		return (
 			<g className={className}>
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForMACD}
-					plotData={plotData}
+				<LineSeries
+					yAccessor={this.yAccessorForMACD}
 					stroke={stroke.macd} fill="none"
 					type={type} />
-				<Line
-					xScale={xScale} yScale={yScale}
-					xAccessor={xAccessor} yAccessor={this.yAccessorForSignal}
-					plotData={plotData}
+				<LineSeries
+					yAccessor={this.yAccessorForSignal}
 					stroke={stroke.signal} fill="none"
 					type={type} />
 				<BarSeries

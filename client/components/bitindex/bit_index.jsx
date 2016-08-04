@@ -35,6 +35,8 @@ const BitIndex = connect({
     //  let {data} = this.mapList(this.props.chartItems);
 
 
+
+
         return (
           <div>
           <br></br>

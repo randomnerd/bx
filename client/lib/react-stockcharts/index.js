@@ -7,7 +7,7 @@ import Chart from "./lib/Chart";
 import BackgroundText from "./lib/BackgroundText";
 
 // interaction components
-import EventCapture from "./lib/EventCapture";
+// import EventCapture from "./lib/EventCapture";
 
 // chart types & Series
 import * as series from "./lib/series";
@@ -26,12 +26,12 @@ import * as helper from "./lib/helper";
 import * as interactive from "./lib/interactive";
 import * as Utils from "./lib/utils";
 
-const version = "0.5.0-alpha1";
+const version = "0.5.0";
 
 export default {
 	ChartCanvas,
 	Chart,
-	EventCapture,
+	// EventCapture,
 	BackgroundText,
 	series,
 	coordinates,

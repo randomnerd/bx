@@ -16,14 +16,7 @@ import RSISeries from "./RSISeries";
 import StochasticSeries from "./StochasticSeries";
 import ElderRaySeries from "./ElderRaySeries";
 import VolumeProfileSeries from "./VolumeProfileSeries";
-
-// import ElderImpulseBackground from "./ElderImpulseBackground";
-
-import Area from "./Area";
-import Line from "./Line";
 import StraightLine from "./StraightLine";
-
-import wrap from "./wrap";
 
 export {
 	ScatterSeries,
@@ -44,8 +37,5 @@ export {
 	StochasticSeries,
 	ElderRaySeries,
 	VolumeProfileSeries,
-	Area,
-	Line,
 	StraightLine,
-	wrap
 };

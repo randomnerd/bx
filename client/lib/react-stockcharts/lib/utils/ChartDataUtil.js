@@ -4,7 +4,6 @@ import React from "react";
 import d3 from "d3";
 import flattenDeep from "lodash.flattendeep";
 
-import EventCapture from "../EventCapture";
 import Chart from "../Chart";
 
 import {
@@ -41,24 +40,15 @@ function values(func) {
 	};
 }
 
-export function shouldShowCrossHairStyle(children) {
-	return React.Children.map(children, (each) => {
-		if (each.type === EventCapture) {
-			return each.props.useCrossHairStyle;
-		}
-		return undefined;
-	}).filter(isDefined)[0];
-}
-
 export function getNewChartConfig(innerDimension, children) {
 
 	return React.Children.map(children, (each) => {
 		if (each.type === Chart) {
 			var { id, origin, padding, yExtents: yExtentsProp, yScale, flipYScale } = each.props;
 			var { width, height, availableWidth, availableHeight } = getDimensions(innerDimension, each.props);
-			var { yMousePointerDisplayLocation: at, yMousePointerDisplayFormat: yDisplayFormat } = each.props;
-			var { yMousePointerRectWidth: rectWidth, yMousePointerRectHeight: rectHeight, yMousePointerArrowWidth: arrowWidth } = each.props;
-			var mouseCoordinates = { at, yDisplayFormat, rectHeight, rectWidth, arrowWidth };
+			var { yPan } = each.props;
+			// var { yMousePointerRectWidth: rectWidth, yMousePointerRectHeight: rectHeight, yMousePointerArrowWidth: arrowWidth } = each.props;
+			// var mouseCoordinates = { at, yDisplayFormat, rectHeight, rectWidth, arrowWidth };
 			var yExtents = (Array.isArray(yExtentsProp) ? yExtentsProp : [yExtentsProp]).map(d3.functor);
 			// console.log(yExtentsProp, yExtents);
 			return {
@@ -68,7 +58,8 @@ export function getNewChartConfig(innerDimension, children) {
 				yExtents,
 				flipYScale,
 				yScale,
-				mouseCoordinates,
+				yPan,
+				// mouseCoordinates,
 				width,
 				height
 			};
@@ -100,26 +91,38 @@ function setRange(scale, height, padding, flipYScale) {
 	return scale;
 }
 
-export function getChartConfigWithUpdatedYScales(chartConfig, plotData) {
+export function getChartConfigWithUpdatedYScales(chartConfig, plotData, dy) {
 
 	var yDomains = chartConfig
-			.map(({ yExtents, yScale }) => {
-				var yValues = yExtents.map(eachExtent =>
-					plotData.map(values(eachExtent)));
-				yValues = flattenDeep(yValues);
+		.map(({ yExtents, yScale }) => {
+			var yDomainDY = isDefined(dy)
+					? yScale.range().map(each => each - dy).map(yScale.invert)
+					: yScale.domain();
 
-				var yDomains = (yScale.invert)
+			var yValues = yExtents.map(eachExtent =>
+				plotData.map(values(eachExtent)));
+			yValues = flattenDeep(yValues);
+
+			var realYDomain = (yScale.invert)
 					? d3.extent(yValues)
 					: d3.set(yValues).values();
-
-				return yDomains;
-			});
+			return {
+				realYDomain,
+				yDomainDY,
+			};
+		});
 
 	var combine = zipper()
-		.combine((config, domain) => {
-			var { padding, height, yScale, flipYScale } = config;
+		.combine((config, { realYDomain, yDomainDY }) => {
+			var { padding, height, yScale, yPan, flipYScale, yPanEnabled = false } = config;
 
-			return { ...config, yScale: setRange(yScale.copy().domain(domain), height, padding, flipYScale) };
+			var domain = yPan && yPanEnabled ? yDomainDY : realYDomain;
+			// console.log(yPan, yPanEnabled, properYDomain, domain, realYDomain)
+			return {
+				...config,
+				yScale: setRange(yScale.copy().domain(domain), height, padding, flipYScale),
+				realYDomain,
+			};
 			// return { ...config, yScale: yScale.copy().domain(domain).range([height - padding, padding]) };
 		});
 

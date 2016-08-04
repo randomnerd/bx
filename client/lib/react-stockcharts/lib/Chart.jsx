@@ -62,10 +62,8 @@ Chart.defaultProps = {
 	origin: [0, 0],
 	padding: 0,
 	yScale: d3.scale.linear(),
-	yMousePointerRectWidth: 50,
-	yMousePointerRectHeight: 20,
-	yMousePointerArrowWidth: 10,
 	flipYScale: false,
+	yPan: false,
 };
 
 Chart.contextTypes = {
@@ -73,11 +71,12 @@ Chart.contextTypes = {
 	height: PropTypes.number.isRequired,
 	chartConfig: PropTypes.array,
 	margin: PropTypes.object.isRequired,
-	interactiveState: PropTypes.array.isRequired,
-	currentItem: PropTypes.object,
-	mouseXY: PropTypes.array,
-	show: PropTypes.bool,
+
 	// adding here even when this is not used by Chart, refer to https://github.com/facebook/react/issues/2517
+	// used by CurrentCoordinate
+	// currentItem: PropTypes.object,
+	// mouseXY: PropTypes.array,
+	// show: PropTypes.bool,
 };
 
 Chart.childContextTypes = {

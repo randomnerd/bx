@@ -3,21 +3,13 @@
 import React, { PropTypes, Component } from "react";
 import d3 from "d3";
 
-import { shallowEqual, identity, last, isDefined, isNotDefined } from "./utils";
-import { shouldShowCrossHairStyle } from "./utils/ChartDataUtil";
+import { shallowEqual, identity, isDefined } from "./utils";
 
 import EventHandler from "./EventHandler";
 import CanvasContainer from "./CanvasContainer";
-import eodIntervalCalculator from "./scale/eodIntervalCalculator";
 import evaluator from "./scale/evaluator";
-import discontinuousTimeScaleProvider from "./scale/discontinuousTimeScaleProvider";
 
-const second = 1000;
-const minute = 60 * second;
-const hour = 60 * minute;
-const daily = 24 * hour;
-
-const CANDIDATES_FOR_RESET = ["seriesName", /* "data",*/,
+const CANDIDATES_FOR_RESET = ["seriesName", /* "data",*/
 	"xScaleProvider", /* "xAccessor",*/"map",
 	"indexAccessor", "indexMutator"];
 
@@ -38,9 +30,11 @@ function getDimensions(props) {
 
 function calculateFullData(props) {
 	var { data: inputData, calculator, plotFull, xScale: xScaleProp } = props;
-	var { xAccessor: inputXAccesor, map, xScaleProvider, indexAccessor, indexMutator, discontinuous } = props;
+	var { xAccessor: inputXAccesor, map, xScaleProvider, indexAccessor, indexMutator } = props;
 
-	var wholeData = isDefined(plotFull) ? plotFull : inputXAccesor === identity;
+	var wholeData = isDefined(plotFull)
+			? plotFull
+			: inputXAccesor === identity;
 
 	// xScale = discontinuousTimeScaleProvider(data);
 	var dimensions = getDimensions(props);
@@ -65,7 +59,7 @@ function calculateFullData(props) {
 
 function calculateState(props) {
 
-	var { xAccessor: inputXAccesor, xExtents: xExtentsProp, xScaleProvider, plotFull, data } = props;
+	var { xAccessor: inputXAccesor, xExtents: xExtentsProp, data } = props;
 
 	var extent = typeof xExtentsProp === "function"
 		? xExtentsProp(data)
@@ -86,7 +80,7 @@ function calculateState(props) {
 	};
 }
 
-function getCursorStyle(children) {
+function getCursorStyle(useCrossHairStyleCursor) {
 	var style = `
 	.react-stockcharts-grabbing-cursor {
 		cursor: grabbing;
@@ -94,6 +88,7 @@ function getCursorStyle(children) {
 		cursor: -webkit-grabbing;
 	}
 	.react-stockcharts-crosshair-cursor {
+		pointer-events: all;
 		cursor: crosshair;
 	}
 	.react-stockcharts-toottip-hover {
@@ -101,6 +96,12 @@ function getCursorStyle(children) {
 		cursor: pointer;
 	}`;
 	var tooltipStyle = `
+	.react-stockcharts-avoid-interaction {
+		pointer-events: none;
+	}
+	.react-stockcharts-enable-interaction {
+		pointer-events: all;
+	}
 	.react-stockcharts-default-cursor {
 		cursor: default;
 	}
@@ -118,7 +119,7 @@ function getCursorStyle(children) {
 		dangerouslySetInnerHTML={{
 			__html: shouldShowCrossHairStyle(children) ? style + tooltipStyle : tooltipStyle
 		}}></style>);*/
-	return (<style type="text/css">{shouldShowCrossHairStyle(children) ? style + tooltipStyle : tooltipStyle}</style>);
+	return (<style type="text/css">{useCrossHairStyleCursor ? style + tooltipStyle : tooltipStyle}</style>);
 }
 
 class ChartCanvas extends Component {
@@ -140,15 +141,6 @@ class ChartCanvas extends Component {
 	}
 	componentWillReceiveProps(nextProps) {
 		var reset = shouldResetChart(this.props, nextProps);
-		// console.log("shouldResetChart =", reset);
-
-		/*
-		plotData,
-		filterData,
-		xScale: xScale.domain(domain),
-		xAccessor,
-		dataAltered: false,
-		lastItem, */
 
 		if (reset) {
 			if (process.env.NODE_ENV !== "production") console.log("RESET CHART, one or more of these props changed", CANDIDATES_FOR_RESET);
@@ -174,9 +166,9 @@ class ChartCanvas extends Component {
 		}
 	}
 	render() {
-		var cursor = getCursorStyle(this.props.children);
+		var cursor = getCursorStyle(this.props.useCrossHairStyleCursor);
 
-		var { data, type, height, width, margin, className, zIndex, postCalculator, flipXScale } = this.props;
+		var { type, height, width, margin, className, zIndex, postCalculator, flipXScale } = this.props;
 		var { padding } = this.props;
 
 		var { plotData, filterData, xScale, xAccessor, dataAltered, lastItem, displayXAccessor } = this.state;
@@ -210,11 +202,6 @@ class ChartCanvas extends Component {
 	}
 }
 
-/*
-							lastItem={last(data)}
-
-*/
-
 ChartCanvas.propTypes = {
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
@@ -234,18 +221,19 @@ ChartCanvas.propTypes = {
 	seriesName: PropTypes.string.isRequired,
 	zIndex: PropTypes.number,
 	children: PropTypes.node.isRequired,
-	xScaleProvider: function(props, propName, componentName) {
+	xScaleProvider: function(props, propName/* , componentName */) {
 		if (isDefined(props[propName]) &&  typeof props[propName] === "function" && isDefined(props.xScale)) {
 			return new Error("Do not define both xScaleProvider and xScale choose only one");
-		} 
+		}
 	},
-	xScale: function(props, propName, componentName) {
+	xScale: function(props, propName/* , componentName */) {
 		if (isDefined(props[propName]) &&  typeof props[propName] === "function" && isDefined(props.xScaleProvider)) {
 			return new Error("Do not define both xScaleProvider and xScale choose only one");
-		} 
+		}
 	},
 	postCalculator: PropTypes.func.isRequired,
 	flipXScale: PropTypes.bool.isRequired,
+	useCrossHairStyleCursor: PropTypes.bool.isRequired,
 	padding: PropTypes.oneOfType([
 		PropTypes.number,
 		PropTypes.shape({
@@ -265,12 +253,12 @@ ChartCanvas.defaultProps = {
 	className: "react-stockchart",
 	zIndex: 1,
 	xExtents: [d3.min, d3.max],
-	// intervalCalculator: eodIntervalCalculator,
 	// dataEvaluator: evaluator,
 	postCalculator: identity,
 	padding: 0,
 	xAccessor: identity,
 	flipXScale: false,
+	useCrossHairStyleCursor: true,
 	// initialDisplay: 30
 };
 

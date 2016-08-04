@@ -178,12 +178,9 @@ const TradeGrid = connect({
       switch (this.state.chartType) {
 
           case 'candle':
-
-
+              if (this.data.chartItems.length <= 2 ) return (<div> None </div>);
               return (
-                  <div>
-                  <Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.props.chartItems)}
-                type='svg' pairText={"sd"}/></div>
+                <div><Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.data.chartItems)} type='svg' pairText={"sd"}/></div>
               );
               break;
 

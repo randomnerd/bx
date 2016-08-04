@@ -1,92 +1,59 @@
 "use strict";
 
-import React, { PropTypes, Component } from "react";
+import React from "react";
 
 import { hexToRGBA, isDefined } from "../utils";
 
-class EdgeCoordinate extends Component {
+/* eslint-disable react/prop-types */
+export function renderSVG(props) {
+	var { className } = props;
 
-	render() {
-		var { className } = this.props;
+	var edge = helper(props);
+	if (edge === null) return null;
+	var line, coordinateBase, coordinate;
 
-		var edge = helper(this.props);
-		if (edge === null) return null;
-		var line, coordinateBase, coordinate;
-
-		if (isDefined(edge.line)) {
-			line = <line
-				className="react-stockcharts-cross-hair" opacity={edge.line.opacity} stroke={edge.line.stroke}
-				x1={edge.line.x1} y1={edge.line.y1}
-				x2={edge.line.x2} y2={edge.line.y2} />;
-		}
-		if (isDefined(edge.coordinateBase)) {
-
-			var { rectWidth, rectHeight, arrowWidth } = edge.coordinateBase;
-
-			var path = edge.orient === "left"
-				? `M0,0L0,${ rectHeight }L${ rectWidth },${ rectHeight }L${ rectWidth + arrowWidth },10L${ rectWidth },0L0,0L0,0`
-				: `M0,${ arrowWidth }L${ arrowWidth },${ rectHeight }L${ rectWidth + arrowWidth },${ rectHeight }L${ rectWidth + arrowWidth },0L${ arrowWidth },0L0,${ arrowWidth }`;
-
-			coordinateBase = edge.orient === "left" || edge.orient === "right"
-				? <g transform={`translate(${edge.coordinateBase.edgeXRect},${edge.coordinateBase.edgeYRect})`}>
-						<path d={path} key={1} className="react-stockchart-text-background"
-							height={rectHeight} width={rectWidth}
-							fill={edge.coordinateBase.fill} opacity={edge.coordinateBase.opacity} />
-					</g>
-				: <rect key={1} className="react-stockchart-text-background"
-						x={edge.coordinateBase.edgeXRect}
-						y={edge.coordinateBase.edgeYRect}
-						height={rectHeight} width={rectWidth}
-						fill={edge.coordinateBase.fill} opacity={edge.coordinateBase.opacity} />;
-
-			coordinate = (<text key={2} x={edge.coordinate.edgeXText}
-				y={edge.coordinate.edgeYText}
-				textAnchor={edge.coordinate.textAnchor}
-				fontFamily={edge.coordinate.fontFamily}
-				fontSize={edge.coordinate.fontSize}
-				dy=".32em" fill={edge.coordinate.textFill} >{edge.coordinate.displayCoordinate}</text>);
-		}
-		return (
-			<g className={className}>
-				{line}
-				{coordinateBase}
-				{coordinate}
-			</g>
-		);
+	if (isDefined(edge.line)) {
+		line = <line
+			className="react-stockcharts-cross-hair" opacity={edge.line.opacity} stroke={edge.line.stroke}
+			x1={edge.line.x1} y1={edge.line.y1}
+			x2={edge.line.x2} y2={edge.line.y2} />;
 	}
+	if (isDefined(edge.coordinateBase)) {
+
+		var { rectWidth, rectHeight, arrowWidth } = edge.coordinateBase;
+
+		var path = edge.orient === "left"
+			? `M0,0L0,${ rectHeight }L${ rectWidth },${ rectHeight }L${ rectWidth + arrowWidth },10L${ rectWidth },0L0,0L0,0`
+			: `M0,${ arrowWidth }L${ arrowWidth },${ rectHeight }L${ rectWidth + arrowWidth },${ rectHeight }L${ rectWidth + arrowWidth },0L${ arrowWidth },0L0,${ arrowWidth }`;
+
+		coordinateBase = edge.orient === "left" || edge.orient === "right"
+			? <g transform={`translate(${edge.coordinateBase.edgeXRect},${edge.coordinateBase.edgeYRect})`}>
+					<path d={path} key={1} className="react-stockchart-text-background"
+						height={rectHeight} width={rectWidth}
+						fill={edge.coordinateBase.fill} opacity={edge.coordinateBase.opacity} />
+				</g>
+			: <rect key={1} className="react-stockchart-text-background"
+					x={edge.coordinateBase.edgeXRect}
+					y={edge.coordinateBase.edgeYRect}
+					height={rectHeight} width={rectWidth}
+					fill={edge.coordinateBase.fill} opacity={edge.coordinateBase.opacity} />;
+
+		coordinate = (<text key={2} x={edge.coordinate.edgeXText}
+			y={edge.coordinate.edgeYText}
+			textAnchor={edge.coordinate.textAnchor}
+			fontFamily={edge.coordinate.fontFamily}
+			fontSize={edge.coordinate.fontSize}
+			dy=".32em" fill={edge.coordinate.textFill} >{edge.coordinate.displayCoordinate}</text>);
+	}
+	return (
+		<g className={className}>
+			{line}
+			{coordinateBase}
+			{coordinate}
+		</g>
+	);
 }
-
-EdgeCoordinate.propTypes = {
-	className: PropTypes.string,
-	type: PropTypes.oneOf(["vertical", "horizontal"]).isRequired,
-	coordinate: PropTypes.any.isRequired,
-	x1: PropTypes.number.isRequired,
-	y1: PropTypes.number.isRequired,
-	x2: PropTypes.number.isRequired,
-	y2: PropTypes.number.isRequired,
-	orient: PropTypes.oneOf(["bottom", "top", "left", "right"]),
-	rectWidth: PropTypes.number,
-	hideLine: PropTypes.bool,
-	fill: PropTypes.string,
-	opacity: PropTypes.number,
-	fontFamily: PropTypes.string.isRequired,
-	fontSize: PropTypes.number.isRequired,
-};
-
-EdgeCoordinate.defaultProps = {
-	className: "react-stockcharts-edgecoordinate",
-	orient: "left",
-	hideLine: false,
-	fill: "#8a8a8a",
-	opacity: 1,
-	fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-	fontSize: 13,
-	textFill: "#FFFFFF",
-	lineStroke: "#000000",
-	lineOpacity: 0.3,
-	arrowWidth: 10,
-};
-
+/* eslint-enable react/prop-types */
 
 function helper(props) {
 	var { coordinate: displayCoordinate, show, type, orient, edgeAt, hideLine } = props;
@@ -130,9 +97,7 @@ function helper(props) {
 	};
 }
 
-EdgeCoordinate.drawOnCanvasStatic = (ctx, props) => {
-	props = { ...EdgeCoordinate.defaultProps, ...props };
-
+export function drawOnCanvas(ctx, props) {
 	var edge = helper(props);
 
 	if (edge === null) return;
@@ -181,6 +146,6 @@ EdgeCoordinate.drawOnCanvasStatic = (ctx, props) => {
 		ctx.lineTo(edge.line.x2, edge.line.y2);
 		ctx.stroke();
 	}
-};
+}
 
-export default EdgeCoordinate;
+// export default EdgeCoordinate;

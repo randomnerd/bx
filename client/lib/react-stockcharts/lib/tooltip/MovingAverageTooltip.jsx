@@ -2,11 +2,10 @@
 
 import React, { PropTypes, Component } from "react";
 import d3 from "d3";
+import GenericChartComponent from "../GenericChartComponent";
 
 import ToolTipText from "./ToolTipText";
 import ToolTipTSpanLabel from "./ToolTipTSpanLabel";
-
-import { first } from "../utils";
 
 class SingleMAToolTip extends Component {
 	constructor(props) {
@@ -48,12 +47,17 @@ SingleMAToolTip.propTypes = {
 };
 
 class MovingAverageTooltip extends Component {
-	render() {
-		var { chartConfig, currentItem, height } = this.context;
+	constructor(props) {
+		super(props);
+		this.renderSVG = this.renderSVG.bind(this);
+	}
+	renderSVG(moreProps) {
+		var { height, chartId } = this.context;
+		var { chartConfig, currentItem } = moreProps;
 
-		var { className, onClick, forChart, width, fontFamily, fontSize, origin: originProp, calculators, displayFormat } = this.props;
+		var { className, onClick, width, fontFamily, fontSize, origin: originProp, calculators, displayFormat } = this.props;
 
-		var config = first(chartConfig.filter(each => each.id === forChart));
+		var config = chartConfig;
 
 		var origin = d3.functor(originProp);
 		var [x, y] = origin(width, height);
@@ -78,23 +82,28 @@ class MovingAverageTooltip extends Component {
 							displayName={each.tooltipLabel()}
 							value={yDisplayValue}
 							options={options}
-							forChart={forChart} onClick={onClick}
+							forChart={chartId} onClick={onClick}
 							fontFamily={fontFamily} fontSize={fontSize} />;
 					})}
 			</g>
 		);
 	}
+	render() {
+		return <GenericChartComponent
+			clip={false}
+			svgDraw={this.renderSVG}
+			drawOnMouseMove
+			/>;
+	}
 }
 
 MovingAverageTooltip.contextTypes = {
-	chartConfig: PropTypes.array.isRequired,
-	currentItem: PropTypes.object,
 	height: PropTypes.number.isRequired,
+	chartId: PropTypes.number.isRequired,
 };
 
 MovingAverageTooltip.propTypes = {
 	className: PropTypes.string,
-	forChart: PropTypes.number.isRequired,
 	displayFormat: PropTypes.func.isRequired,
 	origin: PropTypes.array.isRequired,
 	onClick: PropTypes.func,
