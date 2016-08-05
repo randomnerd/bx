@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-import Controller from 'cerebral';
-import Model from 'cerebral-model-baobab';
+import {Controller} from 'cerebral';
+import Model from 'cerebral/models/immutable';
 import Devtools from 'cerebral-module-devtools';
 
 import router from './router';
@@ -46,7 +46,7 @@ Tracker.autorun(() => {
 const model = Model({});
 const controller = Controller(model);
 controller.addModules({
-  devtools: Devtools(),
+  devtools: process.env.NODE_ENV === 'production' ? () => {} : Devtools(),
   mob: Mob(),
   user: User(),
   page: Page(),
