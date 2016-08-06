@@ -45,13 +45,15 @@ class Axis extends Component {
 		return this.refs.propProvider.getMoreProps();
 	}
 	render() {
-		var { bg, axisZoomCallback, zoomCursorClassName, zoomEnabled } = this.props;
-		var { transform } = this.props;
+		var { bg, axisZoomCallback, zoomCursorClassName, zoomEnabled, getScale } = this.props;
+		var { transform, getMouseDelta } = this.props;
 
 		var zoomCapture = zoomEnabled
 			? <AxisZoomCapture
 				bg={bg}
+				getScale={getScale}
 				getMoreProps={this.getMoreProps}
+				getMouseDelta={getMouseDelta}
 				axisZoomCallback={axisZoomCallback}
 				zoomCursorClassName={zoomCursorClassName} />
 			: null;
@@ -85,6 +87,7 @@ Axis.propTypes = {
 	zoomCursorClassName: PropTypes.string,
 	transform: PropTypes.arrayOf(PropTypes.number).isRequired,
 	range: PropTypes.arrayOf(PropTypes.number).isRequired,
+	getMouseDelta: PropTypes.func.isRequired,
 	getScale: PropTypes.func.isRequired,
 	bg: PropTypes.object.isRequired,
 };

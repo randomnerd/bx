@@ -714,11 +714,14 @@ class EventHandler extends Component {
 		});
 	}
 	render() {
-		// var { chartConfig } = this.state;
-		// var { dimensions } = this.props;
+		var { interaction } = this.props;
 		return (
 			<g>
-				<EventCapture mouseMove zoom pan onContextMenu={this.handleContextMenu}/>
+				<EventCapture
+					mouseMove={interaction}
+					zoom={interaction}
+					pan={interaction}
+					onContextMenu={this.handleContextMenu}/>
 				<g className="react-stockcharts-avoid-interaction">
 					{this.props.children}
 				</g>
@@ -748,6 +751,7 @@ EventHandler.propTypes = {
 	lastItem: PropTypes.object,
 	displayXAccessor: PropTypes.func,
 	filterData: PropTypes.func,
+	interaction: PropTypes.bool,
 	// showingInterval: PropTypes.string,
 };
 

@@ -17,15 +17,13 @@ class OHLCTooltip extends Component {
 	renderSVG(moreProps) {
 		var { className } = this.props;
 		var { width, height } = this.context;
-		var { chartConfig, currentItem } = moreProps;
+		var { currentItem } = moreProps;
 
 		var { onClick, xDisplayFormat, fontFamily, fontSize, accessor, volumeFormat, ohlcFormat } = this.props;
 
 		var displayDate, open, high, low, close, volume;
 
 		displayDate = open = height = low = close = volume = "n/a";
-
-		var config = chartConfig;
 
 		if (isDefined(currentItem)
 				&& isDefined(accessor(currentItem))
@@ -43,10 +41,10 @@ class OHLCTooltip extends Component {
 		var { origin: originProp } = this.props;
 		var origin = d3.functor(originProp);
 		var [x, y] = origin(width, height);
-		var [ox, oy] = config.origin;
 
 		return (
-			<g className={`react-stockcharts-toottip-hover ${className}`} transform={`translate(${ ox + x }, ${ oy + y })`} onClick={onClick}>
+			<g className={`react-stockcharts-toottip-hover ${className}`}
+				transform={`translate(${ x }, ${ y })`} onClick={onClick}>
 				<ToolTipText x={0} y={0}
 					fontFamily={fontFamily} fontSize={fontSize}>
 					<ToolTipTSpanLabel key="label" x={0} dy="5">Date: </ToolTipTSpanLabel>
@@ -70,8 +68,6 @@ class OHLCTooltip extends Component {
 }
 
 OHLCTooltip.contextTypes = {
-	chartConfig: PropTypes.object.isRequired,
-	currentItem: PropTypes.object,
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
 };
