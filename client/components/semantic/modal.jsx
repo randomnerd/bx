@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Formsy from 'formsy-react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const Modal = Component({
-}, {
-
+const Modal = connect({
+}, class Modal extends React.Component {
   getDefaultProps() {
     return {
       size: '',
@@ -13,7 +12,7 @@ const Modal = Component({
       denyLabel: 'Cancel',
       allowSubmit: true,
     };
-  },
+  }
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).modal({
       context: $('.body'),
@@ -25,10 +24,10 @@ const Modal = Component({
     //  onHidden:   this.props.onDeny
     });
     $(ReactDOM.findDOMNode(this)).modal(this.props.show ? 'show' : 'hide');
-  },
+  }
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).modal(newProps.show ? 'show' : 'hide');
-  },
+  }
   render() {
     return (
       <div className={ this.props.size + " " + this.props.hide + " ui modal" }>

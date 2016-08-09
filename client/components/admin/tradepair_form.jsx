@@ -1,21 +1,20 @@
 import React from 'react';
 import {Currencies, TradePairs, PairTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminTradePair = Component({
+const AdminTradePair = connect({
   layout: ['layout'],
   adm_pair: ['adm_pair']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminTradePair extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false,
       published: ''
     };
-  },
+  }
 
   newPair(event) {
     let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
@@ -35,7 +34,7 @@ const AdminTradePair = Component({
         this.props.signals.admin.adminPairs();
       }
     });
-  },
+  }
   savePair(event) {
     let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
     Meteor.call('tradepair_update', this.data.tradePairs._id, {
@@ -54,34 +53,27 @@ const AdminTradePair = Component({
         this.props.signals.admin.adminPairs();
       }
     });
-  },
-  getMeteorData() {
-    return {
-      tradePairs: TradePairs.findOne(this.props.adm_pair),
-      currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
-      markets: PairTypes.find().fetch()
-    };
-  },
+  }
   currentVal(what) {
     return this.data.tradePairs ? this.data.tradePairs[what] : '';
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
 
   currsForSearch() {
     return this.data.currencies.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
     });
-  },
+  }
   marketsForSearch() {
     return this.data.markets.map((m) => {
       return {_id: m._id, title: m.shortName, description: m.name};
     });
-  },
+  }
 
   checkboxToggle() {
     this.setState({published: (this.state.published ? false : true)});
-  },
+  }
   render() {
     let published = this.currentVal('published') ? 'checked' : false;
 
@@ -140,4 +132,10 @@ const AdminTradePair = Component({
     );
   }
 });
-export default AdminTradePair;
+export default AdminTradePairContainer = createContainer(({ params }) => {
+  return {
+    tradePairs: TradePairs.findOne(this.props.adm_pair),
+    currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
+    markets: PairTypes.find().fetch()
+  };
+}, AdminTradePair);

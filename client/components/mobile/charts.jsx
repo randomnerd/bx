@@ -1,5 +1,5 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {BitIndexIndicator_BTPR, TradePairs, Currencies} from '../../../both/collections';
 // import BuySell from '../trade/buysell';
@@ -9,76 +9,62 @@ import Charts from '../bitindex';
 // import OpenOrders from '../trade/open_orders';
 // import Balance from '../trade/balance';
 
-const ChartsShow = Component({}, {
-    mixins: [ReactMeteorData],
-    getInitialState: function() {
+const ChartsShow = connect({
+
+}, class ChartsShow extends React.Component {
+    getInitialState() {
         return {chartType: 'candle', cartH: 300};
-    },
-
-    getMeteorData() {
-        let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
-        let pair = TradePairs.findOne({permalink: this.props.active});
-
-        return {
-            pair: pair,
-            BTPR_Loading: !handle_BTPR.ready(),
-            BTPR: BitIndexIndicator_BTPR.find().fetch(),
-            pairId: pair && pair._id,
-            user: Meteor.user(),
-            currency1: Currencies.findOne({_id: this.props.pair.currId}),
-            currency2: Currencies.findOne({_id: this.props.pair.marketCurrId})
-        };
-    },
+    }
     showCandle(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'candle'});
-    },
+    }
     showLine() {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'line'});
-    },
+    }
     showMACD(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'macd'});
-    },
+    }
     showRSI(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'rsi'});
-    },
+    }
     showSTO(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'sto'});
-    },
+    }
     showBollinger(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'bollinger'});
-    },
+    }
     showKagi(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'kagi'});
-    },
+    }
     showPointandFigure(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'pointandfigure'});
-    },
+    }
     showHaikinAshi(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'haikinashi'});
-    },
+    }
     showRenko(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'renko'});
-    },
+    }
     renderBlockChainIndicator() {
         switch (this.state.chartType) {
 
@@ -147,7 +133,7 @@ const ChartsShow = Component({}, {
             default:
                 break;
         }
-    },
+    }
 
     componentDidMount() {
         $(this.refs.drop).dropdown();
@@ -155,7 +141,7 @@ const ChartsShow = Component({}, {
             chartH: ($(this.refs.chart).height() - 70)
         });
         //console.log(this.state.chartH);
-    },
+    }
 
     render() {
 
@@ -206,11 +192,24 @@ const ChartsShow = Component({}, {
                         {this.data.BTPR_Loading
                             ? <div className='cube'></div>
                             : this.renderBlockChainIndicator()
-}
+                        }
                     </div>
                 </div>
             </div>
         );
     }
 });
-export default ChartsShow;
+export default ChartsShowContainer = createContainer(({ params }) => {
+  let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
+  let pair = TradePairs.findOne({permalink: this.props.active});
+
+  return {
+      pair: pair,
+      BTPR_Loading: !handle_BTPR.ready(),
+      BTPR: BitIndexIndicator_BTPR.find().fetch(),
+      pairId: pair && pair._id,
+      user: Meteor.user(),
+      currency1: Currencies.findOne({_id: this.props.pair.currId}),
+      currency2: Currencies.findOne({_id: this.props.pair.marketCurrId})
+  };
+}, ChartsShow);

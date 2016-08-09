@@ -1,10 +1,10 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const Home = Component({
+const Home = connect({
   user: ['user'],
   title: ['home', 'title']
-}, {
+}, class Home extends React.Component {
   getInitialState() {
     return {
       panel: false,
@@ -13,7 +13,7 @@ const Home = Component({
       scroller: 0,
       scroll: 1
     };
-  },
+  }
   componentDidMount() {
 
     let ld = $(this.refs.ld);
@@ -64,7 +64,7 @@ const Home = Component({
 
 
     });
-  },
+  }
   scrollingTo(h,$scroll){
     let $this = this;
     $(this.refs.ld).animate(
@@ -84,10 +84,10 @@ const Home = Component({
         }
       }
     );
-  },
+  }
   scrollAll(){
     $(this.refs.ld).scrollTop(1).scroll();
-  },
+  }
   render() {
     return (
       <div className={"ld2" + (!this.state.holder?" scroll":"")} ref="ld2">

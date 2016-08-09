@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react'
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Wallets, Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 import UserOnly from '../user/user_only';
@@ -18,30 +18,17 @@ Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
   return true;
 });
 
-const WithdrawModal = Component({
+const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']
-}, {
-  mixins: [
-    ReactMeteorData,
-    //Formsy.Mixin
-  ],
+}, class WithdrawModal extends React.Component {
   getInitialState() {
     return {
       currId: null,
       allowSubmit: false,
       errorMessage: null
     };
-  },
-
-  getMeteorData() {
-    return {
-      wallet: Wallets.findOne({_id: this.props.wallet}),
-      balance: Balances.findOne({currId: this.props.wallet}),
-      currency: Currencies.findOne({_id: this.props.wallet})
-    };
-  },
-
+  }
   getAmount() {
     let curr    = this.data.currency;
     let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
@@ -54,17 +41,17 @@ const WithdrawModal = Component({
       },
       //pointed: 'Available to withdraw'
     };
-  },
+  }
 
   setBalance(){
     //console.log(this.refs.amount);
     this.refs.amount.setValue(this.data.balance ? this.data.balance.displayAmount() : 0);
-  },
+  }
 
   getAddressbook() {
     this.props.signals.tools.addressbook({action: 'open'});
     this.props.signals.tools.withdraw({action: 'close'});
-  },
+  }
 
   getAddress() {
     return {
@@ -77,26 +64,26 @@ const WithdrawModal = Component({
         }]
       }
     };
-  },
+  }
 
 
   componentWillReceiveProps(newProps){
     if (!this.isMounted() || !newProps.tools.address) return;
       this.refs.address.setValue(newProps.tools.address);
-  },
+  }
   componentDidMount() {
     this.setState({currId: this.props.tools.wallet});
 
-  },
+  }
 
   hide(e) {
     this.setState({errorMessage: null});
     this.props.signals.tools.withdraw({action: 'close'});
     this.props.signals.tools.unsetaddress();
-  },
+  }
 
-  allowSubmit()    { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  allowSubmit()    { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
 
   withdraw() {
     Meteor.call('withdraw', {
@@ -108,7 +95,7 @@ const WithdrawModal = Component({
     timeout: 3000, needShow: true });
 
     this.hide();
-  },
+  }
 
   render() {
     let curr = this.data.currency;
@@ -140,4 +127,10 @@ const WithdrawModal = Component({
     );
   }
 });
-export default WithdrawModal;
+export default WithdrawModalContainer = createContainer(({ params }) => {
+  return {
+    wallet: Wallets.findOne({_id: this.props.wallet}),
+    balance: Balances.findOne({currId: this.props.wallet}),
+    currency: Currencies.findOne({_id: this.props.wallet})
+  };
+}, WithdrawModal);

@@ -1,22 +1,22 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import Semantic from './semantic';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const LoginModal = Component({
+const LoginModal = connect({
   show: ['showLoginModal']
-}, {
+}, class LoginModal extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false
     };
-  },
+  }
   hide(e) {
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
     this.props.signals.user.loginDone();
-  },
+  }
   login() {
     var {email, password} = this.refs.form.getCurrentValues();
 
@@ -27,15 +27,15 @@ const LoginModal = Component({
         this.hide();
       }
     });
-  },
+  }
   focusLogin() {
     Meteor.setTimeout(() => {
       $(this.refs.email).focus();
     }, 50);
 
-  },
-  allowSubmit() { this.setState({allowSubmit: true}) },
-  disallowSubmit() { this.setState({allowSubmit: false}) },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}) }
+  disallowSubmit() { this.setState({allowSubmit: false}) }
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"

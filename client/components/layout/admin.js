@@ -13,35 +13,35 @@ import PairType from '../admin/pairtype_form';
 import PairGroups from '../admin/pairgroups';
 import PairGroup from '../admin/pairgroup_form';
 import AdminHome from '../admin/home';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const Admin = Component({
+const Admin = connect({
   page: ['page']
 }, (props) => {
   let renderPage = (page) => {
     switch (page) {
-      case "home": return <AdminHome/>;
-      case "currencies": return <AdminCurrencies/>;
-      case "currency": return <AdminCurrency/>;
-      case "tradepairs": return <AdminTradePairs/>;
-      case "tradepair": return <AdminTradePair/>;
-      case "currtypes": return <CurrTypes/>;
-      case "currtype": return <CurrType/>;
-      case "pairtypes": return <PairTypes/>;
-      case "pairtype": return <PairType/>;
-      case "pairgroups": return <PairGroups/>;
-      case "pairgroup": return <PairGroup/>;
-      default: return <AdminHome/>;
+      case "home": return <AdminHome {...props}/>;
+      case "currencies": return <AdminCurrencies {...props}/>;
+      case "currency": return <AdminCurrency {...props}/>;
+      case "tradepairs": return <AdminTradePairs {...props}/>;
+      case "tradepair": return <AdminTradePair {...props}/>;
+      case "currtypes": return <CurrTypes {...props}/>;
+      case "currtype": return <CurrType {...props}/>;
+      case "pairtypes": return <PairTypes {...props}/>;
+      case "pairtype": return <PairType {...props}/>;
+      case "pairgroups": return <PairGroups {...props}/>;
+      case "pairgroup": return <PairGroup {...props}/>;
+      default: return <AdminHome {...props}/>;
     }
-  }
+  };
   return (
-    <AdminOnly redirect='/'>
+    <AdminOnly redirect='/' {...props}>
       <div>
-        <TopMenu />
+        <TopMenu  {...props}/>
         <div className='ui main container'>
           <div className='ui grid'>
             <div className='four wide column'>
-              <AdminSidebar/>
+              <AdminSidebar {...props}/>
             </div>
             <div className='twelve wide column'>
               {renderPage(props.page)}

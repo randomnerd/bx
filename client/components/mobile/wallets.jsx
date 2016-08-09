@@ -1,21 +1,12 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Wallets} from '../../../both/collections';
 import UserOnly from '../user/user_only';
 
-const WalletsView = Component({
+const WalletsView = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      balances: Balances.find({}).fetch(),
-      currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
-      wallets: Wallets.find({}, {sort: {createdAt: -1}}).fetch()
-    };
-  },
-
+}, class WalletsView extends React.Component {
   newWallet(item, event) {
     if (!Meteor.user()) { return; }
     let el = $(event.currentTarget);
@@ -25,24 +16,24 @@ const WalletsView = Component({
       el.removeClass('loading');
       el.attr('disabled', false);
     });
-  },
+  }
 
   getAddress(currId) {
     if (!this.data.wallets) return;
     let wallet = _.findWhere(this.data.wallets, {currId: currId});
     return wallet && wallet.address;
-  },
+  }
 
   getBalance(currId) {
     if (!this.data.balances) return;
     let balance = _.findWhere(this.data.balances, {currId: currId});
     return balance ? balance.displayAmount() : (0).toFixed(8);
-  },
+  }
 
   showWithdraw(item, event) {
     this.props.signals.tools.withdraw({action: 'open'});
     this.props.signals.u.walletSet({id: item._id});
-  },
+  }
 
   renderWalletItems() {
     return this.data.currencies.map((item) => {
@@ -82,7 +73,7 @@ const WalletsView = Component({
         </div>
       );
     });
-  },
+  }
 
   render() {
     return (
@@ -105,4 +96,10 @@ const WalletsView = Component({
     );
   }
 });
-export default WalletsView;
+export default WalletsViewContainer = createContainer(({ params }) => {
+  return {
+    balances: Balances.find({}).fetch(),
+    currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
+    wallets: Wallets.find({}, {sort: {createdAt: -1}}).fetch()
+  };
+}, WalletsView);

@@ -1,58 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const DropMessage = Component({
+const DropMessage = connect({
   layout: ['layout'],
   notif: ['notif']
-}, {
-  mixins: [ReactMeteorData],
+}, class DropMessage extends React.Component {
   getInitialState() {
     return {
       hidden: true,
       closed: false
     };
-  },
-  types: {
-    vitalyTypes:{
-      newTransaction: 'info',
-      addBalance: 'accept',
-      error: 'error', //red
-      accept: 'accept', //green
-      warning: 'warning', //orange
-      info: 'info', //blue
-      chat: 'chat',
-    },
-    messageAccent: {
-      error: ' red', //red
-      accept: ' green', //green
-      warning: ' orange', //orange
-      info: ' blue', //blue
-      chat: ' purple',
-      default: false //gray
-    },
-    messagesIcon: {
-      error: ' warning sign',
-      accept: ' checkmark',
-      warning: ' warning circle',
-      info: ' info circle',
-      chat: ' comment',
-      default: false
-    }
-  },
-  getMeteorData() {
+  }
+  types() {
     return {
-
-    };
-  },
+      vitalyTypes:{
+        newTransaction: 'info',
+        addBalance: 'accept',
+        error: 'error', //red
+        accept: 'accept', //green
+        warning: 'warning', //orange
+        info: 'info', //blue
+        chat: 'chat',
+      },
+      messageAccent: {
+        error: ' negative', //red
+        accept: ' positive', //green
+        warning: ' warning', //orange
+        info: ' info', //blue
+        chat: ' purple',
+        default:
+          false //gray
+      },
+      messagesIcon: {
+        error: ' warning sign',
+        accept: ' checkmark',
+        warning: ' warning circle',
+        info: ' info circle',
+        chat: ' comment',
+        default:
+            false
+      }
+    }
+  }
   componentDidMount() {
     if (this.props.notif.delAll) {
       if (!this.state.closed) {
         this.delMessage();
       }
     }
-  },
+  }
   readMessage() {
     $(ReactDOM.findDOMNode(this)).transition({
       animation: 'fade',
@@ -68,7 +66,7 @@ const DropMessage = Component({
         });
       }
     });
-  },
+  }
   delMessage() {
     if(confirm("Delete completely?")){
       $(ReactDOM.findDOMNode(this)).transition({
@@ -86,15 +84,15 @@ const DropMessage = Component({
         }
       });
     }
-  },
+  }
   addHeader(item){
     return(
       <h4 className='ui header'>
-        <i className={this.types.messagesIcon[(
-          item.icon ? item.icon : this.types.vitalyTypes[ item.type ]
+        <i className={this.types().messagesIcon[(
+          item.icon ? item.icon : this.types().vitalyTypes[ item.type ]
         )]
           + ' icon ' +
-          (item.type ? this.types.messageAccent[ this.types.vitalyTypes[ item.type ] ] : '')}></i>
+          (item.type ? this.types().messageAccent[ this.types().vitalyTypes[ item.type ] ] : '')}></i>
         {item.title}
         {this.props.newitem ?
           <span className="ui horizontal blue label">
@@ -104,11 +102,11 @@ const DropMessage = Component({
         }
       </h4>
     )
-  },
+  }
   render() {
     return (
       <a className=
-      {'item ' + (this.props.item.type ? this.types.messageAccent[ this.types.vitalyTypes[ this.props.item.type ] ] : '')}
+      {'item ' + (this.props.item.type ? this.types().messageAccent[ this.types().vitalyTypes[ this.props.item.type ] ] : '')}
       onClick={this.props.newitem ? this.readMessage : this.delMessage}>
 
           {this.props.item.title ?
@@ -121,4 +119,8 @@ const DropMessage = Component({
     );
   }
 });
-export default DropMessage;
+export default DropMessageContainer = createContainer(({ params }) => {
+  return {
+
+  };
+}, DropMessage);

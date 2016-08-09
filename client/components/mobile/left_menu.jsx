@@ -1,5 +1,5 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 import TradePairsMenu from './trade_pairs_menu';
@@ -7,35 +7,30 @@ import UserTopMenu from './user_top_menu';
 import TopInfo from '../top_info';
 import NotificationShow from '../common/notifications';
 
-const LeftMenu = Component({
+const LeftMenu = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    }
-  },
+}, class LeftMenu extends React.Component {
+
   getInitialState() {
     return {
       drag:false
     };
-  },
+  }
   showChat() {
     console.log('123');
     this.props.signals.mob.page({id:'chat'});
     this.setState({active:'chat'});
     this.hideMenu();
     //return false;
-  },
+  }
   hideMenu() {
     //console.log('ergweg');
     this.props.signals.mob.menu({action: 'close'});
-  },
+  }
   logOut() {
     Meteor.logout();
     this.hideMenu();
-  },
+  }
   getMenuItems() {
     return [
       { href: null, label: 'Chat', extraCls: '', onclick: this.showChat},
@@ -44,12 +39,12 @@ const LeftMenu = Component({
       { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu},
       { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }
     ];
-  },
+  }
   renderMenuItems() {
     return this.getMenuItems().map((item) => {
       return <a className={"item " + item.extraCls} key={item.label} href={item.href} onClick={item.onclick}>{item.label}</a>;
     });
-  },
+  }
 
   renderLoginButtons() {
     return (
@@ -58,7 +53,7 @@ const LeftMenu = Component({
         <a className="item" onClick={this.showSignUpModal}>Sign up</a>
       </div>
     );
-  },
+  }
   render() {
     return (
       <div>
@@ -79,4 +74,8 @@ const LeftMenu = Component({
     );
   }
 });
-export default LeftMenu;
+export default LeftMenuContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user()
+  }
+}, LeftMenu);

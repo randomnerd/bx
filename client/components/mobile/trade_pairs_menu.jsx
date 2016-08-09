@@ -1,26 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {TradePairs, Currencies} from '../../../both/collections';
 
-const TradePairsMenu = Component({
+const TradePairsMenu = connect({
   layout: ['layout']
-}, {
-
-  mixins: [ReactMeteorData],
+}, class TradePairsMenu extends React.Component {
   getInitialState() {
     return {
       showPairs:false
     };
-  },
-  getMeteorData() {
-    return {
-      user: Meteor.user(),
-      TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
-    };
-  },
+  }
   currName(id) {
     let curr = _.findWhere(this.data.currencies, {
       _id: id
@@ -28,12 +19,12 @@ const TradePairsMenu = Component({
     return curr
       ? curr.shortName
       : '';
-  },
+  }
   displayCurrent() {
     return this.props.pair ?
       (this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)) :
       'Choose a pair';
-  },
+  }
   renderMenuItems() {
     let active = this.props.pair ? this.props.pair : false;
     return this.data.TradePairs.map((pair) => {
@@ -46,22 +37,22 @@ const TradePairsMenu = Component({
         </a>
       );
     });
-  },
+  }
   showMenu() {
     this.setState({showPairs:false});
     $(this.refs.accordion).accordion("close", 0);
       //this.props.signals.mob.page({id:'pair'});
       this.props.signals.mob.menu();
-  },
+  }
   showPairs(){
     this.setState({showPairs:!this.state.showPairs});
-  },
+  }
 
   componentDidMount() {
     //$(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
     $(this.refs.accordion).accordion();
 
-  },
+  }
   render() {
     return (
 
@@ -78,4 +69,10 @@ const TradePairsMenu = Component({
     );
   }
 });
-export default TradePairsMenu;
+export default TradePairsMenuContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user(),
+    TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
+  };
+}, TradePairsMenu);

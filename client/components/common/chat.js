@@ -1,13 +1,12 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Chat} from '../../../both/collections';
 import Semantic from '../semantic';
 import moment from 'moment';
 
-const ChatView = Component({
-}, {
-  mixins: [ReactMeteorData],
+const ChatView = connect({
+}, class ChatView extends React.Component {
   getInitialState() {
     return {
       haveMessages: false,
@@ -19,19 +18,8 @@ const ChatView = Component({
       replyId: null,
       replyName: null
     };
-  },
-  getMeteorData() {
-    return {
-      mesages: Chat.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
-      messages_now: Chat.find({
-        ack: false, createdAt: {$gt: new Date(this.state.nowDate)
-        }}, {sort: {createdAt: -1}}).fetch(),
-      messages_all: Chat.find({
-        $or: [ {isPrivate: false}, {replyId: Meteor.userId()},
-          {userId: Meteor.userId()} ]
-      }, {sort: {createdAt: 1}}).fetch()
-    };
-  },
+  }
+
   writeMessage() {
     let message = this.refs.form.getCurrentValues();
 
@@ -50,25 +38,25 @@ const ChatView = Component({
         }, 100);
       }
     });
-  },
+  }
   reply(item, event) {
     this.setState({replyId: item.userId});
     this.setState({replyName: item.userName });
-  },
+  }
   noReply() {
     this.setState({replyId: null});
     this.setState({replyName: null});
     this.setState({isPrivate: false});
-  },
+  }
   bePrivate() {
     this.setState({isPrivate: (this.state.isPrivate ? false : true)});
-  },
+  }
   beAnon() {
 
-  },
+  }
   componentDidMount() {
     $(this.refs.messages).scrollTop(15000);
-  },
+  }
   renderWithAva() {
     return (
       <div className='comment'>
@@ -89,7 +77,7 @@ const ChatView = Component({
         </div>
       </div>
     );
-  },
+  }
   messages() {
     return (
       this.data.messages_all.map((item) => {
@@ -115,7 +103,7 @@ const ChatView = Component({
         );
       })
     );
-  },
+  }
   writeForm() {
     return (
       <Formsy.Form className='ui form chatform' onValidSubmit={this.writeMessage} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
@@ -141,9 +129,9 @@ const ChatView = Component({
         <input type='submit' className='hidden' />
       </Formsy.Form>
     );
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
 
   render() {
     return (
@@ -156,4 +144,15 @@ const ChatView = Component({
     );
   }
 });
-export default ChatView;
+export default ChatViewContainer = createContainer(({ params }) => {
+  return {
+    mesages: Chat.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
+    messages_now: Chat.find({
+      ack: false, createdAt: {$gt: new Date(this.state.nowDate)
+      }}, {sort: {createdAt: -1}}).fetch(),
+    messages_all: Chat.find({
+      $or: [ {isPrivate: false}, {replyId: Meteor.userId()},
+        {userId: Meteor.userId()} ]
+    }, {sort: {createdAt: 1}}).fetch()
+  };
+}, ChatView);

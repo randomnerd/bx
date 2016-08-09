@@ -1,45 +1,47 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import ReactDOM from 'react-dom';
-const NotificationMessage = Component({
+const NotificationMessage = connect({
   notif: ['notif']
-},{
+}, class NotificationMessage extends React.Component {
   getInitialState() {
     return {
       hidden: true,
       needShow: true,
       closed: false
     };
-  },
-  types: {
-    vitalyTypes:{
-      newTransaction: 'info',
-      addBalance: 'accept',
-      error: 'error', //red
-      accept: 'accept', //green
-      warning: 'warning', //orange
-      info: 'info', //blue
-      chat: 'chat',
-    },
-    messageAccent: {
-      error: ' negative', //red
-      accept: ' positive', //green
-      warning: ' warning', //orange
-      info: ' info', //blue
-      chat: ' purple',
-      default:
-        false //gray
-    },
-    messagesIcon: {
-      error: ' warning sign',
-      accept: ' checkmark',
-      warning: ' warning circle',
-      info: ' info circle',
-      chat: ' comment',
-      default:
-          false
+  }
+  types() {
+    return {
+      vitalyTypes:{
+        newTransaction: 'info',
+        addBalance: 'accept',
+        error: 'error',
+        accept: 'accept',
+        warning: 'warning', //orange
+        info: 'info', //blue
+        chat: 'chat',
+      },
+      messageAccent: {
+        error: ' negative', //red
+        accept: ' positive', //green
+        warning: ' warning', //orange
+        info: ' info', //blue
+        chat: ' purple',
+        default:
+          false //gray
+      },
+      messagesIcon: {
+        error: ' warning sign',
+        accept: ' checkmark',
+        warning: ' warning circle',
+        info: ' info circle',
+        chat: ' comment',
+        default:
+            false
+      }
     }
-  },
+  }
   componentDidMount() {
     //this.props.signals.notif.changeTime();
     if (this.state.hidden && this.state.needShow) {
@@ -60,7 +62,7 @@ const NotificationMessage = Component({
         }
       });
     }
-  },
+  }
   delMessage() {
     if (!this.state.closed) {
           //$this.setState({hidden: true});
@@ -78,33 +80,33 @@ const NotificationMessage = Component({
         }
       });
     }
-  },
+  }
   addIcon(item){
     return(
-      <i className={this.types.messagesIcon[(item.icon
+      <i className={this.types().messagesIcon[(item.icon
           ? item.icon
-          : this.types.vitalyTypes[ item.type ] )] + ' icon'}></i>
-    )
-  },
+          : this.types().vitalyTypes[ item.type ] )] + ' icon'}></i>
+    );
+  }
   render() {
     return (
-          <div className={'ui' + (this.state.hidden ? ' hidden' : '') + ' small icon message' + (this.props.item.type
-            ? this.types.messageAccent[ this.types.vitalyTypes [ this.props.item.type ] ]
-            : '')}>
-            <i className='close icon' onClick={this.delMessage}></i>
-            {this.addIcon(this.props.item)}
+      <div className={'ui' + (this.state.hidden ? ' hidden' : '') + ' small icon message' + (this.props.item.type
+        ? this.types().messageAccent[ this.types().vitalyTypes [ this.props.item.type ] ]
+        : '')}>
+        <i className='close icon' onClick={this.delMessage}></i>
+        {this.addIcon(this.props.item)}
 
-            <div className='content'>
-              {this.props.item.title
-                ? <div className='header'>
-                    {this.props.item.title}
-                  </div>
-                : ''
-              }
-              <p>{this.props.item.message}</p>
-            </div>
-          </div>
-        );
+        <div className='content'>
+          {this.props.item.title
+            ? <div className='header'>
+                {this.props.item.title}
+              </div>
+            : ''
+          }
+          <p>{this.props.item.message}</p>
+        </div>
+      </div>
+    );
   }
 });
-export default NotificationMessage;
+export default  NotificationMessage;
