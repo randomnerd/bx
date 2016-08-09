@@ -29,10 +29,10 @@ const BitIndex = connect({
 
   render() {
 
-      console.log(this.data.chartItems);
-      console.log(this.mapList(this.data.chartItems));
+      console.log(this.props.chartItems);
+      console.log(this.mapList(this.props.chartItems));
 
-    //  let {data} = this.mapList(this.data.chartItems);
+    //  let {data} = this.mapList(this.props.chartItems);
 
 
         return (
@@ -43,7 +43,7 @@ const BitIndex = connect({
           <br></br>
           <br></br>
           <br></br>
-          <Charts.candelstick_intra_day_cont data={this.mapList(this.data.chartItems)} type='hybrid' height={350} pairText={"sds"}/>
+          <Charts.candelstick_intra_day_cont data={this.mapList(this.props.chartItems)} type='hybrid' height={350} pairText={"sds"}/>
           </div>
         )
 
@@ -51,7 +51,7 @@ const BitIndex = connect({
   }
 
 });
-export default BitIndexContainer = createContainer(({ params }) => {
+export default BitIndexContainer = createContainer((props) => {
   return {
       chartItems: ChartItems.find( { pairId: this.props.pair._id }  ).fetch(),
   };

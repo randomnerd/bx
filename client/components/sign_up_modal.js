@@ -17,8 +17,9 @@ Formsy.addValidationRule('passwordSecure', (values, value) => {
 const SignUpModal = connect({
   show: ['showSignUpModal']
 }, class SignUpModal extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false
     };
@@ -51,7 +52,7 @@ const SignUpModal = connect({
         onDeny={this.hide} onPositive={this.signUp} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
 

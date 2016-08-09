@@ -147,8 +147,8 @@ const BuySell = connect({
               <a className='item disabled' onClick={this.setStop}>Stop</a>
             </div>
 
-            <Formsy.Form className='ui form' onValid={this.allowSubmit}
-            onInvalid={this.disallowSubmit} ref='form'>
+            <Formsy.Form className='ui form' onValid={this.allowSubmit.bind(this)}
+            onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
                 {this.state.ordType === 'limit' || this.state.ordType === 'stop' ? this.showWithPrice() : this.showWithoutPrice()}
 
@@ -176,7 +176,7 @@ const BuySell = connect({
   }
 });
 
-export default BuySellContainer = createContainer(({ params }) => {
+export default BuySellContainer = createContainer((props) => {
   return {
     balance1: Balances.findOne({currId: this.props.pair.currId}),
     balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),

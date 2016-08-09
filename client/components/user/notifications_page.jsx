@@ -24,7 +24,7 @@ const NotificationsPage = connect({
   }
 
   renderNotificationsList() {
-    return this.data
+    return this.props
       .notifications
       .map((item) => {
         return (
@@ -59,7 +59,7 @@ const NotificationsPage = connect({
   }
 });
 
-export default NotificationsPageContainer = createContainer(({ params }) => {
+export default NotificationsPageContainer = createContainer((props) => {
   return {
     notifications: Notifications.find({}, {limit: 50}, { sort: {createdAt: -1}}).fetch()
   };

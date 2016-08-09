@@ -36,8 +36,9 @@ const MobileLayout = connect({
   pair_link: ['pair_link'],
   user: ['user']
 }, class MobileLayout extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       showLoginModal: false,
       showSignUpModal: false,
       showWithdrawModal: false,
@@ -210,7 +211,7 @@ const MobileLayout = connect({
     );
   }
 });
-export default MobileLayoutContainer = createContainer(({ params }) => {
+export default MobileLayoutContainer = createContainer((props) => {
   let pair = TradePairs.findOne({permalink: this.props.pair_link});
 
   return {

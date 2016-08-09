@@ -24,8 +24,8 @@ const Orderbook = connect({
   renderSellItems() {
     let nulls = '00000000';
 
-    let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
-    return this.data.ordersSell.map((item) => {
+    let max = this.props.ordersMax ? this.props.ordersMax.displayAmount() : 1;
+    return this.props.ordersSell.map((item) => {
 
       //.displayRemain() и .displayPrice()
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
@@ -72,8 +72,8 @@ const Orderbook = connect({
   renderBuyItems() {
     let nulls = '00000000';
 
-    let max = this.data.ordersMax ? this.data.ordersMax.displayAmount() : 1;
-    return this.data.ordersBuy.map((item) => {
+    let max = this.props.ordersMax ? this.props.ordersMax.displayAmount() : 1;
+    return this.props.ordersBuy.map((item) => {
       //.displayRemain() и .displayPrice()
 
       let weight = parseFloat(70 * (parseFloat(item.displayAmount()) / max).toFixed(8));
@@ -120,7 +120,7 @@ const Orderbook = connect({
     let nulls = '00000000';
     let i=0;
     let lastOne=[];
-    this.data.tradesLast.map((item) => {
+    this.props.tradesLast.map((item) => {
       lastOne[i] = item.displayPrice();
       i++;
     });
@@ -131,8 +131,8 @@ const Orderbook = connect({
     let lastPrice = lastOne[0].toString().split('.');
     lastPrice[1] = lastPrice[1] ? lastPrice[1] : '';
 
-    let hiPrice = this.data.tradesHi.displayPrice().toString().split('.');
-    let lowPrice = this.data.tradesLo.displayPrice().toString().split('.');
+    let hiPrice = this.props.tradesHi.displayPrice().toString().split('.');
+    let lowPrice = this.props.tradesLo.displayPrice().toString().split('.');
     hiPrice[1] = hiPrice[1] ? hiPrice[1] : '';
     lowPrice[1] = lowPrice[1] ? lowPrice[1] : '';
 
@@ -173,7 +173,7 @@ const Orderbook = connect({
   }
 
   render() {
-    //console.log(this.data.ordersSell);
+    //console.log(this.props.ordersSell);
     return (
       <div className='ui basic teal segment h100 tabheader'>
         <table className='ui selectable very compact very basic striped table unstackable nopadding nomargin heading'>
@@ -203,7 +203,7 @@ const Orderbook = connect({
   }
 });
 
-export default OrderbookContainer = createContainer(({ params }) => {
+export default OrderbookContainer = createContainer((props) => {
   return {
     ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
     ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),

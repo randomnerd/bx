@@ -9,12 +9,12 @@ const LandingOrders = connect({
   layout: ['layout'],
 }, class LandingOrders extends React.Component {
   curr(id) {
-    let curr = _.findWhere(this.data.currencies, {_id: id});
+    let curr = _.findWhere(this.props.currencies, {_id: id});
     return curr;
   }
 
   pair(id) {
-    let pair = _.findWhere(this.data.pairs, {_id: id});
+    let pair = _.findWhere(this.props.pairs, {_id: id});
     return pair;
   }
 
@@ -22,12 +22,12 @@ const LandingOrders = connect({
     let nulls = '00000000';
     let data = [];
     if(direction){
-      data =this.data.ordersBuy;
+      data =this.props.ordersBuy;
     }else{
-      data =this.data.ordersSell;
+      data =this.props.ordersSell;
     }
 
-    let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
+    let max = this.props.tradesMax ? parseFloat(this.props.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
@@ -91,17 +91,17 @@ const LandingOrders = connect({
   }
 });
 
-export default LandingOrdersContainer = createContainer(({ params }) => {
-  let lim = this.props.limit ? Math.ceil(this.props.limit/2) : false
+export default LandingOrdersContainer = createContainer((props) => {
+  let lim = props.limit ? Math.ceil(props.limit/2) : false
   return {
-    ordersSell: OrderBookItems.find( { pairId: this.props.pair_ids , buy: false}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
-    ordersBuy: OrderBookItems.find( { pairId: this.props.pair_ids , buy: true}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+    ordersSell: OrderBookItems.find( { pairId: props.pair_ids , buy: false}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+    ordersBuy: OrderBookItems.find( { pairId: props.pair_ids , buy: true}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
     orders: OrderBookItems.find(
-      { pairId: this.props.pair_ids },
+      { pairId: props.pair_ids },
       {sort: {createdAt: -1},
-      limit: this.props.limit||40}
+      limit: props.limit||40}
     ).fetch(),
-    tradesMax: OrderBookItems.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
+    tradesMax: OrderBookItems.findOne({ pairId: props.pair_ids }, {sort: {amount: -1}}),
     pairs: TradePairs.find({ published: true }).fetch(),
     currencies: Currencies.find({ published: true }).fetch(),
   };

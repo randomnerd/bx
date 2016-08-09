@@ -13,8 +13,9 @@ const TopMenu = connect({
   pair_link: ['pair_link'],
   page: ['page']
 }, class TopMenu extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       drag:false
     };
   }
@@ -39,12 +40,6 @@ const TopMenu = connect({
     return this.getMenuItems().map((item) => {
       return <a className={"item " + item.extraCls} key={item.label} href={item.href}>{item.label}</a>;
     });
-  }
-
-  getInitialState() {
-    return {
-      drag:false
-    };
   }
 
   showLoginModal() {

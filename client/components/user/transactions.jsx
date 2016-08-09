@@ -9,20 +9,21 @@ const TransactionsView = connect({
   layout: ['layout'],
   wallet: ['wallet']
 }, class TransactionsView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       test: 1
     }
   }
 
   renderHistoryItems() {
-    let unsortedItems = this.data.deposits.concat(this.data.withdrawals).concat(this.data.trades);
+    let unsortedItems = this.props.deposits.concat(this.props.withdrawals).concat(this.props.trades);
     let items = unsortedItems.sort((a, b) => {
       if (a.createdAt > b.createdAt) return -1;
       if (a.createdAt < b.createdAt) return 1;
       return 0;
     });
-    let confReq = this.data.currency.confReq||5;
+    let confReq = this.props.currency.confReq||5;
 
     return items.map((item) => {
       let cls = [];
@@ -38,8 +39,8 @@ const TransactionsView = connect({
           amount = item.displayAmount();
           break;
         default:
-          cls = item.buyerId == this.data.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
-          let pair = _.find(this.data.pairs, (i) =>{
+          cls = item.buyerId == this.props.user._id ? ['exchange', 'add green', 'Buy'] : ['exchange', 'minus red', 'Sell'];
+          let pair = _.find(this.props.pairs, (i) =>{
             return i._id == item.pairId;
           });
           if(pair.currId == this.props.wallet){
@@ -82,9 +83,9 @@ const TransactionsView = connect({
   }
 
   render() {
-    let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
-    let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
-    let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
+    let avail = this.props.balance ? this.props.balance.displayAmount() : (0).toFixed(8);
+    let held = this.props.balance ? this.props.balance.displayHeld() : (0).toFixed(8);
+    let total = this.props.balance ? this.props.balance.displayTotal() : (0).toFixed(8);
     let allowWithdraw = parseFloat(avail) > 0;
     return (
       <div className="ui main container">
@@ -92,13 +93,13 @@ const TransactionsView = connect({
           <div className="ui secondary segment">
             <div className="ui header clearfix">
               <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw}>
-                Withdraw {this.data.currency.shortName}
+                Withdraw {this.props.currency.shortName}
               </button>
               <a href="/u/wallets" className="ui right floated white button">
                 <i className="icon left arrow"></i>
                 <span>back</span>
               </a>
-              <h1>{this.data.currency.name} balance</h1>
+              <h1>{this.props.currency.name} balance</h1>
             </div>
           </div>
           <div className="ui secondary segment">
@@ -110,7 +111,7 @@ const TransactionsView = connect({
 
 
                       <h2 className="ui header center aligned">
-                        {avail} {this.data.currency.shortName}
+                        {avail} {this.props.currency.shortName}
                       </h2>
 
                 </div>
@@ -119,7 +120,7 @@ const TransactionsView = connect({
                       <h4 className="ui header center aligned">Held for orders</h4>
 
                       <h2 className="ui header center aligned">
-                        {held} {this.data.currency.shortName}
+                        {held} {this.props.currency.shortName}
                       </h2>
 
                 </div>
@@ -128,7 +129,7 @@ const TransactionsView = connect({
                     <h4 className="ui header center aligned">Total</h4>
 
                     <h2 className="ui header center aligned">
-                      {total} {this.data.currency.shortName}
+                      {total} {this.props.currency.shortName}
                     </h2>
 
                 </div>
@@ -166,7 +167,7 @@ const TransactionsView = connect({
   }
 });
 
-export default TransactionsViewContainer = createContainer(({ params }) => {
+export default TransactionsViewContainer = createContainer((props) => {
   let pairs = TradePairs.find({$or:[{currId: this.props.wallet}, {marketCurrId: this.props.wallet}]}).fetch();
   let pair_ids = pairs.map(function(pair) {
     return pair._id;

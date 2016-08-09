@@ -9,8 +9,9 @@ const AdminCurrency = connect({
   layout: ['layout'],
   curr: ['pairtype']
 }, class AdminCurrency extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false,
       published: ''
@@ -33,7 +34,7 @@ const AdminCurrency = connect({
   saveCurr(event) {
     let currVals = this.refs.curr.getCurrentValues();
     currVals.published = currVals.published ? true : false;
-    Meteor.call('pairtype_update', this.data.currency._id, currVals,
+    Meteor.call('pairtype_update', this.props.currency._id, currVals,
     (error, result) => {
       if (error) {
         this.setState({errorMessage: error.message});
@@ -43,7 +44,7 @@ const AdminCurrency = connect({
     });
   }
   currentVal(what) {
-    return this.data.currency ? this.data.currency[what] : '';
+    return this.props.currency ? this.props.currency[what] : '';
   }
   checkboxToggle() {
     this.setState({published: (this.state.published ? false : true)});
@@ -56,7 +57,7 @@ const AdminCurrency = connect({
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit}
+        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/pairtypes'>
@@ -77,7 +78,7 @@ const AdminCurrency = connect({
 
           <div className='two fields'>
 
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.props.currency && this.props.currency.published ? true : false} />
 
             <div className='field'>
 
@@ -95,7 +96,7 @@ const AdminCurrency = connect({
     );
   }
 });
-export default AdminCurrencyContainer = createContainer(({ params }) => {
+export default AdminCurrencyContainer = createContainer((props) => {
   return {
     currency: PairTypes.findOne({_id: this.props.curr})
   };

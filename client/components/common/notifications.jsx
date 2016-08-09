@@ -10,8 +10,9 @@ const NotificationShow = connect({
   layout: ['layout'],
   notif: ['notif']
 }, class NotificationShow extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       haveMessages: false,
       messages: [],
       countFromDB: 0,
@@ -60,14 +61,14 @@ const NotificationShow = connect({
     this.props.signals.notif.delAll();
   }
   renderDropMessages() {
-    if (this.data.notifications_new.length) {
-      return this.data.notifications_new.map((item) => {
+    if (this.props.notifications_new.length) {
+      return this.props.notifications_new.map((item) => {
         return (
           <DropMessage key={item._id} item={item} closable={true} newitem={true} />
         );
       });
     }else {
-      return this.data.notifications.map((item) => {
+      return this.props.notifications.map((item) => {
         return (
           <DropMessage key={item._id} item={item} closable={false} newitem={false} />
         );
@@ -80,9 +81,9 @@ const NotificationShow = connect({
       <div className='ui dropdown right item notifications'>
         <i className='alarm icon' />
         <i className='dropdown icon' />
-          {this.data.notifications_new.length ?
+          {this.props.notifications_new.length ?
             <div className='down floating ui red circular mini label'>
-            {this.data.notifications_new.length}
+            {this.props.notifications_new.length}
             </div>
             : ''
           }
@@ -90,7 +91,7 @@ const NotificationShow = connect({
           <div className='scrolling menu'>
             {this.renderDropMessages()}
           </div>
-            {this.data.notifications_new.length ?
+            {this.props.notifications_new.length ?
               <a className='item' onClick={this.delAllMessages}>
                 Mark all as read
               </a>
@@ -105,7 +106,7 @@ const NotificationShow = connect({
     );
   }
 });
-export default NotificationShowContainer = createContainer(({ params }) => {
+export default NotificationShowContainer = createContainer((props) => {
   return {
     notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
     notifications_now: Notifications.find({

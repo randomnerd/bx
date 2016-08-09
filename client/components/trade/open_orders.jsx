@@ -14,7 +14,7 @@ const OpenOrders = connect({
 
   cancelOrders() {
     if(confirm('Clear all?')){
-      this.data.orders.map((item) => {
+      this.props.orders.map((item) => {
         item.cancel();
       });
     }
@@ -22,7 +22,7 @@ const OpenOrders = connect({
   }
 
   renderOrderItems() {
-    return this.data.orders.map((item) => {
+    return this.props.orders.map((item) => {
       return  (
         <tr key={item._id} >
           <td className={'three wide ' + (item.buy? 'positive' : 'negative')} data-ord-price>{item.displayAmount()}</td>
@@ -42,7 +42,7 @@ const OpenOrders = connect({
       <div className='ui basic teal segment h100 noheader'>
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
-          { this.data.orders.length ?
+          { this.props.orders.length ?
             <a className='item active' onClick={this.cancelOrders}>
               Cancel all
             </a>
@@ -54,8 +54,8 @@ const OpenOrders = connect({
             <thead>
               <tr className='lesspadding'>
                 <th className='three wide' >Size</th>
-                <th className='three wide'>Remain ({this.data.currency1.shortName})</th>
-                <th className='three wide'>Price ({this.data.currency2.shortName})</th>
+                <th className='three wide'>Remain ({this.props.currency1.shortName})</th>
+                <th className='three wide'>Price ({this.props.currency2.shortName})</th>
                 <th className='two wide'>Time</th>
                 <th className='one wide'></th>
               </tr>
@@ -76,7 +76,7 @@ const OpenOrders = connect({
   }
 });
 
-export default OpenOrdersContainer = createContainer(({ params }) => {
+export default OpenOrdersContainer = createContainer((props) => {
   let curr1 =Currencies.findOne({_id: this.props.valute1});
   //console.log(this.props.valute1);
   return {

@@ -8,8 +8,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 const NotificationPopups = connect({
   notif: ['notif'],
 }, class NotificationPopups extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       haveMessages: false,
       messages: [],
       countFromDB: 0,
@@ -46,8 +47,8 @@ const NotificationPopups = connect({
 
   renderMessages() {
     let mess = _.clone(this.state.messages);
-    if (this.data.notifications_now) {
-      this.data.notifications_now.map((item) => {
+    if (this.props.notifications_now) {
+      this.props.notifications_now.map((item) => {
         mess.push(item);
       });
     }
@@ -70,10 +71,10 @@ const NotificationPopups = connect({
     );
   }
 });
-export default NotificationPopupsContainer = createContainer(({ params }) => {
+export default NotificationPopupsContainer = createContainer((props) => {
   return {
     notifications_now: Notifications.find({
-      ack: false, createdAt: {$gt: new Date(this.state.nowDate)}
+      ack: false, createdAt: {$gt: new Date().valueOf()}
     }).fetch(),
   };
 }, NotificationPopups);

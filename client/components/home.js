@@ -5,8 +5,9 @@ const Home = connect({
   user: ['user'],
   title: ['home', 'title']
 }, class Home extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       panel: false,
       icons: true,
       holder: false,

@@ -20,11 +20,11 @@ const WalletPage = connect({
   }
 
   getAddress() {
-    return this.data.wallet && this.data.wallet.address;
+    return this.props.wallet && this.props.wallet.address;
   }
 
   getBalance() {
-    let amount = this.data.balance ? this.data.balance.amount / Math.pow(10, 8) : 0;
+    let amount = this.props.balance ? this.props.balance.amount / Math.pow(10, 8) : 0;
     return amount.toFixed(8);
   }
 
@@ -35,7 +35,7 @@ const WalletPage = connect({
   }
 
   renderWalletItems() {
-    return this.data.currencies.map((item) => {
+    return this.props.currencies.map((item) => {
       let address = this.getAddress(item._id);
       let balance = this.getBalance(item._id);
       return  (
@@ -88,7 +88,7 @@ const WalletPage = connect({
   }
 });
 
-export default WalletPageContainer = createContainer(({ params }) => {
+export default WalletPageContainer = createContainer((props) => {
   return {
     balance: Balances.findOne({currId: this.props.current}),
     currency: Currencies.findOne({_id: this.props.current}),

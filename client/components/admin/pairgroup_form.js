@@ -9,8 +9,9 @@ const AdminPairGroup = connect({
   layout: ['layout'],
   curr: ['pairgroup']
 }, class AdminPairGroup extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false,
       published: '',
@@ -33,7 +34,7 @@ const AdminPairGroup = connect({
   }
   saveCurr(event) {
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
-    Meteor.call('pairgroup_update', this.data.pairgrup._id,
+    Meteor.call('pairgroup_update', this.props.pairgrup._id,
     {name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published},
     (error, result) => {
       if (error) {
@@ -45,13 +46,13 @@ const AdminPairGroup = connect({
   }
 
   currentVal(what) {
-    return this.data.pairgrup ? this.data.pairgrup[what] : '';
+    return this.props.pairgrup ? this.props.pairgrup[what] : '';
   }
 
   renderPairs(){
-    //console.log(this.data.pairs);
+    //console.log(this.props.pairs);
     let pairs = this.state.pairs;
-    return this.data.pairs.map((pair) => {
+    return this.props.pairs.map((pair) => {
       return (
         <a key={pair._id} className={"ui label " + (pairs[pair._id]?"blue":"")} onClick={this.addPair.bind(this, pair)}>
           {pair.permalink}
@@ -68,7 +69,7 @@ const AdminPairGroup = connect({
   }
 
   marketsForSearch() {
-    return this.data.markets.map((m) => {
+    return this.props.markets.map((m) => {
       return {_id: m._id, title: m.shortName, description: m.name};
     });
   }
@@ -76,9 +77,9 @@ const AdminPairGroup = connect({
   componentDidMount(){
     let pairs = this.state.pairs;
     if(pairs.length == 0 && this.props.curr){
-      let pairgroup = this.data.pairgrup;
+      let pairgroup = this.props.pairgrup;
       for(pair of pairgroup.pairs){
-        let curr = _.findWhere(this.data.pairs, {
+        let curr = _.findWhere(this.props.pairs, {
           _id: pair
         });
         pairs[curr._id]=true;
@@ -96,7 +97,7 @@ const AdminPairGroup = connect({
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit}
+        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/pairgroups'>
@@ -129,7 +130,7 @@ const AdminPairGroup = connect({
 
           <div className='two fields'>
 
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.pairgrup && this.data.pairgrup.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.props.pairgrup && this.props.pairgrup.published ? true : false} />
 
             <div className='field'>
 
@@ -147,7 +148,7 @@ const AdminPairGroup = connect({
     );
   }
 });
-export default AdminPairGroupContainer = createContainer(({ params }) => {
+export default AdminPairGroupContainer = createContainer((props) => {
   return {
     pairgrup: PairGroups.findOne({_id: this.props.curr}),
     pairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),

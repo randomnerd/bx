@@ -39,7 +39,7 @@ const WithdrawAddress = connect({
   render() {
     return (
       <tr>
-        <Formsy.Form className='ui large form' onValidSubmit={this.saveAddress} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+        <Formsy.Form className='ui large form' onValidSubmit={this.saveAddress} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
           <td className='four wide'>
           {this.state.editable ?
             <Semantic.Input name='name' className="mini" placeholder='Type your contact name here' ref='name' value={this.props.item.name} required/> :
@@ -75,7 +75,7 @@ const WithdrawAddress = connect({
     );
   }
 });
-export default WithdrawAddressContainer = createContainer(({ params }) => {
+export default WithdrawAddressContainer = createContainer((props) => {
   return {
     address: wAddressBook.findOne({_id: this.props.item._id})
   };

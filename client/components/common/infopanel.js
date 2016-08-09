@@ -10,8 +10,9 @@ const Infopanel = connect({
     user: ['user'],
     tools: ['tools']
   }, class Infopanel extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+      super(props);
+      this.state = {
       mosts: 'active',
       pairs: 'btc',
     };
@@ -98,8 +99,8 @@ const Infopanel = connect({
               </div>
               <div className="ui basic segment nobg">
                 {
-                  this.data.BTPR_Loading ? <div className='cube'></div> :
-                  <Charts.comparechart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={1} />
+                  this.props.BTPR_Loading ? <div className='cube'></div> :
+                  <Charts.comparechart_infopanel data = {this.props.BTPR.slice(500)} type = "hybrid" id={1} />
                 }
               </div>
             </div>
@@ -127,8 +128,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={2} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(100)} type = "hybrid" id={2} />
                       }
                     </td>
                   </tr>
@@ -137,8 +138,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >21.45 <span className="red text">(-32.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={3} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(500)} type = "hybrid" id={3} />
                       }
                     </td>
                   </tr>
@@ -147,8 +148,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={4} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(800)} type = "hybrid" id={4} />
                       }
                     </td>
                   </tr>
@@ -157,8 +158,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={5} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(100)} type = "hybrid" id={5} />
                       }
                     </td>
                   </tr>
@@ -167,8 +168,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >21.45 <span className="red text">(-32.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={6} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(500)} type = "hybrid" id={6} />
                       }
                     </td>
                   </tr>
@@ -195,8 +196,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(100)} type = "hybrid" id={7} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(100)} type = "hybrid" id={7} />
                       }
                     </td>
                   </tr>
@@ -205,8 +206,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >21.45 <span className="red text">(-32.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={8} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(500)} type = "hybrid" id={8} />
                       }
                     </td>
                   </tr>
@@ -215,8 +216,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={9} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(800)} type = "hybrid" id={9} />
                       }
                     </td>
                   </tr>
@@ -225,8 +226,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >21.45 <span className="red text">(-32.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(500)} type = "hybrid" id={10} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(500)} type = "hybrid" id={10} />
                       }
                     </td>
                   </tr>
@@ -235,8 +236,8 @@ const Infopanel = connect({
                     <td className='five wide center aligned' >11.99 <span className="green text">(+76.58%)</span></td>
                     <td className='nine wide right aligned'>
                       {
-                        this.data.BTPR_Loading ? <div className='cube'></div> :
-                        <Charts.areachart_infopanel data = {this.data.BTPR.slice(800)} type = "hybrid" id={11} />
+                        this.props.BTPR_Loading ? <div className='cube'></div> :
+                        <Charts.areachart_infopanel data = {this.props.BTPR.slice(800)} type = "hybrid" id={11} />
                       }
                     </td>
                   </tr>
@@ -249,7 +250,7 @@ const Infopanel = connect({
     );
   }
 });
-export default InfopanelContainer = createContainer(({ params }) => {
+export default InfopanelContainer = createContainer((props) => {
   let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
 
   return {

@@ -13,8 +13,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 const ChartsShow = connect({
 
 }, class ChartsShow extends React.Component {
-    getInitialState() {
-        return {chartType: 'candle', cartH: 300};
+    constructor(props) {
+      super(props);
+      this.state = {chartType: 'candle', cartH: 300};
     }
     showCandle(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
@@ -71,63 +72,63 @@ const ChartsShow = connect({
 
             case 'candle':
                 return (
-                    <div><Charts.candelstick_mobile data={this.data.BTPR} type='hybrid' height={350} height_bar = {150}/></div>
+                    <div><Charts.candelstick_mobile data={this.props.BTPR} type='hybrid' height={350} height_bar = {150}/></div>
                 );
                 break;å
 
             case 'line':
                 return (
-                    <div><Charts.candelstick_mobile data={this.data.BTPR.slice(200)} type='hybrid' height={350} height_bar = {150}/></div>
+                    <div><Charts.candelstick_mobile data={this.props.BTPR.slice(200)} type='hybrid' height={350} height_bar = {150}/></div>
                 );
                 break;
 
             case 'macd':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR.slice(200)} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
                 );
                 break;
             case 'rsi':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR.slice(200)} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
                 );
                 break;
 
             case 'sto':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
                 );
                 break;
 
             case 'bollinger':
                 return (
                     <div>
-                        <Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/>
+                        <Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/>
                     </div>
                 );
                 break;
 
             case 'kagi':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
                 );
                 break;
 
             case 'pointandfigure':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
                 );
                 break;
 
             case 'haikinashi':
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
                 );
                 break;
 
             case 'renko':
 
                 return (
-                    <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
                 );
                 break;
 
@@ -190,7 +191,7 @@ const ChartsShow = connect({
                         </div>
                     </div>
                     <div className='ui basic segment nopadding'>
-                        {this.data.BTPR_Loading
+                        {this.props.BTPR_Loading
                             ? <div className='cube'></div>
                             : this.renderBlockChainIndicator()
                         }
@@ -200,7 +201,7 @@ const ChartsShow = connect({
         );
     }
 });
-export default ChartsShowContainer = createContainer(({ params }) => {
+export default ChartsShowContainer = createContainer((props) => {
   let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
   let pair = TradePairs.findOne({permalink: this.props.active});
 

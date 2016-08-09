@@ -5,13 +5,11 @@ import {connect} from 'cerebral-view-react';
 
 const Modal = connect({
 }, class Modal extends React.Component {
-  getDefaultProps() {
-    return {
+  static defaultProps = {
       size: '',
       positiveLabel: 'OK',
       denyLabel: 'Cancel',
-      allowSubmit: true,
-    };
+      allowSubmit: true
   }
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).modal({

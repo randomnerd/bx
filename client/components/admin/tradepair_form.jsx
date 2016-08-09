@@ -9,8 +9,9 @@ const AdminTradePair = connect({
   layout: ['layout'],
   adm_pair: ['adm_pair']
 }, class AdminTradePair extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false,
       published: ''
@@ -38,7 +39,7 @@ const AdminTradePair = connect({
   }
   savePair(event) {
     let {currId, marketCurrId, buyFee, sellFee, published, permalink, market} = this.refs.curr.getCurrentValues();
-    Meteor.call('tradepair_update', this.data.tradePairs._id, {
+    Meteor.call('tradepair_update', this.props.tradePairs._id, {
       currId: currId,
       marketCurrId: marketCurrId,
       buyFee: buyFee,
@@ -56,18 +57,18 @@ const AdminTradePair = connect({
     });
   }
   currentVal(what) {
-    return this.data.tradePairs ? this.data.tradePairs[what] : '';
+    return this.props.tradePairs ? this.props.tradePairs[what] : '';
   }
   allowSubmit() { this.setState({allowSubmit: true}); }
   disallowSubmit() { this.setState({allowSubmit: false}); }
 
   currsForSearch() {
-    return this.data.currencies.map((curr) => {
+    return this.props.currencies.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
     });
   }
   marketsForSearch() {
-    return this.data.markets.map((m) => {
+    return this.props.markets.map((m) => {
       return {_id: m._id, title: m.shortName, description: m.name};
     });
   }
@@ -86,7 +87,7 @@ const AdminTradePair = connect({
     return (
       <div>
         <Formsy.Form key={this.props.k} className='ui form'
-          onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit}
+          onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/tradepairs'>
@@ -119,7 +120,7 @@ const AdminTradePair = connect({
           required value={this.currentVal('sellFee')} />
 
           <div className='two fields'>
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.data.tradePairs && this.data.tradePairs.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.props.tradePairs && this.props.tradePairs.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
                 onClick={this.props.adm_pair ? this.savePair : this.newPair}>
@@ -133,7 +134,7 @@ const AdminTradePair = connect({
     );
   }
 });
-export default AdminTradePairContainer = createContainer(({ params }) => {
+export default AdminTradePairContainer = createContainer((props) => {
   return {
     tradePairs: TradePairs.findOne(this.props.adm_pair),
     currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),

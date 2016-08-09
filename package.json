@@ -5,6 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.11.5",
     "cerebral": "^0.35.8",
     "cerebral-module-devtools": "^0.7.0",
     "cerebral-module-router": "^0.16.1",

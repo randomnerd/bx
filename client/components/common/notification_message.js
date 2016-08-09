@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 const NotificationMessage = connect({
   notif: ['notif']
 }, class NotificationMessage extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       hidden: true,
       needShow: true,
       closed: false

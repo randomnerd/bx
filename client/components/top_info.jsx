@@ -18,32 +18,32 @@ const TopInfo = connect({
 
         <div className='item double'>
           <h4 className="ui header">Last price</h4>
-          <p>{this.data.pair.lastPrice? parseFloat(this.data.pair.lastPrice).toFixed(4) : 0.0000}</p>
+          <p>{this.props.pair.lastPrice? parseFloat(this.props.pair.lastPrice).toFixed(4) : 0.0000}</p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Bid/Ask</h4>
           <p>
-            <span className="red text">{this.data.tradesBid? parseFloat(this.data.tradesBid.displayPrice()).toFixed(4) : 0.0000} </span>/
-            <span className="green text"> {this.data.tradesAsk? parseFloat(this.data.tradesAsk.displayPrice()).toFixed(4) : 0.0000}</span>
+            <span className="red text">{this.props.tradesBid? parseFloat(this.props.tradesBid.displayPrice()).toFixed(4) : 0.0000} </span>/
+            <span className="green text"> {this.props.tradesAsk? parseFloat(this.props.tradesAsk.displayPrice()).toFixed(4) : 0.0000}</span>
           </p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Range</h4>
           <p>
-            <span className="text">{this.data.tradesLo? parseFloat(this.data.tradesLo.displayPrice()).toFixed(4) : 0.0000} </span>-
-            <span className="text"> {this.data.tradesHi? parseFloat(this.data.tradesHi.displayPrice()).toFixed(4) : 0.0000}</span>
+            <span className="text">{this.props.tradesLo? parseFloat(this.props.tradesLo.displayPrice()).toFixed(4) : 0.0000} </span>-
+            <span className="text"> {this.props.tradesHi? parseFloat(this.props.tradesHi.displayPrice()).toFixed(4) : 0.0000}</span>
           </p>
         </div>
         <div className='item double'>
           <h4 className="ui header">Volume</h4>
-          <p>{this.data.pair.dayVolume? parseFloat(this.data.pair.dayVolume).toFixed(4) : 0.0000}</p>
+          <p>{this.props.pair.dayVolume? parseFloat(this.props.pair.dayVolume).toFixed(4) : 0.0000}</p>
         </div>
       </div>
     );
   }
 });
 
-export default TopInfoContainer = createContainer(({ params }) => {
+export default TopInfoContainer = createContainer((props) => {
   return {
     pair: TradePairs.findOne({_id: this.props.pair._id}),
     user: Meteor.user(),

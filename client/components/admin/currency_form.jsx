@@ -9,8 +9,9 @@ const AdminCurrency = connect({
   layout: ['layout'],
   curr: ['curr']
 }, class AdminCurrency extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false,
       published: false
@@ -39,7 +40,7 @@ const AdminCurrency = connect({
   saveCurr(event) {
     let {name, shortName, published, currType, confReq, withdrawalFee} = this.refs.curr.getCurrentValues();
     published = !!published;
-    Meteor.call('currrency_update', this.data.currency._id, {
+    Meteor.call('currrency_update', this.props.currency._id, {
       name,
       shortName,
       published,
@@ -59,27 +60,27 @@ const AdminCurrency = connect({
     this.setState({published: (this.state.published ? false : true)});
   }
   typesForSearch() {
-    return this.data.currtypes.map((curr) => {
+    return this.props.currtypes.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
     });
   }
   componentDidMount() {
-    let {currency} = this.data;
-    this.setState({published: (this.data.currency && this.data.currency.published ? true : false)});
+    let {currency} = this.props;
+    this.setState({published: (this.props.currency && this.props.currency.published ? true : false)});
   }
   currentVal(what) {
-    return this.data.currency ? this.data.currency[what] : '';
+    return this.props.currency ? this.props.currency[what] : '';
   }
   allowSubmit() { this.setState({allowSubmit: true}); }
   disallowSubmit() { this.setState({allowSubmit: false}); }
   render() {
-    //let {currency} = this.data;
+    //let {currency} = this.props;
     //this.setState({published: (currency && currency.published ? true : false)});
     return (
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit} onInvalid={this.disallowSubmit}
+        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/currencies'>
@@ -107,7 +108,7 @@ const AdminCurrency = connect({
           value={this.currentVal('confReq')||3} />
 
           <div className='two fields'>
-            <Semantic.Checkbox name='published' label='Published' ref='published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
+            <Semantic.Checkbox name='published' label='Published' ref='published' onClick={this.checkboxToggle} isChecked={this.props.currency && this.props.currency.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
                 onClick={this.props.curr ? this.saveCurr : this.newCurr}>
@@ -121,7 +122,7 @@ const AdminCurrency = connect({
     );
   }
 });
-export default AdminCurrencyContainer = createContainer(({ params }) => {
+export default AdminCurrencyContainer = createContainer((props) => {
   return {
     currency: Currencies.findOne({_id: this.props.curr}),
     currtypes: CurrTypes.find().fetch()

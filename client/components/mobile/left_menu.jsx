@@ -11,8 +11,9 @@ const LeftMenu = connect({
   layout: ['layout']
 }, class LeftMenu extends React.Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       drag:false
     };
   }
@@ -61,7 +62,7 @@ const LeftMenu = connect({
           <a className="item" href="/">Bit.Exchange</a>
 
           <TradePairsMenu pair={this.props.pair} />
-            { this.data.user ?
+            { this.props.user ?
 
                 this.renderMenuItems()
 
@@ -74,7 +75,7 @@ const LeftMenu = connect({
     );
   }
 });
-export default LeftMenuContainer = createContainer(({ params }) => {
+export default LeftMenuContainer = createContainer((props) => {
   return {
     user: Meteor.user()
   }

@@ -6,8 +6,9 @@ import {connect} from 'cerebral-view-react';
 const LoginModal = connect({
   show: ['showLoginModal']
 }, class LoginModal extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false
     };
@@ -42,7 +43,7 @@ const LoginModal = connect({
         onDeny={this.hide} onPositive={this.login} show={this.props.show}
         errorMsg={this.state.errorMessage} onVisible={this.focusLogin} allowSubmit={this.state.allowSubmit}>
 
-        <Formsy.Form className="ui large form" onSubmit={this.login} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref="form">
+        <Formsy.Form className="ui large form" onSubmit={this.login} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref="form">
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />

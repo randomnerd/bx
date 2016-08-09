@@ -15,8 +15,9 @@ const Home = connect({
   pair: ['pair', 'pair'],
   tools: ['tools']
 }, class Home extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       panel: false,
       icons: true,
       holder: false,
@@ -110,7 +111,7 @@ const Home = connect({
   }
 
   marketName(id) {
-    let curr = _.findWhere(this.data.markets, {
+    let curr = _.findWhere(this.props.markets, {
       _id: id
     });
     return curr
@@ -119,7 +120,7 @@ const Home = connect({
   }
 
   marketPairs(id) {
-    let markets = _.where(this.data.pairs, {
+    let markets = _.where(this.props.pairs, {
       market: id
     });
     // console.log('markets');
@@ -131,7 +132,7 @@ const Home = connect({
     return {$in: mIds};
   }
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
+    let curr = _.findWhere(this.props.currencies, {
       _id: id
     });
     return curr
@@ -140,8 +141,8 @@ const Home = connect({
   }
   renderPairsInGroup(group){
 
-    return this.data.pairs.map((pair) => {
-      //console.log(this.data.currencies);
+    return this.props.pairs.map((pair) => {
+      //console.log(this.props.currencies);
       if(_.contains(group, pair._id)){
         return (
           <a className='item'
@@ -156,7 +157,7 @@ const Home = connect({
   }
 
   renderGroups(market){
-    let groups = _.where(this.data.groups, {market: market._id});
+    let groups = _.where(this.props.groups, {market: market._id});
     return groups.map((item) => {
       if(item.published){
         let pair_ids = {$in: item.pairs};
@@ -196,7 +197,7 @@ const Home = connect({
     });
   }
   renderMarkets(){
-    return this.data.markets.map((item) => {
+    return this.props.markets.map((item) => {
       return (
         <div className="ui segment bloc">
           <div className="ui header">
@@ -232,7 +233,7 @@ const Home = connect({
                      organization that facilitates, verifies, enforces the negotiation and
                      performs the agent's contract.</p>
 
-                  { !this.props.user._id ? <div>
+                  { this.props.user ? <div>
                     <a className="ui massive teal button" onClick={this.showSignUpModal}>create account</a>
 
                     <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
@@ -304,7 +305,7 @@ const Home = connect({
   }
 
 });
-export default HomeContainer = createContainer(({ params }) => {
+export default HomeContainer = createContainer((props) => {
   let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
   let pair = TradePairs.findOne();
   return {

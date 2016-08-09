@@ -22,7 +22,7 @@ const AdminPairGroups = connect({
     }
   }
   currName(id) {
-    let curr = _.findWhere(this.data.pairs, {
+    let curr = _.findWhere(this.props.pairs, {
       _id: id
     });
     return curr
@@ -30,7 +30,7 @@ const AdminPairGroups = connect({
       : '';
   }
   marketName(id) {
-    let curr = _.findWhere(this.data.markets, {
+    let curr = _.findWhere(this.props.markets, {
       _id: id
     });
     return curr
@@ -48,8 +48,8 @@ const AdminPairGroups = connect({
     });
   }
   renderCurrenciesList() {
-    //console.log(this.data.pairgroups);
-    return this.data.pairgroups.map((curr) => {
+    //console.log(this.props.pairgroups);
+    return this.props.pairgroups.map((curr) => {
       return (
           <tr key={curr._id}>
             <td>{curr.name}</td>
@@ -95,7 +95,7 @@ const AdminPairGroups = connect({
     );
   }
 });
-export default AdminPairGroupsContainer = createContainer(({ params }) => {
+export default AdminPairGroupsContainer = createContainer((props) => {
   return {
     pairgroups: PairGroups.find({}, { sort: { name: 1 } }).fetch(),
     pairs: TradePairs.find().fetch(),

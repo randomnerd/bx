@@ -54,7 +54,7 @@ const UserTopMenu = connect({
     );
   }
 });
-export default UserTopMenuContainer = createContainer(({ params }) => {
+export default UserTopMenuContainer = createContainer((props) => {
   return {
     user: Meteor.user()
   };

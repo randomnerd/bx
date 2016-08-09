@@ -8,17 +8,17 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 const ChatView = connect({
 }, class ChatView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       haveMessages: false,
       messages: [],
       countFromDB: 0,
-      nowDate: new Date().valueOf(),
       textVal: '',
       isPrivate: false,
       replyId: null,
       replyName: null
-    };
+    }
   }
 
   writeMessage() {
@@ -81,7 +81,7 @@ const ChatView = connect({
   }
   messages() {
     return (
-      this.data.messages_all.map((item) => {
+      this.props.messages_all.map((item) => {
         return (
           <div className='comment' key={item._id}>
 
@@ -107,7 +107,7 @@ const ChatView = connect({
   }
   writeForm() {
     return (
-      <Formsy.Form className='ui form chatform' onValidSubmit={this.writeMessage} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+      <Formsy.Form className='ui form chatform' onValidSubmit={this.writeMessage} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
         <div className='field'>
           <label>
             <a className={'ui horizontal label' + (this.state.replyName ? '' : ' hidden')}>
@@ -145,11 +145,11 @@ const ChatView = connect({
     );
   }
 });
-export default ChatViewContainer = createContainer(({ params }) => {
+export default ChatViewContainer = createContainer((a) => {
   return {
     mesages: Chat.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
     messages_now: Chat.find({
-      ack: false, createdAt: {$gt: new Date(this.state.nowDate)
+      ack: false, createdAt: {$gt: new Date().valueOf()
       }}, {sort: {createdAt: -1}}).fetch(),
     messages_all: Chat.find({
       $or: [ {isPrivate: false}, {replyId: Meteor.userId()},

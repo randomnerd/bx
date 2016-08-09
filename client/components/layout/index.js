@@ -24,7 +24,7 @@ const Layout = connect({
     }
   }
 });
-export default LayoutContainer = createContainer(({ params }) => {
+export default LayoutContainer = createContainer((props) => {
   return {
     loading: !Meteor.subs.ready() || Meteor.loggingIn(),
     //currencies: Currencies.findOne(),

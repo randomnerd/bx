@@ -81,7 +81,7 @@ const Settings = connect({
             </div>
 
             <div className="ui basic segment">
-              <Formsy.Form key={this.props.k+3} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='auth'>
+              <Formsy.Form key={this.props.k+3} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='auth'>
                 <h2 className="ui header">Two-factor authentication</h2>
                 <p>
                   Scan this QR code with
@@ -115,7 +115,7 @@ const Settings = connect({
                   Generate new API key pair
                 </a>
 
-                <Formsy.Form key={this.props.k+5} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='api'>
+                <Formsy.Form key={this.props.k+5} className="ui form" onValidSubmit={this.newPassword} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='api'>
                   <Semantic.Input name="qr_code" label="API key" validations="minLength:3" placeholder="and type your code here" required />
                   <Semantic.Input name="chat_name" label="API Secret" validations="minLength:3" placeholder="Enter yor chat name" buttonAction={this.saveName} actionButton buttonName="Save" required />
                 </Formsy.Form>
@@ -128,7 +128,7 @@ const Settings = connect({
   }
 });
 
-export default SettingsContainer = createContainer(({ params }) => {
+export default SettingsContainer = createContainer((props) => {
   return {
     user: Meteor.user()
   };

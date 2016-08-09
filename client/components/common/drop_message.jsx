@@ -8,8 +8,9 @@ const DropMessage = connect({
   layout: ['layout'],
   notif: ['notif']
 }, class DropMessage extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       hidden: true,
       closed: false
     };
@@ -120,7 +121,7 @@ const DropMessage = connect({
     );
   }
 });
-export default DropMessageContainer = createContainer(({ params }) => {
+export default DropMessageContainer = createContainer((props) => {
   return {
 
   };

@@ -8,13 +8,14 @@ import { createContainer } from 'meteor/react-meteor-data';
 const TradePairsMenu = connect({
   layout: ['layout']
 }, class TradePairsMenu extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       showPairs:false
     };
   }
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
+    let curr = _.findWhere(this.props.currencies, {
       _id: id
     });
     return curr
@@ -28,7 +29,7 @@ const TradePairsMenu = connect({
   }
   renderMenuItems() {
     let active = this.props.pair ? this.props.pair : false;
-    return this.data.TradePairs.map((pair) => {
+    return this.props.TradePairs.map((pair) => {
       return (
         <a className={'item' + (active._id === pair._id ? ' active' : '') }
         onClick={this.showMenu}
@@ -70,7 +71,7 @@ const TradePairsMenu = connect({
     );
   }
 });
-export default TradePairsMenuContainer = createContainer(({ params }) => {
+export default TradePairsMenuContainer = createContainer((props) => {
   return {
     user: Meteor.user(),
     TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),

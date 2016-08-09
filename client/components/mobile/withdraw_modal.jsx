@@ -23,16 +23,17 @@ const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']
 }, class WithdrawModal extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       currId: null,
       allowSubmit: false,
       errorMessage: null
     };
   }
   getAmount() {
-    let curr    = this.data.currency;
-    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
+    let curr    = this.props.currency;
+    let balance = this.props.balance ? this.props.balance.displayAmount() : 0;
     return {
       right: {
         labels: [{
@@ -46,7 +47,7 @@ const WithdrawModal = connect({
 
   setBalance(){
     //console.log(this.refs.amount);
-    this.refs.amount.setValue(this.data.balance ? this.data.balance.displayAmount() : 0);
+    this.refs.amount.setValue(this.props.balance ? this.props.balance.displayAmount() : 0);
   }
 
   getAddressbook() {
@@ -88,7 +89,7 @@ const WithdrawModal = connect({
 
   withdraw() {
     Meteor.call('withdraw', {
-      currId: this.data.currency._id,
+      currId: this.props.currency._id,
       amount: this.refs.amount.getValue(),
       address: this.refs.address.getValue()
     });
@@ -99,10 +100,10 @@ const WithdrawModal = connect({
   }
 
   render() {
-    let curr = this.data.currency;
+    let curr = this.props.currency;
     if (!curr) return null;
     let fee = curr.withdrawalFee;
-    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
+    let balance = this.props.balance ? this.props.balance.displayAmount() : 0;
 
     return (
       <UserOnly redirect='/'>
@@ -110,13 +111,13 @@ const WithdrawModal = connect({
           onDeny={this.hide} onPositive={this.withdraw} show={this.props.tools.withdraw}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
             <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
             adds={this.getAmount()} required />
             <div className="ui labeled icon blue button" onClick={this.setBalance}>
               <i className="icon up arrow"></i>
-              Available: {this.data.balance ? this.data.balance.displayAmount() : 0}
+              Available: {this.props.balance ? this.props.balance.displayAmount() : 0}
             </div>
 
             <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
@@ -128,7 +129,7 @@ const WithdrawModal = connect({
     );
   }
 });
-export default WithdrawModalContainer = createContainer(({ params }) => {
+export default WithdrawModalContainer = createContainer((props) => {
   return {
     wallet: Wallets.findOne({_id: this.props.wallet}),
     balance: Balances.findOne({currId: this.props.wallet}),

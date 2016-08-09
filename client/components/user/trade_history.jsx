@@ -17,12 +17,12 @@ const UserTradeHistory = connect({
   }
 
   curr(id) {
-    let curr = _.findWhere(this.data.currencies, {_id: id});
+    let curr = _.findWhere(this.props.currencies, {_id: id});
     return curr
   }
 
   pair(id) {
-    let pair = _.findWhere(this.data.pairs, {_id: id});
+    let pair = _.findWhere(this.props.pairs, {_id: id});
     return pair
   }
 
@@ -33,11 +33,11 @@ const UserTradeHistory = connect({
   renderHistoryItems() {
     let nulls = '00000000';
 
-    return this.data.trades.map((item) => {
+    return this.props.trades.map((item) => {
 
       let pair = this.pair(item.pairId);
       let curr, mcurr, amount, mamount;
-      if(item.buyerId == this.data.user._id){
+      if(item.buyerId == this.props.user._id){
         curr = this.curr(pair.currId);
         mcurr = this.curr(pair.marketCurrId);
 
@@ -98,9 +98,9 @@ const UserTradeHistory = connect({
   }
 
   render() {
-    let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
-    let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
-    let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
+    let avail = this.props.balance ? this.props.balance.displayAmount() : (0).toFixed(8);
+    let held = this.props.balance ? this.props.balance.displayHeld() : (0).toFixed(8);
+    let total = this.props.balance ? this.props.balance.displayTotal() : (0).toFixed(8);
     let allowWithdraw = parseFloat(avail) > 0;
     return (
       <div className="ui main container myhistory">
@@ -140,7 +140,7 @@ const UserTradeHistory = connect({
   }
 });
 
-export default UserTradeHistoryContainer = createContainer(({ params }) => {
+export default UserTradeHistoryContainer = createContainer((props) => {
   return {
     trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
     currencies: Currencies.find().fetch(),

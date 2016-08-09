@@ -22,7 +22,7 @@ const AdminCurrencies = connect({
     }
   }
   renderCurrenciesList() {
-    return this.data.currencies.map((curr) => {
+    return this.props.currencies.map((curr) => {
       return (
           <tr key={curr._id}>
             <td>{curr.name}</td>
@@ -68,7 +68,7 @@ const AdminCurrencies = connect({
     );
   }
 });
-export default AdminCurrenciesContainer = createContainer(({ params }) => {
+export default AdminCurrenciesContainer = createContainer((props) => {
   return {
     currencies: PairTypes.find({}, { sort: { name: 1 } }).fetch()
   };

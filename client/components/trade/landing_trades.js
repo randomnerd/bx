@@ -9,18 +9,18 @@ const LandingTrades = connect({
   layout: ['layout'],
 }, class LandingTrades extends React.Component {
   curr(id) {
-    let curr = _.findWhere(this.data.currencies, {_id: id});
+    let curr = _.findWhere(this.props.currencies, {_id: id});
     return curr;
   }
 
   pair(id) {
-    let pair = _.findWhere(this.data.pairs, {_id: id});
+    let pair = _.findWhere(this.props.pairs, {_id: id});
     return pair
   }
 
   renderTradesItems() {
     let nulls = '00000000';
-    let data =this.data.trades;
+    let data =this.props.trades;
     //console.log(data);
     data.reverse();
     let prev = 1;
@@ -30,7 +30,7 @@ const LandingTrades = connect({
     });
     data.reverse();
 
-    let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
+    let max = this.props.tradesMax ? parseFloat(this.props.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
       let pair = this.pair(item.pairId);
 
@@ -94,16 +94,16 @@ const LandingTrades = connect({
   }
 });
 
-export default LandingTradesContainer = createContainer(({ params }) => {
+export default LandingTradesContainer = createContainer((props) => {
   return {
     trades: Trades.find(
-      { pairId: this.props.pair_ids },
+      { pairId: props.pair_ids },
       {sort: {createdAt: -1},
-      limit: this.props.limit||40}
+      limit: props.limit||40}
     ).fetch(),
     pairs: TradePairs.find({ published: true }).fetch(),
     currencies: Currencies.find({ published: true }).fetch(),
-    tradesMax: Trades.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
-    tradesLast: Trades.find({ pairId: this.props.pair_ids }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+    tradesMax: Trades.findOne({ pairId: props.pair_ids }, {sort: {amount: -1}}),
+    tradesLast: Trades.find({ pairId: props.pair_ids }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
   };
 }, LandingTrades);

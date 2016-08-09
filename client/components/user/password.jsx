@@ -44,7 +44,7 @@ const PasswordPage = connect({
             </div>
             <div className='ui small blue segment centered'>
               <Formsy.Form key={this.props.k} className='ui form' onValidSubmit={this.newPassword}
-                onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='pass'>
+                onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='pass'>
 
                 <Semantic.Input name='old_pass' ref='old_password' className="eight wide centered"
                 type='password' label='Old password' validations='minLength:3'
@@ -75,7 +75,7 @@ const PasswordPage = connect({
   }
 });
 
-export default PasswordPageContainer = createContainer(({ params }) => {
+export default PasswordPageContainer = createContainer((props) => {
   return {
     user: Meteor.user()
   };

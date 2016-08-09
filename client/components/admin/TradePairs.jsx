@@ -28,7 +28,7 @@ const AdminTradePairs = connect({
     }
   }
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
+    let curr = _.findWhere(this.props.currencies, {
       _id: id
     });
     return curr
@@ -36,7 +36,7 @@ const AdminTradePairs = connect({
       : '';
   }
   marketName(id) {
-    let curr = _.findWhere(this.data.markets, {
+    let curr = _.findWhere(this.props.markets, {
       _id: id
     });
     return curr
@@ -45,7 +45,7 @@ const AdminTradePairs = connect({
   }
 
   renderPairsList() {
-    return this.data.TradePairs.map((pair) => {
+    return this.props.TradePairs.map((pair) => {
         return (
           <tr key={pair._id}>
             <td>{this.currName(pair.currId)}</td>
@@ -97,7 +97,7 @@ const AdminTradePairs = connect({
     );
   }
 });
-export default AdminTradePairsContainer = createContainer(({ params }) => {
+export default AdminTradePairsContainer = createContainer((props) => {
   return {
     TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
     currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),

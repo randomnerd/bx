@@ -23,8 +23,9 @@ const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']
 }, class WithdrawModal extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       withdraw: false,
       currId: null,
       allowSubmit: false,
@@ -47,8 +48,8 @@ const WithdrawModal = connect({
     });
   }
   getAmount() {
-    let curr    = this.data.currency;
-    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
+    let curr    = this.props.currency;
+    let balance = this.props.balance ? this.props.balance.displayAmount() : 0;
     return {
       left: {
         buttons: [{
@@ -106,7 +107,7 @@ const WithdrawModal = connect({
 
   withdraw() {
     Meteor.call('withdraw', {
-      currId: this.data.currency._id,
+      currId: this.props.currency._id,
       amount: this.refs.amount.getValue(),
       address: this.refs.address.getValue(),
       totp: this.state.totpEnabled ? this.refs.totp.getValue() : null
@@ -118,17 +119,17 @@ const WithdrawModal = connect({
   }
 
   render() {
-    let curr = this.data.currency;
+    let curr = this.props.currency;
     if (!curr) return null;
     let fee = curr.withdrawalFee;
-    let balance = this.data.balance ? this.data.balance.displayAmount() : 0;
+    let balance = this.props.balance ? this.props.balance.displayAmount() : 0;
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
           onDeny={this.hide} onPositive={this.withdraw} show={this.props.tools.withdraw}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
             <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
             adds={this.getAmount()} required />
@@ -142,10 +143,10 @@ const WithdrawModal = connect({
     );
   }
 });
-export default WithdrawModalContainer = createContainer(({ params }) => {
+export default WithdrawModalContainer = createContainer((props) => {
   return {
-    wallet: Wallets.findOne({_id: this.props.wallet}),
-    balance: Balances.findOne({currId: this.props.wallet}),
-    currency: Currencies.findOne({_id: this.props.wallet})
+    wallet: Wallets.findOne({_id: props.wallet}),
+    balance: Balances.findOne({currId: props.wallet}),
+    currency: Currencies.findOne({_id: props.wallet})
   };
 }, WithdrawModal);

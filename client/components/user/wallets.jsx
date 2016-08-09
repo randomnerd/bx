@@ -20,14 +20,14 @@ const WalletsPage = connect({
   }
 
   getAddress(currId) {
-    if (!this.data.wallets) return;
-    let wallet = _.findWhere(this.data.wallets, {currId: currId});
+    if (!this.props.wallets) return;
+    let wallet = _.findWhere(this.props.wallets, {currId: currId});
     return wallet && wallet.address;
   }
 
   getBalance(currId) {
-    if (!this.data.balances) return;
-    let balance = _.findWhere(this.data.balances, {currId: currId});
+    if (!this.props.balances) return;
+    let balance = _.findWhere(this.props.balances, {currId: currId});
     return balance ? balance.displayAmount() : (0).toFixed(8);
   }
 
@@ -38,7 +38,7 @@ const WalletsPage = connect({
   }
 
   renderWalletItems() {
-    return this.data.currencies.map((item) => {
+    return this.props.currencies.map((item) => {
       let address = this.getAddress(item._id);
       let balance = this.getBalance(item._id);
       let allowWithdraw = parseFloat(balance) > 0;
@@ -97,7 +97,7 @@ const WalletsPage = connect({
     );
   }
 });
-export default WalletsPageContainer = createContainer(({ params }) => {
+export default WalletsPageContainer = createContainer((props) => {
   return {
     balances: Balances.find({}).fetch(),
     currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),

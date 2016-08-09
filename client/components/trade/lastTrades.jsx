@@ -11,7 +11,7 @@ const LastTrades = connect({
 }, class LastTrades extends React.Component {
   renderTradesItems() {
     let nulls = '00000000';
-    let data =this.data.trades;
+    let data =this.props.trades;
     //console.log(data);
     data.reverse();
     let prev = 1;
@@ -21,7 +21,7 @@ const LastTrades = connect({
     });
     data.reverse();
 
-    let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
+    let max = this.props.tradesMax ? parseFloat(this.props.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
@@ -79,7 +79,7 @@ const LastTrades = connect({
   }
 });
 
-export default LastTradesContainer = createContainer(({ params }) => {
+export default LastTradesContainer = createContainer((props) => {
   return {
     trades: Trades.find(
       { pairId: this.props.pair._id },

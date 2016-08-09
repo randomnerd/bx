@@ -116,7 +116,7 @@ const TradeGrid = connect({
   }
 
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {_id: id});
+    let curr = _.findWhere(this.props.currencies, {_id: id});
     return curr ? curr.shortName : '';
   }
 
@@ -188,64 +188,64 @@ const TradeGrid = connect({
 
               return (
                   <div>
-                  <Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.data.chartItems)}
+                  <Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.props.chartItems)}
                 type='svg' pairText={"sd"}/></div>
               );
               break;
 
           case 'line':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR.slice(200)} type='hybrid' height={350} height_bar={150}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='hybrid' height={350} height_bar={150}/></div>
               );
               break;
 
           case 'macd':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR.slice(200)} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
               );
               break;
           case 'rsi':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR.slice(200)} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
               );
               break;
 
           case 'sto':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
               );
               break;
 
           case 'bollinger':
               return (
                   <div>
-                      <Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/>
+                      <Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/>
                   </div>
               );
               break;
 
           case 'kagi':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
               );
               break;
 
           case 'pointandfigure':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
               );
               break;
 
           case 'haikinashi':
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
               );
               break;
 
           case 'renko':
 
               return (
-                  <div><Charts.candelstick_default data={this.data.BTPR} type='svg' height={350}/></div>
+                  <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
               );
               break;
 
@@ -379,15 +379,15 @@ const TradeGrid = connect({
   }
 
   renderOpenorders(){
-    if(this.data.pairId){
+    if(this.props.pairId){
       return (
         <div className='ux fixorders container drag' ref="openorders" data-block="openorders">
           <div className='ui basic segment h100'>
             <h3 className='ui header'>MY ORDERS</h3>
             <OpenOrders
               pairId={this.props.pair._id}
-              valute1={this.data.pair.currId}
-              valute2={this.data.pair.marketCurrId} />
+              valute1={this.props.pair.currId}
+              valute2={this.props.pair.marketCurrId} />
           </div>
         </div>
       );
@@ -568,9 +568,9 @@ const TradeGrid = connect({
     this.setState({drag_on: newProps.tools.drag});
     let dragReset = newProps.tools.dragReset;
     if(dragReset){
-      //this.positions() = this.data.user.profile.blocs;
+      //this.positions() = this.props.user.profile.blocs;
       let places = this.state.places;
-      _.each(this.data.user.profile.blocs, (item, key)=>{
+      _.each(this.props.user.profile.blocs, (item, key)=>{
         if(item.place == 3 && item.size == "big"){
           this.setState({fixclass: true});
         }
@@ -609,14 +609,14 @@ const TradeGrid = connect({
   }
 
   componentDidMount() {
-    if(!this.data.user){
+    if(!this.props.user){
       //FlowRouter.go("/");
       return;
     }
-    if(this.data.user.profile && this.data.user.profile.blocs){
+    if(this.props.user.profile && this.props.user.profile.blocs){
       let places = this.state.places;
-      //this.positions() = this.data.user.profile.blocs;
-      _.each(this.data.user.profile.blocs, (item, key)=>{
+      //this.positions() = this.props.user.profile.blocs;
+      _.each(this.props.user.profile.blocs, (item, key)=>{
         if(item.place == 3 && item.size == "big"){
           this.setState({fixclass: true});
         }
@@ -854,7 +854,7 @@ const TradeGrid = connect({
 
     this.wides();
     this.dragBlocks();
-    //  console.log(this.data.BTPR.slice(200));
+    //  console.log(this.props.BTPR.slice(200));
 
   }
 
@@ -996,7 +996,7 @@ const TradeGrid = connect({
   }
 });
 
-export default TradeGridContainer = createContainer(({ params }) => {
+export default TradeGridContainer = createContainer((props) => {
   let pair = TradePairs.findOne({permalink: this.props.pair_link});
 
   return {

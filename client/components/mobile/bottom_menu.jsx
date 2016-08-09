@@ -11,8 +11,9 @@ const BottomMenu = connect({
   mob: ['mob']
 }, class BottomMenu extends React.Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       drag: false,
       active: "buysell"
     };

@@ -11,8 +11,9 @@ const TopMenu = connect({
   layout: ['layout']
 }, class TopMenu extends React.Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       drag:false
     };
   }
@@ -40,7 +41,7 @@ const TopMenu = connect({
 
         {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
 
-        { this.data.user ?
+        { this.props.user ?
           <div className="right menu">
             <NotificationShow />
           </div>
@@ -50,7 +51,7 @@ const TopMenu = connect({
     );
   }
 });
-export default TopMenuContainer = createContainer(({ params }) => {
+export default TopMenuContainer = createContainer((props) => {
   return {
     user: Meteor.user()
   }

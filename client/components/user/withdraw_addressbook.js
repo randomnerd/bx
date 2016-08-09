@@ -10,8 +10,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 const WithdrawAddressBook = connect({
   tools: ['tools']
 }, class WithdrawAddressBook extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       errorMessage: null,
       allowSubmit: false,
       amount: ''
@@ -32,7 +33,7 @@ const WithdrawAddressBook = connect({
   allowSubmit() { this.setState({allowSubmit: true}); }
   disallowSubmit() { this.setState({allowSubmit: false}); }
   renderAddressItems() {
-    return this.data.addresses.map((item) => {
+    return this.props.addresses.map((item) => {
       return  (
         <WithdrawAddress key={item._id} item={item} />
       );
@@ -64,7 +65,7 @@ const WithdrawAddressBook = connect({
             </div>
           </div>
           <h3 className='ui header'>New address</h3>
-          <Formsy.Form className='ui large form' onValidSubmit={this.saveAddress} onValid={this.allowSubmit} onInvalid={this.disallowSubmit} ref='form'>
+          <Formsy.Form className='ui large form' onValidSubmit={this.saveAddress} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
             <div className='two fields'>
               <Semantic.Input name='name' label='Name' placeholder='Type your contact name here' ref='name' required/>
               <Semantic.Input name='address' label='Address'  placeholder='Type address here' ref='address' required />
@@ -77,7 +78,7 @@ const WithdrawAddressBook = connect({
     );
   }
 });
-export default WithdrawAddressBookContainer = createContainer(({ params }) => {
+export default WithdrawAddressBookContainer = createContainer((props) => {
   return {
     addresses: wAddressBook.find().fetch()
   };

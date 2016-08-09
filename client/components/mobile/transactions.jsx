@@ -11,7 +11,7 @@ const TransactionsView = connect({
 }, class TransactionsView extends React.Component {
 
   renderHistoryItems() {
-    let unsortedItems = this.data.deposits.concat(this.data.withdrawals);
+    let unsortedItems = this.props.deposits.concat(this.props.withdrawals);
     let items = unsortedItems.sort((a, b) => {
       if (a.createdAt > b.createdAt) return -1;
       if (a.createdAt < b.createdAt) return 1;
@@ -40,9 +40,9 @@ const TransactionsView = connect({
   }
 
   render() {
-    let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
-    let held = this.data.balance ? this.data.balance.displayHeld() : (0).toFixed(8);
-    let total = this.data.balance ? this.data.balance.displayTotal() : (0).toFixed(8);
+    let avail = this.props.balance ? this.props.balance.displayAmount() : (0).toFixed(8);
+    let held = this.props.balance ? this.props.balance.displayHeld() : (0).toFixed(8);
+    let total = this.props.balance ? this.props.balance.displayTotal() : (0).toFixed(8);
     return (
       <div className="ui main container">
         <div className="ui segments">
@@ -53,12 +53,12 @@ const TransactionsView = connect({
               <span>back</span>
             </a>
             <h2 className="ui header">
-              {this.data.currency.name} balance
+              {this.props.currency.name} balance
             </h2>
           </div>
           <div className="ui secondary segment">
             <button className="ui fluid blue button" onClick={this.showWithdraw}>
-              Withdraw {this.data.currency.shortName}
+              Withdraw {this.props.currency.shortName}
             </button>
           </div>
 
@@ -69,7 +69,7 @@ const TransactionsView = connect({
 
 
             <h2 className="ui header center aligned">
-              {avail} {this.data.currency.shortName}
+              {avail} {this.props.currency.shortName}
             </h2>
 
             <div className="ui clearing divider"></div>
@@ -77,14 +77,14 @@ const TransactionsView = connect({
             <h4 className="ui header center aligned">Held for orders</h4>
 
             <h2 className="ui header center aligned">
-              {held} {this.data.currency.shortName}
+              {held} {this.props.currency.shortName}
             </h2>
 
             <div className="ui clearing divider"></div>
             <h4 className="ui header center aligned">Total</h4>
 
             <h2 className="ui header center aligned">
-              {total} {this.data.currency.shortName}
+              {total} {this.props.currency.shortName}
             </h2>
 
 
@@ -118,7 +118,7 @@ const TransactionsView = connect({
     );
   }
 });
-export default TransactionsViewContainer = createContainer(({ params }) => {
+export default TransactionsViewContainer = createContainer((props) => {
   return {
     balance: Balances.findOne({currId: this.props.wallet}),
     currency: Currencies.findOne({_id:this.props.wallet}),

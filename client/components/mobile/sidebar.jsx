@@ -11,8 +11,9 @@ const Sidebar = connect({
   pair_link: ['pair_link'],
   user: ['user']
 }, class Sidebar extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       sidebar: false
     };
   }
