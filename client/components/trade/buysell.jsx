@@ -1,31 +1,24 @@
 import React from 'react';
 import Formsy from 'formsy-react'
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 
-const BuySell = Component({
+const BuySell = connect({
   layout: ['layout'],
   pair_link: ['pair_link'],
   buysell: ['pair', 'buysell'],
   pair: ['pair', 'pair']
-}, {
-  getInitialState: function() {
+}, class BuySell extends React.Component {
+  getInitialState() {
     return {
       amount: 0,
       price: 0,
       ordType: 'limit'
     };
-  },
-  getMeteorData() {
-    return {
-      balance1: Balances.findOne({currId: this.props.pair.currId}),
-      balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
-      currency1: Currencies.findOne({_id: this.props.pair.currId}),
-      currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
-    }
-  },
+  }
+
   createOrder(buy) {
 
     let params = {
@@ -35,32 +28,37 @@ const BuySell = Component({
       buy:    buy
     };
     Meteor.call('createOrder', params);
-  },
+  }
+
   componentWillReceiveProps(newProps){
     // console.log(newProps.buysell);
     // if (!this.isMounted() || !newProps.buysell) return;
     //
     // this.refs.amount.setValue(newProps.buysell.amount);
     // if(this.refs.price){ this.refs.price.setValue(newProps.buysell.price); }
-  },
+  }
+
   componentDidMount() {
 
-  },
+  }
+
   setMarket(event) {
     // $(this.refs.ordType).find('.item').removeClass('active');
     // $(event.currentTarget).addClass('active');
     // this.setState({ordType: 'market'});
-  },
+  }
+
   setLimit(event) {
     $(this.refs.ordType).find('.item').removeClass('active');
     $(event.currentTarget).addClass('active');
     this.setState({ordType: 'limit'});
-  },
+  }
   setStop(event) {
     // $(this.refs.ordType).find('.item').removeClass('active');
     // $(event.currentTarget).addClass('active');
     // this.setState({ordType: 'stop'});
-  },
+  }
+
   showWithPrice() {
     let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
@@ -75,7 +73,8 @@ const BuySell = Component({
         onChg={this.changePrice} />
       </div>
     );
-  },
+  }
+
   showWithoutPrice() {
     let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
@@ -87,7 +86,8 @@ const BuySell = Component({
 
       </div>
     );
-  },
+  }
+
   changeAmount(event) {
     let val = event.currentTarget.value;
     let matcher = new RegExp("^\\d*\\.?\\d*$");
@@ -106,9 +106,8 @@ const BuySell = Component({
         price: this.props.buysell.price,
       });
     }
+  }
 
-
-  },
   changePrice(event) {
     let val = event.currentTarget.value;
     let matcher = new RegExp("^\\d*\\.?\\d*$");
@@ -126,13 +125,16 @@ const BuySell = Component({
         price: val,
       });
      }
-  },
+  }
+
   allowSubmit() {
     this.setState({allowSubmit: true});
-  },
+  }
+
   disallowSubmit() {
     this.setState({allowSubmit: false});
-  },
+  }
+
   render() {
     let {buysell} = this.props;//.buysell || {amount: '', price: ''};
     return (
@@ -172,4 +174,12 @@ const BuySell = Component({
     );
   }
 });
-export default BuySell;
+
+export default BuySellContainer = createContainer(({ params }) => {
+  return {
+    balance1: Balances.findOne({currId: this.props.pair.currId}),
+    balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
+    currency1: Currencies.findOne({_id: this.props.pair.currId}),
+    currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
+  }
+}, BuySell);

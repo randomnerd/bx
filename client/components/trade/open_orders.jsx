@@ -1,26 +1,15 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Orders, Currencies} from '../../../both/collections';
 import moment from 'moment';
 
-const OpenOrders = Component({
+const OpenOrders = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    let curr1 =Currencies.findOne({_id: this.props.valute1});
-    //console.log(this.props.valute1);
-    return {
-      orders: Orders.find({pairId: (this.props.pairId)}, {sort: {createdAt: -1}}).fetch(),
-      currency1: Currencies.findOne({_id: this.props.valute1}),
-      currency2: Currencies.findOne({_id: this.props.valute2})
-    }
-  },
-
+}, class OpenOrders extends React.Component {
   cancelOrder(order) {
     order.cancel();
-  },
+  }
 
   cancelOrders() {
     if(confirm('Clear all?')){
@@ -29,7 +18,7 @@ const OpenOrders = Component({
       });
     }
     //order.cancel();
-  },
+  }
 
   renderOrderItems() {
     return this.data.orders.map((item) => {
@@ -45,7 +34,8 @@ const OpenOrders = Component({
         </tr>
       );
     });
-  },
+  }
+
   render() {
     return (
       <div className='ui basic teal segment h100 noheader'>
@@ -84,4 +74,13 @@ const OpenOrders = Component({
     );
   }
 });
-export default OpenOrders;
+
+export default OpenOrdersContainer = createContainer(({ params }) => {
+  let curr1 =Currencies.findOne({_id: this.props.valute1});
+  //console.log(this.props.valute1);
+  return {
+    orders: Orders.find({pairId: (this.props.pairId)}, {sort: {createdAt: -1}}).fetch(),
+    currency1: Currencies.findOne({_id: this.props.valute1}),
+    currency2: Currencies.findOne({_id: this.props.valute2})
+  }
+}, OpenOrders);

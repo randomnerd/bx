@@ -1,34 +1,16 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Currencies, Trades, OrderBookItems, TradePairs} from '../../both/collections';
 
-const TopInfo = Component({
+const TopInfo = connect({
   layout: ['layout'],
   pair: ['pair', 'pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      pair: TradePairs.findOne({_id: this.props.pair._id}),
-      user: Meteor.user(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-      tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
-      tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
-      tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
-      tradesBid: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: 1 } } ),
-      tradesAsk: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
-    };
-  },
-  getInitialState() {
-    return {
-
-    };
-  },
-
+}, class TopInfo extends React.Component {
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
-  },
+  }
+
   render() {
     return (
       <div>
@@ -59,4 +41,16 @@ const TopInfo = Component({
     );
   }
 });
-export default TopInfo;
+
+export default TopInfoContainer = createContainer(({ params }) => {
+  return {
+    pair: TradePairs.findOne({_id: this.props.pair._id}),
+    user: Meteor.user(),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
+    tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
+    tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
+    tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
+    tradesBid: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: 1 } } ),
+    tradesAsk: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
+  };
+}, TopInfo);

@@ -1,44 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const Notification = Component({
+const Notification = connect({
   user: ['user'],
   //pair: ['pair.pair']
-}, {
-  mixins: [ReactMeteorData],
+}, class Notification extends React.Component {
   getInitialState() {
     return {
       hidden: true,
       closed: false
     };
-  },
-  types: {
-    messageAccent: {
-      error: ' negative', //red
-      accept: ' positive', //green
-      warning: ' warning', //orange
-      info: ' info', //blue
-      chat: ' chat',
-      default: false //gray
-    },
-    messagesIcon: {
-      error: ' warning sign',
-      accept: ' checkmark',
-      warning: ' warning circle',
-      info: ' info circle',
-      chat: ' comment',
-      default: ' comment outline'
-    }
-  },
-  getMeteorData() {
+  }
+
+  types() {
     return {
+      messageAccent: {
+        error: ' negative', //red
+        accept: ' positive', //green
+        warning: ' warning', //orange
+        info: ' info', //blue
+        chat: ' chat',
+        default: false //gray
+      },
+      messagesIcon: {
+        error: ' warning sign',
+        accept: ' checkmark',
+        warning: ' warning circle',
+        info: ' info circle',
+        chat: ' comment',
+        default: ' comment outline'
+      }
+    }
+  }
 
-    };
-  },
-  componentDidMount() {
-
-  },
   delMessage() {
     let $this = this;
     $(ReactDOM.findDOMNode(this)).transition({
@@ -50,13 +45,13 @@ const Notification = Component({
         });
       }
     });
-  },
+  }
 
 
   render() {
     return (
-      <tr key={this.props.item._id} className={'item ' + (this.props.item.type ? this.types.messageAccent[this.props.item.type]: '')}>
-        <td><i className={this.types.messagesIcon[(this.props.item.icon ? this.props.item.icon:this.props.item.type)] + ' icon' + (this.props.item.type ? this.types.messageAccent[this.props.item.type] : '')}></i></td>
+      <tr key={this.props.item._id} className={'item ' + (this.props.item.type ? this.types().messageAccent[this.props.item.type]: '')}>
+        <td><i className={this.types.messagesIcon[(this.props.item.icon ? this.props.item.icon:this.props.item.type)] + ' icon' + (this.props.item.type ? this.types().messageAccent[this.props.item.type] : '')}></i></td>
         <td>{this.props.item.title}</td>
         <td>{this.props.item.message}</td>
         <td>{this.props.item.ack ? 'old' : 'new'}</td>

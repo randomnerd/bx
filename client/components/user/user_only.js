@@ -1,6 +1,6 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
-const UserOnly = Component({
+import {connect} from 'cerebral-view-react';
+const UserOnly = connect({
   user: ['user'],
   loggingIn: ['loggingIn']
 }, ({user, loggingIn, redirect, children}) => {

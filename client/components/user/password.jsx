@@ -1,24 +1,19 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import UserOnly from '../user/user_only';
 import Semantic from '../semantic';
 
-const PasswordPage = Component({
+const PasswordPage = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
+}, class PasswordPage extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false
     };
-  },
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    };
-  },
+  }
+
   newPassword() {
     let {old_pass, password} = this.refs.pass.getCurrentValues();
     Accounts.changePassword(old_pass, password, (err)=>{
@@ -33,9 +28,10 @@ const PasswordPage = Component({
         console.log('no err');
       }
     });
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
 
   render() {
     return (
@@ -77,4 +73,9 @@ const PasswordPage = Component({
     );
   }
 });
-export default PasswordPage;
+
+export default PasswordPageContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user()
+  };
+}, PasswordPage);

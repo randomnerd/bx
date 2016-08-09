@@ -1,30 +1,17 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Withdrawals, Transactions} from '../../../both/collections';
 
-const Balance = Component({
+const Balance = connect({
   layout: ['layout'],
   pair_link: ['pair_link'],
   pair: ['pair', 'pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      balance1: Balances.findOne({currId: this.props.pair.currId}),
-      balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
-      currency1: Currencies.findOne({_id: this.props.pair.currId}),
-      currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
-    }
-  },
+}, class Balance extends React.Component {
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
-  },
+    let curr = _.findWhere(this.data.currencies, {_id: id});
+    return curr ? curr.shortName : '';
+  }
 
   render() {
     let balance1 = this.data.balance1 ? this.data.balance1.displayAmount() : (0).toFixed(8);
@@ -59,4 +46,12 @@ const Balance = Component({
     );
   }
 });
-export default Balance;
+
+export default BalanceContainer = createContainer(({ params }) => {
+  return {
+    balance1: Balances.findOne({currId: this.props.pair.currId}),
+    balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
+    currency1: Currencies.findOne({_id: this.props.pair.currId}),
+    currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
+  };
+}, Balance);

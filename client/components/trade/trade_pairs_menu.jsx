@@ -1,32 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {TradePairs, Currencies} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
-const TradePairsMenu = Component({
+import {connect} from 'cerebral-view-react';
+const TradePairsMenu = connect({
   user: ['user'],
   //pair: ['pair.pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      //user: Meteor.user(),
-      TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
-    };
-  },
+}, class TradePairsMenu extends React.Component {
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
-  },
+    let curr = _.findWhere(this.data.currencies, {_id: id});
+    return curr ? curr.shortName : '';
+  }
+
   displayCurrent() {
     return this.props.pair ?
       (this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)) :
       'Choose a pair';
-  },
+  }
+
   renderMenuItems() {
     let active = this.props.pair ? this.props.pair : false;
     return this.data.TradePairs.map((pair) => {
@@ -40,10 +30,12 @@ const TradePairsMenu = Component({
         </a>
       );
     });
-  },
+  }
+
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
-  },
+  }
+  
   render() {
     return (
       <div className='ui dropdown item'>
@@ -58,4 +50,11 @@ const TradePairsMenu = Component({
     );
   }
 });
-export default TradePairsMenu;
+
+export default TradePairsMenuContainer = createContainer(({ params }) => {
+  return {
+    //user: Meteor.user(),
+    TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
+  };
+}, TradePairsMenu);

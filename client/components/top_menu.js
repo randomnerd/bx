@@ -6,30 +6,26 @@ import TopInfo from './mobile/top_info';
 import Infopanel from './common/infopanel';
 import NotificationShow from './common/notifications';
 
-import {Component} from 'cerebral-view-react';
-const TopMenu = Component({
+import {connect} from 'cerebral-view-react';
+const TopMenu = connect({
   user: ['user'],
   pair: ['pair'],
   pair_link: ['pair_link'],
   page: ['page']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      //user: Meteor.user()
-    };
-  },
+}, class TopMenu extends React.Component {
   getInitialState() {
     return {
       drag:false
     };
-  },
+  }
+
   getMenuItems() {
     return [
       //{ href: '/', label: 'Bit.Exchange', extraCls: '' },
       //{ href: '/pair', label: 'Pairs', extraCls: '' }
     ];
-  },
+  }
+
   renderLoginButtons() {
     return (
       <div className="right menu">
@@ -37,33 +33,41 @@ const TopMenu = Component({
         <a className="item" onClick={this.showSignUpModal}>Sign up</a>
       </div>
     );
-  },
+  }
+
   renderMenuItems() {
     return this.getMenuItems().map((item) => {
       return <a className={"item " + item.extraCls} key={item.label} href={item.href}>{item.label}</a>;
     });
-  },
+  }
+
   getInitialState() {
     return {
       drag:false
     };
-  },
+  }
+
   showLoginModal() {
     this.props.signals.user.loginClicked();
-  },
+  }
+
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
-  },
+  }
+
   chatToggle() {
     this.props.signals.tools.chat();
-  },
+  }
+
   infoToggle(){
     this.props.signals.tools.infoPanel();
-  },
+  }
+
   dragToggle(){
     this.props.signals.tools.dragToggle();
     this.setState({drag: !this.state.drag});
-  },
+  }
+
   resetBlocks(){
     let defaultPos = {
       orders: {
@@ -103,7 +107,8 @@ const TopMenu = Component({
       }
     });
     //this.dragToggle();
-  },
+  }
+
   render() {
     let pair = this.props.pair? this.props.pair.pair : false;
     return (

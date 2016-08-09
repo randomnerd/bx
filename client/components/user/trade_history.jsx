@@ -1,44 +1,34 @@
 import React from 'react';
 import {Tracker} from 'meteor/tracker';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades, TradePairs, Currencies} from '../../../both/collections';
 import moment from 'moment';
 
-const UserTradeHistory = Component({
+const UserTradeHistory = connect({
   layout: ['layout'],
   pair: ['pair','pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
-      currencies: Currencies.find().fetch(),
-      pairs: TradePairs.find().fetch(),
-      user: Meteor.user()
-    };
-  },
+}, class UserTradeHistory extends React.Component {
   getInitialState(){
     return{
       test: 1
     }
-  },
-  curr(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
-  },
-  pair(id) {
-    let pair = _.findWhere(this.data.pairs, {
-      _id: id
-    });
-    return pair
+  }
 
-  },
+  curr(id) {
+    let curr = _.findWhere(this.data.currencies, {_id: id});
+    return curr
+  }
+
+  pair(id) {
+    let pair = _.findWhere(this.data.pairs, {_id: id});
+    return pair
+  }
+
   componentDidMount() {
     this.props.signals.u.getHistory({limit: 40, skip: 0});
-  },
+  }
+
   renderHistoryItems() {
     let nulls = '00000000';
 
@@ -99,11 +89,12 @@ const UserTradeHistory = Component({
           </tr>
         );
     });
-  },
-  showWithdraw(){
+  }
+
+  showWithdraw() {
     // this.props.signals.tools.withdraw({action: 'open'});
     // this.props.signals.u.walletSet({id: this.props.wallet});
-  },
+  }
 
   render() {
     let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
@@ -148,4 +139,11 @@ const UserTradeHistory = Component({
   }
 });
 
-export default UserTradeHistory;
+export default UserTradeHistoryContainer = createContainer(({ params }) => {
+  return {
+    trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
+    currencies: Currencies.find().fetch(),
+    pairs: TradePairs.find().fetch(),
+    user: Meteor.user()
+  };
+}, UserTradeHistory);

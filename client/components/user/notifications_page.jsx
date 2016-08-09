@@ -1,13 +1,12 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import NotificationOne from './notification_one';
 import {Notifications} from '../../../both/collections';
 
-const NotificationsPage = Component({
+const NotificationsPage = connect({
   user: ['user'],
   //pair: ['pair.pair']
-}, {
-  mixins: [ReactMeteorData],
+}, class NotificationsPage extends React.Component {
   clearAll(event) {
     if (confirm('Clear all notifications?')) {
       Meteor
@@ -21,18 +20,8 @@ const NotificationsPage = Component({
           }
         });
     }
-  },
-  getMeteorData() {
-    return {
-      notifications: Notifications.find({}, {
-        limit: 50
-      }, {
-        sort: {
-          createdAt: -1
-        }
-      }).fetch()
-    };
-  },
+  }
+
   renderNotificationsList() {
     return this.data
       .notifications
@@ -41,7 +30,8 @@ const NotificationsPage = Component({
           <NotificationOne key={item._id} item={item}/>
         );
       });
-  },
+  }
+
   render() {
     return (
       <div className="ui main container">
@@ -67,4 +57,9 @@ const NotificationsPage = Component({
     );
   }
 });
-export default NotificationsPage;
+
+export default NotificationsPageContainer = createContainer(({ params }) => {
+  return {
+    notifications: Notifications.find({}, {limit: 50}, { sort: {createdAt: -1}}).fetch()
+  };
+}, NotificationsPage);

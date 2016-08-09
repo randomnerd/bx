@@ -1,50 +1,43 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {wAddressBook} from '../../../both/collections';
 import Semantic from '../semantic';
 import WithdrawAddress from './withdraw_address';
 import UserOnly from './user_only';
 
-const WithdrawAddressBook = Component({
+const WithdrawAddressBook = connect({
   tools: ['tools']
-}, {
-  mixins: [ReactMeteorData],
+}, class WithdrawAddressBook extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false,
       amount: ''
     };
-  },
-  getMeteorData() {
-    return {
-      addresses: wAddressBook.find().fetch()
-    };
-  },
-
-  componentDidMount() {
-
-  },
+  }
 
   hide(e) {
     this.setState({errorMessage: null});
     this.props.signals.tools.addressbook({action: 'close'});
     this.props.signals.tools.withdraw({action: 'open'});
-  },
+  }
+
   saveAddress() {
     let addrVals = this.refs.form.getCurrentValues();
     Meteor.call('address/add', addrVals);
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
   renderAddressItems() {
     return this.data.addresses.map((item) => {
       return  (
         <WithdrawAddress key={item._id} item={item} />
       );
     });
-  },
+  }
+
   render() {
     return (
       <UserOnly redirect='/'>
@@ -83,4 +76,8 @@ const WithdrawAddressBook = Component({
     );
   }
 });
-export default WithdrawAddressBook;
+export default WithdrawAddressBookContainer = createContainer(({ params }) => {
+  return {
+    addresses: wAddressBook.find().fetch()
+  };
+}, WithdrawAddressBook);

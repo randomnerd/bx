@@ -1,42 +1,21 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades, TradePairs, Currencies} from '../../../both/collections';
 import moment from 'moment';
-const LandingTrades = Component({
+const LandingTrades = connect({
   layout: ['layout'],
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    return {
-      trades: Trades.find(
-        { pairId: this.props.pair_ids },
-        {sort: {createdAt: -1},
-        limit: this.props.limit||40}
-      ).fetch(),
-      pairs: TradePairs.find({ published: true }).fetch(),
-      currencies: Currencies.find({ published: true }).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
-      tradesLast: Trades.find({ pairId: this.props.pair_ids }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-    };
-  },
+}, class LandingTrades extends React.Component {
   curr(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
+    let curr = _.findWhere(this.data.currencies, {_id: id});
+    return curr;
+  }
 
-  },
   pair(id) {
-    let pair = _.findWhere(this.data.pairs, {
-      _id: id
-    });
+    let pair = _.findWhere(this.data.pairs, {_id: id});
     return pair
+  }
 
-  },
-  componentDidMount() {
-    //console.log(this.props.pair_ids);
-  },
   renderTradesItems() {
     let nulls = '00000000';
     let data =this.data.trades;
@@ -92,7 +71,8 @@ const LandingTrades = Component({
         </tr>
       );
     });
-  },
+  }
+
   render() {
     //console.log(this.props.pair_ids);
     return (
@@ -111,4 +91,17 @@ const LandingTrades = Component({
     );
   }
 });
-export default LandingTrades;
+
+export default LandingTradesContainer = createContainer(({ params }) => {
+  return {
+    trades: Trades.find(
+      { pairId: this.props.pair_ids },
+      {sort: {createdAt: -1},
+      limit: this.props.limit||40}
+    ).fetch(),
+    pairs: TradePairs.find({ published: true }).fetch(),
+    currencies: Currencies.find({ published: true }).fetch(),
+    tradesMax: Trades.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
+    tradesLast: Trades.find({ pairId: this.props.pair_ids }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+  };
+}, LandingTrades);

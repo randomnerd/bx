@@ -1,44 +1,21 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {TradePairs, OrderBookItems, Currencies} from '../../../both/collections';
 import moment from 'moment';
-const LandingOrders = Component({
+const LandingOrders = connect({
   layout: ['layout'],
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    let lim = this.props.limit ? Math.ceil(this.props.limit/2) : false
-    return {
-      ordersSell: OrderBookItems.find( { pairId: this.props.pair_ids , buy: false}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
-      ordersBuy: OrderBookItems.find( { pairId: this.props.pair_ids , buy: true}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
-      orders: OrderBookItems.find(
-        { pairId: this.props.pair_ids },
-        {sort: {createdAt: -1},
-        limit: this.props.limit||40}
-      ).fetch(),
-      tradesMax: OrderBookItems.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
-      pairs: TradePairs.find({ published: true }).fetch(),
-      currencies: Currencies.find({ published: true }).fetch(),
-    };
-  },
+}, class LandingOrders extends React.Component {
   curr(id) {
-    let curr = _.findWhere(this.data.currencies, {
-      _id: id
-    });
-    return curr
+    let curr = _.findWhere(this.data.currencies, {_id: id});
+    return curr;
+  }
 
-  },
   pair(id) {
-    let pair = _.findWhere(this.data.pairs, {
-      _id: id
-    });
-    return pair
+    let pair = _.findWhere(this.data.pairs, {_id: id});
+    return pair;
+  }
 
-  },
-  componentDidMount() {
-    //console.log(this.props.pair_ids);
-  },
   renderTradesItems(direction) {
     let nulls = '00000000';
     let data = [];
@@ -47,7 +24,6 @@ const LandingOrders = Component({
     }else{
       data =this.data.ordersSell;
     }
-
 
     let max = this.data.tradesMax ? parseFloat(this.data.tradesMax.displayAmount()) : 1;
     return data.map((item) => {
@@ -90,7 +66,8 @@ const LandingOrders = Component({
           </tr>
         );
     });
-  },
+  }
+
   render() {
     //console.log(this.props.pair_ids);
     return (
@@ -111,4 +88,19 @@ const LandingOrders = Component({
     );
   }
 });
-export default LandingOrders;
+
+export default LandingOrdersContainer = createContainer(({ params }) => {
+  let lim = this.props.limit ? Math.ceil(this.props.limit/2) : false
+  return {
+    ordersSell: OrderBookItems.find( { pairId: this.props.pair_ids , buy: false}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+    ordersBuy: OrderBookItems.find( { pairId: this.props.pair_ids , buy: true}, { sort: { price: -1 }, limit: lim||40}  ).fetch(),
+    orders: OrderBookItems.find(
+      { pairId: this.props.pair_ids },
+      {sort: {createdAt: -1},
+      limit: this.props.limit||40}
+    ).fetch(),
+    tradesMax: OrderBookItems.findOne({ pairId: this.props.pair_ids }, {sort: {amount: -1}}),
+    pairs: TradePairs.find({ published: true }).fetch(),
+    currencies: Currencies.find({ published: true }).fetch(),
+  };
+}, LandingOrders);

@@ -1,27 +1,13 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades} from '../../../both/collections';
 import moment from 'moment';
 
-const LastTrades = Component({
+const LastTrades = connect({
   layout: ['layout'],
   pair: ['pair','pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    return {
-      trades: Trades.find(
-        { pairId: this.props.pair._id },
-        {sort: {createdAt: -1},
-        limit: this.props.limit||40}
-      ).fetch(),
-      tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
-      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-    };
-  },
-
-
+}, class LastTrades extends React.Component {
   renderTradesItems() {
     let nulls = '00000000';
     let data =this.data.trades;
@@ -64,7 +50,8 @@ const LastTrades = Component({
           </tr>
         );
     });
-  },
+  }
+
   render() {
     return (
       <div className='ui basic teal segment h100 tabheader'>
@@ -90,4 +77,15 @@ const LastTrades = Component({
     );
   }
 });
-export default LastTrades;
+
+export default LastTradesContainer = createContainer(({ params }) => {
+  return {
+    trades: Trades.find(
+      { pairId: this.props.pair._id },
+      {sort: {createdAt: -1},
+      limit: this.props.limit||40}
+    ).fetch(),
+    tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
+    tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+  };
+}, LastTrades);

@@ -1,13 +1,12 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import UserOnly from '../user/user_only';
 import Semantic from '../semantic';
 
-const Settings = Component({
+const Settings = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
+}, class Settings extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
@@ -16,15 +15,12 @@ const Settings = Component({
       qr: null,
       published:''
     };
-  },
+  }
+
   componentDidMount() {
     this.getQR();
-  },
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    };
-  },
+  }
+
   twoFactorAuth(){
     Meteor.call('/totp/key', true, (err, data) => {
       if (err) {
@@ -33,7 +29,8 @@ const Settings = Component({
         this.setState({qr: data.qr});
       }
     });
-  },
+  }
+
   getQR(){
     Meteor.call('/totp/key', false, (err, data) => {
       if (err) {
@@ -42,26 +39,28 @@ const Settings = Component({
         this.setState({qr: data.qr});
       }
     });
-  },
-  
+  }
+
   checkTotp(){
     var {totp} = this.refs.totp.getCurrentValues();
     this.enableTOTP(totp);
     if(!this.state.totpEnabled) this.getQR();
-  },
+  }
+
   totpAdds(){
     return {
       right:{
         buttons:[{name:(this.state.totpEnabled?"Disable":"Enable"),icon:'checkmark',accent:'blue',action:()=>{this.checkTotp()}}]
       }
     }
-  },
+  }
+
   verifyTOTP(token) {
     Meteor.call('/totp/verify', token, (err, result) => {
       if (err) return console.error('TOTP verify', err);
       console.log('TOTP verify', result);
     })
-  },
+  }
 
   enableTOTP(token) {
     Meteor.call('/totp/enable', token, this.state.totpEnabled, (err, result) => {
@@ -69,7 +68,7 @@ const Settings = Component({
       this.setState({totpEnabled: result.totpEnabled});
 
     })
-  },
+  }
 
   render() {
     return (
@@ -127,4 +126,9 @@ const Settings = Component({
     );
   }
 });
-export default Settings;
+
+export default SettingsContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user()
+  };
+}, Settings);

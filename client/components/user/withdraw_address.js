@@ -1,42 +1,39 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import Semantic from '../semantic';
 import {wAddressBook} from '../../../both/collections';
 
-const WithdrawAddress = Component({
+const WithdrawAddress = connect({
   tools: ['tools']
-}, {
-  mixins: [ReactMeteorData],
+}, class WithdrawAddress extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false,
       editable: false
     };
-  },
-  getMeteorData() {
-    return {
-      address: wAddressBook.findOne({_id: this.props.item._id})
-    };
-  },
+  }
+
   edit() {
     this.setState({editable: true});
-  },
+  }
+
   save() {
     let addrVals = this.refs.form.getCurrentValues();
     Meteor.call('address/update', this.props.item._id, addrVals);
     this.setState({editable: false});
-  },
+  }
+
   del() {
     if (!confirm('Delete?')) return;
     Meteor.call('address/remove', this.props.item._id);
-  },
+  }
+
   pick() {
     this.props.signals.tools.setaddress({address: this.props.item.address});
     this.props.signals.tools.addressbook({action: 'close'});
     this.props.signals.tools.withdraw({action: 'open'});
-  },
-
+  }
 
   render() {
     return (
@@ -77,4 +74,8 @@ const WithdrawAddress = Component({
     );
   }
 });
-export default WithdrawAddress;
+export default WithdrawAddressContainer = createContainer(({ params }) => {
+  return {
+    address: wAddressBook.findOne({_id: this.props.item._id})
+  };
+}, WithdrawAddress);

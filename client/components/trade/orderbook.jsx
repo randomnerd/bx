@@ -1,27 +1,16 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {OrderBookItems,Trades} from '../../../both/collections';
 
-const Orderbook = Component({
+const Orderbook = connect({
   layout: ['layout'],
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    return {
-      ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
-      ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
-      ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
-      tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-      tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
-      tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
-    };
-  },
-  getInitialState: function() {
+}, class Orderbook extends React.Component {
+  getInitialState() {
     return {
       spread: 0.1,
     };
-  },
+  }
 
   goBuySell(item, e) {
     this.props.signals.pair.setBuysell({
@@ -29,7 +18,8 @@ const Orderbook = Component({
       price: item.displayPrice(),
       //direction: this.props.direction,
     });
-  },
+  }
+
   renderSellItems() {
     let nulls = '00000000';
 
@@ -76,7 +66,7 @@ const Orderbook = Component({
         </tr>
       );
     });
-  },
+  }
 
   renderBuyItems() {
     let nulls = '00000000';
@@ -123,7 +113,7 @@ const Orderbook = Component({
         </tr>
       );
     });
-  },
+  }
 
   renderSpread() {
     let nulls = '00000000';
@@ -179,7 +169,8 @@ const Orderbook = Component({
         </tr>
 
       );
-  },
+  }
+
   render() {
     //console.log(this.data.ordersSell);
     return (
@@ -210,4 +201,14 @@ const Orderbook = Component({
     );
   }
 });
-export default Orderbook;
+
+export default OrderbookContainer = createContainer(({ params }) => {
+  return {
+    ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
+    ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
+    ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
+    tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+    tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
+    tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
+  };
+}, Orderbook);

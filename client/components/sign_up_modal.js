@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react'
 import Semantic from './semantic';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
 Formsy.addValidationRule('passwordConfirmationMatch', (values, value) => {
   return values.password === values.password_confirm;
@@ -14,20 +14,22 @@ Formsy.addValidationRule('passwordSecure', (values, value) => {
   let hasLetter = letter.exec(values.password);
   return hasDigit && hasLetter;
 });
-const SignUpModal = Component({
+const SignUpModal = connect({
   show: ['showSignUpModal']
-}, {
+}, class SignUpModal extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false
     };
-  },
+  }
+
   hide(e) {
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
     this.props.signals.user.signUpDone();
-  },
+  }
+
   signUp() {
     var {email, password, chat_name} = this.refs.form.getCurrentValues();
 
@@ -38,9 +40,10 @@ const SignUpModal = Component({
         this.hide();
       }
     });
-  },
-  allowSubmit() { this.setState({allowSubmit: true}) },
-  disallowSubmit() { this.setState({allowSubmit: false}) },
+  }
+
+  allowSubmit() { this.setState({allowSubmit: true}) }
+  disallowSubmit() { this.setState({allowSubmit: false}) }
 
   render() {
     return (

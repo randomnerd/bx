@@ -1,38 +1,19 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies, Withdrawals, Transactions, TradePairs, Trades} from '../../../both/collections';
 import moment from 'moment';
 
-const TransactionsView = Component({
+const TransactionsView = connect({
   layout: ['layout'],
   wallet: ['wallet']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    let pairs = TradePairs.find({$or:[{currId: this.props.wallet}, {marketCurrId: this.props.wallet}]}).fetch();
-    let pair_ids = pairs.map(function(pair) {
-      return pair._id;
-    });
-    let user = Meteor.user();
-    return {
-      balance: Balances.findOne({currId: this.props.wallet}),
-      currency: Currencies.findOne({_id:this.props.wallet}),
-      withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
-      deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
-      trades: Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: user._id}, {sellerId: user._id}]}).fetch(),
-      user: Meteor.user(),
-      pairs: pairs
-    }
-  },
+}, class TransactionsView extends React.Component {
   getInitialState() {
     return {
       test: 1
     }
-  },
-  componentDidMount() {
+  }
 
-  },
   renderHistoryItems() {
     let unsortedItems = this.data.deposits.concat(this.data.withdrawals).concat(this.data.trades);
     let items = unsortedItems.sort((a, b) => {
@@ -92,12 +73,12 @@ const TransactionsView = Component({
 
       );
     });
-  },
+  }
 
   showWithdraw(){
     this.props.signals.tools.withdraw({action: 'open'});
     this.props.signals.u.walletSet({id: this.props.wallet});
-  },
+  }
 
   render() {
     let avail = this.data.balance ? this.data.balance.displayAmount() : (0).toFixed(8);
@@ -184,4 +165,19 @@ const TransactionsView = Component({
   }
 });
 
-export default TransactionsView;
+export default TransactionsViewContainer = createContainer(({ params }) => {
+  let pairs = TradePairs.find({$or:[{currId: this.props.wallet}, {marketCurrId: this.props.wallet}]}).fetch();
+  let pair_ids = pairs.map(function(pair) {
+    return pair._id;
+  });
+  let user = Meteor.user();
+  return {
+    balance: Balances.findOne({currId: this.props.wallet}),
+    currency: Currencies.findOne({_id:this.props.wallet}),
+    withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+    deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+    trades: Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: user._id}, {sellerId: user._id}]}).fetch(),
+    user: Meteor.user(),
+    pairs: pairs
+  };
+}, TransactionsView);
