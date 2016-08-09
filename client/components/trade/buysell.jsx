@@ -12,13 +12,12 @@ const BuySell = connect({
   buysell: ['pair', 'buysell'],
   pair: ['pair', 'pair']
 }, class BuySell extends React.Component {
-  getInitialState() {
-    return {
-      amount: 0,
-      price: 0,
-      ordType: 'limit'
-    };
+  state = {
+    amount: 0,
+    price: 0,
+    ordType: 'limit'
   }
+
 
   createOrder(buy) {
 
@@ -178,9 +177,9 @@ const BuySell = connect({
 
 export default BuySellContainer = createContainer((props) => {
   return {
-    balance1: Balances.findOne({currId: this.props.pair.currId}),
-    balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
-    currency1: Currencies.findOne({_id: this.props.pair.currId}),
-    currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
+    balance1: Balances.findOne({currId: props.pair.currId}),
+    balance2: Balances.findOne({currId: props.pair.marketCurrId}),
+    currency1: Currencies.findOne({_id: props.pair.currId}),
+    currency2: Currencies.findOne({_id: props.pair.marketCurrId}),
   }
 }, BuySell);

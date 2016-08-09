@@ -117,7 +117,7 @@ const TopMenu = connect({
           </a>
           :
           null}
-          { !!this.props.user._id ?
+          { !!this.props.user ?
             <div className="right menu">
               {this.state.drag ? <a className="icon item" onClick={this.resetBlocks.bind(this)} title="View reset">
                 <i className="refresh icon"></i>

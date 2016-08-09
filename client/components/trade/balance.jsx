@@ -50,9 +50,9 @@ const Balance = connect({
 
 export default BalanceContainer = createContainer((props) => {
   return {
-    balance1: Balances.findOne({currId: this.props.pair.currId}),
-    balance2: Balances.findOne({currId: this.props.pair.marketCurrId}),
-    currency1: Currencies.findOne({_id: this.props.pair.currId}),
-    currency2: Currencies.findOne({_id: this.props.pair.marketCurrId}),
+    balance1: Balances.findOne({currId: props.pair.currId}),
+    balance2: Balances.findOne({currId: props.pair.marketCurrId}),
+    currency1: Currencies.findOne({_id: props.pair.currId}),
+    currency2: Currencies.findOne({_id: props.pair.marketCurrId}),
   };
 }, Balance);

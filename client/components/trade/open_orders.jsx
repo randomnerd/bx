@@ -77,11 +77,11 @@ const OpenOrders = connect({
 });
 
 export default OpenOrdersContainer = createContainer((props) => {
-  let curr1 =Currencies.findOne({_id: this.props.valute1});
-  //console.log(this.props.valute1);
+  let curr1 =Currencies.findOne({_id: props.valute1});
+  //console.log(props.valute1);
   return {
-    orders: Orders.find({pairId: (this.props.pairId)}, {sort: {createdAt: -1}}).fetch(),
-    currency1: Currencies.findOne({_id: this.props.valute1}),
-    currency2: Currencies.findOne({_id: this.props.valute2})
+    orders: Orders.find({pairId: (props.pairId)}, {sort: {createdAt: -1}}).fetch(),
+    currency1: Currencies.findOne({_id: props.valute1}),
+    currency2: Currencies.findOne({_id: props.valute2})
   }
 }, OpenOrders);

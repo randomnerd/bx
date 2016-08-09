@@ -205,11 +205,11 @@ const Orderbook = connect({
 
 export default OrderbookContainer = createContainer((props) => {
   return {
-    ordersSell: OrderBookItems.find( { pairId: this.props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
-    ordersBuy: OrderBookItems.find( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
-    ordersMax: OrderBookItems.findOne( { pairId: this.props.pair._id }, { sort: { amount: -1 } } ),
-    tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-    tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
-    tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
+    ordersSell: OrderBookItems.find( { pairId: props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
+    ordersBuy: OrderBookItems.find( { pairId: props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
+    ordersMax: OrderBookItems.findOne( { pairId: props.pair._id }, { sort: { amount: -1 } } ),
+    tradesLast: Trades.find({ pairId: props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+    tradesHi: Trades.findOne({ pairId: props.pair._id }, {sort: {price: -1}}),
+    tradesLo: Trades.findOne({ pairId: props.pair._id }, {sort: {price: 1}}),
   };
 }, Orderbook);

@@ -23,8 +23,9 @@ import Chat from '../common/chat';
 import {TradePairs, Currencies} from '../../../both/collections';
 
 const MainLayout = connect({
-  page: 'page.page',
-
+  page: 'page',
+  pair_link: 'pair_link',
+  pair: 'pair.pair',
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {

@@ -82,11 +82,11 @@ const LastTrades = connect({
 export default LastTradesContainer = createContainer((props) => {
   return {
     trades: Trades.find(
-      { pairId: this.props.pair._id },
+      { pairId: props.pair._id },
       {sort: {createdAt: -1},
-      limit: this.props.limit||40}
+      limit: props.limit||40}
     ).fetch(),
-    tradesMax: Trades.findOne({ pairId: this.props.pair._id }, {sort: {amount: -1}}),
-    tradesLast: Trades.find({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
+    tradesMax: Trades.findOne({ pairId: props.pair._id }, {sort: {amount: -1}}),
+    tradesLast: Trades.find({ pairId: props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
   };
 }, LastTrades);

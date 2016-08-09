@@ -87,7 +87,8 @@ const WithdrawModal = connect({
   }
 
   componentWillReceiveProps(newProps){
-    if (!this.isMounted() || !newProps.tools.address) return;
+    //if (!this.isMounted() || !newProps.tools.address) return;
+    if (!this.props.show) return;
       this.refs.address.setValue(newProps.tools.address);
   }
 
