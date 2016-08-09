@@ -1,5 +1,4 @@
 import React from 'react';
-//import InfoPanel from 'components/common/infopanel';
 import TopMenu from '../mobile/top_menu';
 import BottomMenu from '../mobile/bottom_menu';
 import LoginModal from '../login_modal';
