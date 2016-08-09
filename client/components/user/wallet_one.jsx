@@ -75,7 +75,7 @@ const WalletPage = connect({
         </td>
         <td className='three wide right aligned'>
           <div className='ui mini buttons'>
-            <a className={'ui blue button' + (balance>0?'':' disabled')} onClick={this.showWithdraw} >
+            <a className={'ui blue button' + (balance>0?'':' disabled')} onClick={this.showWithdraw.bind(this)} >
               Withdraw
             </a>
             <a className='ui button' href={'/u/wallet/' + item._id}>

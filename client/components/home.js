@@ -108,7 +108,7 @@ const Home = connect({
 
                 <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
               </div> : null }
-              <a className="ui massive icon button scrolldown" onClick={this.scrollAll}>
+              <a className="ui massive icon button scrolldown" onClick={this.scrollAll.bind(this)}>
                 <i className="down arrow icon" />
               </a>
             </div>

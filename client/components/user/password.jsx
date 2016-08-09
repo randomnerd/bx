@@ -60,7 +60,7 @@ const PasswordPage = connect({
 
                 <div className='field'>
                   <a className={'ui' + (!this.state.allowSubmit ? ' disabled' : '') +
-                  ' positive normal labeled icon button'} onClick={this.newPassword}>
+                  ' positive normal labeled icon button'} onClick={this.newPassword.bind(this)}>
                     <i className='checkmark icon' />
                     Save new password
                   </a>

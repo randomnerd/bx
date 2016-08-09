@@ -57,7 +57,7 @@ const TransactionsView = connect({
             </h2>
           </div>
           <div className="ui secondary segment">
-            <button className="ui fluid blue button" onClick={this.showWithdraw}>
+            <button className="ui fluid blue button" onClick={this.showWithdraw.bind(this)}>
               Withdraw {this.props.currency.shortName}
             </button>
           </div>

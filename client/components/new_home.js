@@ -234,11 +234,11 @@ const Home = connect({
                      performs the agent's contract.</p>
 
                   { this.props.user ? <div>
-                    <a className="ui massive teal button" onClick={this.showSignUpModal}>create account</a>
+                    <a className="ui massive teal button" onClick={this.showSignUpModal.bind(this)}>create account</a>
 
                     <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
                   </div> : null }
-                  <a className="ui massive icon button scrolldown" onClick={this.scrollAll}>
+                  <a className="ui massive icon button scrolldown" onClick={this.scrollAll.bind(this)}>
                     <i className="down arrow icon" />
                   </a>
                 </div>

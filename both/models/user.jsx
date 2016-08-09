@@ -8,7 +8,7 @@ Meteor.users._transform = (user) => {
   return new User(user);
 };
 
-class User {
+export default class User {
   constructor(data) {
     _.extend(this, data);
   }

@@ -61,7 +61,7 @@ const AdminTradePairs = connect({
                 <a className='ui positive button' href={'/admin/tradepairs/edit/' + pair._id}>
                   <i className='write icon'></i>
                 </a>
-                <div className='ui negative button' onClick={this.delPair} data-del={pair._id}>
+                <div className='ui negative button' onClick={this.delPair.bind(this)} data-del={pair._id}>
                   <i className='remove icon'></i>
                 </div>
               </div>

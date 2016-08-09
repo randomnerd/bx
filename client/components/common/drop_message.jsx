@@ -109,7 +109,7 @@ const DropMessage = connect({
     return (
       <a className=
       {'item ' + (this.props.item.type ? this.types().messageAccent[ this.types().vitalyTypes[ this.props.item.type ] ] : '')}
-      onClick={this.props.newitem ? this.readMessage : this.delMessage}>
+      onClick={this.props.newitem ? this.readMessage : this.delMessage.bind(this)}>
 
           {this.props.item.title ?
             this.addHeader(this.props.item)

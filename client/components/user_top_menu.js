@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
+import User from '/both/models/user';
 //import UserTopMenu from './user_top_menu';
 
 import {connect} from 'cerebral-view-react';
@@ -29,15 +30,15 @@ const UserTopMenu = connect({
   }
 
   render() {
-    //console.log(this.props.user);
+    let user = this.props.user ? new User(this.props.user) : null;
     return (
       <div className="ui right floated dropdown item">
         <i className="user icon" />
-        {this.props.user?this.props.user.displayName():null}
+        {user?user.displayName():null}
         <i className="dropdown icon" />
 
         <div className="menu">
-          {this.props.user.isAdmin() ? <a className="item" href="/admin/">Admin</a> : null }
+          {user.isAdmin() ? <a className="item" href="/admin/">Admin</a> : null }
           {this.renderMenuItems()}
         </div>
       </div>

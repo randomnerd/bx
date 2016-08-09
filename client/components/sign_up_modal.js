@@ -49,10 +49,10 @@ const SignUpModal = connect({
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
-        onDeny={this.hide} onPositive={this.signUp} show={this.props.show}
+        onDeny={this.hide.bind(this)} onPositive={this.signUp.bind(this)} show={this.props.show}
         errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-        <Formsy.Form className="ui large form" onValidSubmit={this.signUp} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
+        <Formsy.Form className="ui large form" onValidSubmit={this.signUp.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
 

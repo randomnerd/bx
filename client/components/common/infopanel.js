@@ -80,19 +80,19 @@ const Infopanel = connect({
           <div className="three column row">
             <div className="column">
               <div className='ui tabular basic menu nounderline leftline' ref='currType'>
-                <a className='item double positive olive' onClick={this.setMarket}>
+                <a className='item double positive olive' onClick={this.setMarket.bind(this)}>
                   <h4 className="ui header teal text">BTC / USD</h4>
                   <p>234.9292</p>
                 </a>
-                <a className='item double negative orange' onClick={this.setLimit}>
+                <a className='item double negative orange' onClick={this.setLimit.bind(this)}>
                   <h4 className="ui header teal text">BTC / CNY</h4>
                   <p>163.9292</p>
                 </a>
-                <a className='item double negative blue' onClick={this.setStop}>
+                <a className='item double negative blue' onClick={this.setStop.bind(this)}>
                   <h4 className="ui header teal text">GLD / BTC</h4>
                   <p>234.9292</p>
                 </a>
-                <a className='item double positive purple' onClick={this.setStop}>
+                <a className='item double positive purple' onClick={this.setStop.bind(this)}>
                   <h4 className="ui header teal text">ANC / BTC</h4>
                   <p>234.9292</p>
                 </a>
@@ -107,16 +107,16 @@ const Infopanel = connect({
             <div className="column">
 
               <div className='ui tabular basic menu' ref='most'>
-                <a className={'item' + (this.state.most == 'active' ? ' active' : '')} onClick={this.mostActive}>
+                <a className={'item' + (this.state.most == 'active' ? ' active' : '')} onClick={this.mostActive.bind(this)}>
                   Most Actives
                 </a>
-                <a className={'item' + (this.state.most == 'mined' ? ' active' : '')} onClick={this.mostMined}>
+                <a className={'item' + (this.state.most == 'mined' ? ' active' : '')} onClick={this.mostMined.bind(this)}>
                   Most Mined
                 </a>
-                <a className={'item' + (this.state.most == 'gainers' ? ' active' : '')} onClick={this.mostGainers}>
+                <a className={'item' + (this.state.most == 'gainers' ? ' active' : '')} onClick={this.mostGainers.bind(this)}>
                   Most Gainers
                 </a>
-                <a className={'item' + (this.state.most == 'loosers' ? ' active' : '')} onClick={this.mostLoosers}>
+                <a className={'item' + (this.state.most == 'loosers' ? ' active' : '')} onClick={this.mostLoosers.bind(this)}>
                   Most Loosers
                 </a>
               </div>
@@ -178,13 +178,13 @@ const Infopanel = connect({
             </div>
             <div className="column">
               <div className='ui tabular basic menu' ref='currTypes'>
-                <a className={'item' + (this.state.pair == 'btc' ? ' active' : '')} onClick={this.pairBTC}>
+                <a className={'item' + (this.state.pair == 'btc' ? ' active' : '')} onClick={this.pairBTC.bind(this)}>
                   ALT / BTC
                 </a>
-                <a className={'item' + (this.state.pair == 'usd' ? ' active' : '')} onClick={this.pairUSD}>
+                <a className={'item' + (this.state.pair == 'usd' ? ' active' : '')} onClick={this.pairUSD.bind(this)}>
                   ALT / USD
                 </a>
-                <a className={'item' + (this.state.pair == 'cny' ? ' active' : '')} onClick={this.pairCNY}>
+                <a className={'item' + (this.state.pair == 'cny' ? ' active' : '')} onClick={this.pairCNY.bind(this)}>
                   ALT / CNY
                 </a>
               </div>

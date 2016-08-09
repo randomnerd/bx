@@ -46,12 +46,12 @@ const Modal = connect({
         </div>
 
         <div className="actions">
-          <div className="ui black button" onClick={this.props.onDeny}>
+          <div className="ui black button" onClick={this.props.onDeny.bind(this)}>
             { this.props.denyLabel }
           </div>
 
           <button className="ui green right labeled icon button"
-            onClick={this.props.onPositive} disabled={!this.props.allowSubmit}>
+            onClick={this.props.onPositive.bind(this)} disabled={!this.props.allowSubmit}>
             { this.props.positiveLabel }
             <i className="checkmark icon"></i>
           </button>

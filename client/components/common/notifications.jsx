@@ -92,7 +92,7 @@ const NotificationShow = connect({
             {this.renderDropMessages()}
           </div>
             {this.props.notifications_new.length ?
-              <a className='item' onClick={this.delAllMessages}>
+              <a className='item' onClick={this.delAllMessages.bind(this)}>
                 Mark all as read
               </a>
               : ''
@@ -110,7 +110,7 @@ export default NotificationShowContainer = createContainer((props) => {
   return {
     notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
     notifications_now: Notifications.find({
-      ack: false, createdAt: {$gt: new Date(this.state.nowDate)
+      ack: false, createdAt: {$gt: new Date().valueOf()
       }}, {sort: {createdAt: -1}}).fetch(),
     notifications: Notifications.find({}, {limit: 10}, {sort: {createdAt: -1}}).fetch()
   };

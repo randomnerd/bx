@@ -32,7 +32,7 @@ const TradePairsMenu = connect({
     return this.props.TradePairs.map((pair) => {
       return (
         <a className={'item' + (active._id === pair._id ? ' active' : '') }
-        onClick={this.showMenu}
+        onClick={this.showMenu.bind(this)}
         key = {pair.permalink}
         href = {'/pair/' + pair.permalink}>
           {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}

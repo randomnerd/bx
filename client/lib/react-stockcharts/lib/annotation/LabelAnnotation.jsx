@@ -29,7 +29,7 @@ class LabelAnnotation extends Component {
 					fill={fill}
 					opacity={opacity}
 					transform={`rotate(${rotate}, ${xPos}, ${yPos})`}
-					onClick={this.handleClick}
+					onClick={this.handleClick.bind(this)}
 					textAnchor={textAnchor}>{text}</text>
 		</g>);
 	}

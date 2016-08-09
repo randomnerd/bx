@@ -29,15 +29,15 @@ const TopMenu = connect({
   renderLoginButtons() {
     return (
       <div className="right menu">
-        <a className="item" onClick={this.showLoginModal}>Log in</a>
-        <a className="item" onClick={this.showSignUpModal}>Sign up</a>
+        <a className="item" onClick={this.showLoginModal.bind(this)}>Log in</a>
+        <a className="item" onClick={this.showSignUpModal.bind(this)}>Sign up</a>
       </div>
     );
   }
   render() {
     return (
       <div className="ui top fixed large menu">
-        <a className="icon item" onClick={this.showMenu}><i className="sidebar large black icon"></i></a>
+        <a className="icon item" onClick={this.showMenu.bind(this)}><i className="sidebar large black icon"></i></a>
 
         {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
 

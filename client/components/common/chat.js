@@ -112,15 +112,15 @@ const ChatView = connect({
           <label>
             <a className={'ui horizontal label' + (this.state.replyName ? '' : ' hidden')}>
               To: {this.state.replyName}
-              <i className='delete icon' onClick={this.noReply}></i>
+              <i className='delete icon' onClick={this.noReply.bind(this)}></i>
             </a>
           </label>
           <Semantic.Input name='text' placeholder='text here...' value={this.state.textVal} ref='text' />
         </div>
         <div className='two fields'>
-          <Semantic.Checkbox className={this.state.replyName?'':' disabled'} name='isPrivate' label='private' onClick={this.bePrivate} ref='isPrivate' isChecked={this.state.isPrivate} />
+          <Semantic.Checkbox className={this.state.replyName?'':' disabled'} name='isPrivate' label='private' onClick={this.bePrivate.bind(this)} ref='isPrivate' isChecked={this.state.isPrivate} />
           <div className='field'>
-            <a className='ui positive labeled right aligned normal icon button' onClick={this.writeMessage}>
+            <a className='ui positive labeled right aligned normal icon button' onClick={this.writeMessage.bind(this)}>
               <i className='checkmark icon' />
               Send
             </a>

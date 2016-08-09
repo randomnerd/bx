@@ -34,7 +34,7 @@ const AdminCurrencies = connect({
                 <a className='ui positive button' href={'/admin/pairtypes/edit/' + curr._id}>
                   <i className='write icon'></i>
                 </a>
-                <div className='ui negative button' onClick={this.delCurr} data-del={curr._id}>
+                <div className='ui negative button' onClick={this.delCurr.bind(this)} data-del={curr._id}>
                   <i className='remove icon'></i>
                 </div>
               </div>

@@ -130,12 +130,12 @@ const AdminPairGroup = connect({
 
           <div className='two fields'>
 
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.props.pairgrup && this.props.pairgrup.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.pairgrup && this.props.pairgrup.published ? true : false} />
 
             <div className='field'>
 
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.curr ? this.saveCurr : this.newCurr}>
+                onClick={this.props.curr ? this.saveCurr : this.newCurr.bind(this)}>
                 <i className='checkmark icon' />
                 Save currency type
               </a>

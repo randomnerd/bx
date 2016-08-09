@@ -71,7 +71,9 @@ export default (options = {}) => {
         module.getSignals().loggedInUpdated({loggingIn: Accounts.loggingIn()});
       });
       Tracker.autorun(() => {
-        module.getSignals().userChanged({user: Meteor.user() || {}});
+        let user = Meteor.user() || null;
+        console.log('userChanged', user)
+        module.getSignals().userChanged({user: user});
       });
 
     })

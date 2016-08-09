@@ -56,7 +56,7 @@ const Notification = connect({
         <td>{this.props.item.message}</td>
         <td>{this.props.item.ack ? 'old' : 'new'}</td>
         <td className='right aligned collapsing'>
-          <div className='ui tiny normal icon negative button' onClick={this.delMessage}>
+          <div className='ui tiny normal icon negative button' onClick={this.delMessage.bind(this)}>
             <i className='remove icon'></i>
           </div>
         </td>

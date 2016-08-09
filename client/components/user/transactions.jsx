@@ -92,7 +92,7 @@ const TransactionsView = connect({
         <div className="ui segments">
           <div className="ui secondary segment">
             <div className="ui header clearfix">
-              <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw}>
+              <button className={'ui right floated blue button' + (allowWithdraw ? '' : ' disabled')}  onClick={this.showWithdraw.bind(this)}>
                 Withdraw {this.props.currency.shortName}
               </button>
               <a href="/u/wallets" className="ui right floated white button">

@@ -120,10 +120,10 @@ const AdminTradePair = connect({
           required value={this.currentVal('sellFee')} />
 
           <div className='two fields'>
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle} isChecked={this.props.tradePairs && this.props.tradePairs.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.tradePairs && this.props.tradePairs.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.adm_pair ? this.savePair : this.newPair}>
+                onClick={this.props.adm_pair ? this.savePair : this.newPair.bind(this)}>
                 <i className='checkmark icon' />
                 Save pair
               </a>

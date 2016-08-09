@@ -22,7 +22,7 @@ class SvgPathAnnotation extends Component {
 
 		var { x, y, fill, tooltip } = helper(this.props, xAccessor, xScale, yScale);
 
-		return (<g className={className} onClick={this.handleClick}>
+		return (<g className={className} onClick={this.handleClick.bind(this)}>
 			<title>{tooltip}</title>
 			<path d={path({ x, y })} stroke={stroke} fill={fill} opacity={opacity} />
 		</g>);

@@ -914,34 +914,34 @@ const TradeGrid = connect({
                       <div className='ui basic teal segment nopadding'>
                         <div className='ui top attached tabular basic menu'>
                           <div className='right menu' ref='chartType'>
-                            <a className='item active' onClick={this.showCandle}>
+                            <a className='item active' onClick={this.showCandle.bind(this)}>
                               CandleStick
                             </a>
-                            <a className='item' onClick={this.showLine}>
+                            <a className='item' onClick={this.showLine.bind(this)}>
                               Line
                             </a>
-                            <a className='item' onClick={this.showMACD}>
+                            <a className='item' onClick={this.showMACD.bind(this)}>
                               MACD
                             </a>
-                            <a className='item' onClick={this.showRSI}>
+                            <a className='item' onClick={this.showRSI.bind(this)}>
                               RSI
                             </a>
-                            <a className='item' onClick={this.showSTO}>
+                            <a className='item' onClick={this.showSTO.bind(this)}>
                               STO
                             </a>
-                            <a className='item' onClick={this.showBollinger}>
+                            <a className='item' onClick={this.showBollinger.bind(this)}>
                               Bollinger
                             </a>
-                            <a className='item' onClick={this.showKagi}>
+                            <a className='item' onClick={this.showKagi.bind(this)}>
                               Kagi
                             </a>
-                            <a className='item' onClick={this.showPointandFigure}>
+                            <a className='item' onClick={this.showPointandFigure.bind(this)}>
                               P & F
                             </a>
-                            <a className='item' onClick={this.showHaikinAshi}>
+                            <a className='item' onClick={this.showHaikinAshi.bind(this)}>
                               HaikinAshi
                             </a>
-                            <a className='item' onClick={this.showRenko}>
+                            <a className='item' onClick={this.showRenko.bind(this)}>
                               Renko
                             </a>
                           </div>

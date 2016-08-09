@@ -94,7 +94,7 @@ const NotificationMessage = connect({
       <div className={'ui' + (this.state.hidden ? ' hidden' : '') + ' small icon message' + (this.props.item.type
         ? this.types().messageAccent[ this.types().vitalyTypes [ this.props.item.type ] ]
         : '')}>
-        <i className='close icon' onClick={this.delMessage}></i>
+        <i className='close icon' onClick={this.delMessage.bind(this)}></i>
         {this.addIcon(this.props.item)}
 
         <div className='content'>

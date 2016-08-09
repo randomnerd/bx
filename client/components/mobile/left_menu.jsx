@@ -50,8 +50,8 @@ const LeftMenu = connect({
   renderLoginButtons() {
     return (
       <div className="right menu">
-        <a className="item" onClick={this.showLoginModal}>Log in</a>
-        <a className="item" onClick={this.showSignUpModal}>Sign up</a>
+        <a className="item" onClick={this.showLoginModal.bind(this)}>Log in</a>
+        <a className="item" onClick={this.showSignUpModal.bind(this)}>Sign up</a>
       </div>
     );
   }

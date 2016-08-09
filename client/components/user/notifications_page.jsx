@@ -36,7 +36,7 @@ const NotificationsPage = connect({
   render() {
     return (
       <div className="ui main container">
-        <a className='ui blue labeled icon button' onClick={this.clearAll}>
+        <a className='ui blue labeled icon button' onClick={this.clearAll.bind(this)}>
           <i className='trash icon'/>
           Clear all
         </a>

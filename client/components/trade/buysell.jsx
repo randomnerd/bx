@@ -142,9 +142,9 @@ const BuySell = connect({
       <div>
         <div className='ui small basic segment teal' >
             <div className='ui top attached tabular basic menu' ref='ordType'>
-              <a className='item disabled' onClick={this.setMarket}>Market</a>
-              <a className='item active' onClick={this.setLimit}>Limit</a>
-              <a className='item disabled' onClick={this.setStop}>Stop</a>
+              <a className='item disabled' onClick={this.setMarket.bind(this)}>Market</a>
+              <a className='item active' onClick={this.setLimit.bind(this)}>Limit</a>
+              <a className='item disabled' onClick={this.setStop.bind(this)}>Stop</a>
             </div>
 
             <Formsy.Form className='ui form' onValid={this.allowSubmit.bind(this)}

@@ -54,18 +54,18 @@ const WithdrawAddress = connect({
           </td>
           <td className='four wide right aligned'>
             <div className='ui mini buttons'>
-              <a className='ui blue button' onClick={this.pick} >
+              <a className='ui blue button' onClick={this.pick.bind(this)} >
                 Pick
               </a>
               {this.state.editable ?
-                <a className='ui button' onClick={this.save} >
+                <a className='ui button' onClick={this.save.bind(this)} >
                   Save
                 </a> :
-                <a className='ui button' onClick={this.edit} >
+                <a className='ui button' onClick={this.edit.bind(this)} >
                   Edit
                 </a>
               }
-              <a className='ui negative button' onClick={this.del} >
+              <a className='ui negative button' onClick={this.del.bind(this)} >
                 Delete
               </a>
             </div>

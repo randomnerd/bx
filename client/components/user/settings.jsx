@@ -96,7 +96,7 @@ const Settings = connect({
                 {this.state.totpEnabled?
                   null :
                   <div className="field">
-                    <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
+                    <a className="ui blue labeled icon button" onClick={this.twoFactorAuth.bind(this)}>
                       <i className="refresh icon" />
                       Or generate a new key
                     </a>
@@ -110,7 +110,7 @@ const Settings = connect({
                 <h2 className="ui header lpadding">
                   API Access
                 </h2>
-                <a className="ui blue labeled icon button" onClick={this.twoFactorAuth}>
+                <a className="ui blue labeled icon button" onClick={this.twoFactorAuth.bind(this)}>
                   <i className="refresh icon" />
                   Generate new API key pair
                 </a>

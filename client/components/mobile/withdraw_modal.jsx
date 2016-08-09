@@ -115,7 +115,7 @@ const WithdrawModal = connect({
 
             <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
             adds={this.getAmount()} required />
-            <div className="ui labeled icon blue button" onClick={this.setBalance}>
+            <div className="ui labeled icon blue button" onClick={this.setBalance.bind(this)}>
               <i className="icon up arrow"></i>
               Available: {this.props.balance ? this.props.balance.displayAmount() : 0}
             </div>

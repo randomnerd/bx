@@ -30,8 +30,8 @@ const TopMenu = connect({
   renderLoginButtons() {
     return (
       <div className="right menu">
-        <a className="item" onClick={this.showLoginModal}>Log in</a>
-        <a className="item" onClick={this.showSignUpModal}>Sign up</a>
+        <a className="item" onClick={this.showLoginModal.bind(this)}>Log in</a>
+        <a className="item" onClick={this.showSignUpModal.bind(this)}>Sign up</a>
       </div>
     );
   }
@@ -112,22 +112,22 @@ const TopMenu = connect({
           <a className="item daologo" href="/"></a>
           { this.renderMenuItems() }
           <TradePairsMenu pair={pair} />
-          {3==2?<a className="icon item double" onClick={this.infoToggle}>
+          {3==2?<a className="icon item double" onClick={this.infoToggle.bind(this)}>
             <p><i className="dropdown large icon"></i></p>
           </a>
           :
           null}
           { !!this.props.user._id ?
             <div className="right menu">
-              {this.state.drag ? <a className="icon item" onClick={this.resetBlocks} title="View reset">
+              {this.state.drag ? <a className="icon item" onClick={this.resetBlocks.bind(this)} title="View reset">
                 <i className="refresh icon"></i>
               </a> : null}
-              {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle} title="View control">
+              {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle.bind(this)} title="View control">
                 <i className="block layout icon"></i>
               </a> : null}
               <UserTopMenu />
               <NotificationShow />
-              <a className="icon item" onClick={this.chatToggle}>
+              <a className="icon item" onClick={this.chatToggle.bind(this)}>
                 <i className="comment icon"></i>
               </a>
             </div>

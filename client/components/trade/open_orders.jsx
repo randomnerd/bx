@@ -43,7 +43,7 @@ const OpenOrders = connect({
         <div className='ui top attached tabular basic menu'>
           <div className='right menu'>
           { this.props.orders.length ?
-            <a className='item active' onClick={this.cancelOrders}>
+            <a className='item active' onClick={this.cancelOrders.bind(this)}>
               Cancel all
             </a>
             : null }
