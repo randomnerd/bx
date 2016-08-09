@@ -25,35 +25,17 @@ import Balance from '../trade/balance';
 import BuySell from '../trade/buysell';
 
 import {TradePairs, Currencies} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const MobileLayout = Component({
+const MobileLayout = connect({
   layout: ['layout'],
   mob: ['mob'],
   page: ['page'],
   pair_link: ['pair_link'],
   user: ['user']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      loading: !Meteor.subs.ready()
-    };
-  },
-  getMeteorData() {
-    let pair = TradePairs.findOne({permalink: this.props.pair_link});
-
-    return {
-      pair: pair,
-      pairId: pair && pair._id,
-      loading: !Meteor.subs.ready(),
-      user: Meteor.user(),
-      authInProgress: Meteor.loggingIn(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
-    };
-  },
+}, class MobileLayout extends React.Component {
   getInitialState() {
     return {
       showLoginModal: false,
@@ -65,27 +47,27 @@ const MobileLayout = Component({
 
       showMobile:"buysell"
     };
-  },
+  }
   currName(id) {
-    let curr = _.findWhere(this.data.currencies, {
+    let curr = _.findWhere(this.props.currencies, {
       _id: id
     });
     return curr
       ? curr.shortName
       : '';
-  },
+  }
   componentWillReceiveProps(nextProps){
     this.props.signals.mob.menu({action: 'close'});
     //this.setState({showSidebar: nextProps.mob.menu});
     this.setState({showMobile: nextProps.mob.page});
-  },
+  }
 
   componentDidMount() {
-    if (!this.data.user && !this.data.authInProgress){
+    if (!this.props.user && !this.props.authInProgress){
       this.props.signals.user.loginClicked();
     }
 
-  },
+  }
   renderSidebarContent() {
     switch (this.state.sidebarContent) {
     case 'chat':
@@ -94,23 +76,23 @@ const MobileLayout = Component({
       );
     break;
     }
-  },
+  }
 
   renderPage() {
     //console.log(this.props.page);
     switch (this.props.page) {
-      case "wallets": return <WalletsPage/>;
-      case "wallet": return <WalletPage/>;
-      case "settings": return <Settings/>;
-      case "password": return <PasswordPage/>;
-      case "notifications": return <Notifications/>;
-      default: return <WalletsPage/>;
+      case "wallets": return <WalletsPage {...props}/>;
+      case "wallet": return <WalletPage {...props}/>;
+      case "settings": return <Settings {...props}/>;
+      case "password": return <PasswordPage {...props}/>;
+      case "notifications": return <Notifications {...props}/>;
+      default: return <WalletsPage {...props}/>;
     }
-  },
+  }
 
   renderContent(){
     //console.log(this.props.pair);
-    if(!this.data.pair && this.state.showMobile != 'chat') return;
+    if(!this.props.pair && this.state.showMobile != 'chat') return;
     switch (this.state.showMobile) {
 
       case 'buysell':
@@ -118,8 +100,8 @@ const MobileLayout = Component({
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100 buysell'>
               <h3 className='ui header'>BALANCE</h3>
-              <Balance pairId={this.data.pair._id} pair={this.data.pair} wide="double" />
-              <BuySell pairId={this.data.pair._id} pair={this.data.pair} wide="double" />
+              <Balance pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...props}/>
+              <BuySell pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...props}/>
             </div>
           </div>
         )
@@ -129,7 +111,7 @@ const MobileLayout = Component({
       case 'chart':
         return(
           <div className="ui main fluid mobile container">
-            <Charts pair={this.data.pair} />
+            <Charts pair={this.props.pair}  {...props}/>
           </div>
         )
         break;
@@ -140,18 +122,18 @@ const MobileLayout = Component({
             <div className='ui basic segment max100'>
               <h3 className='ui header'>ORDER BOOK</h3>
               <Orders direction='sell'
-                pair={this.data.pair}
-                pairId={this.data.pair._id}
-                valute1={this.currName(this.data.pair.currId)}
-                valute2={this.currName(this.data.pair.marketCurrId)} />
+                pair={this.props.pair}
+                pairId={this.props.pair._id}
+                valute1={this.currName(this.props.pair.currId)}
+                valute2={this.currName(this.props.pair.marketCurrId)}  {...props}/>
             </div>
             <div className='ui basic segment h100 max100'>
               <h3 className='ui header'>MY ORDERS</h3>
               <OpenOrders
-                pair={this.data.pair}
-                pairId={this.data.pair._id}
-                valute1={this.data.pair.currId}
-                valute2={this.data.pair.marketCurrId} />
+                pair={this.props.pair}
+                pairId={this.props.pair._id}
+                valute1={this.props.pair.currId}
+                valute2={this.props.pair.marketCurrId}  {...props}/>
             </div>
           </div>
         )
@@ -164,10 +146,10 @@ const MobileLayout = Component({
               <h3 className='ui header'>TRADE HISTORY</h3>
 
                 <Trades
-                  pair={this.data.pair}
-                  pairId={this.data.pair._id}
-                  valute1={this.currName(this.data.pair.currId)}
-                  valute2={this.currName(this.data.pair.marketCurrId)} />
+                  pair={this.props.pair}
+                  pairId={this.props.pair._id}
+                  valute1={this.currName(this.props.pair.currId)}
+                  valute2={this.currName(this.props.pair.marketCurrId)}  {...props}/>
 
             </div>
           </div>
@@ -177,7 +159,7 @@ const MobileLayout = Component({
       case 'chat':
         return(
           <div className="ui main fluid mobile container">
-            <Chats />
+            <Chats  {...props}/>
           </div>
         )
 
@@ -185,33 +167,33 @@ const MobileLayout = Component({
 
 
     }
-  },
+  }
   renderSidebarContent() {
     return (
-      <LeftMenu />
+      <LeftMenu  {...props}/>
     );
-  },
+  }
   renderLoading() {
     return (
       <div className="ui active dimmer">
         <div className="ui text loader">
-          <img src="gears.svg" />
+          <img src="gears.svg"/>
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     this.props.signals.mob.menu({action: 'close'});
-    this.props.signals.pair.setPair({pair: this.data.pair});
-    if (this.data.loading) return this.renderLoading();
+    this.props.signals.pair.setPair({pair: this.props.pair});
+    if (this.props.loading) return this.renderLoading();
     return (
       <div className="ui inverted newgrey body">
         <Sidebar>
           {this.renderSidebarContent()}
         </Sidebar>
-        <TopMenu title="BitExchange" pair={this.data.pair} />
-        <BottomMenu title="BitExchange" pair={this.data.pair} />
+        <TopMenu title="BitExchange" pair={this.props.pair} {...props}/>
+        <BottomMenu title="BitExchange" pair={this.props.pair} {...props}/>
 
         <div className="pusher">
           <div className="contwrapper pusher ">
@@ -219,13 +201,23 @@ const MobileLayout = Component({
           </div>
         </div>
 
-        <LoginModal />
-        <SignUpModal />
+        <LoginModal {...props}/>
+        <SignUpModal {...props}/>
         <WithdrawModal current={this.state.withdrawCurr}
-        address={this.state.withdrawAddress} amount={this.state.withdrawAmount} />
-        <WithdrawAddressModal show={this.state.withdrawAddressModal} />
+        address={this.state.withdrawAddress} amount={this.state.withdrawAmount} {...props}/>
+        <WithdrawAddressModal show={this.state.withdrawAddressModal} {...props}/>
       </div>
     );
   }
 });
-export default MobileLayout;
+export default MobileLayoutContainer = createContainer(({ params }) => {
+  let pair = TradePairs.findOne({permalink: this.props.pair_link});
+
+  return {
+    pair: pair,
+    pairId: pair && pair._id,
+    user: Meteor.user(),
+    authInProgress: Meteor.loggingIn(),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
+  };
+}, MobileLayout);

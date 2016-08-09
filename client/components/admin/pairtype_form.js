@@ -1,21 +1,20 @@
 import React from 'react';
 import {PairTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminCurrency = Component({
+const AdminCurrency = connect({
   layout: ['layout'],
   curr: ['pairtype']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminCurrency extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false,
       published: ''
     };
-  },
+  }
 
   newCurr(event) {
     let {name, shortName, published, permalink} = this.refs.curr.getCurrentValues();
@@ -29,7 +28,7 @@ const AdminCurrency = Component({
         this.props.signals.admin.adminPairTypes();
       }
     });
-  },
+  }
   saveCurr(event) {
     let currVals = this.refs.curr.getCurrentValues();
     currVals.published = currVals.published ? true : false;
@@ -41,20 +40,15 @@ const AdminCurrency = Component({
         this.props.signals.admin.adminPairTypes();
       }
     });
-  },
-  getMeteorData() {
-    return {
-      currency: PairTypes.findOne({_id: this.props.curr})
-    };
-  },
+  }
   currentVal(what) {
     return this.data.currency ? this.data.currency[what] : '';
-  },
+  }
   checkboxToggle() {
     this.setState({published: (this.state.published ? false : true)});
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
   render() {
     this.published = this.currentVal('published') ? 'checked' : false;
     return (
@@ -100,4 +94,8 @@ const AdminCurrency = Component({
     );
   }
 });
-export default AdminCurrency;
+export default AdminCurrencyContainer = createContainer(({ params }) => {
+  return {
+    currency: PairTypes.findOne({_id: this.props.curr})
+  };
+}, AdminCurrency);

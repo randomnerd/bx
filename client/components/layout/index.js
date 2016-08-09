@@ -1,32 +1,32 @@
 import MainLayout from './main';
 import AdminLayout from './admin';
 import MobileLayout from './mobile_layout';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import React from 'react';
 
-const Layout = Component({
+const Layout = connect({
   layout: ['layout'],
   mobile: ['mobile'],
   pair: ['pair', 'pair'],
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      loading: !Meteor.subs.ready() || Meteor.loggingIn(),
-    };
-  },
+}, class Layout extends React.Component {
 
   componentDidMount() {
     this.props.signals.tools.windowWidth();
-  },
+  }
 
   render() {
-    if (this.data.loading) return <div className="loader"><img src="/gears.svg" /></div>;
-    if (this.props.mobile) return <MobileLayout/>;
+    if (this.props.loading) return <div className="loader"><img src="/gears.svg" /></div>;
+    if (this.props.mobile) return <MobileLayout {...this.props} />;
     switch (this.props.layout) {
-      case 'admin': return <AdminLayout />;
-      default: return <MainLayout />;
+      case 'admin': return <AdminLayout {...this.props} />;
+      default: return <MainLayout {...this.props} />;
     }
   }
 });
-export default Layout;
+export default LayoutContainer = createContainer(({ params }) => {
+  return {
+    loading: !Meteor.subs.ready() || Meteor.loggingIn(),
+    //currencies: Currencies.findOne(),
+    //tradepairs: CurrTypes.find().fetch()
+  };
+}, Layout);

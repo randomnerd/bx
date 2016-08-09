@@ -1,12 +1,11 @@
 import React from 'react';
 import {PairGroups, TradePairs, PairTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const AdminPairGroups = Component({
+const AdminPairGroups = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminPairGroups extends React.Component {
   delCurr(event) {
     if (confirm('Remove currency?')) {
       Meteor
@@ -20,14 +19,7 @@ const AdminPairGroups = Component({
           }
         });
     }
-  },
-  getMeteorData() {
-    return {
-      pairgroups: PairGroups.find({}, { sort: { name: 1 } }).fetch(),
-      pairs: TradePairs.find().fetch(),
-      markets: PairTypes.find().fetch()
-    };
-  },
+  }
   currName(id) {
     let curr = _.findWhere(this.data.pairs, {
       _id: id
@@ -35,7 +27,7 @@ const AdminPairGroups = Component({
     return curr
       ? curr.permalink
       : '';
-  },
+  }
   marketName(id) {
     let curr = _.findWhere(this.data.markets, {
       _id: id
@@ -43,7 +35,7 @@ const AdminPairGroups = Component({
     return curr
       ? curr.shortName
       : '';
-  },
+  }
   renderPairs(pairs){
 
     return pairs.map((pair) => {
@@ -53,7 +45,7 @@ const AdminPairGroups = Component({
         </span>
         );
     });
-  },
+  }
   renderCurrenciesList() {
     //console.log(this.data.pairgroups);
     return this.data.pairgroups.map((curr) => {
@@ -76,7 +68,7 @@ const AdminPairGroups = Component({
           </tr>
         );
     });
-  },
+  }
   render() {
     return (
       <div>
@@ -102,4 +94,10 @@ const AdminPairGroups = Component({
     );
   }
 });
-export default AdminPairGroups;
+export default AdminPairGroupsContainer = createContainer(({ params }) => {
+  return {
+    pairgroups: PairGroups.find({}, { sort: { name: 1 } }).fetch(),
+    pairs: TradePairs.find().fetch(),
+    markets: PairTypes.find().fetch()
+  };
+}, AdminPairGroups);

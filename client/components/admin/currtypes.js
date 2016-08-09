@@ -1,12 +1,11 @@
 import React from 'react';
 import {CurrTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const AdminCurrTypes = Component({
+const AdminCurrTypes = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
+},class AdminCurrTypes extends React.Component {
   delCurr(event) {
     if (confirm('Remove currency?')) {
       Meteor
@@ -20,16 +19,8 @@ const AdminCurrTypes = Component({
           }
         });
     }
-  },
-  getMeteorData() {
-    return {
-      currencies: CurrTypes.find({}, {
-        sort: {
-          name: 1
-        }
-      }).fetch()
-    };
-  },
+  }
+
   renderCurrenciesList() {
     return this.data.currencies.map((curr) => {
       return (
@@ -50,7 +41,7 @@ const AdminCurrTypes = Component({
           </tr>
         );
     });
-  },
+  }
   render() {
     return (
       <div>
@@ -75,4 +66,8 @@ const AdminCurrTypes = Component({
     );
   }
 });
-export default AdminCurrTypes;
+export default AdminCurrTypesContainer = createContainer(({ params }) => {
+  return {
+    currencies: CurrTypes.find({}, { sort: { name: 1 } }).fetch()
+  };
+}, AdminCurrTypes);

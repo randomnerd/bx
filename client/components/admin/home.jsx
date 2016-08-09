@@ -1,7 +1,7 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const AdminHome = Component({
+const AdminHome = connect({
   render() {
     return (
         <div>admin home</div>

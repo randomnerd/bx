@@ -1,6 +1,6 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
-const AdminOnly = Component({
+import {connect} from 'cerebral-view-react';
+const AdminOnly = connect({
   loggingIn: ['loggingIn'],
   admin: ['admin']
 }, (props) => {

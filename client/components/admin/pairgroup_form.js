@@ -1,14 +1,13 @@
 import React from 'react';
 import {PairGroups, TradePairs, PairTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminPairGroup = Component({
+const AdminPairGroup = connect({
   layout: ['layout'],
   curr: ['pairgroup']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminPairGroup extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
@@ -16,7 +15,7 @@ const AdminPairGroup = Component({
       published: '',
       pairs: []
     };
-  },
+  }
 
   newCurr(event) {
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
@@ -30,7 +29,7 @@ const AdminPairGroup = Component({
         this.props.signals.admin.adminPairGroups();
       }
     });
-  },
+  }
   saveCurr(event) {
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
     Meteor.call('pairgroup_update', this.data.pairgrup._id,
@@ -42,17 +41,11 @@ const AdminPairGroup = Component({
         this.props.signals.admin.adminPairGroups();
       }
     });
-  },
-  getMeteorData() {
-    return {
-      pairgrup: PairGroups.findOne({_id: this.props.curr}),
-      pairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-      markets: PairTypes.find({}, { sort: { name: 1 } }).fetch(),
-    };
-  },
+  }
+
   currentVal(what) {
     return this.data.pairgrup ? this.data.pairgrup[what] : '';
-  },
+  }
 
   renderPairs(){
     //console.log(this.data.pairs);
@@ -64,20 +57,20 @@ const AdminPairGroup = Component({
         </a>
         );
     });
-  },
+  }
 
   addPair(pair) {
     let pairs = this.state.pairs;
     pairs[pair._id] = !pairs[pair._id]||false;
 
     this.setState({pairs:pairs})
-  },
+  }
 
   marketsForSearch() {
     return this.data.markets.map((m) => {
       return {_id: m._id, title: m.shortName, description: m.name};
     });
-  },
+  }
 
   componentDidMount(){
     let pairs = this.state.pairs;
@@ -91,12 +84,12 @@ const AdminPairGroup = Component({
       }
       this.setState({pairs:pairs});
     }
-  },
+  }
   checkboxToggle() {
     this.setState({published: (this.state.published ? false : true)});
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
   render() {
     return (
       <div>
@@ -153,4 +146,10 @@ const AdminPairGroup = Component({
     );
   }
 });
-export default AdminPairGroup;
+export default AdminPairGroupContainer = createContainer(({ params }) => {
+  return {
+    pairgrup: PairGroups.findOne({_id: this.props.curr}),
+    pairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
+    markets: PairTypes.find({}, { sort: { name: 1 } }).fetch(),
+  };
+}, AdminPairGroup);

@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "cerebral": "^0.35.8",
-    "cerebral-addons": "^0.5.4",
     "cerebral-module-devtools": "^0.7.0",
     "cerebral-module-router": "^0.16.1",
     "cerebral-view-react": "^0.12.8",

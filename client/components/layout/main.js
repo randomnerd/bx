@@ -1,5 +1,5 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import Home from '../new_home';
 import BitIndex from '../bitindex/bit_index';
 
@@ -22,40 +22,40 @@ import Notifications from '../user/notifications_page';
 import Chat from '../common/chat';
 import {TradePairs, Currencies} from '../../../both/collections';
 
-const MainLayout = Component({
+const MainLayout = connect({
   page: ['page'],
 
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
     switch (page) {
-      case "home": return <Home/>;
-      case "wallets": return <WalletsPage/>;
-      case "wallet": return <WalletPage/>;
-      case "history": return <HistoryPage/>;
-      case "settings": return <Settings/>;
-      case "password": return <PasswordPage/>;
-      case "pair": return <TradeGrid/>;
-      case "notifications": return <Notifications/>;
-      case "bitindex": return <BitIndex/>;
-      default: return <Home/>;
+      case "home": return <Home {...props}/>;
+      case "wallets": return <WalletsPage {...props}/>;
+      case "wallet": return <WalletPage {...props}/>;
+      case "history": return <HistoryPage {...props}/>;
+      case "settings": return <Settings {...props}/>;
+      case "password": return <PasswordPage {...props}/>;
+      case "pair": return <TradeGrid {...props}/>;
+      case "notifications": return <Notifications {...props}/>;
+      case "bitindex": return <BitIndex {...props}/>;
+      default: return <Home {...props}/>;
     }
   }
   return (
     <div className="ui inverted newgrey body">
-      <Sidebar><Chat /></Sidebar>
+      <Sidebar {...props}><Chat {...props}/></Sidebar>
       <div className="pusher">
-        {3==2?<InfoPanel />:null}
+        {3==2?<InfoPanel  {...props}/>:null}
         <div className="contwrapper pusher">
           {renderPage(props.page)}
         </div>
       </div>
-      <TopMenu title="BitExchange"/>
-      <LoginModal />
-      <SignUpModal />
-      <WithdrawModal />
-      <WithdrawAddressModal/>
-      <NotificationPopups />
+      <TopMenu title="BitExchange" {...props}/>
+      <LoginModal  {...props}/>
+      <SignUpModal  {...props}/>
+      <WithdrawModal  {...props}/>
+      <WithdrawAddressModal {...props}/>
+      <NotificationPopups  {...props}/>
     </div>
   );
 });

@@ -1,31 +1,32 @@
 import React from 'react';
 import {Currencies, CurrTypes} from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
+import { createContainer } from 'meteor/react-meteor-data';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminCurrency = Component({
+const AdminCurrency = connect({
   layout: ['layout'],
   curr: ['curr']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminCurrency extends React.Component {
   getInitialState() {
     return {
       errorMessage: null,
       allowSubmit: false,
       published: false
     };
-  },
+  }
 
   newCurr(event) {
-    let {name, shortName, published, currType, confReq} = this.refs.curr.getCurrentValues();
+    let {name, shortName, published, currType, confReq, withdrawalFee} = this.refs.curr.getCurrentValues();
 
     Meteor.call('currrency_add', {
       name,
       shortName,
       published: !!published,
       type: currType,
-      confReq: parseFloat(confReq)
+      confReq: parseFloat(confReq),
+      fee: withdrawalFee
     },
     (error, result) => {
       if (result) {
@@ -34,16 +35,17 @@ const AdminCurrency = Component({
         this.props.signals.admin.adminCurrs();
       }
     });
-  },
+  }
   saveCurr(event) {
-    let {name, shortName, published, currType, confReq} = this.refs.curr.getCurrentValues();
+    let {name, shortName, published, currType, confReq, withdrawalFee} = this.refs.curr.getCurrentValues();
     published = !!published;
     Meteor.call('currrency_update', this.data.currency._id, {
       name,
       shortName,
       published,
       type: currType,
-      confReq: parseFloat(confReq)
+      confReq: parseFloat(confReq),
+      fee: withdrawalFee
     },
     (error, result) => {
       if (error) {
@@ -52,31 +54,24 @@ const AdminCurrency = Component({
         this.props.signals.admin.adminCurrs();
       }
     });
-  },
+  }
   checkboxToggle() {
     this.setState({published: (this.state.published ? false : true)});
-  },
+  }
   typesForSearch() {
     return this.data.currtypes.map((curr) => {
       return {_id: curr._id, title: curr.shortName, description: curr.name};
     });
-  },
-
-  getMeteorData() {
-    return {
-      currency: Currencies.findOne({_id: this.props.curr}),
-      currtypes: CurrTypes.find().fetch()
-    };
-  },
+  }
   componentDidMount() {
     let {currency} = this.data;
     this.setState({published: (this.data.currency && this.data.currency.published ? true : false)});
-  },
+  }
   currentVal(what) {
     return this.data.currency ? this.data.currency[what] : '';
-  },
-  allowSubmit() { this.setState({allowSubmit: true}); },
-  disallowSubmit() { this.setState({allowSubmit: false}); },
+  }
+  allowSubmit() { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
   render() {
     //let {currency} = this.data;
     //this.setState({published: (currency && currency.published ? true : false)});
@@ -111,25 +106,24 @@ const AdminCurrency = Component({
           label='Deposit confirmations' validations='isNumeric' placeholder='3'
           value={this.currentVal('confReq')||3} />
 
-
           <div className='two fields'>
-
             <Semantic.Checkbox name='published' label='Published' ref='published' onClick={this.checkboxToggle} isChecked={this.data.currency && this.data.currency.published ? true : false} />
-
             <div className='field'>
-
               <a className='ui positive labeled right aligned icon button'
                 onClick={this.props.curr ? this.saveCurr : this.newCurr}>
                 <i className='checkmark icon' />
                 Save currency
               </a>
-
             </div>
-
           </div>
         </Formsy.Form>
       </div>
     );
   }
 });
-export default AdminCurrency;
+export default AdminCurrencyContainer = createContainer(({ params }) => {
+  return {
+    currency: Currencies.findOne({_id: this.props.curr}),
+    currtypes: CurrTypes.find().fetch()
+  };
+}, AdminCurrency);
