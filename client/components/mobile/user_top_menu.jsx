@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AdminOnly from '../admin/admin_only';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const UserTopMenu = Component({
+const UserTopMenu = connect({
   layout: ['layout']
-}, {
+}, class UserTopMenu extends React.Component {
 
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    };
-  },
   logOut() {
     Meteor.logout();
     this.hideMenu();
-  },
+  }
   getMenuItems() {
     return [
       { href: null, label: 'Chat', extraCls: '', onclick: this.showChat},
@@ -26,28 +20,26 @@ const UserTopMenu = Component({
       { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu},
       { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }
     ];
-  },
+  }
   renderMenuItems() {
     return this.getMenuItems().map((item) => {
       return <a className={"item " + item.extraCls} key={item.label} href={item.href} onClick={item.onclick}>{item.label}</a>;
     });
-  },
+  }
   showChat() {
     this.props.signals.mob.page({id:'chat'});
     this.setState({active:'chat'});
     this.hideMenu();
     //return false;
-  },
+  }
   hideMenu() {
     console.log('ergweg');
     this.props.signals.mob.menu();
-  },
-  tester(){
-    console.log('berbr');
-  },
+  }
+
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
-  },
+  }
   render() {
     return (
 
@@ -61,4 +53,8 @@ const UserTopMenu = Component({
     );
   }
 });
-export default UserTopMenu;
+export default UserTopMenuContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user()
+  };
+}, UserTopMenu);

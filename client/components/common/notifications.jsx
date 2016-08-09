@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Notifications} from '../../../both/collections';
 import DropMessage from '../common/drop_message';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const NotificationShow = Component({
+const NotificationShow = connect({
   layout: ['layout'],
   notif: ['notif']
-}, {
-  mixins: [ReactMeteorData],
+}, class NotificationShow extends React.Component {
   getInitialState() {
     return {
       haveMessages: false,
@@ -17,16 +16,7 @@ const NotificationShow = Component({
       countFromDB: 0,
       nowDate: new Date().valueOf()
     };
-  },
-  getMeteorData() {
-    return {
-      notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
-      notifications_now: Notifications.find({
-        ack: false, createdAt: {$gt: new Date(this.state.nowDate)
-        }}, {sort: {createdAt: -1}}).fetch(),
-      notifications: Notifications.find({}, {limit: 10}, {sort: {createdAt: -1}}).fetch()
-    };
-  },
+  }
   newnew(){
     Meteor.call('notifications/add', function(error, result) {
       if (error) {
@@ -36,7 +26,7 @@ const NotificationShow = Component({
       }
     });
 
-  },
+  }
   componentWillReceiveProps(nextProps){
     if (nextProps.notif.changeTime) {
       this.setState({ nowDate: new Date().valueOf() });
@@ -58,16 +48,16 @@ const NotificationShow = Component({
       }
       )});
     }
-  },
+  }
 
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'nothing'});
 
     //this.setState({messages: mess});
-  },
+  }
   delAllMessages() {
     this.props.signals.notif.delAll();
-  },
+  }
   renderDropMessages() {
     if (this.data.notifications_new.length) {
       return this.data.notifications_new.map((item) => {
@@ -82,7 +72,7 @@ const NotificationShow = Component({
         );
       });
     }
-  },
+  }
 
   render() {
     return (
@@ -114,4 +104,12 @@ const NotificationShow = Component({
     );
   }
 });
-export default NotificationShow;
+export default NotificationShowContainer = createContainer(({ params }) => {
+  return {
+    notifications_new: Notifications.find({ack: false}, {sort: {createdAt: -1}}).fetch(),
+    notifications_now: Notifications.find({
+      ack: false, createdAt: {$gt: new Date(this.state.nowDate)
+      }}, {sort: {createdAt: -1}}).fetch(),
+    notifications: Notifications.find({}, {limit: 10}, {sort: {createdAt: -1}}).fetch()
+  };
+}, NotificationShow);

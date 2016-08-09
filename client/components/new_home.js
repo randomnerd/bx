@@ -1,20 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes, PairGroups} from '../../both/collections';
 import {Meteor} from 'meteor/meteor';
 import LandingTrades from './trade/landing_trades';
 import LandingOrders from './trade/landing_orders';
 
-const Home = Component({
+const Home = connect({
   user: ['user'],
   title: ['home', 'title'],
   layout: ['layout'],
   pair_link: ['pair_link'],
   pair: ['pair', 'pair'],
   tools: ['tools']
-}, {
-  mixins: [ReactMeteorData],
+}, class Home extends React.Component {
   getInitialState() {
     return {
       panel: false,
@@ -23,23 +22,8 @@ const Home = Component({
       scroller: 0,
       scroll: 1
     };
-  },
+  }
 
-  getMeteorData() {
-    let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
-    let pair = TradePairs.findOne();
-    return {
-      pair: pair,
-      pairs: TradePairs.find().fetch(),
-      BTPR_Loading: !handle_BTPR.ready(),
-      BTPR: BitIndexIndicator_BTPR.find().fetch(),
-      pairId: pair && pair._id,
-      user: Meteor.user(),
-      markets: PairTypes.find().fetch(),
-      groups: PairGroups.find().fetch(),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
-    };
-  },
   componentDidMount() {
     $('.groupmenu').dropdown({on: 'hover', action: 'hide'});
 
@@ -95,11 +79,11 @@ const Home = Component({
 
 
     });
-  },
+  }
 
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
-  },
+  }
   scrollingTo(h,$scroll){
     let $this = this;
     $(this.refs.ld).animate(
@@ -119,10 +103,10 @@ const Home = Component({
         }
       }
     );
-  },
+  }
   scrollAll(){
     $(this.refs.ld).scrollTop(1).scroll();
-  },
+  }
 
   marketName(id) {
     let curr = _.findWhere(this.data.markets, {
@@ -131,7 +115,7 @@ const Home = Component({
     return curr
       ? curr.shortName
       : '';
-  },
+  }
 
   marketPairs(id) {
     let markets = _.where(this.data.pairs, {
@@ -144,7 +128,7 @@ const Home = Component({
       mIds.push(market._id);
     }
     return {$in: mIds};
-  },
+  }
   currName(id) {
     let curr = _.findWhere(this.data.currencies, {
       _id: id
@@ -152,9 +136,9 @@ const Home = Component({
     return curr
       ? curr.shortName
       : '';
-  },
+  }
   renderPairsInGroup(group){
-    
+
     return this.data.pairs.map((pair) => {
       //console.log(this.data.currencies);
       if(_.contains(group, pair._id)){
@@ -168,7 +152,7 @@ const Home = Component({
         );
       }
     });
-  },
+  }
 
   renderGroups(market){
     let groups = _.where(this.data.groups, {market: market._id});
@@ -189,10 +173,10 @@ const Home = Component({
               </div>
             </div>
             <div className="content">
-              <LandingTrades limit={tradeCount} pair_ids={pair_ids} />
+              <LandingTrades limit={tradeCount} pair_ids={pair_ids} {...this.props}/>
             </div>
             <div className="content">
-              <LandingOrders limit={orderCount} pair_ids={pair_ids} />
+              <LandingOrders limit={orderCount} pair_ids={pair_ids} {...this.props}/>
             </div>
           </div>
         );
@@ -209,7 +193,7 @@ const Home = Component({
         );
       }
     });
-  },
+  }
   renderMarkets(){
     return this.data.markets.map((item) => {
       return (
@@ -221,7 +205,7 @@ const Home = Component({
         </div>
       );
     });
-  },
+  }
   render() {
     return (
       <div className={"ld2" + (!this.state.holder?" scroll":"")} ref="ld2">
@@ -319,4 +303,18 @@ const Home = Component({
   }
 
 });
-export default Home;
+export default HomeContainer = createContainer(({ params }) => {
+  let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
+  let pair = TradePairs.findOne();
+  return {
+    pair: pair,
+    pairs: TradePairs.find().fetch(),
+    BTPR_Loading: !handle_BTPR.ready(),
+    BTPR: BitIndexIndicator_BTPR.find().fetch(),
+    pairId: pair && pair._id,
+    user: Meteor.user(),
+    markets: PairTypes.find().fetch(),
+    groups: PairGroups.find().fetch(),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
+  };
+}, Home);

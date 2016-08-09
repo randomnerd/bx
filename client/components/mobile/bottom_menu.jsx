@@ -3,28 +3,24 @@ import TradePairsMenu from '../trade/trade_pairs_menu';
 import UserTopMenu from '../user_top_menu';
 import TopInfo from '../mobile/top_info';
 import NotificationShow from '../common/notifications';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const BottomMenu = Component({
+const BottomMenu = connect({
   layout: ['layout'],
   mob: ['mob']
-}, {  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    }
-  },
+}, class BottomMenu extends React.Component {
+
   getInitialState() {
     return {
       drag: false,
       active: "buysell"
     };
-  },
+  }
   showPage(item, event) {
     this.props.signals.mob.page({id:item});
     this.setState({active:item});
-  },
+  }
 
 
 

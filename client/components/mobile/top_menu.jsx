@@ -4,32 +4,27 @@ import UserTopMenu from './user_top_menu';
 import TopInfo from './top_info';
 import NotificationShow from '../common/notifications';
 
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const TopMenu = Component({
+const TopMenu = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      user: Meteor.user()
-    }
-  },
+}, class TopMenu extends React.Component {
+
   getInitialState() {
     return {
       drag:false
     };
-  },
+  }
   showMenu() {
     this.props.signals.mob.menu();
-  },
+  }
   showLoginModal() {
     this.props.signals.user.loginClicked();
-  },
+  }
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
-  },
+  }
   renderLoginButtons() {
     return (
       <div className="right menu">
@@ -37,7 +32,7 @@ const TopMenu = Component({
         <a className="item" onClick={this.showSignUpModal}>Sign up</a>
       </div>
     );
-  },
+  }
   render() {
     return (
       <div className="ui top fixed large menu">
@@ -55,4 +50,8 @@ const TopMenu = Component({
     );
   }
 });
-export default TopMenu;
+export default TopMenuContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user()
+  }
+}, TopMenu);

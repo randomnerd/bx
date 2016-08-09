@@ -5,24 +5,16 @@ import { Meteor } from 'meteor/meteor';
 import Charts from './';
 
 import ReStock from '/client/lib/react-stockcharts';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
 
 
-const BitIndex = Component({
+const BitIndex = connect({
   pair: ['pair', 'pair'],
-  layout: ['layout'],
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData: function() {
-    console.log(this.props);
+  layout: ['layout']
+}, class BitIndex extends React.Component {
 
-    return {
-        chartItems: ChartItems.find( { pairId: this.props.pair._id }  ).fetch(),
-    };
-
-  },
-  mapList: function(list) {
+  mapList(list) {
 
     return list.map((item) => {
        return {
@@ -32,12 +24,13 @@ const BitIndex = Component({
          high: (item.high / Math.pow(10, 8)).toFixed(8),
          low: (item.low / Math.pow(10, 8)).toFixed(8),
          close: (item.close / Math.pow(10, 8)).toFixed(8),
-         volume: (item.volume / Math.pow(10,8)).toFixed(8),
+         volume: (item.volume / Math.pow(10,8)).toFixed(8)
 
-       };
+       }
      });
-   },
-  render: function() {
+  }
+
+  render() {
 
       console.log(this.data.chartItems);
       console.log(this.mapList(this.data.chartItems));
@@ -61,4 +54,8 @@ const BitIndex = Component({
   }
 
 });
-export default BitIndex;
+export default BitIndexContainer = createContainer(({ params }) => {
+  return {
+      chartItems: ChartItems.find( { pairId: this.props.pair._id }  ).fetch(),
+  };
+}, BitIndex);

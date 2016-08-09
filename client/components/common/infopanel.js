@@ -1,30 +1,21 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 import Charts from '../bitindex';
 import { BitIndexIndicator_BTPR } from '../../../both/collections';
 
 
-const Infopanel = Component({
+const Infopanel = connect({
     user: ['user'],
     tools: ['tools']
-  }, {
-  mixins: [ReactMeteorData],
+  }, class Infopanel extends React.Component {
   getInitialState() {
     return {
       mosts: 'active',
       pairs: 'btc',
     };
-  },
-  getMeteorData() {
-    let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
-
-    return {
-     BTPR_Loading: !handle_BTPR.ready(),
-     BTPR: BitIndexIndicator_BTPR.find().fetch(),
-    };
-  },
+  }
   componentDidMount() {
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({
@@ -40,47 +31,46 @@ const Infopanel = Component({
     });
     this.setState({most: 'active'});
     this.setState({pair: 'btc'});
-  },
+  }
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.tools.panel ? 'show' : 'hide');
-  },
-
+  }
 
   mostActive(){
     $(this.refs.most).find('.item').removeClass('active');
     this.setState({most: 'active'});
-  },
+  }
   mostMined(){
     $(this.refs.most).find('.item').removeClass('active');
     this.setState({most: 'mined'});
-  },
+  }
 
   mostGainers(){
     $(this.refs.most).find('.item').removeClass('active');
     this.setState({most: 'gainers'});
-  },
+  }
 
   mostLoosers(){
     $(this.refs.most).find('.item').removeClass('active');
     this.setState({most: 'loosers'});
-  },
+  }
 
 
 
   pairBTC(){
     $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'btc'});
-  },
+  }
 
   pairUSD(){
     $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'usd'});
-  },
+  }
 
   pairCNY(){
     $(this.refs.currTypes).find('.item').removeClass('active');
     this.setState({pair: 'cny'});
-  },
+  }
 
   render() {
     return (
@@ -259,4 +249,11 @@ const Infopanel = Component({
     );
   }
 });
-export default Infopanel;
+export default InfopanelContainer = createContainer(({ params }) => {
+  let handle_BTPR = Meteor.subscribe("BitIndexIndicator_BTPR");
+
+  return {
+   BTPR_Loading: !handle_BTPR.ready(),
+   BTPR: BitIndexIndicator_BTPR.find().fetch(),
+  };
+}, Infopanel);

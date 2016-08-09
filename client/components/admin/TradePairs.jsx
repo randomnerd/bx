@@ -1,13 +1,12 @@
 import React from 'react';
 import {Currencies, TradePairs, PairTypes}  from '../../../both/collections';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
-const AdminTradePairs = Component({
+const AdminTradePairs = connect({
   layout: ['layout']
-}, {
-  mixins: [ReactMeteorData],
+}, class AdminTradePairs extends React.Component {
   //currId: currencyId
   //marketCurrId: currencyId
   //published: boolean
@@ -26,7 +25,7 @@ const AdminTradePairs = Component({
           }
         });
     }
-  },
+  }
   currName(id) {
     let curr = _.findWhere(this.data.currencies, {
       _id: id
@@ -34,7 +33,7 @@ const AdminTradePairs = Component({
     return curr
       ? curr.shortName
       : '';
-  },
+  }
   marketName(id) {
     let curr = _.findWhere(this.data.markets, {
       _id: id
@@ -42,14 +41,8 @@ const AdminTradePairs = Component({
     return curr
       ? curr.shortName
       : '';
-  },
-  getMeteorData() {
-    return {
-      TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-      currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),
-      markets: PairTypes.find().fetch()
-    };
-  },
+  }
+  
   renderPairsList() {
     return this.data.TradePairs.map((pair) => {
         return (
@@ -75,7 +68,7 @@ const AdminTradePairs = Component({
           </tr>
         );
       });
-  },
+  }
   render() {
     return (
       <div>
@@ -103,4 +96,10 @@ const AdminTradePairs = Component({
     );
   }
 });
-export default AdminTradePairs;
+export default AdminTradePairsContainer = createContainer(({ params }) => {
+  return {
+    TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
+    currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),
+    markets: PairTypes.find().fetch()
+  };
+}, AdminTradePairs);

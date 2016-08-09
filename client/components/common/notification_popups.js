@@ -1,13 +1,12 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Notifications} from '../../../both/collections';
 import NotificationMessage from './notification_message';
 import ReactDOM from 'react-dom';
 
-const NotificationPopups = Component({
+const NotificationPopups = connect({
   notif: ['notif'],
-},{
-  mixins: [ReactMeteorData],
+}, class NotificationPopups extends React.Component {
   getInitialState() {
     return {
       haveMessages: false,
@@ -15,14 +14,7 @@ const NotificationPopups = Component({
       countFromDB: 0,
       nowDate: new Date().valueOf()
     };
-  },
-  getMeteorData() {
-    return {
-      notifications_now: Notifications.find({
-        ack: false, createdAt: {$gt: new Date(this.state.nowDate)}
-      }).fetch(),
-    };
-  },
+  }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.notif.changeTime) {
@@ -45,11 +37,11 @@ const NotificationPopups = Component({
       }
       )});
     }
-  },
+  }
 
   componentDidMount(){
 
-  },
+  }
 
   renderMessages() {
     let mess = _.clone(this.state.messages);
@@ -65,7 +57,7 @@ const NotificationPopups = Component({
         <NotificationMessage key={item._id} item={item} needShow={true} />
       );
     });
-  },
+  }
 
   render() {
     return (
@@ -77,4 +69,10 @@ const NotificationPopups = Component({
     );
   }
 });
-export default NotificationPopups;
+export default NotificationPopupsContainer = createContainer(({ params }) => {
+  return {
+    notifications_now: Notifications.find({
+      ack: false, createdAt: {$gt: new Date(this.state.nowDate)}
+    }).fetch(),
+  };
+}, NotificationPopups);

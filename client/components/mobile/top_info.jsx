@@ -1,35 +1,17 @@
 import React from 'react';
 import {Currencies, Trades, OrderBookItems, TradePairs} from '../../../both/collections';
 
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
-const TopInfo = Component({
+const TopInfo = connect({
   layout: ['layout'],
   pair: ['pair','pair']
-}, {
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      user: Meteor.user(),
-      pair: TradePairs.findOne({_id : this.props.pair._id}),
-      currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-      tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
-      tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
-      tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
-      tradesBid: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: 1 } } ),
-      tradesAsk: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
-    };
-  },
-  getInitialState() {
-    return {
-
-    };
-  },
+}, class TopInfo extends React.Component {
 
   displayCurrent() {
     return this.props.active ? this.props.active.toUpperCase() : 'Choose a pair';
-  },
+  }
   renderInfo(clss){
     //console.log(this.data.pair);
     //console.log(this.props.pair);
@@ -59,7 +41,7 @@ const TopInfo = Component({
         </div>
       </div>
     )
-  },
+  }
   componentDidMount() {
     let width=1;
     $(this.refs.runrow).find(".runrow_inner > .item").each(function(i){
@@ -69,7 +51,7 @@ const TopInfo = Component({
     if(width > $(this.refs.runrow).width()){
       $(this.refs.runrow).liScroll();
     }
-  },
+  }
 
   render() {
     return (
@@ -87,4 +69,15 @@ const TopInfo = Component({
     );
   }
 });
-export default TopInfo;
+export default TopInfoContainer = createContainer(({ params }) => {
+  return {
+    user: Meteor.user(),
+    pair: TradePairs.findOne({_id : this.props.pair._id}),
+    currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
+    tradesLast: Trades.findOne({ pairId: this.props.pair._id }, {sort: {createdAt: -1}}),
+    tradesHi: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: -1}}),
+    tradesLo: Trades.findOne({ pairId: this.props.pair._id }, {sort: {price: 1}}),
+    tradesBid: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: false}, { sort: { price: 1 } } ),
+    tradesAsk: OrderBookItems.findOne( { pairId: this.props.pair._id , buy: true}, { sort: { price: -1 } } ),
+  };
+}, TopInfo);

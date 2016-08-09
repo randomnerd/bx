@@ -1,7 +1,7 @@
 import React from 'react';
-import {Component} from 'cerebral-view-react';
+import {connect} from 'cerebral-view-react';
 
-const Sidebar = Component({
+const Sidebar = connect({
 }, (props) => {
   return (
     <div className='ui fluid vertical menu'>
