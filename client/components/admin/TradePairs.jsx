@@ -1,5 +1,6 @@
 import React from 'react';
 import {Currencies, TradePairs, PairTypes}  from '../../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
@@ -42,7 +43,7 @@ const AdminTradePairs = connect({
       ? curr.shortName
       : '';
   }
-  
+
   renderPairsList() {
     return this.data.TradePairs.map((pair) => {
         return (

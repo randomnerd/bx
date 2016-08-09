@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'cerebral-view-react';
 import NotificationOne from './notification_one';
 import {Notifications} from '../../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const NotificationsPage = connect({
   user: ['user'],

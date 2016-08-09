@@ -4,6 +4,7 @@ import {connect} from 'cerebral-view-react';
 import {Chat} from '../../../both/collections';
 import Semantic from '../semantic';
 import moment from 'moment';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const ChatView = connect({
 }, class ChatView extends React.Component {

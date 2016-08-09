@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {OrderBookItems,Trades} from '../../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const Orderbook = connect({
   layout: ['layout'],

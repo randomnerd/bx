@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {TradePairs, Currencies} from '../../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const TradePairsMenu = connect({
   layout: ['layout']

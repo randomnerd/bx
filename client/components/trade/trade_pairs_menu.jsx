@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {TradePairs, Currencies} from '../../../both/collections';
 import {connect} from 'cerebral-view-react';
+import { createContainer } from 'meteor/react-meteor-data';
+
 const TradePairsMenu = connect({
   user: ['user'],
   //pair: ['pair.pair']
@@ -35,7 +37,7 @@ const TradePairsMenu = connect({
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
   }
-  
+
   render() {
     return (
       <div className='ui dropdown item'>

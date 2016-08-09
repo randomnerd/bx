@@ -4,7 +4,7 @@ import {Meteor} from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 import Charts from '../bitindex';
 import { BitIndexIndicator_BTPR } from '../../../both/collections';
-
+import { createContainer } from 'meteor/react-meteor-data';
 
 const Infopanel = connect({
     user: ['user'],

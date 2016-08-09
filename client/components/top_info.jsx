@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Currencies, Trades, OrderBookItems, TradePairs} from '../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const TopInfo = connect({
   layout: ['layout'],

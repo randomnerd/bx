@@ -4,6 +4,7 @@ import {connect} from 'cerebral-view-react';
 import {Wallets, Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 import UserOnly from './user_only';
+import { createContainer } from 'meteor/react-meteor-data';
 
 Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
   let amount = parseFloat(values.amount);

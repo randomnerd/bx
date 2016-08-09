@@ -3,6 +3,7 @@ import {Balances, Currencies, Wallets} from '../../../both/collections';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import UserOnly from '../user/user_only';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const WalletsPage = connect({
   layout: ['layout']

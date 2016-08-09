@@ -3,6 +3,7 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import UserOnly from '../user/user_only';
 import Semantic from '../semantic';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const PasswordPage = connect({
   layout: ['layout']

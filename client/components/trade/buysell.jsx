@@ -4,6 +4,7 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const BuySell = connect({
   layout: ['layout'],

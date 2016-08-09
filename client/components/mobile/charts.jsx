@@ -8,6 +8,7 @@ import Charts from '../bitindex';
 // import Orders from '../trade/orderbook';
 // import OpenOrders from '../trade/open_orders';
 // import Balance from '../trade/balance';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const ChartsShow = connect({
 

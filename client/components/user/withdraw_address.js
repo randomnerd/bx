@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'cerebral-view-react';
 import Semantic from '../semantic';
 import {wAddressBook} from '../../../both/collections';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const WithdrawAddress = connect({
   tools: ['tools']

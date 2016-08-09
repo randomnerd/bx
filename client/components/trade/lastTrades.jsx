@@ -3,6 +3,7 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades} from '../../../both/collections';
 import moment from 'moment';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const LastTrades = connect({
   layout: ['layout'],

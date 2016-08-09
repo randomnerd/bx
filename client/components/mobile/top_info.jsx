@@ -1,6 +1,6 @@
 import React from 'react';
 import {Currencies, Trades, OrderBookItems, TradePairs} from '../../../both/collections';
-
+import { createContainer } from 'meteor/react-meteor-data';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 

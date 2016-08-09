@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
-
+import { createContainer } from 'meteor/react-meteor-data';
 import TradePairsMenu from './trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
 import TopInfo from '../top_info';

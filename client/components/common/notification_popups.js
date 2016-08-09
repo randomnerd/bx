@@ -3,6 +3,7 @@ import {connect} from 'cerebral-view-react';
 import {Notifications} from '../../../both/collections';
 import NotificationMessage from './notification_message';
 import ReactDOM from 'react-dom';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const NotificationPopups = connect({
   notif: ['notif'],

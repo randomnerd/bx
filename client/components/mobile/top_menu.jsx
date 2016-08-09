@@ -3,7 +3,7 @@ import TradePairsMenu from '../trade/trade_pairs_menu';
 import UserTopMenu from './user_top_menu';
 import TopInfo from './top_info';
 import NotificationShow from '../common/notifications';
-
+import { createContainer } from 'meteor/react-meteor-data';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 

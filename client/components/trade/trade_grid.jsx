@@ -9,7 +9,7 @@ import Orders from './orderbook';
 import OpenOrders from './open_orders';
 import Balance from './balance';
 const heightChart = 350;
-
+import { createContainer } from 'meteor/react-meteor-data';
 
 const TradeGrid = connect({
   layout: ['layout'],

@@ -28,6 +28,7 @@ import {TradePairs, Currencies} from '../../../both/collections';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const MobileLayout = connect({
   layout: ['layout'],

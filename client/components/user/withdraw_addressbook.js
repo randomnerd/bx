@@ -5,6 +5,7 @@ import {wAddressBook} from '../../../both/collections';
 import Semantic from '../semantic';
 import WithdrawAddress from './withdraw_address';
 import UserOnly from './user_only';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const WithdrawAddressBook = connect({
   tools: ['tools']

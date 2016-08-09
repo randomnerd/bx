@@ -4,6 +4,7 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {Trades, TradePairs, Currencies} from '../../../both/collections';
 import moment from 'moment';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const UserTradeHistory = connect({
   layout: ['layout'],

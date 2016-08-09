@@ -2,6 +2,7 @@ import React from 'react';
 import {Currencies, CurrTypes} from '../../../both/collections';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminCurrencies = connect({
   layout: ['layout']

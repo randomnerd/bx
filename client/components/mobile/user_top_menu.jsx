@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AdminOnly from '../admin/admin_only';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const UserTopMenu = connect({
   layout: ['layout']

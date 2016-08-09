@@ -5,6 +5,7 @@ import {Currencies, TradePairs, BitIndexIndicator_BTPR, PairTypes, PairGroups} f
 import {Meteor} from 'meteor/meteor';
 import LandingTrades from './trade/landing_trades';
 import LandingOrders from './trade/landing_orders';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const Home = connect({
   user: ['user'],

@@ -3,6 +3,7 @@ import AdminLayout from './admin';
 import MobileLayout from './mobile_layout';
 import {connect} from 'cerebral-view-react';
 import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const Layout = connect({
   layout: ['layout'],

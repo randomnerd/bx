@@ -4,6 +4,7 @@ import {Notifications} from '../../../both/collections';
 import DropMessage from '../common/drop_message';
 import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const NotificationShow = connect({
   layout: ['layout'],
