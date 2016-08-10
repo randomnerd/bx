@@ -6,8 +6,6 @@ import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminCurrType = connect({
-  layout: ['layout'],
-  curr: ['currtype']
 }, class AdminCurrType extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +55,7 @@ const AdminCurrType = connect({
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
+        onValidSubmit={this.newCurr.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/currtypes'>
@@ -80,7 +78,7 @@ const AdminCurrType = connect({
             <div className='field'>
 
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.curr ? this.saveCurr : this.newCurr.bind(this)}>
+                onClick={this.props.curr ? this.saveCurr.bind(this) : this.newCurr.bind(this)}>
                 <i className='checkmark icon' />
                 Save currency type
               </a>
@@ -95,6 +93,6 @@ const AdminCurrType = connect({
 });
 export default AdminCurrTypeContainer = createContainer((props) => {
   return {
-    currency: CurrTypes.findOne({_id: this.props.curr})
+    currency: CurrTypes.findOne({_id: props.currtype})
   };
 }, AdminCurrType);

@@ -6,8 +6,6 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 
 const AdminCurrency = connect({
-  layout: ['layout'],
-  curr: ['curr']
 }, class AdminCurrency extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +44,7 @@ const AdminCurrency = connect({
       published,
       type: currType,
       confReq: parseFloat(confReq),
-      fee: withdrawalFee
+      withdrawalFee
     },
     (error, result) => {
       if (error) {
@@ -80,7 +78,7 @@ const AdminCurrency = connect({
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
+        onValidSubmit={this.newCurr.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/currencies'>
@@ -111,7 +109,7 @@ const AdminCurrency = connect({
             <Semantic.Checkbox name='published' label='Published' ref='published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.currency && this.props.currency.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.curr ? this.saveCurr : this.newCurr.bind(this)}>
+                onClick={this.props.curr ? this.saveCurr.bind(this) : this.newCurr.bind(this)}>
                 <i className='checkmark icon' />
                 Save currency
               </a>
@@ -124,7 +122,7 @@ const AdminCurrency = connect({
 });
 export default AdminCurrencyContainer = createContainer((props) => {
   return {
-    currency: Currencies.findOne({_id: this.props.curr}),
+    currency: Currencies.findOne({_id: props.curr}),
     currtypes: CurrTypes.find().fetch()
   };
 }, AdminCurrency);

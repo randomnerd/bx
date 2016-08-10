@@ -5,7 +5,6 @@ import {Meteor} from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminPairGroups = connect({
-  layout: ['layout']
 }, class AdminPairGroups extends React.Component {
   delCurr(event) {
     if (confirm('Remove currency?')) {

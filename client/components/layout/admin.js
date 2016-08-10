@@ -16,7 +16,12 @@ import AdminHome from '../admin/home';
 import {connect} from 'cerebral-view-react';
 
 const Admin = connect({
-  page: ['page']
+  page: 'page',
+  curr: 'curr',
+  currtype: 'currtype',
+  pairtype: 'pairtype',
+  adm_pair: 'adm_pair',
+  pairgroup: 'pairgroup'
 }, (props) => {
   let renderPage = (page) => {
     switch (page) {

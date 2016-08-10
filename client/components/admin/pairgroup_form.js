@@ -6,8 +6,6 @@ import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminPairGroup = connect({
-  layout: ['layout'],
-  curr: ['pairgroup']
 }, class AdminPairGroup extends React.Component {
   constructor(props) {
     super(props);
@@ -97,7 +95,7 @@ const AdminPairGroup = connect({
       <div>
 
         <Formsy.Form key={this.props.k} className='ui form'
-        onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
+        onValidSubmit={this.newCurr.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/pairgroups'>
@@ -135,7 +133,7 @@ const AdminPairGroup = connect({
             <div className='field'>
 
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.curr ? this.saveCurr : this.newCurr.bind(this)}>
+                onClick={this.props.curr ? this.saveCurr.bind(this) : this.newCurr.bind(this)}>
                 <i className='checkmark icon' />
                 Save currency type
               </a>
@@ -150,7 +148,7 @@ const AdminPairGroup = connect({
 });
 export default AdminPairGroupContainer = createContainer((props) => {
   return {
-    pairgrup: PairGroups.findOne({_id: this.props.curr}),
+    pairgrup: PairGroups.findOne({_id: props.pairgroup}),
     pairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
     markets: PairTypes.find({}, { sort: { name: 1 } }).fetch(),
   };

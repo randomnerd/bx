@@ -6,8 +6,6 @@ import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminTradePair = connect({
-  layout: ['layout'],
-  adm_pair: ['adm_pair']
 }, class AdminTradePair extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +85,7 @@ const AdminTradePair = connect({
     return (
       <div>
         <Formsy.Form key={this.props.k} className='ui form'
-          onValidSubmit={this.newCurr} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
+          onValidSubmit={this.newCurr.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/tradepairs'>
@@ -123,7 +121,7 @@ const AdminTradePair = connect({
           <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.tradePairs && this.props.tradePairs.published ? true : false} />
             <div className='field'>
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.adm_pair ? this.savePair : this.newPair.bind(this)}>
+                onClick={this.props.adm_pair ? this.savePair.bind(this) : this.newPair.bind(this)}>
                 <i className='checkmark icon' />
                 Save pair
               </a>
@@ -136,7 +134,7 @@ const AdminTradePair = connect({
 });
 export default AdminTradePairContainer = createContainer((props) => {
   return {
-    tradePairs: TradePairs.findOne(this.props.adm_pair),
+    tradePairs: TradePairs.findOne(props.adm_pair),
     currencies: Currencies.find({}, {sort: {name: 1}}).fetch(),
     markets: PairTypes.find().fetch()
   };
