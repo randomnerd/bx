@@ -45,6 +45,9 @@ Tracker.autorun(() => {
 
 const model = Model({});
 const controller = Controller(model);
+controller.addServices({
+  subsManager
+});
 controller.addModules({
   devtools: process.env.NODE_ENV === 'production' ? () => {} : Devtools(),
   mob: Mob(),
@@ -57,8 +60,5 @@ controller.addModules({
   u: U(),
   router
 });
-controller.addServices({
-  subsManager
-})
 
 export default controller;
