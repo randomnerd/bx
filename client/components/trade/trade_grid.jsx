@@ -413,7 +413,6 @@ const TradeGrid = connect({
   }
 
   renderOrders(k){
-    console.log(this.props);
     let fixclass="";
     if(this.state.fixclass && (this.state.places.left.orders == 2 || this.state.places.right.orders == 2) && this.positions.orders.size == "small"){
       fixclass=" fixclass";
@@ -742,7 +741,7 @@ const TradeGrid = connect({
               }
 
               if(place >= oldPosition.place && place <= newPosition.place){
-                console.log(place + " >= " + oldPosition.place + " && " + place + " <= " + newPosition.place);
+                //console.log(place + " >= " + oldPosition.place + " && " + place + " <= " + newPosition.place);
                 if( places[oldPosition.column][key] > 1 ){
                   places[oldPosition.column][key]--;
                   $this.positions[key].place = places[oldPosition.column][key];
@@ -808,7 +807,7 @@ const TradeGrid = connect({
             }else if(key == el){
               places[newPosition.column][key] = newPosition.place;
               $this.positions[key].place = newPosition.place;
-              console.log(key + " : " + places[newPosition.column][key]);
+              //console.log(key + " : " + places[newPosition.column][key]);
               if(newPosition.place == 3 && newPosition.size == "big"){
                 fix1 = true;
                 //console.log("fix 2");
@@ -817,7 +816,7 @@ const TradeGrid = connect({
             if( place >= newPosition.place ){
               places[newPosition.column][key]++;
               $this.positions[key].place = places[newPosition.column][key];
-              console.log(key + " : " + places[newPosition.column][key]);
+              //console.log(key + " : " + places[newPosition.column][key]);
               if( places[newPosition.column][key] == 3 && $this.positions[key].size == "big" ){
                 fix1 = true;
                 //console.log("fix 2");

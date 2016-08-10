@@ -72,7 +72,6 @@ export default (options = {}) => {
       });
       Tracker.autorun(() => {
         let user = Meteor.user() || null;
-        console.log('userChanged', user)
         module.getSignals().userChanged({user: user});
       });
 

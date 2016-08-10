@@ -8,14 +8,12 @@ import { createContainer } from 'meteor/react-meteor-data';
 const Settings = connect({
   layout: ['layout']
 }, class Settings extends React.Component {
-  getInitialState() {
-    return {
-      errorMessage: null,
-      allowSubmit: false,
-      totpEnabled: false,
-      qr: null,
-      published:''
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false,
+    totpEnabled: false,
+    qr: null,
+    published:''
   }
 
   componentDidMount() {
@@ -70,6 +68,8 @@ const Settings = connect({
 
     })
   }
+  allowSubmit()    { this.setState({allowSubmit: true}); }
+  disallowSubmit() { this.setState({allowSubmit: false}); }
 
   render() {
     return (

@@ -8,11 +8,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 const PasswordPage = connect({
   layout: ['layout']
 }, class PasswordPage extends React.Component {
-  getInitialState() {
-    return {
-      errorMessage: null,
-      allowSubmit: false
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false
   }
 
   newPassword() {
