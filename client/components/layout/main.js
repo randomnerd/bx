@@ -26,6 +26,7 @@ const MainLayout = connect({
   page: 'page',
   pair_link: 'pair_link',
   pair: 'pair.pair',
+  wallet: 'wallet'
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {

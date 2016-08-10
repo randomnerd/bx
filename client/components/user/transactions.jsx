@@ -6,8 +6,7 @@ import moment from 'moment';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const TransactionsView = connect({
-  layout: ['layout'],
-  wallet: ['wallet']
+  
 }, class TransactionsView extends React.Component {
   constructor(props) {
     super(props);
@@ -168,16 +167,16 @@ const TransactionsView = connect({
 });
 
 export default TransactionsViewContainer = createContainer((props) => {
-  let pairs = TradePairs.find({$or:[{currId: this.props.wallet}, {marketCurrId: this.props.wallet}]}).fetch();
+  let pairs = TradePairs.find({$or:[{currId: props.wallet}, {marketCurrId: props.wallet}]}).fetch();
   let pair_ids = pairs.map(function(pair) {
     return pair._id;
   });
   let user = Meteor.user();
   return {
-    balance: Balances.findOne({currId: this.props.wallet}),
-    currency: Currencies.findOne({_id:this.props.wallet}),
-    withdrawals: Withdrawals.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
-    deposits: Transactions.find({currId: this.props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+    balance: Balances.findOne({currId: props.wallet}),
+    currency: Currencies.findOne({_id:props.wallet}),
+    withdrawals: Withdrawals.find({currId: props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
+    deposits: Transactions.find({currId: props.wallet}, {limit: 30, sort: {createdAt: -1}}).fetch(),
     trades: Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: user._id}, {sellerId: user._id}]}).fetch(),
     user: Meteor.user(),
     pairs: pairs

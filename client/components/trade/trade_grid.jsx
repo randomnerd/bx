@@ -998,6 +998,6 @@ export default TradeGridContainer = createContainer((props) => {
     pairId: pair && pair._id,
     user: Meteor.user(),
     currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-    chartItems: ChartItems.find({ pairId: props.pair._id }).fetch(),
+    chartItems: ChartItems.find({ pairId: pair._id }).fetch(),
   };
 }, TradeGrid);
