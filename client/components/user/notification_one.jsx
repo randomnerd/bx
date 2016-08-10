@@ -6,11 +6,9 @@ const Notification = connect({
   user: ['user'],
   //pair: ['pair.pair']
 }, class Notification extends React.Component {
-  getInitialState() {
-    return {
-      hidden: true,
-      closed: false
-    };
+  state = {
+    hidden: true,
+    closed: false
   }
 
   types() {

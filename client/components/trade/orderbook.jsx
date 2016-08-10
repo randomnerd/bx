@@ -7,10 +7,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 const Orderbook = connect({
   layout: ['layout'],
 }, class Orderbook extends React.Component {
-  getInitialState() {
-    return {
+  state = {
       spread: 0.1,
-    };
   }
 
   goBuySell(item, e) {

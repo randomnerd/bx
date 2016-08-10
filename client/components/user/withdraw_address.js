@@ -7,12 +7,10 @@ import { createContainer } from 'meteor/react-meteor-data';
 const WithdrawAddress = connect({
   tools: ['tools']
 }, class WithdrawAddress extends React.Component {
-  getInitialState() {
-    return {
-      errorMessage: null,
-      allowSubmit: false,
-      editable: false
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false,
+    editable: false
   }
 
   edit() {

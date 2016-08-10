@@ -10,12 +10,6 @@ const UserTradeHistory = connect({
   layout: ['layout'],
   pair: ['pair','pair']
 }, class UserTradeHistory extends React.Component {
-  getInitialState(){
-    return{
-      test: 1
-    }
-  }
-
   curr(id) {
     let curr = _.findWhere(this.props.currencies, {_id: id});
     return curr
