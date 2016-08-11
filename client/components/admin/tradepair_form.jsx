@@ -85,7 +85,7 @@ const AdminTradePair = connect({
     return (
       <div>
         <Formsy.Form key={this.props.k} className='ui form'
-          onValidSubmit={this.newCurr.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
+          onValidSubmit={this.newPair.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)}
         ref='curr'>
           <div className='field'>
             <a className='ui blue labeled icon button' href='/admin/tradepairs'>
