@@ -11,14 +11,9 @@ const TopMenu = connect({
   user: ['user'],
   pair: ['pair'],
   pair_link: ['pair_link'],
-  page: ['page']
+  page: ['page'],
+  tools: 'tools'
 }, class TopMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drag:false
-    };
-  }
 
   getMenuItems() {
     return [
@@ -60,7 +55,6 @@ const TopMenu = connect({
 
   dragToggle(){
     this.props.signals.tools.dragToggle();
-    this.setState({drag: !this.state.drag});
   }
 
   resetBlocks(){
@@ -96,7 +90,6 @@ const TopMenu = connect({
     };
     Meteor.call('userblocs/update', defaultPos , (err, result) => {
       if(!err){
-        this.setState({drag: !this.state.drag});
         this.props.signals.tools.dragReset({action:"on"});
         this.props.signals.tools.dragToggle();
       }
@@ -119,10 +112,10 @@ const TopMenu = connect({
           null}
           { !!this.props.user ?
             <div className="right menu">
-              {this.state.drag ? <a className="icon item" onClick={this.resetBlocks.bind(this)} title="View reset">
+              {this.props.tools.drag ? <a className="icon item" onClick={this.resetBlocks.bind(this)} title="View reset">
                 <i className="refresh icon"></i>
               </a> : null}
-              {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.state.drag ? " active" : "")} onClick={this.dragToggle.bind(this)} title="View control">
+              {this.props.pair_link && this.props.page=='pair' ? <a className={"icon item" + (this.props.tools.drag ? " active" : "")} onClick={this.dragToggle.bind(this)} title="View control">
                 <i className="block layout icon"></i>
               </a> : null}
               <UserTopMenu />

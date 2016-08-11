@@ -560,10 +560,11 @@ const TradeGrid = connect({
         $(place).draggable( "destroy" );
       }
     });
+    // this.setState({drag_on: false});
+    this.props.signals.tools.dragToggle({action:"off"});
     if (this.state.dragTimer) Meteor.clearTimeout(this.state.dragTimer);
   }
   componentWillReceiveProps(newProps){
-    this.setState({drag_on: newProps.tools.drag});
     let dragReset = newProps.tools.dragReset;
     if(dragReset){
       this.positions = this.props.user.profile.blocs;
@@ -588,7 +589,6 @@ const TradeGrid = connect({
     }
     if(newProps.tools.drag){
       this.dragBlocks();
-      this.setState({drag_on: !this.state.drag_on});
     }else{
       _.map(this.previousPlace,(place)=>{
         if(place && $(place).draggable( "instance" )){
@@ -602,7 +602,6 @@ const TradeGrid = connect({
         //this.props.signals.tools.dragReset({action:"off"});
       }
       this.props.signals.tools.dragReset({action:"off"});
-      this.setState({drag_on: !this.state.drag_on});
     }
   }
 
@@ -875,7 +874,7 @@ const TradeGrid = connect({
     }
     return (
       <div className="ui main fluid container">
-        <div className={"ux grid fullheight " + ( this.state.drag_on ? "dragcontainer " : "") + this.state.center}>
+        <div className={"ux grid fullheight " + ( this.props.tools.drag ? "dragcontainer " : "") + this.state.center}>
           <div className={"ux column left fullheight " + this.state.left}>
             {this.renderLeft(1)}
             {this.renderLeft(2)}
