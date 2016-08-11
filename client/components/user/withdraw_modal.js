@@ -23,15 +23,12 @@ const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']
 }, class WithdrawModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      withdraw: false,
-      currId: null,
-      allowSubmit: false,
-      errorMessage: null,
-      totpEnabled: false
-    };
+  state = {
+    withdraw: false,
+    currId: null,
+    allowSubmit: false,
+    errorMessage: null,
+    totpEnabled: false
   }
 
   // componentWillReceiveProps(newProps){
@@ -127,10 +124,10 @@ const WithdrawModal = connect({
     return (
       <UserOnly redirect='/'>
         <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
-          onDeny={this.hide} onPositive={this.withdraw} show={this.props.tools.withdraw}
+          onDeny={this.hide} onPositive={this.withdraw.bind(this)} show={this.props.tools.withdraw}
           errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
 
-          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
+          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
 
             <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
             adds={this.getAmount()} required />
