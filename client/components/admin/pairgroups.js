@@ -40,7 +40,7 @@ const AdminPairGroups = connect({
 
     return pairs.map((pair) => {
       return (
-        <span className={"ui label blue"}>
+        <span key={pair} className={"ui label blue"}>
           {this.currName(pair)}
         </span>
         );

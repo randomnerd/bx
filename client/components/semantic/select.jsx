@@ -30,6 +30,7 @@ export default React.createClass({
   render() {
     var {
       adds,
+      iconSide,
       onChg,
       labeled,
       labelName,
