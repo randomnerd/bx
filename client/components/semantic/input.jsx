@@ -89,6 +89,27 @@ const Input = React.createClass({
   },
 
   render() {
+    var {
+      adds,
+      onChg,
+      labeled,
+      labelName,
+      mapping,
+      validations,
+      validationError,
+      validationErrors,
+      onSubmit,
+      onValid,
+      onValidSubmit,
+      onInvalid,
+      onInvalidSubmit,
+      onChange,
+      reset,
+      preventExternalInvalidation,
+      onSuccess,
+      onError,
+      ...nonFormsyProps
+    } = this.props;
     let clsParams = {
       field:    true,
       required: this.showRequired(),
@@ -99,7 +120,7 @@ const Input = React.createClass({
     let cls = classNames(clsParams);
 
     let errorMessage = this.getErrorMessage();
-    let input = <input {...this.props} onChange={this.changeValue} value={this.getValue() || ''} />;
+    let input = <input {...nonFormsyProps} onChange={this.changeValue} value={this.getValue() || ''} />;
     let label = this.props.label ? <label>{this.props.label}</label> : null;
     let icon  = this.props.icon ? <i className={"icon " + this.props.icon} /> : null;
 

@@ -46,6 +46,24 @@ export default React.createClass({
     }
   },
   render() {
+    var {
+      isChecked,
+      mapping,
+      validations,
+      validationError,
+      validationErrors,
+      onSubmit,
+      onValid,
+      onValidSubmit,
+      onInvalid,
+      onInvalidSubmit,
+      onChange,
+      reset,
+      preventExternalInvalidation,
+      onSuccess,
+      onError,
+      ...nonFormsyProps
+    } = this.props;
     let classes = [ 'field' ];
     if (this.showRequired())  classes.push('required');
     if (this.showError())     classes.push('error');
@@ -54,7 +72,7 @@ export default React.createClass({
 
 
     let errorMessage = this.getErrorMessage();
-    let input = <input {...this.props} value={this.getValue()} />;
+    let input = <input {...nonFormsyProps} value={this.getValue()} />;
 
     return (
       <div className={classes.join(' ')}>

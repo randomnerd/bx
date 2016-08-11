@@ -164,7 +164,7 @@ const Home = connect({
         let tradeCount = parseFloat(item.tradesCount)||1;
         let orderCount = parseFloat(item.ordersCount)||1;
         return (
-          <div>
+          <div key={item._id + 'subheader'}>
             <div className="subheader">
               <div className="ui dropdown groupmenu">
                 <div className="text">{item.name}</div>
@@ -184,7 +184,7 @@ const Home = connect({
         );
       }else{
         return (
-          <div className="not-available">
+          <div key={item._id + 'subheader'} className="not-available">
             <div className="subheader">
               {item.name}
             </div>
@@ -199,7 +199,7 @@ const Home = connect({
   renderMarkets(){
     return this.props.markets.map((item) => {
       return (
-        <div className="ui segment bloc">
+        <div key={item._id} className="ui segment bloc">
           <div className="ui header">
             {item.name}
           </div>
