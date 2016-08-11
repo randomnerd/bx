@@ -13,7 +13,10 @@ import Pair from './modules/Pair';
 import Notifications from './modules/Notifications';
 import U from './modules/U';
 
-const subsManager = new SubsManager({cacheLimit: 100});
+const subsManager = new SubsManager({
+  cacheLimit: 100,
+  expireIn: 24 * 60
+});
 Meteor.subs = subsManager;
 
 subsManager.subscribe('currencies');
