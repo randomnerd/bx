@@ -28,6 +28,27 @@ export default React.createClass({
   },
 
   render() {
+    var {
+      adds,
+      onChg,
+      labeled,
+      labelName,
+      mapping,
+      validations,
+      validationError,
+      validationErrors,
+      onSubmit,
+      onValid,
+      onValidSubmit,
+      onInvalid,
+      onInvalidSubmit,
+      onChange,
+      reset,
+      preventExternalInvalidation,
+      onSuccess,
+      onError,
+      ...nonFormsyProps
+    } = this.props;
     let classes = [ 'field' ];
     if (this.showRequired())  classes.push('required');
     if (this.showError())     classes.push('error');
@@ -41,7 +62,7 @@ export default React.createClass({
     return (
       <div className={classes.join(' ')}>
         {this.props.label ? <label>{this.props.label}</label> : ""}
-        <select {...this.props} className="ui search dropdown" ref="select">
+        <select {...nonFormsyProps} className="ui search dropdown" ref="select">
           <option key="0" value="">{this.props.placeholder}</option>
           {this.renderOptions()}
         </select>
