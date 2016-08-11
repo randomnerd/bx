@@ -522,10 +522,9 @@ const TradeGrid = connect({
       if(place && $(place).draggable( "instance" )){
         $(place).draggable( "destroy" );
       }
-    })
+    });
 
-
-    Meteor.setTimeout(()=>{
+    let dragTimer = Meteor.setTimeout(()=>{
       $(".dragcontainer .drag").each((indx, element)=>{
         let el = $(element).attr('data-block');
         $this.previousPlace[el]=element;
@@ -551,10 +550,18 @@ const TradeGrid = connect({
         }
       });
       $this.setState({dragorders : true});
-    },100);
+    }, 200);
+    this.setState({dragTimer});
 
   }
-
+  componentWillUnmount(){
+    _.map(this.previousPlace,(place)=>{
+      if (place && $(place).draggable( "instance" )){
+        $(place).draggable( "destroy" );
+      }
+    });
+    if (this.state.dragTimer) Meteor.clearTimeout(this.state.dragTimer);
+  }
   componentWillReceiveProps(newProps){
     this.setState({drag_on: newProps.tools.drag});
     let dragReset = newProps.tools.dragReset;
@@ -619,10 +626,10 @@ const TradeGrid = connect({
           places.right[key]=false;
         }
       });
-      Meteor.setTimeout(()=>{
+      //Meteor.setTimeout(()=>{
         //console.log(places);
         this.setState({places: places});
-      },200);
+      //}, 1400);
     }
 
     let $this = this;

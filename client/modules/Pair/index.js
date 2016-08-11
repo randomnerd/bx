@@ -3,7 +3,6 @@ import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
 import {TradePairs} from '/both/collections';
-import {set, copy} from 'cerebral-addons';
 import {subsReady} from '../Tools';
 
 
