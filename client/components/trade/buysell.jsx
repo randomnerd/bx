@@ -64,13 +64,13 @@ const BuySell = connect({
     return (
       <div className={this.props.wide ? "two fields" : ""}>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={buysell.amount} onChg={this.changeAmount}
+        value={buysell.amount} onChg={this.changeAmount.bind(this)}
         placeholder='0.0000' ref='amount'
         labeled labelName={this.props.currency}/>
         <Semantic.Input className='nomargin' name='price' label='Price' icon='shop'
         value={buysell.price}
         placeholder='0.0000' ref='price' labeled labelName='BTC'
-        onChg={this.changePrice} />
+        onChg={this.changePrice.bind(this)} />
       </div>
     );
   }
@@ -80,7 +80,7 @@ const BuySell = connect({
     return (
       <div>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={buysell.amount} onChg={this.changeAmount}
+        value={buysell.amount} onChg={this.changeAmount.bind(this)}
         placeholder='0.0000' ref='amount'
         labeled labelName={this.props.currency}/>
 
