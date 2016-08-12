@@ -86,51 +86,60 @@ class EventCapture extends Component {
 			onPanEnd(newPos, panStartXScale, panOrigin, chartsToPan, e);
 		}
 
+		onContextMenu(newPos, e);
+
+		var win = d3Window(this.refs.capture);
+		d3.select(win)
+			.on(MOUSEMOVE, null)
+			.on(MOUSEUP, null);
+
+		this.contextMenuClicked = true;
 		this.setState({
 			panInProgress: false,
 			panStart: null,
-		}, () => {
-			onContextMenu(newPos, e);
-
-			var win = d3Window(this.refs.capture);
-			d3.select(win)
-				.on(MOUSEMOVE, null)
-				.on(MOUSEUP, null);
-			// this.contextMenuClicked = false;
 		});
 		// onPanEnd(newPos, e);
 	}
 	handleMouseDown(e) {
-		var { pan, xScale, chartConfig } = this.props;
+		var { pan, xScale, chartConfig, onMouseDown } = this.props;
+		this.panHappened = false;
+		this.focus = true;
 
-		if (!this.state.panInProgress) {
-			this.focus = true;
+		if (!this.state.panInProgress && this.mouseInteraction) {
 
-			if (this.mouseInteraction && pan) {
-				var mouseXY = mousePosition(e);
+			var mouseXY = mousePosition(e);
 
-				this.panHappened = false;
+			var dx = e.pageX - mouseXY[0],
+				dy = e.pageY - mouseXY[1];
 
-				var dx = e.pageX - mouseXY[0],
-					dy = e.pageY - mouseXY[1];
+			var currentCharts = getCurrentCharts(chartConfig, mouseXY);
 
-				var currentCharts = getCurrentCharts(chartConfig, mouseXY);
+			this.setState({
+				panInProgress: pan,
+				panStart: {
+					panStartXScale: xScale,
+					panOrigin: mouseXY,
+					dx, dy,
+					chartsToPan: currentCharts
+				},
+			});
 
-				this.setState({
-					panInProgress: true,
-					panStart: {
-						panStartXScale: xScale,
-						panOrigin: mouseXY,
-						dx, dy,
-						chartsToPan: currentCharts
-					},
-				});
-
+			if (pan) {
 				var win = d3Window(this.refs.capture);
 				d3.select(win)
 					.on(MOUSEMOVE, this.handlePan)
 					.on(MOUSEUP, this.handlePanEnd);
+			}
 
+			if (!pan) {
+				e.persist();
+				setTimeout(() => {
+					if (!this.contextMenuClicked) {
+						// console.log("NO RIGHT")
+						onMouseDown(mouseXY, currentCharts, e);
+					}
+					this.contextMenuClicked = false;
+				}, 100);
 			}
 		}
 		e.preventDefault();
@@ -158,14 +167,12 @@ class EventCapture extends Component {
 		var e = d3.event;
 
 		var { pan: panEnabled, onPanEnd, onClick, onDoubleClick } = this.props;
-		var { dx, dy, panStartXScale, panOrigin, chartsToPan } = this.state.panStart;
 
-		var newPos = [e.pageX - dx, e.pageY - dy];
+		if (isDefined(this.state.panStart)) {
+			var { dx, dy, panStartXScale, panOrigin, chartsToPan } = this.state.panStart;
 
-		this.setState({
-			panInProgress: false,
-			panStart: null,
-		}, () => {
+			var newPos = [e.pageX - dx, e.pageY - dy];
+
 			if (!this.panHappened) {
 				if (this.clicked) {
 					onDoubleClick(newPos, e);
@@ -190,8 +197,11 @@ class EventCapture extends Component {
 				onPanEnd(newPos, panStartXScale, panOrigin, chartsToPan, e);
 			}
 
-			// this.contextMenuClicked = false;
-		});
+			this.setState({
+				panInProgress: false,
+				panStart: null,
+			});
+		}
 	}
 	handleTouchStart(e) {
 		this.mouseInteraction = false;
@@ -234,9 +244,8 @@ class EventCapture extends Component {
 				this.setState({
 					panInProgress: false,
 					panStart: null,
-				}, () => {
-					onPanEnd(newPos, panStartXScale, panOrigin, e);
 				});
+				onPanEnd(newPos, panStartXScale, panOrigin, e);
 			}
 		}
 
@@ -354,6 +363,7 @@ EventCapture.propTypes = {
 	onClick: PropTypes.func,
 	onDoubleClick: PropTypes.func,
 	onContextMenu: PropTypes.func,
+	onMouseDown: PropTypes.func,
 	children: PropTypes.node,
 };
 

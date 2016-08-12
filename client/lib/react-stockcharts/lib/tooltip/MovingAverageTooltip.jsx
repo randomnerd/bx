@@ -27,7 +27,7 @@ class SingleMAToolTip extends Component {
 					<tspan x="5" dy="15">{this.props.value}</tspan>
 				</ToolTipText>
 				<rect x={0} y={0} width={55} height={30}
-					onClick={this.handleClick.bind(this)}
+					onClick={this.handleClick}
 					fill="none" stroke="none" />
 			</g>
 		);

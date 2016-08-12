@@ -34,6 +34,14 @@ export function getClosestItemIndexes2(array, value, accessor) {
 	return { left, right };
 }
 
+export function getClosestValue(values, currentValue) {
+	var diff = values
+		.map(each => each - currentValue)
+		.reduce((diff1, diff2) => Math.abs(diff1) < Math.abs(diff2) ? diff1 : diff2);
+	return currentValue + diff;
+}
+
+
 export function d3Window(node) {
 	var d3win = node && (node.ownerDocument && node.ownerDocument.defaultView || node.document && node || node.defaultView);
 	return d3win;
