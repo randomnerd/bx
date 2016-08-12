@@ -13,6 +13,7 @@ import PairType from '../admin/pairtype_form';
 import PairGroups from '../admin/pairgroups';
 import PairGroup from '../admin/pairgroup_form';
 import AdminHome from '../admin/home';
+import Users from '../admin/users';
 import {connect} from 'cerebral-view-react';
 
 const Admin = connect({
@@ -21,7 +22,8 @@ const Admin = connect({
   currtype: 'currtype',
   pairtype: 'pairtype',
   adm_pair: 'adm_pair',
-  pairgroup: 'pairgroup'
+  pairgroup: 'pairgroup',
+  pageNum: 'pageNum'
 }, (props) => {
   let renderPage = (page) => {
     switch (page) {
@@ -36,6 +38,8 @@ const Admin = connect({
       case "pairtype": return <PairType {...props}/>;
       case "pairgroups": return <PairGroups {...props}/>;
       case "pairgroup": return <PairGroup {...props}/>;
+      case "users": return <Users {...props}/>;
+      //case "pairgroup": return <PairGroup {...props}/>;
       default: return <AdminHome {...props}/>;
     }
   };

@@ -19,7 +19,9 @@ const router = Router({
      '/pairtypes/edit/:id' : 'admin.adminPairTypesEdit',
      '/pairgroups' : 'admin.adminPairGroups',
      '/pairgroups/new' : 'admin.adminPairGroupsNew',
-     '/pairgroups/edit/:id' : 'admin.adminPairGroupsEdit'
+     '/pairgroups/edit/:id' : 'admin.adminPairGroupsEdit',
+     '/users/:pageNum' : 'admin.adminUsers',
+     '/user/:id' : 'admin.adminUser'
    },
    '/u': {
      '/wallets': 'u.wallets',

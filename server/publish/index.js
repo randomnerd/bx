@@ -12,3 +12,4 @@ import './withdrawals';
 import './orders';
 import './currtypes';
 import './pairtypes';
+import './users';

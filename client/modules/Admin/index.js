@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
+import {subsReady} from '../Tools';
 
 
 function goHome ({input, state}) {
@@ -96,6 +97,24 @@ function goPairGroupsEdit ({input, state}) {
   state.set('layout', "admin");
 }
 
+function getUsers ({input, state, services}) {
+  if (!input.pageNum || parseInt(input.pageNum) < 1) input.pageNum = 1;
+  services.subsManager.subscribe('usersAdmin', parseInt(input.pageNum));
+}
+
+function goUsers ({input, state}) {
+  state.set('page', "users");
+  state.set('pageNum', input.pageNum)
+  state.set('userId', null);
+  state.set('layout', "admin");
+}
+
+function goUser ({input, state}) {
+  state.set('page', "user");
+  state.set('userId', input.id);
+  state.set('layout', "admin");
+}
+
 const home = [
   goHome
 ];
@@ -155,6 +174,16 @@ const adminPairGroupsEdit = [
   goPairGroupsEdit
 ];
 
+const adminUsers = [
+  getUsers,
+  [subsReady, {
+    success: [goUsers]
+  }]
+];
+const adminUser = [
+  goUser
+];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -179,6 +208,8 @@ export default (options = {}) => {
       adminPairGroups,
       adminPairGroupsNew,
       adminPairGroupsEdit,
+      adminUsers,
+      adminUser
       // pair
     });
 
