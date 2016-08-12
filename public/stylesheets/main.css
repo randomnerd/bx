@@ -13,8 +13,8 @@ html, body, html.ios, html.ios body{
 .ui.body{display: block;}
 
 .daologo{
-  padding-left: 70px !important;
-  background: url("/dao_logo.png") 11px 11px no-repeat !important;
+  padding-left: 35px !important;
+  background: url("/images/logo_small.png") 11px 8px no-repeat !important;
   font-weight: bold !important;
   font-size: 12px !important;
 }
@@ -1317,7 +1317,7 @@ tr.lesspadding th {
   font-weight: lighter;
   width: 70%;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;;
 }
 .ld .block .promo h2{
   font-size: 3rem;
@@ -1497,7 +1497,7 @@ tr.lesspadding th {
 }
 
 .ld img{
-  width: 100%;
+  width: 40%;
   margin: auto;
 }
 

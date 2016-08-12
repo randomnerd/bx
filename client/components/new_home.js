@@ -224,7 +224,7 @@ const Home = connect({
                   </div>
                 </div>
                 <div className="promo column">
-                  <h1><img src="/dao_logo_big.png" /></h1>
+                  <h1><img src="/images/logo_big.png" /></h1>
                   <p>Token contraсts. Digital startup shares. Crypto currencies.</p>
                   <h3>All in one place. All stored in blockchain.</h3>
                   <p>DAO Stock is an exchange platform where buyers and sellers consummating
