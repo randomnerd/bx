@@ -9,11 +9,6 @@ import moment from 'moment';
 const AdminUsers = connect({
   layout: ['layout']
 }, class AdminUsers extends React.Component {
-  //currId: currencyId
-  //marketCurrId: currencyId
-  //published: boolean
-  //buyFee: float
-  //sellFee: float
   delUser(event) {
     if (confirm('Remove user completely?')) {
       Meteor
@@ -28,24 +23,17 @@ const AdminUsers = connect({
         });
     }
   }
-  currName(id) {
-    let curr = _.findWhere(this.props.currencies, {
-      _id: id
+
+  impersonate(userId) {
+    Meteor.call('/admin/impersonate', userId, (error, result) => {
+      if (error) return console.error('Failed to impersonate', error);
+      // console.log(this.props.signals);
+      this.props.signals.page.home();
+      Meteor.connection.setUserId(userId);
     });
-    return curr
-      ? curr.shortName
-      : '';
-  }
-  marketName(id) {
-    let curr = _.findWhere(this.props.markets, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
   }
 
-  renderPairsList() {
+  renderUserList() {
     return this.props.users.map((user) => {
         return (
           <tr key={user._id}>
@@ -60,6 +48,10 @@ const AdminUsers = connect({
                 <a className='ui positive button' href={'/admin/user/' + user._id}>
                   <i className='write icon'></i>
                 </a>
+                <a className='ui button' onClick={this.impersonate.bind(this, user._id)}>
+                  <i className='sign in icon'></i>
+                </a>
+
                 <div className='ui negative button' onClick={this.delUser.bind(this)} data-del={user._id}>
                   <i className='remove icon'></i>
                 </div>
@@ -86,7 +78,7 @@ const AdminUsers = connect({
             </tr>
           </thead>
           <tbody>
-            {this.renderPairsList()}
+            {this.renderUserList()}
           </tbody>
         </table>
       </div>
@@ -95,9 +87,6 @@ const AdminUsers = connect({
 });
 export default AdminUsersContainer = createContainer((props) => {
   return {
-    users: Meteor.users.find({},{skip: (props.pageNum-1)*20}).fetch(),
-    TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
-    currencies: Currencies.find({}, { sort: { name: 1 } }).fetch(),
-    markets: PairTypes.find().fetch()
+    users: Meteor.users.find({},{ skip: (props.pageNum - 1) * 20 }).fetch()
   };
 }, AdminUsers);

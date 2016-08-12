@@ -133,5 +133,12 @@ Meteor.methods({
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
 
     TradePairs.remove(id);
+  },
+
+  '/admin/impersonate': function(userId) {
+    check(userId, String);
+    if (!Meteor.userId()) throw new Meteor.Error('Unauthorized');
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) throw new Meteor.Error('Unauthorized');
+    this.setUserId(userId);
   }
 });
