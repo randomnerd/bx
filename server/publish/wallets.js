@@ -13,3 +13,10 @@ Meteor.publish('wallet_trades', function(currId) {
   });
   return Trades.find({pairId: {$in: pair_ids}, $or: [{buyerId: this.userId}, {sellerId: this.userId}]});
 });
+
+Meteor.publish('walletsAdmin', function(id) {
+  check(id, Match.Maybe(String));
+  if (!this.userId) throw new Meteor.Error('Unauthorized');
+  if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Unauthorized');
+  return Wallets.find({userId: id}, {fields: {secret: 0}});
+});

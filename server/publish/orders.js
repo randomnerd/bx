@@ -46,3 +46,16 @@ Meteor.publish('uTrades', function(limit, skip, pair) {
   }
   return Trades.find(q, {sort: {createdAt: -1}, skip: skip || 0, limit: limit || 40});
 });
+
+Meteor.publish('adminUserTrades', function(userId, limit, skip, pair) {
+  if (!this.userId) throw new Meteor.Error('unauthorized');
+  check(limit, Number);
+  check(userId, String);
+  check(skip, Number);
+  check(pair, Match.Maybe(String));
+  let q = {$or: [{buyerId: userId}, {sellerId: userId}]}
+  if(pair){
+    q.pairId = pair;
+  }
+  return Trades.find(q, {sort: {createdAt: -1}, skip: skip || 0, limit: limit || 40});
+});

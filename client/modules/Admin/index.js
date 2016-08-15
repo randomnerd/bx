@@ -102,16 +102,24 @@ function getUsers ({input, state, services}) {
   services.subsManager.subscribe('usersAdmin', parseInt(input.pageNum));
 }
 
+function getUser ({input, state, services}) {
+  if (!input.id) input.id = '';
+  services.subsManager.subscribe('userAdmin', input.id);
+  services.subsManager.subscribe('balancesAdmin', input.id);
+  services.subsManager.subscribe('walletsAdmin', input.id);
+  services.subsManager.subscribe('adminUserTrades', input.id, 20, 0);
+}
+
 function goUsers ({input, state}) {
   state.set('page', "users");
   state.set('pageNum', input.pageNum)
-  state.set('userId', null);
+  state.set('thisUserId', null);
   state.set('layout', "admin");
 }
 
 function goUser ({input, state}) {
   state.set('page', "user");
-  state.set('userId', input.id);
+  state.set('thisUserId', input.id);
   state.set('layout', "admin");
 }
 
@@ -181,9 +189,11 @@ const adminUsers = [
   }]
 ];
 const adminUser = [
-  goUser
+  getUser,
+  [subsReady, {
+    success: [goUser]
+  }]
 ];
-
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({

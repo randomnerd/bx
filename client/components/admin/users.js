@@ -45,16 +45,12 @@ const AdminUsers = connect({
             <td></td>
             <td className='right aligned collapsing'>
               <div className='ui tiny icon buttons'>
-                <a className='ui positive button' href={'/admin/user/' + user._id}>
-                  <i className='write icon'></i>
+                <a className='ui blue button' href={'/admin/user/' + user._id}>
+                  <i className='list layout icon'></i>
                 </a>
                 <a className='ui button' onClick={this.impersonate.bind(this, user._id)}>
                   <i className='sign in icon'></i>
                 </a>
-
-                <div className='ui negative button' onClick={this.delUser.bind(this)} data-del={user._id}>
-                  <i className='remove icon'></i>
-                </div>
               </div>
             </td>
           </tr>
