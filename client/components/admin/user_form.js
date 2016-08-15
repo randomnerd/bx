@@ -99,7 +99,7 @@ const AdminUser = connect({
     });
   }
   renderSignInLog() {
-    if (!this.props.thisUser.profile.loginHistory) return;
+    if (!this.props.thisUser.profile || !this.props.thisUser.profile.loginHistory) return;
     let i = 0;
     return this.props.thisUser.profile.loginHistory.map((item) => {
       i++;
