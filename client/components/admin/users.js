@@ -41,8 +41,7 @@ const AdminUsers = connect({
             <td>{user.username}</td>
             <td>{user.emails[0]['address']}</td>
             <td>{moment(user.createdAt).format("DD.MM.YYYY - hh:mm:ss")}</td>
-            <td></td>
-            <td></td>
+            <td><i className={"circle icon " + (user.profile && user.profile.online ? 'green' : 'thin')}></i></td>
             <td className='right aligned collapsing'>
               <div className='ui tiny icon buttons'>
                 <a className='ui blue button' href={'/admin/user/' + user._id}>
@@ -69,7 +68,6 @@ const AdminUsers = connect({
               <th>Email</th>
               <th>Reg date</th>
               <th>Is online</th>
-              <th>Non-zero balance</th>
               <th>Action</th>
             </tr>
           </thead>

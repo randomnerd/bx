@@ -11,7 +11,8 @@ Meteor.publish('usersAdmin', function(page) {
       username: 1,
       emails: 1,
       createdAt: 1,
-      //profile: 1
+      'profile.loginHistory': 1,
+      'profile.online': 1
     },
     limit: perPage,
     skip: perPage*(page-1)
