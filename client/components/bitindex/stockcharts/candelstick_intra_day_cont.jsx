@@ -67,7 +67,7 @@ const candelstick_intra_day_cont = React.createClass({
                 ]} height={100} origin={(w, h) => [
                     0, h - 100
                 ]}>
-                    <YAxis axisAt="left" orient="left" ticks={5} tickFormat={d3.format("s")}/>
+                    <YAxis axisAt="left" orient="left" ticks={10} tickFormat={d3.format("s")}/>
 
                     <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open
                         ? "#6BA583"
