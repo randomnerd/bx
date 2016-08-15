@@ -14,7 +14,8 @@ html, body, html.ios, html.ios body{
 
 .daologo{
   padding-left: 35px !important;
-  background: url("/images/logo_small.png") 11px 8px no-repeat !important;
+  background: url("/images/logo_small_2.png") 11px 8px no-repeat !important;
+  background-size: 24px !important;
   font-weight: bold !important;
   font-size: 12px !important;
 }
