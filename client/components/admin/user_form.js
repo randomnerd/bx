@@ -99,6 +99,7 @@ const AdminUser = connect({
     });
   }
   renderSignInLog() {
+    if (!this.props.thisUser.profile.loginHistory) return;
     let i = 0;
     return this.props.thisUser.profile.loginHistory.map((item) => {
       i++;
@@ -178,15 +179,20 @@ const AdminUser = connect({
     });
   }
   render() {
+    let user = this.props.thisUser;
     return (
       <div>
+        <a className="ui blue button" href="/admin/users/1">
+          Back
+        </a>
         <div className="ui vertical segment">
           <h3 className="ui header">
-            Username: {this.props.thisUser.username}
+            <i className={"circle icon " + (user.profile.online ? 'green' : 'thin')}></i> Username: {user.username}
           </h3>
+
           <div className="ui bulleted list">
-            <div className="item">Email: {this.props.thisUser.emails[0].address}</div>
-            <div className="item">Created at: {moment(this.props.thisUser.createdAt).format("DD.MM.YYYY - hh:mm:ss")}</div>
+            <div className="item">Email: {user.emails[0].address}</div>
+            <div className="item">Created at: {moment(user.createdAt).format("DD.MM.YYYY - hh:mm:ss")}</div>
           </div>
         </div>
         <div className="ui vertical segment">
@@ -256,7 +262,6 @@ const AdminUser = connect({
   }
 });
 export default AdminUserContainer = createContainer((props) => {
-  console.log(props.thisUserId);
   return {
     trades: Trades.find({},{sort: {createdAt: -1}}).fetch(),
     pairs: TradePairs.find().fetch(),
