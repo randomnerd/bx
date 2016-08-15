@@ -187,7 +187,7 @@ const AdminUser = connect({
         </a>
         <div className="ui vertical segment">
           <h3 className="ui header">
-            <i className={"circle icon " + (user.profile.online ? 'green' : 'thin')}></i> Username: {user.username}
+            <i className={"circle icon " + (user.profile && user.profile.online ? 'green' : 'thin')}></i> Username: {user.username}
           </h3>
 
           <div className="ui bulleted list">
