@@ -46,7 +46,7 @@ const Modal = connect({
         </div>
 
         <div className="actions">
-          <div className="ui black button" onClick={this.props.onDeny.bind(this)}>
+          <div className="ui main button" onClick={this.props.onDeny.bind(this)}>
             { this.props.denyLabel }
           </div>
 

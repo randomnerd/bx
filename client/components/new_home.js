@@ -8,12 +8,12 @@ import LandingOrders from './trade/landing_orders';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const Home = connect({
-  user: ['user'],
-  title: ['home', 'title'],
-  layout: ['layout'],
-  pair_link: ['pair_link'],
-  pair: ['pair', 'pair'],
-  tools: ['tools']
+  user: 'user',
+  title: 'home.title',
+  layout: 'layout',
+  pair_link: 'pair_link',
+  pair: 'pair.pair',
+  tools: 'tools'
 }, class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -233,14 +233,10 @@ const Home = connect({
                      organization that facilitates, verifies, enforces the negotiation and
                      performs the agent's contract.</p>
 
-                  { this.props.user ? <div>
-                    <a className="ui massive teal button" onClick={this.showSignUpModal.bind(this)}>create account</a>
-
-                    <button className="ui normal big positive button hidden">Sign in with Coinbase</button>
+                  { !this.props.user ? <div>
+                    <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>create account</a>
                   </div> : null }
-                  <a className="ui massive icon button scrolldown" onClick={this.scrollAll.bind(this)}>
-                    <i className="down arrow icon" />
-                  </a>
+
                 </div>
               </div>
             </div>
@@ -277,26 +273,7 @@ const Home = connect({
               </div>
             </div>
           </div>
-          <div className="block white" ref="currs">
-            <div className="ui grid">
-              <div className="stackable two column row">
-                <div className="promo column">
-                  <h1><br />
-                    Dedicated<br />
-                    Customer<br />
-                    <strong>Support</strong>
-                  </h1>
-                </div>
-                <div className="promo column">
-                  <h1><br /></h1>
-                  <h3>Blah blah blah</h3>
-                  <p>Our Incident Management System (IMS) has integrated with ethereum blockchain solve any problem.</p>
 
-
-                </div>
-              </div>
-            </div>
-          </div>
 
 
         </div>

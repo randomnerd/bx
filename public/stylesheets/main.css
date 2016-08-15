@@ -426,6 +426,7 @@ html, body, html.ios, html.ios body{
 .ui.inverted.newgrey .ui.grey.button{color: #767676; border-color: #767676;}
 .ui.inverted.newgrey .ui.white.button{color: #ffffff; border-color: #ffffff;}
 .ui.inverted.newgrey .ui.black.button{color: #1b1c1d; border-color: #1b1c1d;}
+.ui.inverted.newgrey .ui.main.button{color: #212e3e; border-color: #212e3e;}
 
 .ui.inverted.newgrey .ui.button.normal{color: #FFF !important;}
 .ui.inverted.newgrey .ui.blue.button.normal{background: #2185d0 !important;}
@@ -443,6 +444,7 @@ html, body, html.ios, html.ios body{
 .ui.inverted.newgrey .ui.white.button.normal{background: #ffffff !important; color: #333 !important;}
 .ui.inverted.newgrey .ui.black.button.normal{background: #1b1c1d !important;}
 .ui.inverted.newgrey .ui.bg.button.normal{background-color: #28394d !important; border: none !important;}
+.ui.inverted.newgrey .ui.bg.main.button{background-color: #212e3e !important; border: none !important;}
 
 .ui.inverted.newgrey .ui.form .field > label {
     color: #ced2d5;
