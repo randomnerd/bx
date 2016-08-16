@@ -241,8 +241,10 @@ const Home = connect({
 
                   { this.props.user ?
                     null :
-                    <p>&nbsp;</p>
-                    <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
+                    <div>
+                      <p>&nbsp;</p>
+                      <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
+                    </div>
                   }
 
                 </div>
