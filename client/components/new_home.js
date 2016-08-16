@@ -208,13 +208,13 @@ const Home = connect({
       );
     });
   }
+
   render() {
     return (
       <div className={"ld2" + (!this.state.holder?" scroll":"")} ref="ld2">
         <div className={"ld" + (this.state.holder?" noscroll":"")} ref="ld">
-          <div className="block background">
+          <div className="block background"></div>
 
-          </div>
           <div className="block opacity">
             <div className="ui grid">
               <div className="stackable two column row">
@@ -225,56 +225,29 @@ const Home = connect({
                 </div>
                 <div className="promo column">
                   <h1><img src="/images/logo_big.png" /></h1>
-                  <p>Token contraсts. Digital startup shares. Crypto currencies.</p>
-                  <h3>All in one place. All stored in blockchain.</h3>
-                  <p>DAO Stock is an exchange platform where buyers and sellers consummating
-                     transactions of digital assets trading (DAO tokens, digital currency) at a
-                     decentral location - public blockchain, operated by decentral autonomous
-                     organization that facilitates, verifies, enforces the negotiation and
-                     performs the agent's contract.</p>
-
-                  { !this.props.user ? <div>
-                    <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>create account</a>
-                  </div> : null }
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="block white" ref="bignum">
-            <div className="ui grid">
-              <div className="stackable two column row">
-                <div className="promo column">
-                  <h1><br />
-                    Our<br />
-                    Commitment<br />
-                    to<br />
-                    <strong>Safety</strong>
-                  </h1>
-                </div>
-                <div className="promo column">
-                  <h1><br /></h1>
-                  <h2>Store trading data in to Blockchain</h2>
-                  <p>We store all the trading data in to our private Blockchain
-                      so you can be sure that every little process and trade on our
-                      market will not be lost or compromised.</p>
-
-                  <h2>Ice Box - Cold Storage</h2>
-                  <p>Icebox is a simple Ether cold storage solution based on Lightwallet.
-                  It makes it easy to securely generate new keys and addresses on an
-                  airgapped device as well as spend from those addresses.</p>
-
-                  <h2>Trustless Token Management</h2>
-                  <p>Trustless (Contract Controlled) Token Management extends
-                  the managed Account function of DAO to be able to manage all
-                  tokens and token sets which will ever exist.</p>
+                  <p>&nbsp;</p>
+                  <h3>Welcome to the Digital Assets Online stock.</h3>
+                  <p>
+                    DAO Stock is an online realtime exchange platform where you can
+                    buy or sell the most trusted and valued digital assets like
+                    Bitcoin or Litecoin in shortest time possible without any
+                    trading fees<sup>*</sup>.
+                  </p>
+                  <p>
+                    Need help? Ask any questions in our online chat or navigate to
+                    our <a href="https://daostock.zendesk.com/hc/en-us" target="_blank">Help Center</a>.
+                  </p>
+                  <h5><sup>*</sup> Limited time offer</h5>
+                  <p>&nbsp;</p>
+                  { this.props.user ?
+                    null :
+                    <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
+                  }
 
                 </div>
               </div>
             </div>
           </div>
-
-
 
         </div>
       </div>
