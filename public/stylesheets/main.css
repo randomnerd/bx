@@ -558,7 +558,7 @@ input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s eas
   padding-left: 0.1rem !important;
   padding-right: 0.1rem !important;
   padding-top: 0.1rem !important;
-  padding-bottom: 0.1rem !important;
+  padding-bottom: 0 !important;
   margin: 0 !important;
   height: 100% !important;
 }
