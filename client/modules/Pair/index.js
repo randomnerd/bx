@@ -2,22 +2,25 @@ import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
-import {TradePairs} from '/both/collections';
+import {TradePairs, Currencies} from '/both/collections';
 import {subsReady} from '../Tools';
 
 
 function showPair ({input, state, output, services}) {
   state.set('page', "pair");
+
   state.set('layout', "main");
   state.set('pair_link', input.id);
   if (state.get('mobile')) state.set('mob.page', 'buysell');
   let pair = TradePairs.findOne({permalink: input.id});
-
+  let curr = Currencies.findOne({_id: pair.currId});
+  let marketCurr = Currencies.findOne({_id: pair.marketCurrId});
   if (!pair) return;
   services.subsManager.subscribe('trades', pair._id);
   services.subsManager.subscribe('orderbook', pair._id);
   services.subsManager.subscribe('chartitems', pair._id);
   state.set(['pair', 'pair'], pair);
+  state.set('title', `${curr.shortName} / ${marketCurr.shortName} - Digital Assets Online Stock`);
 }
 
 function setPairObj ({input, state}) {

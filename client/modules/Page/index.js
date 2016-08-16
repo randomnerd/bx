@@ -24,6 +24,8 @@ function goHome ({input, state}) {
   state.set('page', "home");
   state.set('layout', "home");
   state.set(['pair', 'pair'], null);
+  state.set('title', "Digital Assets Online Stock");
+
 }
 
 function goBitx ({input, state, output, services}) {

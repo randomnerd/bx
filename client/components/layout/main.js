@@ -26,7 +26,8 @@ const MainLayout = connect({
   page: 'page',
   pair_link: 'pair_link',
   pair: 'pair.pair',
-  wallet: 'wallet'
+  wallet: 'wallet',
+  title: 'title'
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
@@ -45,6 +46,7 @@ const MainLayout = connect({
   }
   return (
     <div className="ui inverted newgrey body">
+      <title>{props.title}</title>
       <Sidebar {...props}><Chat {...props}/></Sidebar>
       <div className="pusher">
         {3==2?<InfoPanel  {...props}/>:null}
