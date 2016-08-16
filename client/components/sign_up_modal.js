@@ -43,6 +43,12 @@ const SignUpModal = connect({
     });
   }
 
+  signIn() {
+    this.setState({errorMessage: null});
+    this.props.signals.user.signUpDone();
+    this.props.signals.user.loginClicked();
+  }
+
   allowSubmit() { this.setState({allowSubmit: true}) }
   disallowSubmit() { this.setState({allowSubmit: false}) }
 
@@ -64,6 +70,7 @@ const SignUpModal = connect({
             ref="password_confirm" validations="passwordConfirmationMatch" required/>
           <input type="submit" className="hidden" />
         </Formsy.Form>
+        <a href="#" onClick={this.signIn.bind(this)}>Signed up already? Click here!</a>
       </Semantic.Modal>
     );
   }
