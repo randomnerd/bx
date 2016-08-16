@@ -1299,10 +1299,12 @@ tr.lesspadding th {
   margin: -70px auto 0;
   position: absolute;
   text-align: center;
-  top: 15%;
+  padding-top: : 5%;
   height: inherit;
   width: inherit;
   color: #000;
+  width: 110%;
+  overflow-y: auto;
 }
 .ld .button{
   text-transform: uppercase;

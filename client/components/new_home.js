@@ -51,36 +51,36 @@ const Home = connect({
       hPanel = h;
     });
 
-    $(this.refs.ld).scroll(()=>{
-
-      if(!this.state.holder){
-        this.setState({ holder : true });
-        let realScroll = ld.scrollTop();
-        if(this.state.scroll == 1 && realScroll > this.state.scroller){
-          this.scrollingTo(hPanel, 2);
-          //console.log(hPanel);
-          //this.props.signals.tools.infoPanel({action:'show'});
-        }else if(this.state.scroll == 2 && realScroll < this.state.scroller){
-          this.scrollingTo(0, 1);
-          //console.log(2);
-          //this.props.signals.tools.infoPanel({action:'hide'});
-        }
-        else if(this.state.scroll == 2 && realScroll > this.state.scroller){
-          this.scrollingTo(hCurrs, 3);
-          //console.log(hCurrs);
-          //this.props.signals.tools.infoPanel({action:'hide'});
-        }else if(this.state.scroll == 3 && realScroll < this.state.scroller){
-          this.scrollingTo(hPanel, 2);
-          //console.log(hPanel);
-          //this.props.signals.tools.infoPanel({action:'show'});
-        }
-        else{
-          this.setState({ holder : false });
-        }
-      }
-
-
-    });
+    // $(this.refs.ld).scroll(()=>{
+    //
+    //   if(!this.state.holder){
+    //     this.setState({ holder : true });
+    //     let realScroll = ld.scrollTop();
+    //     if(this.state.scroll == 1 && realScroll > this.state.scroller){
+    //       this.scrollingTo(hPanel, 2);
+    //       //console.log(hPanel);
+    //       //this.props.signals.tools.infoPanel({action:'show'});
+    //     }else if(this.state.scroll == 2 && realScroll < this.state.scroller){
+    //       this.scrollingTo(0, 1);
+    //       //console.log(2);
+    //       //this.props.signals.tools.infoPanel({action:'hide'});
+    //     }
+    //     else if(this.state.scroll == 2 && realScroll > this.state.scroller){
+    //       this.scrollingTo(hCurrs, 3);
+    //       //console.log(hCurrs);
+    //       //this.props.signals.tools.infoPanel({action:'hide'});
+    //     }else if(this.state.scroll == 3 && realScroll < this.state.scroller){
+    //       this.scrollingTo(hPanel, 2);
+    //       //console.log(hPanel);
+    //       //this.props.signals.tools.infoPanel({action:'show'});
+    //     }
+    //     else{
+    //       this.setState({ holder : false });
+    //     }
+    //   }
+    //
+    //
+    // });
   }
 
   showSignUpModal() {
@@ -238,9 +238,10 @@ const Home = connect({
                     our <a href="https://daostock.zendesk.com/hc/en-us" target="_blank">Help Center</a>.
                   </p>
                   <h5><sup>*</sup> Limited time offer</h5>
-                  <p>&nbsp;</p>
+
                   { this.props.user ?
                     null :
+                    <p>&nbsp;</p>
                     <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
                   }
 
