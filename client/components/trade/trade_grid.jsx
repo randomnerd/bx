@@ -121,7 +121,7 @@ const TradeGrid = connect({
       </div>
     );
     return (
-      <div><Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.props.chartItems)} type='svg' pairText={"sd"}/></div>
+      <div><Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.props.chartItems)} type='svg' pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
     );
   }
 
