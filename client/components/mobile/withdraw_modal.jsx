@@ -70,7 +70,7 @@ const WithdrawModal = connect({
 
 
   componentWillReceiveProps(newProps){
-    if (!this.isMounted() || !newProps.tools.address) return;
+    if (!this.props.show) return;
       this.refs.address.setValue(newProps.tools.address);
   }
   componentDidMount() {
@@ -131,8 +131,8 @@ const WithdrawModal = connect({
 });
 export default WithdrawModalContainer = createContainer((props) => {
   return {
-    wallet: Wallets.findOne({_id: this.props.wallet}),
-    balance: Balances.findOne({currId: this.props.wallet}),
-    currency: Currencies.findOne({_id: this.props.wallet})
+    wallet: Wallets.findOne({_id: props.wallet}),
+    balance: Balances.findOne({currId: props.wallet}),
+    currency: Currencies.findOne({_id: props.wallet})
   };
 }, WithdrawModal);

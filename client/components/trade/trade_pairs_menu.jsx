@@ -5,8 +5,8 @@ import {connect} from 'cerebral-view-react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const TradePairsMenu = connect({
-  user: ['user'],
-  //pair: ['pair.pair']
+  user: 'user',
+  pair: 'pair.pair'
 }, class TradePairsMenu extends React.Component {
   currName(id) {
     let curr = _.findWhere(this.props.currencies, {_id: id});
@@ -22,7 +22,6 @@ const TradePairsMenu = connect({
   renderMenuItems() {
     let active = this.props.pair ? this.props.pair : false;
     return this.props.TradePairs.map((pair) => {
-      //console.log(this.props.currencies);
       return (
         <a className={'item' + (active._id === pair._id ? ' active' : '') }
         key = {pair.permalink}

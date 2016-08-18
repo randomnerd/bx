@@ -13,10 +13,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 const ChartsShow = connect({
 
 }, class ChartsShow extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {chartType: 'candle', cartH: 300};
-    }
+    state = {chartType: 'candle', cartH: 300};
+
     showCandle(event) {
         $(this.refs.chartType).find('.item').removeClass('active');
         $(event.currentTarget).addClass('active');
@@ -203,7 +201,7 @@ const ChartsShow = connect({
 });
 export default ChartsShowContainer = createContainer((props) => {
   let handle_BTPR = Meteor.subscribe('BitIndexIndicator_BTPR');
-  let pair = TradePairs.findOne({permalink: this.props.active});
+  let pair = TradePairs.findOne({permalink: props.active});
 
   return {
       pair: pair,
@@ -211,7 +209,7 @@ export default ChartsShowContainer = createContainer((props) => {
       BTPR: BitIndexIndicator_BTPR.find().fetch(),
       pairId: pair && pair._id,
       user: Meteor.user(),
-      currency1: Currencies.findOne({_id: this.props.pair.currId}),
-      currency2: Currencies.findOne({_id: this.props.pair.marketCurrId})
+      currency1: Currencies.findOne({_id: props.pair.currId}),
+      currency2: Currencies.findOne({_id: props.pair.marketCurrId})
   };
 }, ChartsShow);

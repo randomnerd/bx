@@ -30,24 +30,22 @@ import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const MobileLayout = connect({
-  layout: ['layout'],
-  mob: ['mob'],
-  page: ['page'],
-  pair_link: ['pair_link'],
-  user: ['user']
+  layout: 'layout',
+  mob: 'mob',
+  page: 'page',
+  pair_link: 'pair_link',
+  user: 'user'
 }, class MobileLayout extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLoginModal: false,
-      showSignUpModal: false,
-      showWithdrawModal: false,
-      showSidebar: false,
-      showPanel: false,
-      withdrawAddressModal: false,
+  state = {
+    showLoginModal: false,
+    showSignUpModal: false,
+    showWithdrawModal: false,
+    showSidebar: false,
+    showPanel: false,
+    withdrawAddressModal: false,
 
-      showMobile:"buysell"
-    };
+    showMobile:"buysell"
+
   }
   currName(id) {
     let curr = _.findWhere(this.props.currencies, {
@@ -73,7 +71,7 @@ const MobileLayout = connect({
     switch (this.state.sidebarContent) {
     case 'chat':
       return (
-        <Chats />
+        <Chats {...this.props}/>
       );
     break;
     }
@@ -82,17 +80,16 @@ const MobileLayout = connect({
   renderPage() {
     //console.log(this.props.page);
     switch (this.props.page) {
-      case "wallets": return <WalletsPage {...props}/>;
-      case "wallet": return <WalletPage {...props}/>;
-      case "settings": return <Settings {...props}/>;
-      case "password": return <PasswordPage {...props}/>;
-      case "notifications": return <Notifications {...props}/>;
-      default: return <WalletsPage {...props}/>;
+      case "wallets": return <WalletsPage {...this.props}/>;
+      case "wallet": return <WalletPage {...this.props}/>;
+      case "settings": return <Settings {...this.props}/>;
+      case "password": return <PasswordPage {...this.props}/>;
+      case "notifications": return <Notifications {...this.props}/>;
+      default: return <WalletsPage {...this.props}/>;
     }
   }
 
   renderContent(){
-    //console.log(this.props.pair);
     if(!this.props.pair && this.state.showMobile != 'chat') return;
     switch (this.state.showMobile) {
 
@@ -101,8 +98,8 @@ const MobileLayout = connect({
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100 buysell'>
               <h3 className='ui header'>BALANCE</h3>
-              <Balance pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...props}/>
-              <BuySell pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...props}/>
+              <Balance pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...this.props}/>
+              <BuySell pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...this.props}/>
             </div>
           </div>
         )
@@ -112,7 +109,7 @@ const MobileLayout = connect({
       case 'chart':
         return(
           <div className="ui main fluid mobile container">
-            <Charts pair={this.props.pair}  {...props}/>
+            <Charts pair={this.props.pair}  {...this.props}/>
           </div>
         )
         break;
@@ -126,7 +123,7 @@ const MobileLayout = connect({
                 pair={this.props.pair}
                 pairId={this.props.pair._id}
                 valute1={this.currName(this.props.pair.currId)}
-                valute2={this.currName(this.props.pair.marketCurrId)}  {...props}/>
+                valute2={this.currName(this.props.pair.marketCurrId)}  {...this.props}/>
             </div>
             <div className='ui basic segment h100 max100'>
               <h3 className='ui header'>MY ORDERS</h3>
@@ -134,7 +131,7 @@ const MobileLayout = connect({
                 pair={this.props.pair}
                 pairId={this.props.pair._id}
                 valute1={this.props.pair.currId}
-                valute2={this.props.pair.marketCurrId}  {...props}/>
+                valute2={this.props.pair.marketCurrId}  {...this.props}/>
             </div>
           </div>
         )
@@ -150,7 +147,7 @@ const MobileLayout = connect({
                   pair={this.props.pair}
                   pairId={this.props.pair._id}
                   valute1={this.currName(this.props.pair.currId)}
-                  valute2={this.currName(this.props.pair.marketCurrId)}  {...props}/>
+                  valute2={this.currName(this.props.pair.marketCurrId)}  {...this.props}/>
 
             </div>
           </div>
@@ -160,7 +157,7 @@ const MobileLayout = connect({
       case 'chat':
         return(
           <div className="ui main fluid mobile container">
-            <Chats  {...props}/>
+            <Chats  {...this.props}/>
           </div>
         )
 
@@ -171,7 +168,7 @@ const MobileLayout = connect({
   }
   renderSidebarContent() {
     return (
-      <LeftMenu  {...props}/>
+      <LeftMenu  {...this.props}/>
     );
   }
   renderLoading() {
@@ -193,8 +190,8 @@ const MobileLayout = connect({
         <Sidebar>
           {this.renderSidebarContent()}
         </Sidebar>
-        <TopMenu title="BitExchange" pair={this.props.pair} {...props}/>
-        <BottomMenu title="BitExchange" pair={this.props.pair} {...props}/>
+        <TopMenu title="BitExchange" pair={this.props.pair} {...this.props}/>
+        <BottomMenu title="BitExchange" pair={this.props.pair} {...this.props}/>
 
         <div className="pusher">
           <div className="contwrapper pusher ">
@@ -202,17 +199,17 @@ const MobileLayout = connect({
           </div>
         </div>
 
-        <LoginModal {...props}/>
-        <SignUpModal {...props}/>
+        <LoginModal {...this.props}/>
+        <SignUpModal {...this.props}/>
         <WithdrawModal current={this.state.withdrawCurr}
-        address={this.state.withdrawAddress} amount={this.state.withdrawAmount} {...props}/>
-        <WithdrawAddressModal show={this.state.withdrawAddressModal} {...props}/>
+        address={this.state.withdrawAddress} amount={this.state.withdrawAmount} {...this.props}/>
+        <WithdrawAddressModal show={this.state.withdrawAddressModal} {...this.props}/>
       </div>
     );
   }
 });
 export default MobileLayoutContainer = createContainer((props) => {
-  let pair = TradePairs.findOne({permalink: this.props.pair_link});
+  let pair = TradePairs.findOne({permalink: props.pair_link});
 
   return {
     pair: pair,

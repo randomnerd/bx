@@ -6,17 +6,17 @@ import {User} from '/both/models';
 
 function showMenu ({input, state}) {
   if(input.action && input.action == 'close'){
-    state.set('mob.menu', false);
+    state.set(['mob','menu'], false);
   }else if(input.action && input.action == 'open'){
-    state.set('mob.menu', true);
+    state.set(['mob','menu'], true);
   }else{
-    state.set('mob.menu', !state.get('mob.menu'));
+    state.set(['mob','menu'], !state.get('mob.menu'));
   }
 }
 
 function showPage ({input, state}) {
-  state.set('mob.page', input.id);
-  state.set('mob.menu', false);
+  state.set(['mob','page'], input.id);
+  state.set(['mob','menu'], false);
 }
 
 const menu = [

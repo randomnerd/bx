@@ -8,11 +8,11 @@ import NotificationShow from './common/notifications';
 
 import {connect} from 'cerebral-view-react';
 const TopMenu = connect({
-  user: ['user'],
-  pair: ['pair'],
-  pair_link: ['pair_link'],
-  page: ['page'],
-  tools: 'tools'
+  user: 'user',
+  pair_link: 'pair_link',
+  page: 'page',
+  tools: 'tools',
+  pair:'pair'
 }, class TopMenu extends React.Component {
 
   getMenuItems() {
@@ -98,13 +98,13 @@ const TopMenu = connect({
   }
 
   render() {
-    let pair = this.props.pair? this.props.pair.pair : false;
+    let pair = this.props.pair? this.props.pair : false;
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container topmenu">
           <a className="item daologo" href="/"></a>
           { this.renderMenuItems() }
-          <TradePairsMenu pair={pair} />
+          <TradePairsMenu {...this.props} />
           {3==2?<a className="icon item double" onClick={this.infoToggle.bind(this)}>
             <p><i className="dropdown large icon"></i></p>
           </a>
@@ -127,7 +127,7 @@ const TopMenu = connect({
             : this.renderLoginButtons()
           }
 
-          {pair ? <TopInfo pair={pair} /> : null}
+          {pair ? <TopInfo {...this.props} /> : null}
 
 
         </div>

@@ -6,9 +6,10 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const Layout = connect({
-  layout: ['layout'],
-  mobile: ['mobile'],
-  pair: ['pair', 'pair'],
+  layout: 'layout',
+  mobile: 'mobile',
+  mob: 'mob',
+  pair_link: 'pair_link',
 }, class Layout extends React.Component {
 
   componentDidMount() {
