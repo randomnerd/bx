@@ -20,51 +20,7 @@ const ChartsShow = connect({
         $(event.currentTarget).addClass('active');
         this.setState({chartType: 'candle'});
     }
-    showLine() {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'line'});
-    }
-    showMACD(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'macd'});
-    }
-    showRSI(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'rsi'});
-    }
-    showSTO(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'sto'});
-    }
-    showBollinger(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'bollinger'});
-    }
-    showKagi(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'kagi'});
-    }
-    showPointandFigure(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'pointandfigure'});
-    }
-    showHaikinAshi(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'haikinashi'});
-    }
-    showRenko(event) {
-        $(this.refs.chartType).find('.item').removeClass('active');
-        $(event.currentTarget).addClass('active');
-        this.setState({chartType: 'renko'});
-    }
+
     renderBlockChainIndicator() {
         switch (this.state.chartType) {
 
@@ -74,61 +30,7 @@ const ChartsShow = connect({
                 );
                 break;å
 
-            case 'line':
-                return (
-                    <div><Charts.candelstick_mobile data={this.props.BTPR.slice(200)} type='hybrid' height={350} height_bar = {150}/></div>
-                );
-                break;
 
-            case 'macd':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
-                );
-                break;
-            case 'rsi':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR.slice(200)} type='svg' height={350}/></div>
-                );
-                break;
-
-            case 'sto':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
-                );
-                break;
-
-            case 'bollinger':
-                return (
-                    <div>
-                        <Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/>
-                    </div>
-                );
-                break;
-
-            case 'kagi':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
-                );
-                break;
-
-            case 'pointandfigure':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
-                );
-                break;
-
-            case 'haikinashi':
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
-                );
-                break;
-
-            case 'renko':
-
-                return (
-                    <div><Charts.candelstick_default data={this.props.BTPR} type='svg' height={350}/></div>
-                );
-                break;
 
             default:
                 break;
@@ -158,33 +60,7 @@ const ChartsShow = connect({
                                 <a className='item active' onClick={this.showCandle.bind(this)}>
                                     CandleStick
                                 </a>
-                                <a className='item' onClick={this.showLine.bind(this)}>
-                                    Line
-                                </a>
-                                <a className='item' onClick={this.showMACD.bind(this)}>
-                                    MACD
-                                </a>
-                                <a className='item' onClick={this.showRSI.bind(this)}>
-                                    RSI
-                                </a>
-                                <a className='item' onClick={this.showSTO.bind(this)}>
-                                    STO
-                                </a>]
-                                <a className='item' onClick={this.showBollinger.bind(this)}>
-                                    Bollinger
-                                </a>
-                                <a className='item' onClick={this.showKagi.bind(this)}>
-                                    Kagi
-                                </a>
-                                <a className='item' onClick={this.showPointandFigure.bind(this)}>
-                                    P & F
-                                </a>
-                                <a className='item' onClick={this.showHaikinAshi.bind(this)}>
-                                    HaikinAshi
-                                </a>
-                                <a className='item' onClick={this.showRenko.bind(this)}>
-                                    Renko
-                                </a>
+
                             </div>
                         </div>
                     </div>
