@@ -11,6 +11,7 @@ import {
 	clearCanvas,
 	shallowEqual,
 	identity,
+	noop,
 } from "./utils";
 
 import { getNewChartConfig, getChartConfigWithUpdatedYScales, getCurrentCharts, getCurrentItem } from "./utils/ChartDataUtil";
@@ -35,9 +36,8 @@ function shouldResetChart(thisProps, nextProps) {
 function getCursorStyle(useCrossHairStyleCursor) {
 	var style = `
 	.react-stockcharts-grabbing-cursor {
+		pointer-events: all;
 		cursor: grabbing;
-		cursor: -moz-grabbing;
-		cursor: -webkit-grabbing;
 	}
 	.react-stockcharts-crosshair-cursor {
 		pointer-events: all;
@@ -109,9 +109,9 @@ function calculateFullData(props) {
 		.xScale(xScaleProp)
 		.calculator(calculator);
 
-	var { xAccessor, displayXAccessor, xScale, filterData, lastItem } = evaluate(inputData);
+	var { xAccessor, displayXAccessor, xScale, filterData, firstItem, lastItem } = evaluate(inputData);
 
-	return { xAccessor, displayXAccessor, xScale, filterData, lastItem };
+	return { xAccessor, displayXAccessor, xScale, filterData, firstItem, lastItem };
 }
 function resetChart(props, firstCalculation = false) {
 	if (process.env.NODE_ENV !== "production") {
@@ -119,7 +119,7 @@ function resetChart(props, firstCalculation = false) {
 	}
 
 	var state = calculateState(props);
-	var { plotData: initialPlotData, xScale } = state
+	var { plotData: initialPlotData, xScale } = state;
 	var { postCalculator, children, padding, flipXScale } = props;
 
 	var plotData = postCalculator(initialPlotData);
@@ -138,7 +138,7 @@ function resetChart(props, firstCalculation = false) {
 
 function updateChart(newState, initialXScale, props, prevLastItem) {
 
-	var { lastItem, xScale, xAccessor, filterData } = newState;
+	var { firstItem, lastItem, xScale, xAccessor, filterData } = newState;
 	var lastItemVisible = lastItem === prevLastItem;
 	if (process.env.NODE_ENV !== "production") {
 		if (lastItemVisible)
@@ -159,6 +159,7 @@ function updateChart(newState, initialXScale, props, prevLastItem) {
 		// get plotData between [start, end] and do not change the domain
 		initialPlotData = filterData([start, end], xAccessor).plotData;
 		updatedXScale.domain([start, end]);
+		// console.log("HERE!!!!!", start, end);
 	} else {
 		// get plotData between [xAccessor(l) - (end - start), xAccessor(l)] and DO change the domain
 		var dx = updatedXScale(xAccessor(lastItem)) - updatedXScale.range()[1];
@@ -166,7 +167,6 @@ function updateChart(newState, initialXScale, props, prevLastItem) {
 
 		initialPlotData = filterData([newStart, newEnd], xAccessor).plotData;
 		// if last item was visible, then shift
-		console.log("HERE!!!!!", dx)
 		updatedXScale.domain([newStart, newEnd]);
 	}
 	// plotData = getDataOfLength(fullData, showingInterval, plotData.length)
@@ -174,6 +174,7 @@ function updateChart(newState, initialXScale, props, prevLastItem) {
 	let chartConfig = getChartConfigWithUpdatedYScales(getNewChartConfig(dimensions, children), plotData);
 
 	return {
+		firstItem,
 		lastItem,
 		xScale: updatedXScale,
 		xAccessor,
@@ -191,7 +192,7 @@ function calculateState(props) {
 		? xExtentsProp(data)
 		: d3.extent(xExtentsProp.map(d => d3.functor(d)).map(each => each(data, inputXAccesor)));
 
-	var { xAccessor, displayXAccessor, xScale, filterData, lastItem } = calculateFullData(props);
+	var { xAccessor, displayXAccessor, xScale, filterData, firstItem, lastItem } = calculateFullData(props);
 
 	var { plotData, domain } = filterData(extent, inputXAccesor);
 
@@ -200,6 +201,7 @@ function calculateState(props) {
 		xScale: xScale.domain(domain),
 		xAccessor,
 		filterData,
+		firstItem,
 		lastItem,
 		displayXAccessor,
 	};
@@ -220,17 +222,6 @@ function setXRange(xScale, dimensions, padding, direction = 1) {
 		}
 	}
 	return xScale;
-}
-
-function compareArray(a, b) {
-	if (a.length === b.length) {
-		var result = true;
-		for (var i = 0; i < a.length; i++) {
-			result = result && shallowEqual(a[i], b[i]);
-		}
-		return result;
-	}
-	return false;
 }
 
 class ChartCanvas extends Component {
@@ -258,7 +249,7 @@ class ChartCanvas extends Component {
 		this.pinchCoordinates = this.pinchCoordinates.bind(this);
 
 		// this.setInteractiveState = this.setInteractiveState.bind(this);
-		//this.getInteractiveState = this.getInteractiveState.bind(this);
+		// this.getInteractiveState = this.getInteractiveState.bind(this);
 
 		this.subscriptions = [];
 		this.subscribe = this.subscribe.bind(this);
@@ -277,20 +268,20 @@ class ChartCanvas extends Component {
 			return this.refs.canvases.getCanvasContexts();
 		}
 	}
-	clearBothCanvas(props) {
+	clearBothCanvas() {
 		var canvases = this.getCanvasContexts();
 		if (canvases && canvases.axes) {
 			// console.log("CLEAR");
 			clearCanvas([canvases.axes, canvases.mouseCoord]);
 		}
 	}
-	clearMouseCanvas(props) {
+	clearMouseCanvas() {
 		var canvases = this.getCanvasContexts();
 		if (canvases && canvases.mouseCoord) {
 			clearCanvas([canvases.mouseCoord]);
 		}
 	}
-	clearThreeCanvas(props) {
+	clearThreeCanvas() {
 		var canvases = this.getCanvasContexts();
 		if (canvases && canvases.axes) {
 			clearCanvas([canvases.axes, canvases.mouseCoord, canvases.bg]);
@@ -442,10 +433,18 @@ class ChartCanvas extends Component {
 			currentItem,
 		}, e);
 
+
+		var { firstItem } = this.state;
+		var start = first(xScale.domain());
+		var end = xAccessor(firstItem);
+		var { onLoadMore } = this.props;
+
 		this.setState({
 			xScale,
 			plotData,
 			chartConfig,
+		}, () => {
+			if (start < end) onLoadMore(start, end);
 		});
 	}
 	calculateStateForDomain(newDomain) {
@@ -471,7 +470,18 @@ class ChartCanvas extends Component {
 		var { xScale, plotData, chartConfig } = this.calculateStateForDomain(newDomain);
 		this.clearBothCanvas();
 
-		this.setState({ xScale, plotData, chartConfig });
+		var { firstItem, xAccessor } = this.state;
+		var start = first(xScale.domain());
+		var end = xAccessor(firstItem);
+		var { onLoadMore } = this.props;
+
+		this.setState({
+			xScale,
+			plotData,
+			chartConfig,
+		}, () => {
+			if (start < end) onLoadMore(start, end);
+		});
 	}
 	yAxisZoom(chartId, newDomain) {
 		this.clearThreeCanvas();
@@ -587,11 +597,20 @@ class ChartCanvas extends Component {
 		} = state;
 
 		requestAnimationFrame(() => {
+			var { xAccessor, firstItem } = this.state;
+
+			var start = first(xScale.domain());
+			var end = xAccessor(firstItem);
+			// console.log(start, end, start < end ? "Load more" : "I have it");
+
+			var { onLoadMore } = this.props;
 			this.clearThreeCanvas();
 			this.setState({
 				xScale,
 				plotData,
 				chartConfig,
+			}, () => {
+				if (start < end) onLoadMore(start, end);
 			});
 		});
 	}/*
@@ -621,7 +640,7 @@ class ChartCanvas extends Component {
 			chartConfig: this.state.chartConfig,
 			xScale: this.state.xScale,
 			xAccessor: this.state.xAccessor,
-			displayXAccessor: this.state.displayXAccessor,
+			displayXAccessor: this.props.displayXAccessor || this.state.displayXAccessor,
 			chartCanvasType: this.props.type,
 			margin: this.props.margin,
 			xAxisZoom: this.xAxisZoom,
@@ -653,47 +672,47 @@ class ChartCanvas extends Component {
 					console.log("xExtents changed");
 			}
 			// do reset
-			newState = resetChart(nextProps)
+			newState = resetChart(nextProps);
 		} else {
 			if (process.env.NODE_ENV !== "production") {
 				if (this.props.data !== nextProps.data)
 					console.log("data is changed but seriesName did not, change the seriesName if you wish to reset the chart");
 				else if (!shallowEqual(this.props.calculator, nextProps.calculator))
-					console.log("calculator changed")
+					console.log("calculator changed");
 				else
 					console.log("Trivial change, may be width/height or type changed, but that does not matter");
 			}
 
 			var calculatedState = calculateFullData(nextProps);
-			console.log(calculatedState.xScale.domain())
 
 			newState = updateChart(calculatedState, this.state.xScale, nextProps, last(this.state.plotData));
 		}
 
 		var { chartConfig: initialChartConfig } = this.state;
 
-		var a = newState.chartConfig.map(each => each.realYDomain);
-		var b = initialChartConfig.map(each => each.realYDomain);
+		var a = newState.chartConfig.map(each => each.id);
+		var b = initialChartConfig.map(each => each.id);
 
-		if (compareArray(a, b)) {
+		if (!reset) {
 			newState.chartConfig
 				.forEach((each, idx) => {
-					each.yScale.domain(initialChartConfig[idx].yScale.domain());
-					each.yPanEnabled = initialChartConfig[idx].yPanEnabled;
+					var sourceChartConfig = initialChartConfig.filter(d => d.id === each.id);
+					if (sourceChartConfig.length > 0 && sourceChartConfig[0].yPanEnabled) {
+						each.yScale.domain(sourceChartConfig[0].yScale.domain());
+						each.yPanEnabled = sourceChartConfig[0].yPanEnabled;
+					}
 				});
 		}
 
-
-
-		this.clearThreeCanvas(nextProps);
-		this.setState(newState)
+		this.clearThreeCanvas();
+		this.setState(newState);
 	}
 	render() {
 
-		var { type, height, width, margin, className, zIndex, postCalculator, flipXScale, defaultFocus } = this.props;
-		var { padding, useCrossHairStyleCursor, drawMode } = this.props;
+		var { type, height, width, margin, className, zIndex, defaultFocus } = this.props;
+		var { useCrossHairStyleCursor, drawMode } = this.props;
 
-		var { plotData, filterData, xScale, xAccessor, dataAltered, lastItem, displayXAccessor, chartConfig } = this.state;
+		var { plotData, xScale, xAccessor, chartConfig } = this.state;
 		var dimensions = getDimensions(this.props);
 
 		var interaction = isInteractionEnabled(xScale, xAccessor, plotData);
@@ -795,7 +814,8 @@ ChartCanvas.propTypes = {
 		})
 	]).isRequired,
 	defaultFocus: PropTypes.bool,
-
+	onLoadMore: PropTypes.func,
+	displayXAccessor: PropTypes.func,
 };
 
 ChartCanvas.defaultProps = {
@@ -816,6 +836,7 @@ ChartCanvas.defaultProps = {
 	useCrossHairStyleCursor: true,
 	drawMode: false,
 	defaultFocus: true,
+	onLoadMore: noop,
 };
 
 ChartCanvas.childContextTypes = {
