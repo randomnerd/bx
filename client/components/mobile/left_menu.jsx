@@ -8,14 +8,11 @@ import TopInfo from '../top_info';
 import NotificationShow from '../common/notifications';
 
 const LeftMenu = connect({
-  layout: ['layout']
+  layout: 'layout'
 }, class LeftMenu extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      drag:false
-    };
+  state = {
+    drag:false
   }
   showChat() {
     console.log('123');
@@ -34,11 +31,11 @@ const LeftMenu = connect({
   }
   getMenuItems() {
     return [
-      { href: null, label: 'Chat', extraCls: '', onclick: this.showChat},
-      { href: '/u/wallets', label: 'My wallets', extraCls: '', onclick: this.hideMenu},
-      { href: '/u/settings', label: 'Settings', extraCls: '', onclick: this.hideMenu},
-      { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu},
-      { href: '', label: 'Logout', extraCls: '', onclick: this.logOut }
+      { href: null, label: 'Chat', extraCls: '', onclick: this.showChat.bind(this)},
+      { href: '/u/wallets', label: 'My wallets', extraCls: '', onclick: this.hideMenu.bind(this)},
+      { href: '/u/settings', label: 'Settings', extraCls: '', onclick: this.hideMenu.bind(this)},
+      { href: '/u/password', label: 'Change password', extraCls: '', onclick: this.hideMenu.bind(this)},
+      { href: '', label: 'Logout', extraCls: '', onclick: this.logOut.bind(this) }
     ];
   }
   renderMenuItems() {

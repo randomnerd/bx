@@ -11,14 +11,13 @@ const BottomMenu = connect({
   mob: ['mob']
 }, class BottomMenu extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      drag: false,
-      active: "buysell"
-    };
+  state = {
+    drag: false,
+    active: "buysell"
+
   }
   showPage(item, event) {
+    //console.log(item);
     this.props.signals.mob.page({id:item});
     this.setState({active:item});
   }
