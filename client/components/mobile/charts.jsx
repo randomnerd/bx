@@ -28,7 +28,7 @@ const ChartsShow = connect({
                 return (
                     <div><Charts.candelstick_mobile data={this.props.BTPR} type='hybrid' height={350} height_bar = {150}/></div>
                 );
-                break;å
+                break;
 
 
 
