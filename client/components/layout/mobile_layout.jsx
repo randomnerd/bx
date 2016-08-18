@@ -94,7 +94,6 @@ const MobileLayout = connect({
     switch (this.state.showMobile) {
 
       case 'buysell':
-        console.log(this.state.showMobile);
         return(
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100 buysell'>
