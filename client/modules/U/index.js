@@ -14,6 +14,7 @@ function goHome ({input, state}) {
 function goWallets ({input, state}) {
   state.set('page', "wallets");
   state.set('layout', "main");
+  state.set(['pair', 'pair'], null);
   state.set('title', "My wallets - Digital Assets Online Stock");
   if(state.get('mobile')){state.set('mob.page', false);}
 }
@@ -22,6 +23,7 @@ function goWallet ({input, state}) {
   state.set('page', "wallet");
   state.set('wallet', input.id);
   state.set('layout', "main");
+  state.set(['pair', 'pair'], null);
   let curr = Currencies.findOne({_id: input.id});
   state.set('title',  `My ${curr.shortName} wallet - Digital Assets Online Stock`);
   if(state.get('mobile')){state.set('mob.page', false);}
@@ -39,6 +41,7 @@ function setWallet ({input, state}) {
 function goSettings ({input, state}) {
   state.set('page', "settings");
   state.set('layout', "main");
+  state.set(['pair', 'pair'], null);
   state.set('title', "My settings - Digital Assets Online Stock");
   if(state.get('mobile')){state.set('mob.page', false);}
 }
@@ -47,6 +50,7 @@ function goSettings ({input, state}) {
 function goPassword ({input, state}) {
   state.set('page', "password");
   state.set('layout', "main");
+  state.set(['pair', 'pair'], null);
   state.set('title', "Change password - Digital Assets Online Stock");
   if(state.get('mobile')){state.set('mob.page', false);}
 }
