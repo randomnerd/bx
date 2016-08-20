@@ -9,7 +9,7 @@ export async function subsReady({input, state, output, services}) {
       output.success();
     }
   });
-}
+}; subsReady.async = true;
 
 function setMobile ({input, state}) {
   state.set('mobile',($('body').width() > 680) ? false : true);
@@ -109,6 +109,12 @@ const dragReset = [
   resetDrag
 ];
 
+function setLoadingFn({input, state}) {
+  state.set('loading', input.loading);
+}
+
+const setLoading = [ setLoadingFn ];
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState({
@@ -131,14 +137,28 @@ export default (options = {}) => {
       setaddress,
       unsetaddress,
       dragToggle,
-      dragReset
+      dragReset,
+      setLoading
     });
 
-    // Tracker.autorun(() => {
-    //   module.getSignals().loggedInUpdated({loggingIn: Accounts.loggingIn()});
-    // });
-    // Tracker.autorun(() => {
-    //   module.getSignals().userChanged({user: Meteor.user() || {}});
-    // });
+
+    let readyTimer = null;
+    let readyFn = () => {
+      console.log('loading', false);
+      module.getSignals().setLoading({loading: false});
+      readyTimer = null;
+    };
+
+    Meteor.startup(() => {
+      Tracker.autorun(() => {
+        if (!Meteor.subs.ready()) {
+          if (controller.get('loading')) return;
+          console.log('loading', true);
+          return module.getSignals().setLoading({loading: true});
+        }
+        if (readyTimer) Meteor.clearTimeout(readyTimer);
+        readyTimer = Meteor.setTimeout(readyFn, 100);
+      });
+    });
   }
 }

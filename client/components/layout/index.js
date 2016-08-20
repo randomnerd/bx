@@ -6,6 +6,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const Layout = connect({
+  loading: 'loading',
   layout: 'layout',
   mobile: 'mobile',
   mob: 'mob',
@@ -27,7 +28,7 @@ const Layout = connect({
 });
 export default LayoutContainer = createContainer((props) => {
   return {
-    loading: !Meteor.subs.ready() || Meteor.loggingIn(),
+    // loading: !Meteor.subs.ready() || Meteor.loggingIn(),
     //currencies: Currencies.findOne(),
     //tradepairs: CurrTypes.find().fetch()
   };

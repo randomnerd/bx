@@ -46,7 +46,9 @@ Tracker.autorun(() => {
   }
 });
 
-const model = Model({});
+const model = Model({
+  loading: true
+});
 const controller = Controller(model);
 controller.addServices({
   subsManager
