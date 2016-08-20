@@ -16,7 +16,7 @@ Meteor.publish('myOrders', function() {
 })
 
 Meteor.publish('orderbook', function(pairId, permalink) {
-  check(pairId, String);
+  check(pairId, Match.Maybe(String));
   if (permalink) {
     check(permalink, String);
     let pair = TradePairs.findOne({ permalink });
@@ -26,7 +26,7 @@ Meteor.publish('orderbook', function(pairId, permalink) {
 });
 
 Meteor.publish('trades', function(pairId, permalink) {
-  check(pairId, String);
+  check(pairId, Match.Maybe(String));
   if (permalink) {
     check(permalink, String);
     let pair = TradePairs.findOne({ permalink });
