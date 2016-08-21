@@ -32,9 +32,9 @@ const candelstick_intra_day_cont = React.createClass({
         let {fitWidth} = ReStock.helper
         let {Label} = ReStock.annotation;
 
-    
+
         let margin = {
-            left: 7,
+            left: 10,
             right: 60,
             top: 10,
             bottom: 15
@@ -62,7 +62,7 @@ const candelstick_intra_day_cont = React.createClass({
             <ChartCanvas width={width} height={height} margin={{
                 left: 60,
                 right: 60,
-                top: 20,
+                top: 24,
                 bottom: 20
             }} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, smaVolume50]} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
                 <Chart id={2} yExtents={[
@@ -70,7 +70,13 @@ const candelstick_intra_day_cont = React.createClass({
                     smaVolume50.accessor()
                 ]} height={100} origin={(w, h) => [
                     0, h - 100
-                ]}>
+                ]}
+
+                padding={{
+                    top: 14,
+                    bottom: 5
+                }}
+                >
                     <YAxis axisAt='left' orient='left' ticks={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open
@@ -84,6 +90,7 @@ const candelstick_intra_day_cont = React.createClass({
                     <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
                     <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
                 </Chart>
+
                 <Chart id={1} yPan yExtents={[
                     d => [
                         d.high, d.low
@@ -91,9 +98,11 @@ const candelstick_intra_day_cont = React.createClass({
                     ema20.accessor(),
                     ema50.accessor()
                 ]} padding={{
-                    top: 10,
-                    bottom: 20
-                }}>
+                    top: 20,
+                    bottom: 30
+                }}
+                    height={250}
+                >
 
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' />
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676'/>
