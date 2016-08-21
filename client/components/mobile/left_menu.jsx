@@ -15,7 +15,6 @@ const LeftMenu = connect({
     drag:false
   }
   showChat() {
-    console.log('123');
     this.props.signals.mob.page({id:'chat'});
     this.setState({active:'chat'});
     this.hideMenu();
@@ -47,8 +46,8 @@ const LeftMenu = connect({
   renderLoginButtons() {
     return (
       <div className="right menu">
-        <a className="item" onClick={this.showLoginModal.bind(this)}>Log in</a>
-        <a className="item" onClick={this.showSignUpModal.bind(this)}>Sign up</a>
+        <a className="item" onClick={this.props.signals.user.loginClicked.bind(this, {})}>Log in</a>
+        <a className="item" onClick={this.props.signals.user.signUpClicked.bind(this, {})}>Sign up</a>
       </div>
     );
   }
