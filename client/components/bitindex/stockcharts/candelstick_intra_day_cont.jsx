@@ -77,18 +77,18 @@ const candelstick_intra_day_cont = React.createClass({
                     bottom: 5
                 }}
                 >
-                    <YAxis axisAt='left' orient='left' ticks={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
+                    <YAxis axisAt='left' orient='left' ticks={10} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open
                         ? '#6BA583'
                         : '#FF0000'}/>
                     <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
 
-                    <CurrentCoordinate yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()}/>
-                    <CurrentCoordinate yAccessor={d => d.volume} fill='#9B0A47'/>
+                    <CurrentCoordinate fontSize={11} yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()}/>
+                    <CurrentCoordinate fontSize={11} yAccessor={d => d.volume} fill='#9B0A47'/>
 
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
+                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' fontSize={11} yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
+                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' fontSize={11} yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
                 </Chart>
 
                 <Chart id={1} yPan yExtents={[
@@ -104,9 +104,9 @@ const candelstick_intra_day_cont = React.createClass({
                     height={250}
                 >
 
-                    <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' />
-                    <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676'/>
-                    <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' />
+                    <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
+                    <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
+                    <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' fontSize={11} />
                     <Label x={(width - margin.left - margin.right) / 2} y={height - 45} text={'Live market data' + ' ' + pairText}  fill='#767676' />
 
                     <CandlestickSeries/>
@@ -118,17 +118,17 @@ const candelstick_intra_day_cont = React.createClass({
                     <CurrentCoordinate yAccessor={ema50.accessor()} fill={ema50.stroke()}/>
 
 
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
+                    <EdgeIndicator fontSize={11} itemType='last' orient='right' edgeAt='right' yAccessor={d => d.close} fill={d => d.close > d.open
                         ? '#6BA583'
                         : '#FF0000'}/>
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' yAccessor={d => d.close} fill={d => d.close > d.open
+                    <EdgeIndicator fontSize={11} itemType='first' orient='left' edgeAt='left' yAccessor={d => d.close} fill={d => d.close > d.open
                         ? '#6BA583'
                         : '#FF0000'}/>
 
-                    <MouseCoordinateX at='top' orient='top' displayFormat={d3.time.format('%Y-%m-%d')}/>
-                    <MouseCoordinateX at='bottom' orient='bottom' displayFormat={d3.time.format('%H:%M:%S')}/>
-                    <MouseCoordinateY at='right' orient='right' displayFormat={d3.format('.4f')}/>
-                    <MouseCoordinateY at='left' orient='left' displayFormat={d3.format('.4f')}/>
+                    <MouseCoordinateX fontSize={11} at='top' orient='top' displayFormat={d3.time.format('%Y-%m-%d')}/>
+                    <MouseCoordinateX fontSize={11} at='bottom' orient='bottom' displayFormat={d3.time.format('%H:%M:%S')}/>
+                    <MouseCoordinateY fontSize={11} at='right' orient='right' displayFormat={d3.format('.4f')}/>
+                    <MouseCoordinateY fontSize={11} at='left' orient='left' displayFormat={d3.format('.4f')}/>
 
                 </Chart>
                 <CrossHairCursor/>
