@@ -30,7 +30,7 @@ const candelstick_intra_day_cont = React.createClass({
         let {XAxis, YAxis} = ReStock.axes;
         let {ema, sma} = ReStock.indicator;
         let {fitWidth} = ReStock.helper
-        
+
 
         let margin = {
             left: 10,
@@ -78,9 +78,7 @@ const candelstick_intra_day_cont = React.createClass({
                 >
                     <YAxis axisAt='left' orient='left' ticks={10} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
-                    <BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open
-                        ? '#6BA583'
-                        : '#FF0000'}/>
+                    <BarSeries yAccessor={d => d.volume} fill='#212e3e'/>
                     <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
 
                     <CurrentCoordinate fontSize={11} yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()}/>
@@ -96,11 +94,7 @@ const candelstick_intra_day_cont = React.createClass({
                     ],
                     ema20.accessor(),
                     ema50.accessor()
-                ]} padding={{
-                    top: 20,
-                    bottom: 30
-                }}
-                    height={250}
+                ]} 
                 >
 
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
