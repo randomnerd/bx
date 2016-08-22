@@ -76,7 +76,7 @@ const candelstick_intra_day_cont = React.createClass({
                     bottom: 5
                 }}
                 >
-                    <YAxis axisAt='left' orient='left' ticks={10} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
+                    <YAxis axisAt='left' orient='left' ticks={4} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill='#212e3e'/>
                     <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
@@ -94,12 +94,12 @@ const candelstick_intra_day_cont = React.createClass({
                     ],
                     ema20.accessor(),
                     ema50.accessor()
-                ]} 
+                ]}
                 >
 
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
-                    <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' fontSize={11} />
+                    <YAxis axisAt='right' orient='right' ticks={10} stroke='#767676' tickStroke='#767676' fontSize={11} />
 
                     <CandlestickSeries/>
 
@@ -123,6 +123,7 @@ const candelstick_intra_day_cont = React.createClass({
                     <MouseCoordinateY fontSize={11} at='left' orient='left' displayFormat={d3.format('.4f')}/>
 
                 </Chart>
+
                 <CrossHairCursor/>
             </ChartCanvas>
         );
@@ -130,15 +131,3 @@ const candelstick_intra_day_cont = React.createClass({
 });
 
 export default ReStock.helper.fitWidth(candelstick_intra_day_cont);
-
-// <TooltipContainer>
-//   <OHLCTooltip forChart={1} origin={[-40, 0]} xDisplayFormat={d3.time.format('%Y-%m-%d %H:%M:%S')}/>
-//   <MovingAverageTooltip forChart={1} onClick={(e) => console.log(e)} origin={[-38, 15]}
-//     calculators={[ema20, ema50]}/>
-// </TooltipContainer>
-//
-// <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
-// <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()}/>
-//
-// <CurrentCoordinate id={1} yAccessor={ema20.accessor()} fill={ema20.stroke()} />
-// <CurrentCoordinate id={2} yAccessor={ema50.accessor()} fill={ema50.stroke()} />
