@@ -68,7 +68,7 @@ const candelstick_mobile = React.createClass({
               ]} height={100} origin={(w, h) => [
                   0, h - 100
               ]}>
-                  <YAxis axisAt='left' orient='left' ticks={10} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
+                  <YAxis axisAt='left' orient='left' ticks={4} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
 
                   <BarSeries yAccessor={d => d.volume} fill='#212e3e'/>
                   <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
