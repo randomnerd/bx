@@ -11,28 +11,22 @@ if (rootUrl == 'http://localhost:3000/') {
   BrowserPolicy.content.allowConnectOrigin('ws://localhost:3002');
 }
 
-if (rootUrl == 'http://dstock.io/') {
+if (rootUrl == 'http://dstock.io/' || rootUrl == 'https://dstock.io/') {
   BrowserPolicy.content.allowConnectOrigin('http://dstock.io');
   BrowserPolicy.content.allowConnectOrigin('ws://dstock.io');
   BrowserPolicy.content.allowConnectOrigin('http://*.dstock.io');
   BrowserPolicy.content.allowConnectOrigin('ws://*.dstock.io');
-}
-
-if (rootUrl == 'https://dstock.io/') {
   BrowserPolicy.content.allowConnectOrigin('https://dstock.io');
   BrowserPolicy.content.allowConnectOrigin('wss://dstock.io');
   BrowserPolicy.content.allowConnectOrigin('https://*.dstock.io');
   BrowserPolicy.content.allowConnectOrigin('wss://*.dstock.io');
 }
 
-if (rootUrl == 'http://daostock.com/') {
+if (rootUrl == 'http://daostock.com/' || rootUrl == 'https://daostock.com/') {
   BrowserPolicy.content.allowConnectOrigin('http://daostock.com');
   BrowserPolicy.content.allowConnectOrigin('ws://daostock.com');
   BrowserPolicy.content.allowConnectOrigin('http://*.daostock.com');
   BrowserPolicy.content.allowConnectOrigin('ws://*.daostock.com');
-}
-
-if (rootUrl == 'https://daostock.com/') {
   BrowserPolicy.content.allowConnectOrigin('https://daostock.com');
   BrowserPolicy.content.allowConnectOrigin('wss://daostock.com');
   BrowserPolicy.content.allowConnectOrigin('https://*.daostock.com');
