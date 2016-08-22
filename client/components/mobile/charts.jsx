@@ -14,9 +14,7 @@ const ChartsShow = connect({
     };
 
     componentDidMount() {
-        this.setState({
-            chartH: ($(this.refs.chart).height() - 70)
-        });
+      this.setState({ chartH: $(this.refs.chart).height() });
     }
 
     chartItemsPrepare(list) {
@@ -42,7 +40,7 @@ const ChartsShow = connect({
       return (<Charts.candelstick_mobile
         data={this.chartItemsPrepare(this.props.chartItems)}
         type='hybrid'
-        height={350}
+        height={this.state.chartH}
         height_bar={150}
         pairText=''
       />);

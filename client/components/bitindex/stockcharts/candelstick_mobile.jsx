@@ -52,7 +52,7 @@ const candelstick_mobile = React.createClass({
       let {data, type, width, pairText} = this.props;
 
 
-      let height = 350;
+      let height = this.props.height || 350;
 
       return (
 

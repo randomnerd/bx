@@ -44,18 +44,14 @@ const MobileLayout = connect({
     showSidebar: false,
     showPanel: false,
     withdrawAddressModal: false,
-
-    showMobile:"buysell"
-
+    showMobile: "buysell"
   }
+
   currName(id) {
-    let curr = _.findWhere(this.props.currencies, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
+    let curr = _.findWhere(this.props.currencies, { _id: id });
+    return curr ? curr.shortName : '';
   }
+
   componentWillReceiveProps(nextProps){
     this.props.signals.mob.menu({action: 'close'});
     //this.setState({showSidebar: nextProps.mob.menu});
@@ -66,20 +62,16 @@ const MobileLayout = connect({
     if (!this.props.user && !this.props.authInProgress){
       this.props.signals.user.loginClicked();
     }
-
   }
+
   renderSidebarContent() {
     switch (this.state.sidebarContent) {
-    case 'chat':
-      return (
-        <Chats {...this.props}/>
-      );
-    break;
+      case 'chat':
+        return <Chats {...this.props}/>;
     }
   }
 
   renderPage() {
-    console.log(this.props.page);
     switch (this.props.page) {
       case "wallets": return <WalletsPage {...this.props}/>;
       case "wallet": return <WalletPage {...this.props}/>;
@@ -92,40 +84,39 @@ const MobileLayout = connect({
   }
 
   renderContent(){
-    if(!this.props.pair && this.state.showMobile != 'chat') return;
+    if (!this.props.pair && this.state.showMobile != 'chat') return;
     switch (this.state.showMobile) {
-
       case 'buysell':
-        return(
+        return (
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100 buysell'>
               <h3 className='ui header'>BALANCE</h3>
-              <Balance pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...this.props}/>
-              <BuySell pairId={this.props.pair._id} pair={this.props.pair} wide="double"  {...this.props}/>
+              <Balance pairId={this.props.pair._id} pair={this.props.pair} wide="double" {...this.props} />
+              <BuySell pairId={this.props.pair._id} pair={this.props.pair} wide="double" {...this.props} />
             </div>
           </div>
-        )
-        break;
-
+        );
 
       case 'chart':
-        return(
+        return (
           <div className="ui main fluid mobile container">
-            <Charts pair={this.props.pair}  {...this.props}/>
+            <Charts pair={this.props.pair} {...this.props} />
           </div>
-        )
-        break;
+        );
 
       case 'orders':
-        return(
+        return (
           <div className="ui main fluid mobile container scrollable">
             <div className='ui basic segment max100'>
               <h3 className='ui header'>ORDER BOOK</h3>
-              <Orders direction='sell'
+              <Orders
+                direction='sell'
                 pair={this.props.pair}
                 pairId={this.props.pair._id}
                 valute1={this.currName(this.props.pair.currId)}
-                valute2={this.currName(this.props.pair.marketCurrId)}  {...this.props}/>
+                valute2={this.currName(this.props.pair.marketCurrId)}
+                {...this.props}
+              />
             </div>
             <div className='ui basic segment h100 max100'>
               <h3 className='ui header'>MY ORDERS</h3>
@@ -133,46 +124,42 @@ const MobileLayout = connect({
                 pair={this.props.pair}
                 pairId={this.props.pair._id}
                 valute1={this.props.pair.currId}
-                valute2={this.props.pair.marketCurrId}  {...this.props}/>
+                valute2={this.props.pair.marketCurrId}
+                {...this.props}
+              />
             </div>
           </div>
-        )
-        break;
+        );
 
       case 'history':
-        return(
+        return (
           <div className="ui main fluid mobile container">
             <div className='ui basic segment h100'>
               <h3 className='ui header'>TRADE HISTORY</h3>
-
                 <Trades
                   pair={this.props.pair}
                   pairId={this.props.pair._id}
                   valute1={this.currName(this.props.pair.currId)}
-                  valute2={this.currName(this.props.pair.marketCurrId)}  {...this.props}/>
-
+                  valute2={this.currName(this.props.pair.marketCurrId)}
+                  {...this.props}
+                />
             </div>
           </div>
-        )
-        break;
+        );
 
       case 'chat':
-        return(
+        return (
           <div className="ui main fluid mobile container">
-            <Chats  {...this.props}/>
+            <Chats {...this.props} />
           </div>
-        )
-
-        break;
-
-
+        );
     }
   }
+
   renderSidebarContent() {
-    return (
-      <LeftMenu  {...this.props}/>
-    );
+    return <LeftMenu  {...this.props} />;
   }
+
   renderLoading() {
     return (
       <div className="ui active dimmer">
