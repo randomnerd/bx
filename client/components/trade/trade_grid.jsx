@@ -1,15 +1,14 @@
 import React from 'react';
-import {Currencies, TradePairs, BitIndexIndicator_BTPR, ChartItems} from '../../../both/collections';
-import {connect} from 'cerebral-view-react';
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { connect } from 'cerebral-view-react';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Currencies, TradePairs, ChartItems } from '../../../both/collections';
 import BuySell from './buysell';
 import Trades from './lastTrades';
 import Charts from '../bitindex';
 import Orders from './orderbook';
 import OpenOrders from './open_orders';
 import Balance from './balance';
-const heightChart = 350;
-import { createContainer } from 'meteor/react-meteor-data';
 
 const TradeGrid = connect({
   layout: 'layout',
@@ -18,75 +17,69 @@ const TradeGrid = connect({
   tools: 'tools'
 }, class TradeGrid extends React.Component {
   state = {
-      chartType: 'candle',
-
-      drag_on: false,
-
-      dragging: false,
-
-      drag_el: false,
-
-      left: 'balance',
-      right: 'double',
-      center: 'lbalance rdouble',
-
-      lcol: 1,
-      rcol: 2,
-      ccol: 0,
-
-      places: {
-        right:{
-          balance: false,
-          orders: 1,
-          trades: 2
-        },
-        left:{
-          balance: 1,
-          orders: false,
-          trades: false
-        },
-        center:{}
+    chartType: 'candle',
+    drag_on: false,
+    dragging: false,
+    drag_el: false,
+    left: 'balance',
+    right: 'double',
+    center: 'lbalance rdouble',
+    lcol: 1,
+    rcol: 2,
+    ccol: 0,
+    places: {
+      right:{
+        balance: false,
+        orders: 1,
+        trades: 2
       },
-      fixclass:false,
-      dragorders:false,
+      left:{
+        balance: 1,
+        orders: false,
+        trades: false
+      },
+      center:{}
+    },
+    fixclass:false,
+    dragorders:false,
   }
 
   positions = {
-      orders: {
-        column: 'right',
-        place: 1,
-        size: "big",
-        top: false
-      },
-      trades: {
-        column: 'right',
-        place: 2,
-        size: "big",
-        top: false
-      },
-      balance: {
-        column: 'left',
-        place: 1,
-        size: "big",
-        top: false
-      },
-      openorders: {
-        column: 'center',
-        place: 2,
-        size: "small"
-      },
-      charts: {
-        column: 'center',
-        place: 1,
-        size: "small"
-      }
+    orders: {
+      column: 'right',
+      place: 1,
+      size: "big",
+      top: false
+    },
+    trades: {
+      column: 'right',
+      place: 2,
+      size: "big",
+      top: false
+    },
+    balance: {
+      column: 'left',
+      place: 1,
+      size: "big",
+      top: false
+    },
+    openorders: {
+      column: 'center',
+      place: 2,
+      size: "small"
+    },
+    charts: {
+      column: 'center',
+      place: 1,
+      size: "small"
+    }
   }
 
   previousPlace = {
-      orders: false,
-      trades: false,
-      openorders: false,
-      balance: false
+    orders: false,
+    trades: false,
+    openorders: false,
+    balance: false
   }
 
   // getPlacesLeft(){
@@ -121,7 +114,11 @@ const TradeGrid = connect({
       </div>
     );
     return (
-      <div><Charts.candelstick_intra_day_cont data={this.chartItemsPrepare(this.props.chartItems)} type='svg' pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}/></div>
+      <Charts.candelstick_intra_day_cont
+        data={this.chartItemsPrepare(this.props.chartItems)}
+        type='svg'
+        pairText={this.currName(this.props.pair.currId) + ' / ' + this.currName(this.props.pair.marketCurrId)}
+      />
     );
   }
 
