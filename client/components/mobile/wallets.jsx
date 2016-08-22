@@ -36,12 +36,22 @@ const WalletsView = connect({
     this.props.signals.u.walletSet({id: item._id});
   }
 
+  showAddr(item, addr, event){
+    $(event.target).popup({
+      variation: 'tiny',
+      content  : addr,
+      on: 'focus'
+    }).popup('toggle');
+  }
+
+
   renderWalletItems() {
     return this.props.currencies.map((item) => {
       let address = this.getAddress(item._id);
       let balance = this.getBalance(item._id);
       let allowWithdraw = parseFloat(balance) > 0;
       let generateBtn = <button className='ui normal tiny button' onClick={this.newWallet.bind(this, item)}>Generate</button>;
+      let showBtn = <button className='ui normal tiny button' onClick={this.showAddr.bind(this, item, address)}>Show</button>;
 
       return  (
         <div key={item._id} className="ui container">
@@ -55,10 +65,10 @@ const WalletsView = connect({
           </div>
           <div className="ui hidden fitted divider"></div>
           <div className="ui padded grid">
-            <div className="nine wide column">
-              {address ? <div className="ui wallet basic segment">{address}</div> : generateBtn}
+            <div className="eight wide column">
+              {address ? showBtn : generateBtn}
             </div>
-            <div className='seven wide column'>
+            <div className='eight wide column'>
               <div className='ui fluid mini buttons'>
                 <a className={'ui blue normal button' + (allowWithdraw ? '' : ' disabled')} onClick={this.showWithdraw.bind(this, item)}>
                   Withdraw

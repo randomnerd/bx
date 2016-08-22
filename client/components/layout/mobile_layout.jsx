@@ -79,13 +79,14 @@ const MobileLayout = connect({
   }
 
   renderPage() {
-    //console.log(this.props.page);
+    console.log(this.props.page);
     switch (this.props.page) {
       case "wallets": return <WalletsPage {...this.props}/>;
       case "wallet": return <WalletPage {...this.props}/>;
       case "settings": return <Settings {...this.props}/>;
       case "password": return <PasswordPage {...this.props}/>;
       case "notifications": return <Notifications {...this.props}/>;
+      case "pair": return this.renderContent();
       default: return <WalletsPage {...this.props}/>;
     }
   }
