@@ -5,8 +5,6 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 const TopInfo = connect({
-  layout: 'layout',
-  pair: 'pair.pair'
 }, class TopInfo extends React.Component {
 
   displayCurrent() {
@@ -70,15 +68,15 @@ const TopInfo = connect({
   }
 });
 export default TopInfoContainer = createContainer((props) => {
-  let pairId = props.pair._id;
+  let pair = TradePairs.findOne({permalink : props.pair_link});
   return {
     user: Meteor.user(),
-    pair: TradePairs.findOne({_id : pairId}),
+    pair: pair,
     currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch(),
-    tradesLast: Trades.findOne({ pairId: pairId }, {sort: {createdAt: -1}}),
-    tradesHi: Trades.findOne({ pairId: pairId }, {sort: {price: -1}}),
-    tradesLo: Trades.findOne({ pairId: pairId }, {sort: {price: 1}}),
-    tradesBid: OrderBookItems.findOne( { pairId: pairId , buy: false}, { sort: { price: 1 } } ),
-    tradesAsk: OrderBookItems.findOne( { pairId: pairId , buy: true}, { sort: { price: -1 } } ),
+    tradesLast: Trades.findOne({ pairId: pair._id }, {sort: {createdAt: -1}}),
+    tradesHi: Trades.findOne({ pairId: pair._id }, {sort: {price: -1}}),
+    tradesLo: Trades.findOne({ pairId: pair._id }, {sort: {price: 1}}),
+    tradesBid: OrderBookItems.findOne( { pairId: pair._id , buy: false}, { sort: { price: 1 } } ),
+    tradesAsk: OrderBookItems.findOne( { pairId: pair._id , buy: true}, { sort: { price: -1 } } ),
   };
 }, TopInfo);

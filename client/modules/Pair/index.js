@@ -7,20 +7,13 @@ import {subsReady} from '../Tools';
 
 
 function showPair ({input, state, output, services}) {
-  state.set('page', "pair");
-
-  state.set('layout', "main");
+  services.subsManager.subscribe('trades', null, input.id);
+  services.subsManager.subscribe('orderbook', null, input.id);
+  services.subsManager.subscribe('chartitems', null, input.id);
   state.set('pair_link', input.id);
+  state.set('layout', "main");
   if (state.get('mobile')) state.set('mob.page', 'buysell');
-  let pair = TradePairs.findOne({permalink: input.id});
-  let curr = Currencies.findOne({_id: pair.currId});
-  let marketCurr = Currencies.findOne({_id: pair.marketCurrId});
-  if (!pair) return;
-  services.subsManager.subscribe('trades', pair._id);
-  services.subsManager.subscribe('orderbook', pair._id);
-  services.subsManager.subscribe('chartitems', pair._id);
-  state.set(['pair', 'pair'], pair);
-  state.set('title', `${curr.shortName} / ${marketCurr.shortName} - Digital Assets Online Stock`);
+  state.set('page', "pair");
 }
 
 function setPairObj ({input, state}) {
@@ -34,11 +27,12 @@ function setBuySell ({input, state}) {
 }
 
 const show = [
-  [
-    subsReady, {
-      success: [showPair]
-    }
-  ]
+  showPair
+  // [
+  //   subsReady, {
+  //     success: [showPair]
+  //   }
+  // ]
 
   // set("pair", 'state:/page'),
   // set("main", 'state:/layout'),

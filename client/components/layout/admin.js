@@ -28,6 +28,7 @@ const Admin = connect({
   thisUserId: 'thisUserId'
 }, (props) => {
   let renderPage = (page) => {
+    if (props.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     switch (page) {
       case "home": return <AdminHome {...props}/>;
       case "currencies": return <AdminCurrencies {...props}/>;

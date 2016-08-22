@@ -3,14 +3,7 @@ import {Accounts} from 'meteor/accounts-base';
 import {Tracker} from 'meteor/tracker';
 import {User} from '/both/models';
 import {TradePairs} from '/both/collections';
-
-function subsReady({input, state, output, services}) {
-  Tracker.autorun(() => {
-    if (services.subsManager && services.subsManager.ready()) {
-      output.success();
-    }
-  });
-}; subsReady.async = true;
+import {subsReady} from '../Tools';
 
 function tradesSubs({input, state, output, services}) {
   let pairs = TradePairs.find({published: true}).fetch();
@@ -23,7 +16,7 @@ function tradesSubs({input, state, output, services}) {
 function goHome ({input, state}) {
   state.set('page', "home");
   state.set('layout', "home");
-  state.set(['pair', 'pair'], null);
+  state.set('pair_link', null);
   state.set('title', "Digital Assets Online Stock");
 
 }

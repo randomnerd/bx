@@ -25,12 +25,12 @@ import {TradePairs, Currencies} from '../../../both/collections';
 const MainLayout = connect({
   page: 'page',
   pair_link: 'pair_link',
-  pair: 'pair.pair',
   wallet: 'wallet',
   title: 'title'
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
+    if (props.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     switch (page) {
       case "home": return <Home {...props}/>;
       case "wallets": return <WalletsPage {...props}/>;

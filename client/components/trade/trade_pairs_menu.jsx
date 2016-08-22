@@ -6,7 +6,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 const TradePairsMenu = connect({
   user: 'user',
-  pair: 'pair.pair'
 }, class TradePairsMenu extends React.Component {
   currName(id) {
     let curr = _.findWhere(this.props.currencies, {_id: id});
@@ -20,10 +19,10 @@ const TradePairsMenu = connect({
   }
 
   renderMenuItems() {
-    let active = this.props.pair ? this.props.pair : false;
+    let active = this.props.pair;
     return this.props.TradePairs.map((pair) => {
       return (
-        <a className={'item' + (active._id === pair._id ? ' active' : '') }
+        <a className={'item' + (active && active._id === pair._id ? ' active' : '') }
         key = {pair.permalink}
         href = {'/pair/' + pair.permalink}>
           <div className="ui label">{pair.dayVolume? (parseFloat(pair.dayVolume)/100000000).toFixed(4) : 0.0000}</div>
@@ -35,6 +34,10 @@ const TradePairsMenu = connect({
 
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).dropdown({on: 'hover', action: 'hide'});
+  }
+
+  componentWillUnmount() {
+    $(ReactDOM.findDOMNode(this)).dropdown('destroy');
   }
 
   render() {
@@ -54,7 +57,7 @@ const TradePairsMenu = connect({
 
 export default TradePairsMenuContainer = createContainer((props) => {
   return {
-    //user: Meteor.user(),
+    pair: TradePairs.findOne({permalink: props.pair_link}),
     TradePairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
     currencies: Currencies.find({ published: true }, { sort: { name: 1 } }).fetch()
   };

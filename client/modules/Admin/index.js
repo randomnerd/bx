@@ -8,6 +8,7 @@ import {subsReady} from '../Tools';
 function goHome ({input, state}) {
   state.set('page', "admin");
   state.set('layout', "admin");
+  state.set('pair_link', null);
 }
 
 function goCurrs ({input, state}) {

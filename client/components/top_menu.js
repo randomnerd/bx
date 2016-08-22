@@ -11,8 +11,7 @@ const TopMenu = connect({
   user: 'user',
   pair_link: 'pair_link',
   page: 'page',
-  tools: 'tools',
-  pair:'pair'
+  tools: 'tools'
 }, class TopMenu extends React.Component {
 
   getMenuItems() {
@@ -98,7 +97,6 @@ const TopMenu = connect({
   }
 
   render() {
-    let pair = this.props.pair? this.props.pair : false;
     return (
       <div className="ui top fixed large menu">
         <div className="ui fluid container topmenu">
@@ -110,7 +108,7 @@ const TopMenu = connect({
           </a>
           :
           null}
-          { !!this.props.user ?
+          { !!this.props.user && !this.props.loading ?
             <div className="right menu">
               {this.props.tools.drag ? <a className="icon item" onClick={this.resetBlocks.bind(this)} title="View reset">
                 <i className="refresh icon"></i>
@@ -127,7 +125,7 @@ const TopMenu = connect({
             : this.renderLoginButtons()
           }
 
-          {pair ? <TopInfo {...this.props} /> : null}
+          {this.props.pair_link && !this.props.loading ? <TopInfo {...this.props} /> : null}
 
 
         </div>

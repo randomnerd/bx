@@ -39,7 +39,7 @@ const TopMenu = connect({
       <div className="ui top fixed large menu">
         <a className="icon item" onClick={this.showMenu.bind(this)}><i className="sidebar large black icon"></i></a>
 
-        {this.props.pair ? <TopInfo pair={this.props.pair} /> : null}
+        {this.props.pair ? <TopInfo {...this.props} /> : null}
 
         { this.props.user ?
           <div className="right menu">
