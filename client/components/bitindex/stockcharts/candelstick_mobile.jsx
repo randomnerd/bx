@@ -28,7 +28,6 @@ const candelstick_mobile = React.createClass({
       let {XAxis, YAxis} = ReStock.axes;
       let {ema, sma} = ReStock.indicator;
       let {fitWidth} = ReStock.helper
-      let {Label} = ReStock.annotation;
 
 
       let margin = {
@@ -58,8 +57,8 @@ const candelstick_mobile = React.createClass({
       return (
 
           <ChartCanvas width={width} height={height} margin={{
-              left: 60,
-              right: 60,
+              left: 50,
+              right: 50,
               top: 20,
               bottom: 20
           }} type={type} seriesName='MSFT' data={data} calculator={[ema20, ema50, smaVolume50]} xAccessor={d => d.date} xScaleProvider={discontinuousTimeScaleProvider}>
@@ -93,10 +92,7 @@ const candelstick_mobile = React.createClass({
                   bottom: 20
               }}>
 
-                  <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' />
-                  <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676'/>
                   <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' />
-                  <Label x={(width - margin.left - margin.right) / 2} y={height - 45} text={'Live market data' + ' ' + pairText}  fill='#767676' />
 
                   <CandlestickSeries/>
 

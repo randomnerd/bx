@@ -30,8 +30,7 @@ const candelstick_intra_day_cont = React.createClass({
         let {XAxis, YAxis} = ReStock.axes;
         let {ema, sma} = ReStock.indicator;
         let {fitWidth} = ReStock.helper
-        let {Label} = ReStock.annotation;
-
+        
 
         let margin = {
             left: 10,
@@ -107,7 +106,6 @@ const candelstick_intra_day_cont = React.createClass({
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' fontSize={11} />
-                    <Label x={(width - margin.left - margin.right) / 2} y={height - 45} text={'Live market data' + ' ' + pairText}  fill='#767676' />
 
                     <CandlestickSeries/>
 
