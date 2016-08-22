@@ -39,7 +39,8 @@ if (rootUrl == 'https://daostock.com/') {
   BrowserPolicy.content.allowConnectOrigin('wss://*.daostock.com');
 }
 
-
+BrowserPolicy.content.allowOriginForAll('https://mc.yandex.ru');
+BrowserPolicy.content.allowOriginForAll('https://www.google-analytics.com');
 BrowserPolicy.content.allowOriginForAll('https://chart.googleapis.com');
 BrowserPolicy.content.allowOriginForAll('https://fonts.googleapis.com');
 BrowserPolicy.content.allowOriginForAll('https://fonts.gstatic.com');
