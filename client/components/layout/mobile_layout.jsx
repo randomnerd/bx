@@ -34,7 +34,8 @@ const MobileLayout = connect({
   mob: 'mob',
   page: 'page',
   pair_link: 'pair_link',
-  user: 'user'
+  user: 'user',
+  wallet: 'wallet'
 }, class MobileLayout extends React.Component {
   state = {
     showLoginModal: false,
