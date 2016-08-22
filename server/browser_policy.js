@@ -25,6 +25,21 @@ if (rootUrl == 'https://dstock.io/') {
   BrowserPolicy.content.allowConnectOrigin('wss://*.dstock.io');
 }
 
+if (rootUrl == 'http://daostock.com/') {
+  BrowserPolicy.content.allowConnectOrigin('http://daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('ws://daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('http://*.daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('ws://*.daostock.com');
+}
+
+if (rootUrl == 'https://daostock.com/') {
+  BrowserPolicy.content.allowConnectOrigin('https://daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('wss://daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('https://*.daostock.com');
+  BrowserPolicy.content.allowConnectOrigin('wss://*.daostock.com');
+}
+
+
 BrowserPolicy.content.allowOriginForAll('https://chart.googleapis.com');
 BrowserPolicy.content.allowOriginForAll('https://fonts.googleapis.com');
 BrowserPolicy.content.allowOriginForAll('https://fonts.gstatic.com');
