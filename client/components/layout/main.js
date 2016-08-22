@@ -30,7 +30,6 @@ const MainLayout = connect({
 }, (props) => {
   //let width=($('body').width() > 680) ? 'norm' : 'mobile';
   let renderPage = (page) => {
-    if (props.loading) return <div className="loader"><img src="/gears.svg" /></div>;
     switch (page) {
       case "home": return <Home {...props}/>;
       case "wallets": return <WalletsPage {...props}/>;
