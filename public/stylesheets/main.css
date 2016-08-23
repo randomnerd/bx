@@ -1568,7 +1568,23 @@ tr.lesspadding th {
   }
 }
 
-
+/* MOBILE LANDING */
+.ui.inverted.newgrey .ui.main.fluid.mobile.container.mobpromo{
+  background-color: #fff;
+  margin: 0 !important;
+  padding: 4em 1em 1em;
+  overflow: auto !important;
+}
+.mobpromo h1{
+  text-align: center;
+  margin: 2em 0;
+}
+.mobpromo h1 img{
+  width: 70%;
+}
+.mobpromo p, .mobpromo h3, .mobpromo h5{
+  color: #212e3e !important;
+}
 
 /*
 .ld .ui.segment .ui.header::after{

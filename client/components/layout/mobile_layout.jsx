@@ -6,6 +6,9 @@ import SignUpModal from '../sign_up_modal';
 import WithdrawModal from '../mobile/withdraw_modal';
 import WithdrawAddressModal from '../user/withdraw_addressbook';
 import NotificationPopups from '../common/notification_popups';
+
+import HomePage from '../mobile/home';
+
 import Chats from '../common/chat';
 import Charts from '../mobile/charts';
 import Sidebar from '../mobile/sidebar';
@@ -60,7 +63,7 @@ const MobileLayout = connect({
 
   componentDidMount() {
     if (!this.props.user && !this.props.authInProgress){
-      this.props.signals.user.loginClicked();
+      //this.props.signals.user.loginClicked();
     }
   }
 
@@ -79,6 +82,7 @@ const MobileLayout = connect({
       case "password": return <PasswordPage {...this.props}/>;
       case "notifications": return <Notifications {...this.props}/>;
       case "pair": return this.renderContent();
+      case "home": return <HomePage {...this.props}/>;
       default: return <WalletsPage {...this.props}/>;
     }
   }
@@ -180,7 +184,7 @@ const MobileLayout = connect({
           {this.renderSidebarContent()}
         </Sidebar>
         <TopMenu title="BitExchange" pair={this.props.pair} {...this.props}/>
-        <BottomMenu title="BitExchange" pair={this.props.pair} {...this.props}/>
+        {this.props.pair? <BottomMenu title="BitExchange" pair={this.props.pair} {...this.props}/> : null}
 
         <div className="pusher">
           <div className="contwrapper pusher ">

@@ -144,7 +144,7 @@ export default (options = {}) => {
 
     let readyTimer = null;
     let readyFn = () => {
-      console.log('loading', false);
+      //console.log('loading', false);
       module.getSignals().setLoading({loading: false});
       readyTimer = null;
     };
@@ -153,7 +153,7 @@ export default (options = {}) => {
       Tracker.autorun(() => {
         if (!Meteor.subs.ready()) {
           if (controller.get('loading')) return;
-          console.log('loading', true);
+          //console.log('loading', true);
           return module.getSignals().setLoading({loading: true});
         }
         if (readyTimer) Meteor.clearTimeout(readyTimer);

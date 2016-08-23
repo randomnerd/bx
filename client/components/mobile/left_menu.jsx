@@ -55,7 +55,7 @@ const LeftMenu = connect({
     return (
       <div>
 
-          <a className="item" href="/">Bit.Exchange</a>
+          <a className="item" href="/">DAO Stock</a>
 
           <TradePairsMenu pair={this.props.pair} />
             { this.props.user ?
