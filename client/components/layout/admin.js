@@ -23,7 +23,7 @@ const Admin = connect({
   currtype: 'currtype',
   pairtype: 'pairtype',
   adm_pair: 'adm_pair',
-  pairgroup: 'pairgroup',
+  pairgroupId: 'pairgroup',
   pageNum: 'pageNum',
   thisUserId: 'thisUserId'
 }, (props) => {

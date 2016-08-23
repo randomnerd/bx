@@ -19,7 +19,6 @@ const AdminPairGroup = connect({
 
   newCurr(event) {
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
-    console.log({name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published});
     Meteor.call('pairgroup_add',
     {name: name, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs)},
     (error, result) => {
@@ -32,7 +31,7 @@ const AdminPairGroup = connect({
   }
   saveCurr(event) {
     let {name, market, tradesCount, ordersCount, published} = this.refs.curr.getCurrentValues();
-    Meteor.call('pairgroup_update', this.props.pairgrup._id,
+    Meteor.call('pairgroup_update', this.props.pairgroup._id,
     {name: name, market: market, tradesCount: tradesCount, ordersCount: ordersCount, pairs: _.keys(this.state.pairs), published: !!published},
     (error, result) => {
       if (error) {
@@ -44,7 +43,7 @@ const AdminPairGroup = connect({
   }
 
   currentVal(what) {
-    return this.props.pairgrup ? this.props.pairgrup[what] : '';
+    return this.props.pairgroup ? this.props.pairgroup[what] : '';
   }
 
   renderPairs(){
@@ -73,16 +72,15 @@ const AdminPairGroup = connect({
   }
 
   componentDidMount(){
-    let pairs = this.state.pairs;
-    if(pairs.length == 0 && this.props.curr){
-      let pairgroup = this.props.pairgrup;
+    let { pairs } = this.state;
+    let { pairgroup } = this.props;
+    if(!pairs.length && pairgroup){
+      console.log(pairgroup);
       for(pair of pairgroup.pairs){
-        let curr = _.findWhere(this.props.pairs, {
-          _id: pair
-        });
+        let curr = _.findWhere(this.props.pairs, {_id: pair});
         pairs[curr._id]=true;
       }
-      this.setState({pairs:pairs});
+      this.setState({pairs});
     }
   }
   checkboxToggle() {
@@ -128,12 +126,12 @@ const AdminPairGroup = connect({
 
           <div className='two fields'>
 
-          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.pairgrup && this.props.pairgrup.published ? true : false} />
+          <Semantic.Checkbox name='published' label='Published' onClick={this.checkboxToggle.bind(this)} isChecked={this.props.pairgroup && this.props.pairgroup.published ? true : false} />
 
             <div className='field'>
 
               <a className='ui positive labeled right aligned icon button'
-                onClick={this.props.curr ? this.saveCurr.bind(this) : this.newCurr.bind(this)}>
+                onClick={this.props.pairgroup ? this.saveCurr.bind(this) : this.newCurr.bind(this)}>
                 <i className='checkmark icon' />
                 Save currency type
               </a>
@@ -148,7 +146,7 @@ const AdminPairGroup = connect({
 });
 export default AdminPairGroupContainer = createContainer((props) => {
   return {
-    pairgrup: PairGroups.findOne({_id: props.pairgroup}),
+    pairgroup: PairGroups.findOne({_id: props.pairgroupId}),
     pairs: TradePairs.find({}, { sort: { name: 1 } }).fetch(),
     markets: PairTypes.find({}, { sort: { name: 1 } }).fetch(),
   };
