@@ -12,7 +12,7 @@ export async function subsReady({input, state, output, services}) {
 }; subsReady.async = true;
 
 function setMobile ({input, state}) {
-  state.set('mobile',($('body').width() > 680) ? false : true);
+  state.set('mobile',($('body').width() > 780) ? false : true);
 }
 
 function panel ({input, state}) {

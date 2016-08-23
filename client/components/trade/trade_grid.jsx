@@ -22,10 +22,10 @@ const TradeGrid = connect({
     dragging: false,
     drag_el: false,
     left: 'balance',
-    right: 'double',
-    center: 'lbalance rdouble',
+    right: 'single',
+    center: 'lbalance rsingle',
     lcol: 1,
-    rcol: 2,
+    rcol: 1,
     ccol: 0,
     places: {
       right:{
@@ -48,13 +48,13 @@ const TradeGrid = connect({
     orders: {
       column: 'right',
       place: 1,
-      size: "big",
+      size: "small",
       top: false
     },
     trades: {
       column: 'right',
       place: 2,
-      size: "big",
+      size: "small",
       top: false
     },
     balance: {
