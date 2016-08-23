@@ -213,7 +213,7 @@ const Home = connect({
     return (
       <div className="ui main fluid mobile container mobpromo">
         <h1><img src="/images/logo_big.png" /></h1>
-      
+
         <h3>Welcome to the Digital Assets Online stock.</h3>
         <p>
           DAO Stock is an online realtime exchange platform where you can
@@ -230,7 +230,6 @@ const Home = connect({
         { this.props.user ?
           null :
           <div>
-            <p>&nbsp;</p>
             <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
