@@ -3,7 +3,7 @@
 import React from 'react';
 import d3 from 'd3';
 
-import ReStock from '/client/lib/react-stockcharts';
+import { ChartCanvas, Chart, series, scale, coordinates, tooltip, axes, indicator, helper } from '/client/lib/react-stockcharts';
 
 const candelstick_intra_day_cont = React.createClass({
 
@@ -16,20 +16,19 @@ const candelstick_intra_day_cont = React.createClass({
     defaultProps: {
         type: 'svg'
     },
+
     render() {
 
-        let {ChartCanvas, Chart, EventCapture} = ReStock;
+        let {CandlestickSeries, BarSeries, LineSeries, AreaSeries, VolumeProfileSeries} = series;
+        let {discontinuousTimeScaleProvider} = scale;
 
-        let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
-        let {discontinuousTimeScaleProvider} = ReStock.scale;
+        let {EdgeIndicator} = coordinates;
+        let {CrossHairCursor, MouseCoordinateX, MouseCoordinateY, CurrentCoordinate} = coordinates;
 
-        let {EdgeIndicator} = ReStock.coordinates;
-        let {CrossHairCursor, MouseCoordinateX, MouseCoordinateY, CurrentCoordinate} = ReStock.coordinates;
-
-        let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
-        let {XAxis, YAxis} = ReStock.axes;
-        let {ema, sma} = ReStock.indicator;
-        let {fitWidth} = ReStock.helper
+        let {TooltipContainer, OHLCTooltip, MovingAverageTooltip, HoverTooltip} = tooltip;
+        let {XAxis, YAxis} = axes;
+        let {ema, sma} = indicator;
+        let {fitWidth} = helper;
 
 
         let margin = {
@@ -55,6 +54,27 @@ const candelstick_intra_day_cont = React.createClass({
 
 
         let height = 405;
+
+        let dateFormat = d3.time.format("%Y-%m-%d");
+        let numberFormat = d3.format(".8f");
+
+        function tooltipContent(calculators) {
+          return ({currentItem, xAccessor}) => {
+            return {
+              x: dateFormat(xAccessor(currentItem)),
+              y: [
+                  { label: "Open", value: numberFormat(currentItem.open) },
+                  { label: "High", value: numberFormat(currentItem.high) },
+                  { label: "Low", value: numberFormat(currentItem.low) },
+                  { label: "Close", value: numberFormat(currentItem.close) },
+                ].concat(calculators.map(each => ({
+                  label: each.tooltipLabel(),
+                  value: numberFormat(each.accessor()(currentItem)),
+                  stroke: each.stroke()
+                })))
+              }
+            }
+        }
 
         return (
 
@@ -100,7 +120,6 @@ const candelstick_intra_day_cont = React.createClass({
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <YAxis axisAt='right' orient='right' ticks={10} stroke='#767676' tickStroke='#767676' fontSize={11} />
-
                     <CandlestickSeries/>
 
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
@@ -121,7 +140,7 @@ const candelstick_intra_day_cont = React.createClass({
                     <MouseCoordinateX fontSize={11} at='bottom' orient='bottom' displayFormat={d3.time.format('%H:%M:%S')}/>
                     <MouseCoordinateY fontSize={11} at='right' orient='right' displayFormat={d3.format('.4f')}/>
                     <MouseCoordinateY fontSize={11} at='left' orient='left' displayFormat={d3.format('.4f')}/>
-
+                  <HoverTooltip tooltipContent={tooltipContent([ema20, ema50])} bgwidth={120} bgheight={95} />
                 </Chart>
 
                 <CrossHairCursor/>
@@ -130,4 +149,4 @@ const candelstick_intra_day_cont = React.createClass({
     }
 });
 
-export default ReStock.helper.fitWidth(candelstick_intra_day_cont);
+export default helper.fitWidth(candelstick_intra_day_cont);

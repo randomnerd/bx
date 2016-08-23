@@ -2,7 +2,7 @@
 
 import React from 'react';
 import d3 from 'd3';
-import ReStock from '/client/lib/react-stockcharts';
+import { ChartCanvas, Chart, series, scale, coordinates, tooltip, axes, indicator, helper } from '/client/lib/react-stockcharts';
 
 const candelstick_mobile = React.createClass({
   propTypes: {
@@ -16,18 +16,16 @@ const candelstick_mobile = React.createClass({
   },
   render() {
 
-      let {ChartCanvas, Chart, EventCapture} = ReStock;
+      let {CandlestickSeries, BarSeries, LineSeries, AreaSeries, VolumeProfileSeries} = series;
+      let {discontinuousTimeScaleProvider} = scale;
 
-      let {CandlestickSeries, BarSeries, LineSeries, AreaSeries} = ReStock.series;
-      let {discontinuousTimeScaleProvider} = ReStock.scale;
+      let {EdgeIndicator} = coordinates;
+      let {CrossHairCursor, MouseCoordinateX, MouseCoordinateY, CurrentCoordinate} = coordinates;
 
-      let {EdgeIndicator} = ReStock.coordinates;
-      let {CrossHairCursor, MouseCoordinateX, MouseCoordinateY, CurrentCoordinate} = ReStock.coordinates;
-
-      let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = ReStock.tooltip;
-      let {XAxis, YAxis} = ReStock.axes;
-      let {ema, sma} = ReStock.indicator;
-      let {fitWidth} = ReStock.helper
+      let {TooltipContainer, OHLCTooltip, MovingAverageTooltip} = tooltip;
+      let {XAxis, YAxis} = axes;
+      let {ema, sma} = indicator;
+      let {fitWidth} = helper
 
 
       let margin = {
@@ -53,6 +51,9 @@ const candelstick_mobile = React.createClass({
 
 
       let height = this.props.height || 350;
+
+
+
 
       return (
 
@@ -92,6 +93,7 @@ const candelstick_mobile = React.createClass({
 
                   <YAxis axisAt='right' orient='right' ticks={5} stroke='#767676' tickStroke='#767676' />
 
+
                   <CandlestickSeries/>
 
                   <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
@@ -120,4 +122,4 @@ const candelstick_mobile = React.createClass({
   }
 });
 
-export default ReStock.helper.fitWidth(candelstick_mobile);
+export default helper.fitWidth(candelstick_mobile);
