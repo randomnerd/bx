@@ -119,7 +119,7 @@ const candelstick_intra_day_cont = React.createClass({
 
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
-                    <YAxis axisAt='right' orient='right' ticks={10} stroke='#767676' tickStroke='#767676' fontSize={11} />
+                    <YAxis axisAt='right' orient='right' ticks={8} stroke='#767676' tickStroke='#767676' fontSize={11} />
                     <CandlestickSeries/>
 
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
