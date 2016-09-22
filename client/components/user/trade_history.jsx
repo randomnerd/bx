@@ -105,7 +105,7 @@ const UserTradeHistory = connect({
             </div>
           </div>
             <div className="ui secondary segment">
-              <h2 className="white text">Transactions</h2>
+              <h2 className="white text">Trades</h2>
             </div>
             <div className="ui small blue segment">
               <table className="ui selectable very compact very basic striped unstackable table nomargin">

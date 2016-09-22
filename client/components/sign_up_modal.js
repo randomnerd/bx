@@ -53,6 +53,7 @@ const SignUpModal = connect({
   disallowSubmit() { this.setState({allowSubmit: false}) }
 
   render() {
+    let showHint = !this.state.allowSubmit;
     return (
       <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
         onDeny={this.hide.bind(this)} onPositive={this.signUp.bind(this)} show={this.props.show}
@@ -63,6 +64,7 @@ const SignUpModal = connect({
           <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
 
           <Semantic.Input name="chat_name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" required />
+          <div className={"ui tiny message" + (showHint ? '' : ' hidden') }>Your password must be at least six characters and include both letters and numbers.</div>
 
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
             ref="password" validations="passwordConfirmationMatch,passwordSecure" required />

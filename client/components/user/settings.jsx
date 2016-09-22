@@ -96,9 +96,10 @@ const Settings = connect({
                 {this.state.totpEnabled?
                   null :
                   <div className="field">
+                    <p>&nbsp;</p>
                     <a className="ui blue labeled icon button" onClick={this.twoFactorAuth.bind(this)}>
                       <i className="refresh icon" />
-                      Or generate a new key
+                      Generate new TFA key
                     </a>
                   </div>
                 }
