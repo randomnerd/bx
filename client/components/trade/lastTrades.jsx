@@ -25,8 +25,8 @@ const LastTrades = connect({
     return data.map((item) => {
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
 
-      let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = parseFloat(item.displayPrice()).toString().split('.');
+      let amount = item.displayAmount().split('.');
+      let price = item.displayPrice().split('.');
       //console.log(item.displayPrice().toString().split('.'));
       if (!amount[1]) {
         amount[1] = '';

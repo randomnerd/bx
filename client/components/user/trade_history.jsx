@@ -35,34 +35,27 @@ const UserTradeHistory = connect({
         curr = this.curr(pair.currId);
         mcurr = this.curr(pair.marketCurrId);
 
-        amount = parseFloat(item.displayAmount().toString()).toString().split('.');
-        mamount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
+        amount = item.displayAmount().split('.');
+        mamount = item.displayMarketAmount().split('.');
       }else{
         mcurr = this.curr(pair.currId);
         curr = this.curr(pair.marketCurrId);
 
-        mamount = parseFloat(item.displayAmount().toString()).toString().split('.');
-        amount = parseFloat(item.displayMarketAmount().toString()).toString().split('.');
+        mamount = item.displayAmount().split('.');
+        amount = item.displayMarketAmount().split('.');
       }
-      let price = parseFloat(item.displayPrice().toString()).toString().split('.');
-      if (!amount[1]) {
-        amount[1] = '';
-      }else{
-        //amount[0] = parseInt(amount[0]).toString();
-        amount[1] = parseInt(amount[1]).toString();
+      let price = item.displayPrice().split('.');
+
+      while (amount[1][amount[1].length-1] == '0') {
+        amount[1] = amount[1].slice(0,amount[1].length-1)
       }
-      if (!mamount[1]) {
-        mamount[1] = '';
-      }else{
-        //mamount[0] = parseInt(mamount[0]).toString();
-        mamount[1] = parseInt(mamount[1]).toString();
+      while (mamount[1][mamount[1].length-1] == '0') {
+        mamount[1] = mamount[1].slice(0,mamount[1].length-1)
       }
-      if (!price[1]) {
-        price[1] = "";
-      }else{
-        //price[0] = parseInt(price[0]).toString();
-        price[1] = parseInt(price[1]).toString();
+      while (price[1][price[1].length-1] == '0') {
+        price[1] = price[1].slice(0,price[1].length-1)
       }
+
       return (
           <tr key={item._id} className='animate'>
             <td className='three wide'>

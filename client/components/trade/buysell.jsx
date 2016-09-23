@@ -5,7 +5,9 @@ import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
-
+Formsy.addValidationRule('minTotal', (values, value) => {
+  return (parseFloat(values.amount * values.price)).toFixed(8) > 0;
+});
 const BuySell = connect({
   layout: ['layout'],
   pair_link: ['pair_link'],
@@ -59,16 +61,27 @@ const BuySell = connect({
     // this.setState({ordType: 'stop'});
   }
 
+  cutZeroes(str) {
+    str = str.toFixed(8);
+    while (str[str.length-1] == '0' || str[str.length-1] == '.') {
+      str = str.slice(0,str.length-1)
+    }
+    return str;
+  }
+
   showWithPrice() {
-    let {buysell} = this.props;//.buysell || {amount: '', price: ''};
+    let {amount, price} = this.props.buysell;// || {amount: '', price: ''};
+    amount = this.cutZeroes(amount);
+    price = this.cutZeroes(price);
+
     return (
       <div className={this.props.wide ? "two fields" : ""}>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={buysell.amount} onChg={this.changeAmount.bind(this)}
-        placeholder='0.0000' ref='amount'
+        value={amount} onChg={this.changeAmount.bind(this)}
+        placeholder='0.0000' ref='amount' validations="minTotal"
         labeled labelName={this.props.currency}/>
         <Semantic.Input className='nomargin' name='price' label='Price' icon='shop'
-        value={buysell.price}
+        value={price} validations="minTotal"
         placeholder='0.0000' ref='price' labeled labelName='BTC'
         onChg={this.changePrice.bind(this)} />
       </div>
@@ -76,11 +89,12 @@ const BuySell = connect({
   }
 
   showWithoutPrice() {
-    let {buysell} = this.props;//.buysell || {amount: '', price: ''};
+    let {amount} = this.props.buysell;//.buysell || {amount: '', price: ''};
+    amount = this.cutZeroes(amount);
     return (
       <div>
         <Semantic.Input className='nomargin' name='amount' label='Amount' icon='money'
-        value={buysell.amount} onChg={this.changeAmount.bind(this)}
+        value={amount.toFixed(8)} onChg={this.changeAmount.bind(this)}
         placeholder='0.0000' ref='amount'
         labeled labelName={this.props.currency}/>
 
@@ -89,6 +103,7 @@ const BuySell = connect({
   }
 
   changeAmount(event) {
+    let buysell = this.props.buysell
     let val = event.currentTarget.value;
     let matcher = new RegExp("^\\d*\\.?\\d*$");
     let isOk = matcher.exec(val);
@@ -166,8 +181,8 @@ const BuySell = connect({
         </div>
         <div className='ui small basic segment centered'>
           <div className='centered'>
-            <button className='ui button green' onClick={this.createOrder.bind(this, true)}>Buy {this.props.currency}</button>
-            <button className='ui button red' onClick={this.createOrder.bind(this, false)}>Sell {this.props.currency}</button>
+            <button className={'ui button green' + (this.state.allowSubmit ? '' : ' disabled')} onClick={this.createOrder.bind(this, true)}>Buy {this.props.currency}</button>
+            <button className={'ui button red' + (this.state.allowSubmit ? '' : ' disabled')} onClick={this.createOrder.bind(this, false)}>Sell {this.props.currency}</button>
           </div>
         </div>
       </div>
