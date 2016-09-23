@@ -7,7 +7,7 @@ import Semantic from '../semantic';
 import moment from 'moment';
 
 const AdminUsers = connect({
-  layout: ['layout']
+  adminUserPageNum: 'adminUserPageNum'
 }, class AdminUsers extends React.Component {
   delUser(event) {
     if (confirm('Remove user completely?')) {
@@ -22,6 +22,10 @@ const AdminUsers = connect({
           }
         });
     }
+  }
+
+  showMore() {
+    this.props.signals.admin.adminUsers({pageNum: this.props.adminUserPageNum + 1});
   }
 
   impersonate(userId) {
@@ -57,6 +61,7 @@ const AdminUsers = connect({
       });
   }
   render() {
+    let showMoreButton = this.props.users.length == this.props.adminUserPageNum*20;
     return (
       <div>
 
@@ -75,12 +80,13 @@ const AdminUsers = connect({
             {this.renderUserList()}
           </tbody>
         </table>
+        {showMoreButton ? <a className="ui basic button" onClick={this.showMore.bind(this)}>Show more</a> : null}
       </div>
     );
   }
 });
 export default AdminUsersContainer = createContainer((props) => {
   return {
-    users: Meteor.users.find({},{ skip: (props.pageNum - 1) * 20 }).fetch()
+    users: Meteor.users.find().fetch(),
   };
 }, AdminUsers);

@@ -10,7 +10,7 @@ const Sidebar = connect({
       <a href='/admin/currtypes' className='item'>Currency types</a>
       <a href='/admin/pairtypes' className='item'>Markets</a>
       <a href='/admin/pairgroups' className='item'>Pair groups</a>
-      <a href='/admin/users/1' className='item'>Users</a>
+      <a href='/admin/users' className='item'>Users</a>
     </div>
   );
 });

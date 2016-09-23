@@ -20,7 +20,7 @@ const router = Router({
      '/pairgroups' : 'admin.adminPairGroups',
      '/pairgroups/new' : 'admin.adminPairGroupsNew',
      '/pairgroups/edit/:id' : 'admin.adminPairGroupsEdit',
-     '/users/:pageNum' : 'admin.adminUsers',
+     '/users' : 'admin.adminUsers',
      '/user/:id' : 'admin.adminUser'
    },
    '/u': {

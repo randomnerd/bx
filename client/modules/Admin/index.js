@@ -106,14 +106,16 @@ function getUsers ({input, state, services}) {
 function getUser ({input, state, services}) {
   if (!input.id) input.id = '';
   services.subsManager.subscribe('userAdmin', input.id);
+  services.subsManager.subscribe('userAdminCount');
   services.subsManager.subscribe('balancesAdmin', input.id);
   services.subsManager.subscribe('walletsAdmin', input.id);
   services.subsManager.subscribe('adminUserTrades', input.id, 20, 0);
 }
 
 function goUsers ({input, state}) {
+  if (!input.pageNum || parseInt(input.pageNum) < 1) input.pageNum = 1;
   state.set('page', "users");
-  state.set('pageNum', input.pageNum)
+  state.set('adminUserPageNum', input.pageNum)
   state.set('thisUserId', null);
   state.set('layout', "admin");
 }

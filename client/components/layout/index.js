@@ -18,7 +18,7 @@ const Layout = connect({
   }
 
   render() {
-    if (this.props.loading) return <div className="loader"><img src="/gears.svg" /></div>;
+    if (this.props.loading && this.props.layout != 'admin') return <div className="loader"><img src="/gears.svg" /></div>;
     if (this.props.mobile) return <MobileLayout {...this.props} />;
     switch (this.props.layout) {
       case 'admin': return <AdminLayout {...this.props} />;
