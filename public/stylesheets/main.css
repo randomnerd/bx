@@ -1087,6 +1087,7 @@ tr.lesspadding th {
   bottom: 15px;
   width: 350px;
   z-index: 9999;
+  max-width: 90%;
 }
 
 .notifications .item .ui.header .icon{

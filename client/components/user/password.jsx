@@ -33,6 +33,7 @@ const PasswordPage = connect({
   disallowSubmit() { this.setState({allowSubmit: false}); }
 
   render() {
+    let showHint = !this.state.allowSubmit;
     return (
       <UserOnly redirect='/'>
         <div className="ui main container">
@@ -41,8 +42,9 @@ const PasswordPage = connect({
               <h3 className='ui header'>Change password</h3>
             </div>
             <div className='ui small blue segment centered'>
-              <Formsy.Form key={this.props.k} className='ui form' onValidSubmit={this.newPassword}
+              <Formsy.Form key={this.props.k} className='ui form' onValidSubmit={this.newPassword.bind(this)}
                 onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='pass'>
+                <div className={"ui tiny message" + (showHint ? '' : ' hidden') }>Your password must be at least six characters and include both letters and numbers.</div>
 
                 <Semantic.Input name='old_pass' ref='old_password' className="eight wide centered"
                 type='password' label='Old password' validations='minLength:3'
@@ -55,7 +57,7 @@ const PasswordPage = connect({
                 <Semantic.Input name='password_confirm' ref='password_confirm' className="eight wide centered"
                 validations='passwordConfirmationMatch' type='password' label='Confirm new password'
                 placeholder='Re-enter new password' required />
-
+                <input type="submit" className="hidden" />
                 <div className='field'>
                   <a className={'ui' + (!this.state.allowSubmit ? ' disabled' : '') +
                   ' positive normal labeled icon button'} onClick={this.newPassword.bind(this)}>

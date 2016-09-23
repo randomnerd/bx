@@ -197,6 +197,7 @@ const MobileLayout = connect({
         <WithdrawModal current={this.state.withdrawCurr}
         address={this.state.withdrawAddress} amount={this.state.withdrawAmount} {...this.props}/>
         <WithdrawAddressModal show={this.state.withdrawAddressModal} {...this.props}/>
+        <NotificationPopups  {...this.props}/>
       </div>
     );
   }
