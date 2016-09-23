@@ -9,6 +9,14 @@ const LastTrades = connect({
   layout: ['layout'],
   pair: ['pair','pair']
 }, class LastTrades extends React.Component {
+
+  cutZeroes(str) {
+    //str = str.toFixed(8);
+    while (str[str.length-1] == '0' || str[str.length-1] == '.') {
+      str = str.slice(0,str.length-1)
+    }
+    return str;
+  }
   renderTradesItems() {
     let nulls = '00000000';
     let data =this.props.trades;
@@ -27,13 +35,8 @@ const LastTrades = connect({
 
       let amount = item.displayAmount().split('.');
       let price = item.displayPrice().split('.');
-      //console.log(item.displayPrice().toString().split('.'));
-      if (!amount[1]) {
-        amount[1] = '';
-      }
-      if (!price[1] && price[1] != "0") {
-        price[1] = "0";
-      }
+      amount[1] = this.cutZeroes(amount[1]);
+      price[1] = this.cutZeroes(price[1]);
       return (
           <tr key={item._id} className='animate'>
             <td className='six wide'>

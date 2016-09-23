@@ -18,7 +18,13 @@ const Orderbook = connect({
       //direction: this.props.direction,
     });
   }
-
+  cutZeroes(str) {
+    //str = str.toFixed(8);
+    while (str[str.length-1] == '0' || str[str.length-1] == '.') {
+      str = str.slice(0,str.length-1)
+    }
+    return str;
+  }
   renderSellItems() {
     let nulls = '00000000';
 
@@ -29,10 +35,10 @@ const Orderbook = connect({
       let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
       let amount = item.displayAmount().split('.');
       let price = item.displayPrice().split('.');
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
-      //console.log(item.displayPrice().toString().split('.'));
-      if (!amount[1]) { amount[1] = ''; }
-      if (!price[1]) { price[1] = ''; }
+      amount[1] = this.cutZeroes(amount[1]);
+      price[1] = this.cutZeroes(price[1]);
+      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).split('.');
+
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
@@ -77,9 +83,9 @@ const Orderbook = connect({
       let weight = parseFloat(70 * (parseFloat(item.displayAmount()) / max).toFixed(8));
       let amount = item.displayAmount().split('.');
       let price = item.displayPrice().split('.');
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).toString().split('.');
-      if (!amount[1]) { amount[1] = ''; }
-      if (!price[1]) { price[1] = ''; }
+      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).split('.');
+      amount[1] = this.cutZeroes(amount[1]);
+      price[1] = this.cutZeroes(price[1]);
       return  (
         <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
         className={!item.animate ? 'animate' : ''}>
@@ -129,8 +135,8 @@ const Orderbook = connect({
     let lastPrice = lastOne[0].toString().split('.');
     lastPrice[1] = lastPrice[1] ? lastPrice[1] : '';
 
-    let hiPrice = this.props.tradesHi.displayPrice().toString().split('.');
-    let lowPrice = this.props.tradesLo.displayPrice().toString().split('.');
+    let hiPrice = this.props.tradesHi.displayPrice().split('.');
+    let lowPrice = this.props.tradesLo.displayPrice().split('.');
     hiPrice[1] = hiPrice[1] ? hiPrice[1] : '';
     lowPrice[1] = lowPrice[1] ? lowPrice[1] : '';
 
