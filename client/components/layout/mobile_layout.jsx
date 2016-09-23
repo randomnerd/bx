@@ -3,6 +3,7 @@ import TopMenu from '../mobile/top_menu';
 import BottomMenu from '../mobile/bottom_menu';
 import LoginModal from '../login_modal';
 import SignUpModal from '../sign_up_modal';
+import RemainPassModal from '../user/remain_pass';
 import WithdrawModal from '../mobile/withdraw_modal';
 import WithdrawAddressModal from '../user/withdraw_addressbook';
 import NotificationPopups from '../common/notification_popups';
@@ -194,6 +195,7 @@ const MobileLayout = connect({
 
         <LoginModal {...this.props}/>
         <SignUpModal {...this.props}/>
+        <RemainPassModal  {...this.props}/>
         <WithdrawModal current={this.state.withdrawCurr}
         address={this.state.withdrawAddress} amount={this.state.withdrawAmount} {...this.props}/>
         <WithdrawAddressModal show={this.state.withdrawAddressModal} {...this.props}/>

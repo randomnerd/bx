@@ -15,6 +15,7 @@ import TradeGrid from '../trade/trade_grid';
 import TopMenu from '../top_menu';
 import LoginModal from '../login_modal';
 import SignUpModal from '../sign_up_modal';
+import RemainPassModal from '../user/remain_pass';
 import WithdrawModal from '../user/withdraw_modal';
 import WithdrawAddressModal from '../user/withdraw_addressbook';
 import NotificationPopups from '../common/notification_popups';
@@ -56,6 +57,7 @@ const MainLayout = connect({
       <TopMenu title="BitExchange" {...props}/>
       <LoginModal  {...props}/>
       <SignUpModal  {...props}/>
+      <RemainPassModal  {...props}/>
       <WithdrawModal  {...props}/>
       <WithdrawAddressModal {...props}/>
       <NotificationPopups  {...props}/>

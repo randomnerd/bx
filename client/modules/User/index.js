@@ -29,6 +29,13 @@ function showLoginModal ({input, state}) {
 function hideLoginModal ({input, state}) {
   state.set('showLoginModal', false);
 }
+function showRemainPass ({input, state}) {
+  state.set('showRemainPassModal', true);
+}
+
+function closeRemainPass ({input, state}) {
+  state.set('showRemainPassModal', false);
+}
 
 const userChanged = [
   updateUser, updateAdmin
@@ -49,6 +56,13 @@ const loginDone = [
   hideLoginModal
 ];
 
+const remainPass = [
+  showRemainPass
+];
+const remainPassDone = [
+  closeRemainPass
+];
+
 
 export default (options = {}) => {
   return (module, controller) => {
@@ -63,7 +77,9 @@ export default (options = {}) => {
       signUpClicked,
       signUpDone,
       loginClicked,
-      loginDone
+      loginDone,
+      remainPass,
+      remainPassDone
     });
 
     Meteor.startup(() => {

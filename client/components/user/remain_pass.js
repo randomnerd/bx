@@ -1,10 +1,10 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import Semantic from './semantic';
+import Semantic from '../semantic';
 import {connect} from 'cerebral-view-react';
 
-const LoginModal = connect({
-  show: ['showLoginModal']
+const RemainPass = connect({
+  show: ['showRemainPassModal']
 }, class LoginModal extends React.Component {
   constructor(props) {
     super(props);
@@ -16,15 +16,18 @@ const LoginModal = connect({
   hide(e) {
     //if (e) e.preventDefault();
     this.setState({errorMessage: null});
-    this.props.signals.user.loginDone();
+    this.props.signals.user.remainPassDone();
   }
   login() {
-    var {email, password} = this.refs.form.getCurrentValues();
+    var {email} = this.refs.form.getCurrentValues();
 
-    Meteor.loginWithPassword(email, password, (err) => {
+    Accounts.forgotPassword({email}, (err) => {
       if (err) {
-        this.setState({errorMessage: err.message});
+        this.props.signals.notif.newOne({_id: 'pass_not_changed' + Math.random(), type: 'error', icon: 'error', title: 'Error!',
+        message: err.message, timeout: 3000, needShow: true });
       } else {
+        this.props.signals.notif.newOne({_id: 'pass_changed' + Math.random(), type: 'accept', icon: 'accept',
+        title: 'OK!', message: "Check your e-mail for new password", timeout: 3000, needShow: true});
         this.hide();
       }
     });
@@ -36,23 +39,21 @@ const LoginModal = connect({
 
   }
   remainPass(){
-    this.props.signals.user.remainPass();
+
   }
-  getActions(){
-    return { name: "Forgot password?", action: this.remainPass.bind(this) }
-  }
+
   allowSubmit() { this.setState({allowSubmit: true}) }
   disallowSubmit() { this.setState({allowSubmit: false}) }
   render() {
     return (
       <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
         onDeny={this.hide.bind(this)} onPositive={this.login.bind(this)} show={this.props.show}
-        errorMsg={this.state.errorMessage} onVisible={this.focusLogin.bind(this)} allowSubmit={this.state.allowSubmit} buttons={this.getActions()}>
+        errorMsg={this.state.errorMessage} onVisible={this.focusLogin.bind(this)} allowSubmit={this.state.allowSubmit}>
 
         <Formsy.Form className="ui large form" onSubmit={this.login.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref="form">
 
-          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
-          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />
+          <Semantic.Input name="email" icon="user" placeholder="Put your e-mail address here" ref="email" validations="isEmail" required />
+
           <input type="submit" className="hidden" />
         </Formsy.Form>
 
@@ -60,4 +61,4 @@ const LoginModal = connect({
     );
   }
 });
-export default LoginModal;
+export default RemainPass;

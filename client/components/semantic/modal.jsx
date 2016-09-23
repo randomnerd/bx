@@ -26,6 +26,15 @@ const Modal = connect({
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).modal(newProps.show ? 'show' : 'hide');
   }
+
+  renderActions(button){
+    return (
+      <div className="ui main button" onClick={button.action}>
+        { button.name }
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className={ this.props.size + " " + this.props.hide + " ui modal" }>
@@ -46,6 +55,7 @@ const Modal = connect({
         </div>
 
         <div className="actions">
+          {this.props.buttons ? this.renderActions(this.props.buttons) : ""}
           <div className="ui main button" onClick={this.props.onDeny.bind(this)}>
             { this.props.denyLabel }
           </div>

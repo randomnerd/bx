@@ -19,12 +19,10 @@ const PasswordPage = connect({
       if (err) {
         this.props.signals.notif.newOne({_id: 'pass_not_changed' + Math.random(), type: 'error', icon: 'error', title: 'Error!',
         message: err.message, timeout: 3000, needShow: true });
-        console.log('err');
       } else {
         this.props.signals.notif.newOne({_id: 'pass_changed' + Math.random(), type: 'accept', icon: 'accept',
         title: 'Your password changed!', timeout: 3000, needShow: true});
         this.refs.pass.reset();
-        console.log('no err');
       }
     });
   }
