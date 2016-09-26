@@ -8,17 +8,14 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 const ChatView = connect({
 }, class ChatView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      haveMessages: false,
-      messages: [],
-      countFromDB: 0,
-      textVal: '',
-      isPrivate: false,
-      replyId: null,
-      replyName: null
-    }
+  state = {
+    haveMessages: false,
+    messages: [],
+    countFromDB: 0,
+    textVal: '',
+    isPrivate: false,
+    replyId: null,
+    replyName: null
   }
 
   writeMessage() {

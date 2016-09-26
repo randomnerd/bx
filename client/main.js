@@ -1,12 +1,13 @@
 if (process.env.NODE_ENV !== 'production') require('react-hot-loader/patch');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Container} from 'cerebral-view-react';
+import { Container } from 'cerebral-view-react';
 import { AppContainer } from 'react-hot-loader';
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 
 import controller from './controller';
 import Layout from './components/layout';
+import './lib/formsy_validations';
 import './lib/liscroll';
 
 const app = (

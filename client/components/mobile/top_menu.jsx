@@ -8,24 +8,23 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 
 const TopMenu = connect({
-  layout: ['layout']
 }, class TopMenu extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      drag:false
-    };
+  state = {
+    drag: false
   }
+
   showMenu() {
     this.props.signals.mob.menu();
   }
+
   showLoginModal() {
     this.props.signals.user.loginClicked();
   }
+
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
   }
+
   renderLoginButtons() {
     return (
       <div className="right menu">
@@ -34,6 +33,7 @@ const TopMenu = connect({
       </div>
     );
   }
+
   render() {
     return (
       <div className="ui top fixed large menu">

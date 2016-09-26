@@ -3,73 +3,92 @@ import Formsy from 'formsy-react'
 import Semantic from './semantic';
 import {connect} from 'cerebral-view-react';
 
-Formsy.addValidationRule('passwordConfirmationMatch', (values, value) => {
-  return values.password === values.password_confirm;
-});
-Formsy.addValidationRule('passwordSecure', (values, value) => {
-  if (values.password && values.password.length < 6) return false;
-  let digit = new RegExp("\\d+");
-  let letter = new RegExp("[a-zA-Z]+");
-  let hasDigit = digit.exec(values.password);
-  let hasLetter = letter.exec(values.password);
-  return hasDigit && hasLetter;
-});
 const SignUpModal = connect({
-  show: ['showSignUpModal']
+  show: 'showSignUpModal'
 }, class SignUpModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      allowSubmit: false
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false
   }
 
   hide(e) {
-    //if (e) e.preventDefault();
-    this.setState({errorMessage: null});
+    if (e) e.preventDefault();
+    this.setState({ errorMessage: null });
     this.props.signals.user.signUpDone();
   }
 
   signUp() {
     var {email, password, chat_name} = this.refs.form.getCurrentValues();
 
-    Accounts.createUser({email: email, password: password, username: chat_name}, (err) => {
-      if (err) {
-        this.setState({errorMessage: err.message});
-      } else {
-        this.hide();
-      }
+    Accounts.createUser({email, password, username: chat_name}, (err) => {
+      if (err) return this.setState({ errorMessage: err.message });
+      this.hide();
     });
   }
 
   signIn() {
-    this.setState({errorMessage: null});
+    this.setState({ errorMessage: null });
     this.props.signals.user.signUpDone();
     this.props.signals.user.loginClicked();
   }
 
-  allowSubmit() { this.setState({allowSubmit: true}) }
-  disallowSubmit() { this.setState({allowSubmit: false}) }
+  allowSubmit() { this.setState({ allowSubmit: true }); }
+  disallowSubmit() { this.setState({ allowSubmit: false }); }
 
   render() {
     let showHint = !this.state.allowSubmit;
     return (
-      <Semantic.Modal size="small" positiveLabel="Sign up" header="Sign up"
-        onDeny={this.hide.bind(this)} onPositive={this.signUp.bind(this)} show={this.props.show}
-        errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
+      <Semantic.Modal
+        size="small"
+        positiveLabel="Sign up"
+        header="Sign up"
+        onDeny={this.hide.bind(this)}
+        onPositive={this.signUp.bind(this)}
+        show={this.props.show}
+        errorMsg={this.state.errorMessage}
+        allowSubmit={this.state.allowSubmit}
+      >
+        <Formsy.Form
+          className="ui large form"
+          onValidSubmit={this.signUp.bind(this)}
+          onValid={this.allowSubmit.bind(this)}
+          onInvalid={this.disallowSubmit.bind(this)}
+          ref='form'
+        >
+          <Semantic.Input required
+            ref="email"
+            name="email"
+            placeholder="E-mail address"
+            validations="isEmail"
+            icon="user"
+          />
+          <Semantic.Input required
+            ref="chatname"
+            name="chat_name"
+            placeholder="Enter yor chat name"
+            validations="minLength:3"
+          />
 
-        <Formsy.Form className="ui large form" onValidSubmit={this.signUp.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
+          <div className={"ui tiny message" + (showHint ? '' : ' hidden') }>
+            Your password must be at least six characters and include both letters and numbers.
+          </div>
 
-          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
-
-          <Semantic.Input name="chat_name" validations="minLength:3" placeholder="Enter yor chat name" ref="chatname" required />
-          <div className={"ui tiny message" + (showHint ? '' : ' hidden') }>Your password must be at least six characters and include both letters and numbers.</div>
-
-          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password"
-            ref="password" validations="passwordConfirmationMatch,passwordSecure" required />
-          <Semantic.Input name="password_confirm" type="password" icon="lock" placeholder="Confirmation"
-            ref="password_confirm" validations="passwordConfirmationMatch" required/>
+          <Semantic.Input required
+            type="password"
+            ref="password"
+            name="password"
+            placeholder="Password"
+            icon="lock"
+            validations="passwordConfirmationMatch,passwordSecure"
+          />
+          <Semantic.Input required
+            type="password"
+            ref="password_confirm"
+            name="password_confirm"
+            placeholder="Confirmation"
+            validations="passwordConfirmationMatch"
+            icon="lock"
+          />
           <input type="submit" className="hidden" />
         </Formsy.Form>
         <a href="#" onClick={this.signIn.bind(this)}>Signed up already? Click here!</a>
@@ -77,4 +96,5 @@ const SignUpModal = connect({
     );
   }
 });
+
 export default SignUpModal;

@@ -7,15 +7,12 @@ import Semantic from '../semantic';
 
 const AdminCurrency = connect({
 }, class AdminCurrency extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      allowSubmit: false,
-      published: false
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false,
+    published: false
   }
-
+  
   newCurr(event) {
     let {name, shortName, published, currType, confReq, withdrawalFee} = this.refs.curr.getCurrentValues();
 

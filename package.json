@@ -7,7 +7,7 @@
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.11.5",
     "bcrypt": "^0.8.7",
-    "cerebral": "^1.0.1",
+    "cerebral": "^1.1.0",
     "cerebral-module-devtools": "^0.7.2",
     "cerebral-module-router": "^0.17.1",
     "cerebral-view-react": "^0.12.12",

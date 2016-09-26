@@ -11,13 +11,10 @@ const Sidebar = connect({
   pair_link: ['pair_link'],
   user: ['user']
 }, class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebar: false
-    };
+  state = {
+    sidebar: false
   }
-
+  
   componentDidMount() {
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({

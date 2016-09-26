@@ -6,64 +6,89 @@ import {connect} from 'cerebral-view-react';
 const LoginModal = connect({
   show: ['showLoginModal']
 }, class LoginModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      allowSubmit: false
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false
   }
+
   hide(e) {
-    //if (e) e.preventDefault();
-    this.setState({errorMessage: null});
+    if (e) e.preventDefault();
+    this.setState({ errorMessage: null });
     this.props.signals.user.loginDone();
   }
+
   login() {
     var {email, password} = this.refs.form.getCurrentValues();
 
     Meteor.loginWithPassword(email, password, (err) => {
-      if (err) {
-        this.setState({errorMessage: err.message});
-      } else {
-        this.hide();
-      }
+      if (err) return this.setState({errorMessage: err.message});
+      this.hide();
     });
   }
+
   focusLogin() {
     Meteor.setTimeout(() => {
       $(this.refs.email).focus();
     }, 50);
-
   }
 
-  emailSaver(event){
+  emailSaver(event) {
     this.props.signals.user.loginEmail({email: event.currentTarget.value});
   }
 
-  remainPass(){
+  remainPass() {
     this.hide();
     this.props.signals.user.remainPass();
   }
-  getActions(){
-    return { name: "Forgot password?", action: this.remainPass.bind(this) }
+
+  getActions() {
+    return { name: "Forgot password?", action: this.remainPass.bind(this) };
   }
-  allowSubmit() { this.setState({allowSubmit: true}) }
-  disallowSubmit() { this.setState({allowSubmit: false}) }
+
+  allowSubmit() { this.setState({ allowSubmit: true }); }
+  disallowSubmit() { this.setState({ allowSubmit: false }); }
+
   render() {
     return (
-      <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
-        onDeny={this.hide.bind(this)} onPositive={this.login.bind(this)} show={this.props.show}
-        errorMsg={this.state.errorMessage} onVisible={this.focusLogin.bind(this)} allowSubmit={this.state.allowSubmit} buttons={this.getActions()}>
-
-        <Formsy.Form className="ui large form" onSubmit={this.login.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref="form">
-
-          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required onChg={this.emailSaver.bind(this)} />
-          <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />
+      <Semantic.Modal
+        size="small"
+        positiveLabel="Log in"
+        header="Log in"
+        onDeny={this.hide.bind(this)}
+        onPositive={this.login.bind(this)}
+        show={this.props.show}
+        errorMsg={this.state.errorMessage}
+        onVisible={this.focusLogin.bind(this)}
+        allowSubmit={this.state.allowSubmit}
+        buttons={this.getActions()}
+      >
+        <Formsy.Form
+          className="ui large form"
+          ref="form"
+          onSubmit={this.login.bind(this)}
+          onValid={this.allowSubmit.bind(this)}
+          onInvalid={this.disallowSubmit.bind(this)}
+        >
+          <Semantic.Input required
+            name="email"
+            icon="user"
+            placeholder="E-mail address"
+            ref="email"
+            validations="isEmail"
+            onChg={this.emailSaver.bind(this)}
+          />
+          <Semantic.Input required
+            type="password"
+            ref="password"
+            name="password"
+            placeholder="Password"
+            icon="lock"
+          />
           <input type="submit" className="hidden" />
         </Formsy.Form>
-
       </Semantic.Modal>
     );
   }
 });
+
 export default LoginModal;

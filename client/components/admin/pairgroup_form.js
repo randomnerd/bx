@@ -7,14 +7,11 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminPairGroup = connect({
 }, class AdminPairGroup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      allowSubmit: false,
-      published: '',
-      pairs: []
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false,
+    published: '',
+    pairs: []
   }
 
   newCurr(event) {

@@ -10,15 +10,13 @@ const NotificationShow = connect({
   layout: ['layout'],
   notif: ['notif']
 }, class NotificationShow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      haveMessages: false,
-      messages: [],
-      countFromDB: 0,
-      nowDate: new Date().valueOf()
-    };
+  state = {
+    haveMessages: false,
+    messages: [],
+    countFromDB: 0,
+    nowDate: new Date().valueOf()
   }
+
   newnew(){
     Meteor.call('notifications/add', function(error, result) {
       if (error) {

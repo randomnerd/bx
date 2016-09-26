@@ -15,29 +15,24 @@ const Home = connect({
   pair: 'pair.pair',
   tools: 'tools'
 }, class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      panel: false,
-      icons: true,
-      holder: false,
-      scroller: 0,
-      scroll: 1
-    };
+  state = {
+    panel: false,
+    icons: true,
+    holder: false,
+    scroller: 0,
+    scroll: 1
   }
 
   componentDidMount() {
     $('.groupmenu').dropdown({on: 'hover', action: 'hide'});
 
     let ld = $(this.refs.ld);
-
     let h = ld.height();
     let hIco = $(this.refs.icons).height();
     let hBignum = $(this.refs.bignum).height();
     let hCurrs = $(this.refs.currs).height();
     hCurrs = h*2;
     let hPanel = h;
-
     let $this = this;
 
     $(window).resize(()=>{
@@ -50,42 +45,12 @@ const Home = connect({
 
       hPanel = h;
     });
-
-    // $(this.refs.ld).scroll(()=>{
-    //
-    //   if(!this.state.holder){
-    //     this.setState({ holder : true });
-    //     let realScroll = ld.scrollTop();
-    //     if(this.state.scroll == 1 && realScroll > this.state.scroller){
-    //       this.scrollingTo(hPanel, 2);
-    //       //console.log(hPanel);
-    //       //this.props.signals.tools.infoPanel({action:'show'});
-    //     }else if(this.state.scroll == 2 && realScroll < this.state.scroller){
-    //       this.scrollingTo(0, 1);
-    //       //console.log(2);
-    //       //this.props.signals.tools.infoPanel({action:'hide'});
-    //     }
-    //     else if(this.state.scroll == 2 && realScroll > this.state.scroller){
-    //       this.scrollingTo(hCurrs, 3);
-    //       //console.log(hCurrs);
-    //       //this.props.signals.tools.infoPanel({action:'hide'});
-    //     }else if(this.state.scroll == 3 && realScroll < this.state.scroller){
-    //       this.scrollingTo(hPanel, 2);
-    //       //console.log(hPanel);
-    //       //this.props.signals.tools.infoPanel({action:'show'});
-    //     }
-    //     else{
-    //       this.setState({ holder : false });
-    //     }
-    //   }
-    //
-    //
-    // });
   }
 
   showSignUpModal() {
     this.props.signals.user.signUpClicked();
   }
+
   scrollingTo(h,$scroll){
     let $this = this;
     $(this.refs.ld).animate(
@@ -110,45 +75,37 @@ const Home = connect({
     $(this.refs.ld).scrollTop(1).scroll();
   }
 
-  marketName(id) {
-    let curr = _.findWhere(this.props.markets, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
+  marketName(_id) {
+    let curr = _.findWhere(this.props.markets, { _id });
+    return curr ? curr.shortName : '';
   }
 
   marketPairs(id) {
-    let markets = _.where(this.props.pairs, {
-      market: id
-    });
-    // console.log('markets');
-    // console.log(markets);
+    let markets = _.where(this.props.pairs, { market: id });
     let mIds = [];
     for(let market of markets) {
       mIds.push(market._id);
     }
-    return {$in: mIds};
+    return { $in: mIds };
   }
-  currName(id) {
-    let curr = _.findWhere(this.props.currencies, {
-      _id: id
-    });
-    return curr
-      ? curr.shortName
-      : '';
-  }
-  renderPairsInGroup(group){
 
+  currName(_id) {
+    let curr = _.findWhere(this.props.currencies, { _id });
+    return curr ? curr.shortName : '';
+  }
+
+  renderPairsInGroup(group){
     return this.props.pairs.map((pair) => {
-      //console.log(this.props.currencies);
-      if(_.contains(group, pair._id)){
+      if(_.contains(group, pair._id)) {
         return (
-          <a className='item'
-          key = {pair.permalink}
-          href = {'/pair/' + pair.permalink}>
-            <div className="ui label">{pair.dayVolume? (parseFloat(pair.dayVolume)/100000000).toFixed(4) : 0.0000}</div>
+          <a
+            className='item'
+            key = {pair.permalink}
+            href = {'/pair/' + pair.permalink}
+          >
+            <div className="ui label">
+              {pair.dayVolume ? (parseFloat(pair.dayVolume)/100000000).toFixed(4) : 0.0000}
+            </div>
             {this.currName(pair.currId).toUpperCase()} / {this.currName(pair.marketCurrId).toUpperCase()}
           </a>
         );
@@ -243,15 +200,15 @@ const Home = connect({
                     null :
                     <div>
                       <p>&nbsp;</p>
-                      <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>Create an account and start trading today!</a>
+                      <a className="ui massive main button" onClick={this.showSignUpModal.bind(this)}>
+                        Create an account and start trading today!
+                      </a>
                     </div>
                   }
-
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     );

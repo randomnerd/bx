@@ -6,16 +6,13 @@ import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NotificationPopups = connect({
-  notif: ['notif'],
+  notif: 'notif',
 }, class NotificationPopups extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      haveMessages: false,
-      messages: [],
-      countFromDB: 0,
-      nowDate: new Date().valueOf()
-    };
+  state = {
+    haveMessages: false,
+    messages: [],
+    countFromDB: 0,
+    nowDate: new Date().valueOf()
   }
 
   componentWillReceiveProps(nextProps){
@@ -39,10 +36,6 @@ const NotificationPopups = connect({
       }
       )});
     }
-  }
-
-  componentDidMount(){
-
   }
 
   renderMessages() {

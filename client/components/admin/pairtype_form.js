@@ -7,15 +7,12 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 const AdminCurrency = connect({
 }, class AdminCurrency extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: null,
-      allowSubmit: false,
-      published: ''
-    };
+  state = {
+    errorMessage: null,
+    allowSubmit: false,
+    published: ''
   }
-
+  
   newCurr(event) {
     let {name, shortName, published, permalink} = this.refs.curr.getCurrentValues();
 

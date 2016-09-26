@@ -1,36 +1,21 @@
 import React from 'react';
 import Formsy from 'formsy-react'
-import {connect} from 'cerebral-view-react';
-import {Wallets, Balances, Currencies} from '../../../both/collections';
+import { connect } from 'cerebral-view-react';
+import { Wallets, Balances, Currencies } from '../../../both/collections';
 import Semantic from '../semantic';
 import UserOnly from '../user/user_only';
 import { createContainer } from 'meteor/react-meteor-data';
-
-Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
-  let amount = parseFloat(values.amount);
-  let fee = parseFloat(params[0]);
-  let balance = parseFloat(params[1]);
-
-  if (!amount) return false;
-  if (!fee) return true;
-  if (amount <= fee) return false;
-  if (amount > balance) return false;
-
-  return true;
-});
 
 const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']
 }, class WithdrawModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currId: null,
-      allowSubmit: false,
-      errorMessage: null
-    };
+  state = {
+    currId: null,
+    allowSubmit: false,
+    errorMessage: null
   }
+
   getAmount() {
     let curr    = this.props.currency;
     let balance = this.props.balance ? this.props.balance.displayAmount() : 0;
@@ -45,8 +30,7 @@ const WithdrawModal = connect({
     };
   }
 
-  setBalance(){
-    //console.log(this.refs.amount);
+  setBalance() {
     this.refs.amount.setValue(this.props.balance ? this.props.balance.displayAmount() : 0);
   }
 
@@ -69,23 +53,23 @@ const WithdrawModal = connect({
   }
 
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     if (!this.props.show) return;
-      this.refs.address.setValue(newProps.tools.address);
+    this.refs.address.setValue(newProps.tools.address);
   }
-  componentDidMount() {
-    this.setState({currId: this.props.tools.wallet});
 
+  componentDidMount() {
+    this.setState({ currId: this.props.tools.wallet });
   }
 
   hide(e) {
-    this.setState({errorMessage: null});
-    this.props.signals.tools.withdraw({action: 'close'});
+    this.setState({ errorMessage: null });
+    this.props.signals.tools.withdraw({ action: 'close' });
     this.props.signals.tools.unsetaddress();
   }
 
-  allowSubmit()    { this.setState({allowSubmit: true}); }
-  disallowSubmit() { this.setState({allowSubmit: false}); }
+  allowSubmit()    { this.setState({ allowSubmit: true }); }
+  disallowSubmit() { this.setState({ allowSubmit: false }); }
 
   withdraw() {
     Meteor.call('withdraw', {
@@ -93,9 +77,14 @@ const WithdrawModal = connect({
       amount: this.refs.amount.getValue(),
       address: this.refs.address.getValue()
     });
-    this.props.signals.notif.newOne({_id: 'withdrawal_requested' + Math.random(), type: 'accept', icon: 'accept', title: 'Withdrawal request sent!',
-    timeout: 3000, needShow: true });
-
+    this.props.signals.notif.newOne({
+      _id: 'withdrawal_requested' + Math.random(),
+      type: 'accept',
+      icon: 'accept',
+      title: 'Withdrawal request sent!',
+      timeout: 3000,
+      needShow: true
+    });
     this.hide();
   }
 
@@ -107,21 +96,49 @@ const WithdrawModal = connect({
 
     return (
       <UserOnly redirect='/'>
-        <Semantic.Modal size='small' positiveLabel='Request withdrawal' header={`Withdraw ${curr.name}`}
-          onDeny={this.hide} onPositive={this.withdraw} show={this.props.tools.withdraw}
-          errorMsg={this.state.errorMessage} allowSubmit={this.state.allowSubmit} >
-
-          <Formsy.Form className='ui large form' onValidSubmit={this.withdraw} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref='form'>
-
-            <Semantic.Input name='amount' label='Amount'  placeholder='0.00000000' ref='amount' validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
-            adds={this.getAmount()} required />
+        <Semantic.Modal
+          size='small'
+          positiveLabel='Request withdrawal'
+          header={`Withdraw ${curr.name}`}
+          onDeny={this.hide}
+          onPositive={this.withdraw}
+          show={this.props.tools.withdraw}
+          errorMsg={this.state.errorMessage}
+          allowSubmit={this.state.allowSubmit}
+        >
+          <Formsy.Form
+            className='ui large form'
+            onValidSubmit={this.withdraw}
+            onValid={this.allowSubmit.bind(this)}
+            onInvalid={this.disallowSubmit.bind(this)}
+            ref='form'
+          >
+            <Semantic.Input required
+              name='amount'
+              label='Amount'
+              placeholder='0.00000000'
+              ref='amount'
+              validations={{isNumeric: true, withdrawalFee: [fee, balance]}}
+              adds={this.getAmount()}
+            />
             <div className="ui labeled icon blue button" onClick={this.setBalance.bind(this)}>
               <i className="icon up arrow"></i>
               Available: {this.props.balance ? this.props.balance.displayAmount() : 0}
             </div>
 
-            <Semantic.Input name='address' label='Address' placeholder='Type address here or select from address book' ref='address' adds={this.getAddress()} required />
-            <Semantic.Input name='tfa' label='TFA code' placeholder='Type your TFA code here' ref='tfa' />
+            <Semantic.Input required
+              name='address'
+              label='Address'
+              placeholder='Type address here or select from address book'
+              ref='address'
+              adds={this.getAddress()}
+            />
+            <Semantic.Input
+              name='tfa'
+              label='TFA code'
+              placeholder='Type your TFA code here'
+              ref='tfa'
+            />
             <input type='submit' className='hidden' name="afsgseg1" />
           </Formsy.Form>
         </Semantic.Modal>

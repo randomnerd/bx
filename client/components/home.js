@@ -5,16 +5,14 @@ const Home = connect({
   user: ['user'],
   title: ['home', 'title']
 }, class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      panel: false,
-      icons: true,
-      holder: false,
-      scroller: 0,
-      scroll: 1
-    };
+  state = {
+    panel: false,
+    icons: true,
+    holder: false,
+    scroller: 0,
+    scroll: 1
   }
+
   componentDidMount() {
 
     let ld = $(this.refs.ld);

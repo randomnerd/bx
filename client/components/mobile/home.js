@@ -13,15 +13,12 @@ const Home = connect({
   pair: 'pair.pair',
   tools: 'tools'
 }, class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      panel: false,
-      icons: true,
-      holder: false,
-      scroller: 0,
-      scroll: 1
-    };
+  state = {
+    panel: false,
+    icons: true,
+    holder: false,
+    scroller: 0,
+    scroll: 1
   }
 
   componentDidMount() {

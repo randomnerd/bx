@@ -6,19 +6,6 @@ import Semantic from '../semantic';
 import UserOnly from './user_only';
 import { createContainer } from 'meteor/react-meteor-data';
 
-Formsy.addValidationRule('withdrawalFee', (values, value, params) => {
-  let amount = parseFloat(values.amount);
-  let fee = parseFloat(params[0]);
-  let balance = parseFloat(params[1]);
-
-  if (!amount) return false;
-  if (!fee) return true;
-  if (amount <= fee) return false;
-  if (amount > balance) return false;
-
-  return true;
-});
-
 const WithdrawModal = connect({
   tools: ['tools'],
   wallet: ['wallet']

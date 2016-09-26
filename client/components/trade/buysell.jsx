@@ -5,9 +5,7 @@ import {Meteor} from 'meteor/meteor';
 import {Balances, Currencies} from '../../../both/collections';
 import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
-Formsy.addValidationRule('minTotal', (values, value) => {
-  return (parseFloat(values.amount * values.price)).toFixed(8) > 0;
-});
+
 const BuySell = connect({
   layout: ['layout'],
   pair_link: ['pair_link'],

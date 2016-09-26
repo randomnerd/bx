@@ -8,13 +8,11 @@ const DropMessage = connect({
   layout: ['layout'],
   notif: ['notif']
 }, class DropMessage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hidden: true,
-      closed: false
-    };
+  state = {
+    hidden: true,
+    closed: false
   }
+  
   types() {
     return {
       vitalyTypes:{

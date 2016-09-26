@@ -7,16 +7,14 @@ import { BitIndexIndicator_BTPR } from '../../../both/collections';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const Infopanel = connect({
-    user: ['user'],
-    tools: ['tools']
-  }, class Infopanel extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-      mosts: 'active',
-      pairs: 'btc',
-    };
+    user: 'user',
+    tools: 'tools'
+}, class Infopanel extends React.Component {
+  state = {
+    mosts: 'active',
+    pairs: 'btc',
   }
+
   componentDidMount() {
     //$this=this;
     $(ReactDOM.findDOMNode(this)).sidebar({
@@ -33,11 +31,12 @@ const Infopanel = connect({
     this.setState({most: 'active'});
     this.setState({pair: 'btc'});
   }
+
   componentWillReceiveProps(newProps) {
     $(ReactDOM.findDOMNode(this)).sidebar(newProps.tools.panel ? 'show' : 'hide');
   }
 
-  mostActive(){
+  mostActive() {
     $(this.refs.most).find('.item').removeClass('active');
     this.setState({most: 'active'});
   }
