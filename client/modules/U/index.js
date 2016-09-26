@@ -55,6 +55,15 @@ function goPassword ({input, state}) {
   if(state.get('mobile')){state.set('mob.page', false);}
 }
 
+function goNewPass ({input, state}) {
+  state.set('page', "new_password");
+  state.set('token', input.token);
+  state.set('layout', "main");
+  state.set(['pair', 'pair'], null);
+  state.set('title', "Reset password - Digital Assets Online Stock");
+  if(state.get('mobile')){state.set('mob.page', false);}
+}
+
 function goPairsNew ({input, state}) {
   state.set('page', "tradepair");
   state.set(['pair', 'pair'], null);
@@ -117,6 +126,10 @@ const notifications = [
   goNotifs
 ];
 
+const new_password = [
+  goNewPass
+];
+
 const history = [
   [
     subsReady, {
@@ -149,7 +162,8 @@ export default (options = {}) => {
       walletSet,
       notifications,
       history,
-      getHistory
+      getHistory,
+      new_password
       // pair
     });
 

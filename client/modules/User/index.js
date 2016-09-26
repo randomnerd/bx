@@ -37,6 +37,10 @@ function closeRemainPass ({input, state}) {
   state.set('showRemainPassModal', false);
 }
 
+function loginEmailSaver ({input, state}) {
+  state.set('loginEmail', input.email);
+}
+
 const userChanged = [
   updateUser, updateAdmin
 ];
@@ -63,6 +67,10 @@ const remainPassDone = [
   closeRemainPass
 ];
 
+const loginEmail = [
+  loginEmailSaver
+];
+
 
 export default (options = {}) => {
   return (module, controller) => {
@@ -79,7 +87,8 @@ export default (options = {}) => {
       loginClicked,
       loginDone,
       remainPass,
-      remainPassDone
+      remainPassDone,
+      loginEmail
     });
 
     Meteor.startup(() => {

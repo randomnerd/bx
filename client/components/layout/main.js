@@ -7,6 +7,7 @@ import WalletsPage from '../user/wallets';
 import WalletPage from '../user/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
+import NewPasswordPage from '../user/new_password_form';
 import HistoryPage from '../user/trade_history';
 
 import Sidebar from '../common/sidebar';
@@ -38,6 +39,7 @@ const MainLayout = connect({
       case "history": return <HistoryPage {...props}/>;
       case "settings": return <Settings {...props}/>;
       case "password": return <PasswordPage {...props}/>;
+      case "new_password": return <NewPasswordPage {...props}/>;
       case "pair": return <TradeGrid {...props}/>;
       case "notifications": return <Notifications {...props}/>;
       case "bitindex": return <BitIndex {...props}/>;

@@ -4,7 +4,8 @@ import Semantic from '../semantic';
 import {connect} from 'cerebral-view-react';
 
 const RemainPass = connect({
-  show: ['showRemainPassModal']
+  show: 'showRemainPassModal',
+  loginEmailSaver: 'loginEmail'
 }, class LoginModal extends React.Component {
   constructor(props) {
     super(props);
@@ -46,13 +47,13 @@ const RemainPass = connect({
   disallowSubmit() { this.setState({allowSubmit: false}) }
   render() {
     return (
-      <Semantic.Modal size="small" positiveLabel="Log in" header="Log in"
+      <Semantic.Modal size="small" positiveLabel="Reset" header="Reset password"
         onDeny={this.hide.bind(this)} onPositive={this.login.bind(this)} show={this.props.show}
         errorMsg={this.state.errorMessage} onVisible={this.focusLogin.bind(this)} allowSubmit={this.state.allowSubmit}>
 
         <Formsy.Form className="ui large form" onSubmit={this.login.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref="form">
 
-          <Semantic.Input name="email" icon="user" placeholder="Put your e-mail address here" ref="email" validations="isEmail" required />
+          <Semantic.Input name="email" icon="user" placeholder="Put your e-mail address here" ref="email" validations="isEmail" value={this.props.loginEmailSaver} required />
 
           <input type="submit" className="hidden" />
         </Formsy.Form>

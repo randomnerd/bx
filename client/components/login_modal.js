@@ -35,6 +35,11 @@ const LoginModal = connect({
     }, 50);
 
   }
+
+  emailSaver(event){
+    this.props.signals.user.loginEmail({email: event.currentTarget.value});
+  }
+
   remainPass(){
     this.hide();
     this.props.signals.user.remainPass();
@@ -52,7 +57,7 @@ const LoginModal = connect({
 
         <Formsy.Form className="ui large form" onSubmit={this.login.bind(this)} onValid={this.allowSubmit.bind(this)} onInvalid={this.disallowSubmit.bind(this)} ref="form">
 
-          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required />
+          <Semantic.Input name="email" icon="user" placeholder="E-mail address" ref="email" validations="isEmail" required onChg={this.emailSaver.bind(this)} />
           <Semantic.Input name="password" type="password" icon="lock" placeholder="Password" ref="password" required />
           <input type="submit" className="hidden" />
         </Formsy.Form>

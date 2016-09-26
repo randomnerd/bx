@@ -29,6 +29,7 @@ const router = Router({
      '/wallet/:id': 'u.wallet',
      '/settings': 'u.settings',
      '/password': 'u.password',
+     '/reset_password/:token': 'u.new_password',
      '/notifications': 'u.notifications'
    },
    '/pair/:id': 'pair.show',
