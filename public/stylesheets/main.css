@@ -1868,6 +1868,10 @@ tr.lesspadding th {
   font-size: 1em;
 }
 
+.ui.menu:not(.vertical) .right.menu {
+    white-space: nowrap;
+}
+
 .ui.inverted.newgrey .segment.wallet {
   background-color: #28394d;
   margin: 0 1em 0 0;
