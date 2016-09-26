@@ -19,6 +19,7 @@ import WalletsPage from '../mobile/wallets';
 import WalletPage from '../mobile/transactions';
 import Settings from '../user/settings';
 import PasswordPage from '../user/password';
+import NewPasswordPage from '../user/new_password_form';
 import Notifications from '../user/notifications_page';
 
 import Trades from '../trade/lastTrades';
@@ -81,6 +82,7 @@ const MobileLayout = connect({
       case "wallet": return <WalletPage {...this.props}/>;
       case "settings": return <Settings {...this.props}/>;
       case "password": return <PasswordPage {...this.props}/>;
+      case "new_password": return <NewPasswordPage {...this.props}/>;
       case "notifications": return <Notifications {...this.props}/>;
       case "pair": return this.renderContent();
       case "home": return <HomePage {...this.props}/>;
