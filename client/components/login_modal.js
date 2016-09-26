@@ -36,6 +36,7 @@ const LoginModal = connect({
 
   }
   remainPass(){
+    this.hide();
     this.props.signals.user.remainPass();
   }
   getActions(){
