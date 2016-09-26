@@ -1,4 +1,5 @@
 Meteor.startup(() => {
+  Accounts.emailTemplates.resetPassword.from = "DAOstock.com <no-reply@daostock.com>"
   let oldText = Accounts.emailTemplates.resetPassword.text;
   Accounts.emailTemplates.resetPassword.text = (user) => {
     let {token} = user.services.password.reset;
