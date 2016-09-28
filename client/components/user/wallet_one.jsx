@@ -5,6 +5,7 @@ import {Meteor} from 'meteor/meteor';
 import Semantic from '../semantic';
 import { createContainer } from 'meteor/react-meteor-data';
 
+
 const WalletPage = connect({
   layout: ['layout']
 }, class WalletPage extends React.Component {
@@ -70,7 +71,11 @@ const WalletPage = connect({
         <td className='two wide'>{this.props.item.shortName}</td>
         <td className='nine wide'>
           { address ?
-            address :
+            <div>
+              <span className="adress_container">{address}</span>
+              <button className ='ui mini button' data-clipboard-target="adress_container">Copy</button>
+            </div>
+            :
             <button className='ui mini button' onClick={this.newWallet.bind(this, item)}>Generate</button> }
         </td>
         <td className='three wide right aligned'>

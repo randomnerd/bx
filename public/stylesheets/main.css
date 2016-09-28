@@ -467,7 +467,8 @@ html, body, html.ios, html.ios body{
 .ui.inverted.newgrey .ui.form input[type="tel"],
 .ui.inverted.newgrey .ui.form input[type="time"],
 .ui.inverted.newgrey .ui.form input[type="url"],
-.ui.inverted.newgrey .ui.form input[type="number"] {
+.ui.inverted.newgrey .ui.form input[type="number"],
+.ui.inverted.newgrey .dark.input input{
     background: rgba(200, 220, 250, 0.1) repeat scroll 0 0;
     color: rgba(200, 200, 200, 0.67);
     transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
@@ -1134,6 +1135,7 @@ tr.lesspadding th {
 .ui.action.input[class*="left right action"] > .buttons:first-child > .button,
 .ui.action.input[class*="left right action"] > .dropdown:first-child{
     border-radius: 0.285714rem 0 0 0.285714rem !important;
+    margin-right: -0.285714rem;
 }
 .ui.labeled.input > .label:first-child{
     border-radius: 0.285714rem 0 0 0.285714rem !important;
@@ -1141,6 +1143,7 @@ tr.lesspadding th {
 .ui.labeled.input > .label:last-child{
     border-radius: 0 0.285714rem 0.285714rem 0 !important;
 }
+
 /* \semantic input */
 
 

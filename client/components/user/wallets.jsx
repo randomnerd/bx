@@ -4,6 +4,7 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import UserOnly from '../user/user_only';
 import { createContainer } from 'meteor/react-meteor-data';
+import Clipboard from 'clipboard';
 
 const WalletsPage = connect({
   layout: ['layout']
@@ -36,8 +37,14 @@ const WalletsPage = connect({
     this.props.signals.tools.withdraw({action: 'open'});
     this.props.signals.u.walletSet({id: item._id});
   }
-
+  componentDidMount(){
+    var clipboard = new Clipboard('.copy_address');
+    clipboard.on('success', function(e) {
+      $(e.trigger).addClass('positive');
+    });
+  }
   renderWalletItems() {
+    let i = 1;
     return this.props.currencies.map((item) => {
       let address = this.getAddress(item._id);
       let balance = this.getBalance(item._id);
@@ -48,7 +55,15 @@ const WalletsPage = connect({
         <tr key={item._id} className="ui white text opacity">
           <td className='two wide'>{balance}</td>
           <td className='two wide'>{item.shortName}</td>
-          <td className='nine wide'>{address ? address : generateBtn}</td>
+          <td className='nine wide'>{
+            address ?
+            <div className="ui fluid inverted dark action input">
+              <input type="text" className={"disabled adress_container_" + i} value={address} />
+              <button className ='ui mini button copy_address' data-clipboard-target={".adress_container_" + i}>Copy</button>
+            </div>
+
+             :
+             generateBtn}</td>
           <td className='three wide right aligned'>
             <div className='ui tiny buttons'>
               <a className={'ui blue normal button' + (allowWithdraw ? '' : ' disabled')} onClick={this.showWithdraw.bind(this, item)}>
@@ -61,6 +76,7 @@ const WalletsPage = connect({
           </td>
         </tr>
       );
+      i++;
     });
   }
 
