@@ -8,7 +8,8 @@ import {subsReady} from '../Tools';
 
 function showPair ({input, state, output, services}) {
   services.subsManager.subscribe('trades', null, input.id);
-  services.subsManager.subscribe('orderbook', null, input.id);
+  services.subsManager.subscribe('orderbook_buy', null, input.id);
+  services.subsManager.subscribe('orderbook_sell', null, input.id);
   services.subsManager.subscribe('chartitems', null, input.id);
   state.set('pair_link', input.id);
   state.set('layout', "main");

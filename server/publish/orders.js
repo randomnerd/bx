@@ -15,14 +15,23 @@ Meteor.publish('myOrders', function() {
   });
 })
 
-Meteor.publish('orderbook', function(pairId, permalink) {
+Meteor.publish('orderbook_sell', function(pairId, permalink) {
   check(pairId, Match.Maybe(String));
   if (permalink) {
     check(permalink, String);
     let pair = TradePairs.findOne({ permalink });
     pairId = pair._id;
   };
-  return OrderBookItems.find({ pairId }, { sort: { price: -1 } });
+  return OrderBookItems.find({ pairId: pairId, buy: false  }, { sort: { price: -1 }, limit: 40 });
+});
+Meteor.publish('orderbook_buy', function(pairId, permalink) {
+  check(pairId, Match.Maybe(String));
+  if (permalink) {
+    check(permalink, String);
+    let pair = TradePairs.findOne({ permalink });
+    pairId = pair._id;
+  };
+  return OrderBookItems.find({ pairId: pairId, buy: true  }, { sort: { price: -1 }, limit: 40 });
 });
 
 Meteor.publish('trades', function(pairId, permalink) {

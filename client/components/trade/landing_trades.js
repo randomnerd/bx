@@ -17,7 +17,13 @@ const LandingTrades = connect({
     let pair = _.findWhere(this.props.pairs, {_id: id});
     return pair
   }
-
+  cutZeroes(str) {
+    //str = str.toFixed(8);
+    while (str[str.length-1] == '0' || str[str.length-1] == '.') {
+      str = str.slice(0,str.length-1)
+    }
+    return str;
+  }
   renderTradesItems() {
     let nulls = '00000000';
     let data =this.props.trades;
@@ -41,9 +47,12 @@ const LandingTrades = connect({
       let curr = this.curr(pair.currId);
       let mcurr = this.curr(pair.marketCurrId);
 
-      let amount = parseFloat(item.displayAmount()).toString().split('.');
-      let price = item.displayPrice().toString().split('.');
+      let amount = item.displayAmount().split('.');
+      let price = item.displayPrice().split('.');
       //console.log(item.displayPrice().toString().split('.'));
+
+      amount[1] = this.cutZeroes(amount[1]);
+      price[1] = this.cutZeroes(price[1]);
       if (!amount[1]) {
         amount[1] = '';
       }
