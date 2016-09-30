@@ -3,6 +3,8 @@ import {connect} from 'cerebral-view-react';
 import {Meteor} from 'meteor/meteor';
 import {OrderBookItems,Trades} from '../../../both/collections';
 import { createContainer } from 'meteor/react-meteor-data';
+import OrderItem from './orderbook_item'
+import Spreadline from './orderbook_spreadline'
 
 const Orderbook = connect({
   layout: ['layout'],
@@ -19,6 +21,7 @@ const Orderbook = connect({
     });
   }
   cutZeroes(str) {
+    if (!str) str = 0;
     //str = str.toFixed(8);
     while (str[str.length-1] == '0' || str[str.length-1] == '.') {
       str = str.slice(0,str.length-1)
@@ -26,49 +29,14 @@ const Orderbook = connect({
     return str;
   }
   renderSellItems() {
-    let nulls = '00000000';
 
     let max = this.props.ordersMax ? this.props.ordersMax.displayAmount() : 1;
     return this.props.ordersSell.map((item) => {
-
-      //.displayRemain() и .displayPrice()
-      let weight = parseFloat(70 * (item.displayAmount() / max).toFixed(8));
-      let amount = item.displayAmount().split('.');
-      let price = item.displayPrice().split('.');
-      amount[1] = this.cutZeroes(amount[1]);
-      price[1] = this.cutZeroes(price[1]);
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).split('.');
+      item.max = max;
+      item.direction = ' negative';
 
       return  (
-        <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
-        className={!item.animate ? 'animate' : ''}>
-          <td>
-            <div className='bignum left'>{amount[0]}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{amount[1]}
-              <span>{ nulls.substr(0, 8 - amount[1].length) }</span>
-            </div>
-
-            <span className='leveler negative'
-                style={{width: weight + '%'}}>
-            </span>
-          </td>
-          <td className='center aligned negative'>
-
-            <div className='bignum left'>{price[0]}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{price[1]}
-              <span>{nulls.substr(0, 8 - price[1].length)}</span>
-            </div>
-          </td>
-          <td className='right aligned'>
-            <div className='bignum left'>{total[0].substr(0, 5)}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{total[1]}
-              <span>{nulls.substr(0, 8 - total[1].length)}</span>
-            </div>
-          </td>
-        </tr>
+        <OrderItem key = {item._id} item={item} {...this.props} />
       );
     });
   }
@@ -78,102 +46,13 @@ const Orderbook = connect({
 
     let max = this.props.ordersMax ? this.props.ordersMax.displayAmount() : 1;
     return this.props.ordersBuy.map((item) => {
-      //.displayRemain() и .displayPrice()
+      item.max = max;
+      item.direction = ' positive';
 
-      let weight = parseFloat(70 * (parseFloat(item.displayAmount()) / max).toFixed(8));
-      let amount = item.displayAmount().split('.');
-      let price = item.displayPrice().split('.');
-      let total = (item.displayPrice() * item.displayAmount()).toFixed(8).split('.');
-      amount[1] = this.cutZeroes(amount[1]);
-      price[1] = this.cutZeroes(price[1]);
       return  (
-        <tr key = {item._id} onClick = {this.goBuySell.bind(this, item)}
-        className={!item.animate ? 'animate' : ''}>
-          <td>
-            <div className='bignum left'>{amount[0]}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{amount[1]}
-              <span>{ nulls.substr(0, 8 - amount[1].length) }</span>
-            </div>
-
-            <span className='leveler positive'
-                style={{width: weight + '%'}}>
-            </span>
-          </td>
-          <td className='center aligned positive'>
-
-            <div className='bignum left'>{price[0]}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{price[1]}
-              <span>{nulls.substr(0, 8 - price[1].length)}</span>
-            </div>
-          </td>
-          <td className='right aligned'>
-            <div className='bignum left'>{total[0].substr(0, 5)}</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'>{total[1]}
-              <span>{nulls.substr(0, 8 - total[1].length)}</span>
-            </div>
-          </td>
-        </tr>
+        <OrderItem key = {item._id} item={item} {...this.props} />
       );
     });
-  }
-
-  renderSpread() {
-    let nulls = '00000000';
-    let i=0;
-    let lastOne=[];
-    this.props.tradesLast.map((item) => {
-      lastOne[i] = item.displayPrice();
-      i++;
-    });
-    if (!lastOne[0]) return null;
-    let direction = !!( lastOne[0] > lastOne[1] );
-    let diff = ( lastOne[0] - lastOne[1] ).toFixed(4);
-    let diffPerc = ( ( diff / lastOne[1] ) * 100 ).toFixed(2);
-    let lastPrice = lastOne[0].toString().split('.');
-    lastPrice[1] = lastPrice[1] ? lastPrice[1] : '';
-
-    let hiPrice = this.props.tradesHi.displayPrice().split('.');
-    let lowPrice = this.props.tradesLo.displayPrice().split('.');
-    hiPrice[1] = hiPrice[1] ? hiPrice[1] : '';
-    lowPrice[1] = lowPrice[1] ? lowPrice[1] : '';
-
-
-    return (
-
-        <tr className='ui white text opacity' >
-          <td className='red markered text'>
-            <span className='direction'>Lowest <i className='long arrow down icon'></i></span>
-            <div className='bignum left'>{ lowPrice[0] }</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{ lowPrice[1] }</span>
-              { nulls.substr(0, 8 - lowPrice[1].length) }
-            </div>
-          </td>
-          <td className='center aligned white markered text'>
-            <div className='bignum left'>{ lastPrice[0] }</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{ lastPrice[1] }</span>
-              { nulls.substr(0, 8 - lastPrice[1].length) }
-            </div>
-            <span className={'direction ' + (direction ? 'green' : 'red') + ' text'}>
-              {diff}
-              ({diffPerc}%)
-            </span>
-          </td>
-          <td className='right aligned green markered text'>
-            <span className='direction'>Highest <i className='long arrow up icon'></i></span>
-            <div className='bignum left'>{ hiPrice[0] }</div>
-            <div className='bignum dot'>.</div>
-            <div className='bignum right'><span>{ hiPrice[1] }</span>
-              { nulls.substr(0, 8 - hiPrice[1].length) }
-            </div>
-          </td>
-        </tr>
-
-      );
   }
 
   render() {
@@ -195,7 +74,7 @@ const Orderbook = connect({
               <tbody>
 
                 { this.renderSellItems() }
-                { this.renderSpread() }
+                <Spreadline {...this.props} />
                 { this.renderBuyItems() }
 
               </tbody>
@@ -212,8 +91,5 @@ export default OrderbookContainer = createContainer((props) => {
     ordersSell: OrderBookItems.find( { pairId: props.pair._id , buy: false}, { sort: { price: -1 } } ).fetch(),
     ordersBuy: OrderBookItems.find( { pairId: props.pair._id , buy: true}, { sort: { price: -1 } } ).fetch(),
     ordersMax: OrderBookItems.findOne( { pairId: props.pair._id }, { sort: { amount: -1 } } ),
-    tradesLast: Trades.find({ pairId: props.pair._id }, {sort: {createdAt: -1}}, {limit:2}).fetch(),
-    tradesHi: Trades.findOne({ pairId: props.pair._id }, {sort: {price: -1}}),
-    tradesLo: Trades.findOne({ pairId: props.pair._id }, {sort: {price: 1}}),
   };
 }, Orderbook);
