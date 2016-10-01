@@ -3,7 +3,7 @@ import { ChartItems } from '/both/collections';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import Charts from './';
-import ReStock from '/client/lib/react-stockcharts';
+import ReStock from 'react-stockcharts';
 import {connect} from 'cerebral-view-react';
 
 const BitIndex = connect({

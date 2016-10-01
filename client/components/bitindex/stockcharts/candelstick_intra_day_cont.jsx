@@ -1,15 +1,18 @@
 'use strict';
 
 import React from 'react';
-import d3 from 'd3';
 
-import { ChartCanvas, Chart, series, scale, coordinates, tooltip, axes, indicator, helper } from '/client/lib/react-stockcharts';
+import { format } from "d3-format";
+import { timeFormat } from "d3-time-format";
+
+import { ChartCanvas, Chart, series, scale, coordinates, tooltip, axes, indicator, helper } from 'react-stockcharts';
 
 const candelstick_intra_day_cont = React.createClass({
 
     propTypes: {
         data: React.PropTypes.array.isRequired,
         width: React.PropTypes.number.isRequired,
+        ratio: React.PropTypes.number.isRequired,
         type: React.PropTypes.oneOf(['svg', 'hybrid']).isRequired,
         pairText: React.PropTypes.string.isRequired
     },
@@ -50,13 +53,13 @@ const candelstick_intra_day_cont = React.createClass({
             d.smaVolume50 = c
         }).accessor(d => d.smaVolume50);
 
-        let {data, type, width, pairText} = this.props;
+        let {data, type, width, pairText, ratio} = this.props;
 
 
         let height = 405;
 
-        let dateFormat = d3.time.format("%Y-%m-%d");
-        let numberFormat = d3.format(".8f");
+        let dateFormat = timeFormat("%Y-%m-%d");
+        let numberFormat = format(".8f");
 
         function tooltipContent(calculators) {
           return ({currentItem, xAccessor}) => {
@@ -78,7 +81,7 @@ const candelstick_intra_day_cont = React.createClass({
 
         return (
 
-            <ChartCanvas width={width} height={height} margin={{
+            <ChartCanvas ratio={ratio} width={width} height={height} margin={{
                 left: 60,
                 right: 60,
                 top: 24,
@@ -96,7 +99,7 @@ const candelstick_intra_day_cont = React.createClass({
                     bottom: 5
                 }}
                 >
-                    <YAxis axisAt='left' orient='left' ticks={4} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={d3.format('s')}/>
+                    <YAxis axisAt='left' orient='left' ticks={4} fontSize={11} stroke='#767676' tickStroke='#767676' tickFormat={format('.0s')}/>
 
                     <BarSeries yAccessor={d => d.volume} fill='#212e3e'/>
                     <AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
@@ -104,8 +107,8 @@ const candelstick_intra_day_cont = React.createClass({
                     <CurrentCoordinate fontSize={11} yAccessor={smaVolume50.accessor()} fill={smaVolume50.stroke()}/>
                     <CurrentCoordinate fontSize={11} yAccessor={d => d.volume} fill='#9B0A47'/>
 
-                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' fontSize={11} yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
-                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' fontSize={11} yAccessor={d => d.volume} displayFormat={d3.format('.4s')} fill='#0F0F0F'/>
+                    <EdgeIndicator itemType='first' orient='left' edgeAt='left' fontSize={11} yAccessor={d => d.volume} displayFormat={format('.4s')} fill='#0F0F0F'/>
+                    <EdgeIndicator itemType='last' orient='right' edgeAt='right' fontSize={11} yAccessor={d => d.volume} displayFormat={format('.4s')} fill='#0F0F0F'/>
                 </Chart>
 
                 <Chart id={1} yPan yExtents={[
@@ -119,7 +122,7 @@ const candelstick_intra_day_cont = React.createClass({
 
                     <XAxis axisAt='bottom' orient='bottom' stroke='#767676' tickStroke='#767676' fontSize={11}/>
                     <XAxis axisAt='top' orient='top' stroke='#767676' tickStroke='#767676' fontSize={11}/>
-                    <YAxis axisAt='right' orient='right' ticks={8} stroke='#767676' tickStroke='#767676' fontSize={11} />
+                    <YAxis axisAt='right' orient='right' ticks={4} stroke='#767676' tickStroke='#767676' fontSize={11} />
                     <CandlestickSeries/>
 
                     <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()}/>
@@ -136,10 +139,10 @@ const candelstick_intra_day_cont = React.createClass({
                         ? '#6BA583'
                         : '#FF0000'}/>
 
-                    <MouseCoordinateX fontSize={11} at='top' orient='top' displayFormat={d3.time.format('%Y-%m-%d')}/>
-                    <MouseCoordinateX fontSize={11} at='bottom' orient='bottom' displayFormat={d3.time.format('%H:%M:%S')}/>
-                    <MouseCoordinateY fontSize={11} at='right' orient='right' displayFormat={d3.format('.4f')}/>
-                    <MouseCoordinateY fontSize={11} at='left' orient='left' displayFormat={d3.format('.4f')}/>
+                    <MouseCoordinateX fontSize={11} at='top' orient='top' displayFormat={timeFormat('%Y-%m-%d')}/>
+                    <MouseCoordinateX fontSize={11} at='bottom' orient='bottom' displayFormat={timeFormat('%H:%M:%S')}/>
+                    <MouseCoordinateY fontSize={11} at='right' orient='right' displayFormat={format('.4f')}/>
+                    <MouseCoordinateY fontSize={11} at='left' orient='left' displayFormat={format('.4f')}/>
                   <HoverTooltip tooltipContent={tooltipContent([ema20, ema50])} bgwidth={120} bgheight={95} />
                 </Chart>
 
