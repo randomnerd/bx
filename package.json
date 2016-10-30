@@ -5,35 +5,34 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-class-properties": "^6.18.0",
     "bcrypt": "^0.8.7",
     "cerebral": "^1.1.0",
     "cerebral-module-devtools": "^0.7.2",
     "cerebral-module-router": "^0.17.1",
     "cerebral-view-react": "^0.12.12",
     "classnames": "^2.2.5",
-    "react-stockcharts": "0.6.0-beta.1", 
-    "clipboard": "^1.5.12",
+    "clipboard": "^1.5.15",
     "d3-collection": "^1.0.1",
     "d3-format": "^1.0.2",
     "d3-scale": "^1.0.3",
     "d3-selection": "^1.0.2",
     "d3-shape": "^1.0.3",
     "d3-time-format": "^2.0.2",
-    "d3fc-rebind": "^4.1.0",
-
+    "d3fc-rebind": "^4.1.1",
     "formsy-react": "^0.18.1",
     "lodash.flattendeep": "^4.4.0",
     "meteor-node-stubs": "^0.2.3",
-    "moment": "^2.15.1",
+    "moment": "^2.15.2",
     "notp": "^2.0.3",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-stockcharts": "0.6.0-beta.1",
     "save-svg-as-png": "^1.0.3",
     "thirty-two": "^1.0.2"
   },
   "devDependencies": {
-    "react-hot-loader": "^3.0.0-beta.5"
+    "react-hot-loader": "^3.0.0-beta.6"
   }
 }
